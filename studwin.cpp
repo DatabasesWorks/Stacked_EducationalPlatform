@@ -31,3 +31,10 @@ void StudWin::on_pushButton_clicked()
     }
 
 }
+
+//Move to controller?
+void StudWin::on_pushButton_2_clicked()
+{
+    View* par = (View*) this->parentWidget();
+    par->setCurrentPage("login");
+}

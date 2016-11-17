@@ -2,6 +2,7 @@
 #define STUDWIN_H
 
 #include <QWidget>
+#include <view.h>
 
 namespace Ui {
 class StudWin;
@@ -17,6 +18,8 @@ public:
 
 private slots:
     void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::StudWin *ui;
