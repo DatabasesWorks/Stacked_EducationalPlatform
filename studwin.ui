@@ -87,7 +87,7 @@
              <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
               <widget class="QLabel" name="label">
                <property name="text">
-                <string>LEVEL !@#%</string>
+                <string>LEVELS</string>
                </property>
               </widget>
              </item>
@@ -184,28 +184,28 @@
                <item row="0" column="3">
                 <widget class="QPushButton" name="pushButton_2">
                  <property name="text">
-                  <string>PushButton</string>
+                  <string>Save &amp; Log Out</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="1">
                 <widget class="QLabel" name="label_2">
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string>Level: Arrays</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="2">
                 <widget class="QPushButton" name="pushButton">
                  <property name="text">
-                  <string>PushButton</string>
+                  <string>Hide Levels</string>
                  </property>
                 </widget>
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_3">
                  <property name="text">
-                  <string>TextLabel</string>
+                  <string>Welcome: Student</string>
                  </property>
                 </widget>
                </item>
