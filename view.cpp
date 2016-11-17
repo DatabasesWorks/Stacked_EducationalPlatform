@@ -22,6 +22,21 @@ View::~View()
     delete ui;
 }
 
+//Move this all to controller later
+void View::setCurrentPage(QString s)
+{
+    if(s == "login"){
+        setCentralWidget(new LoginWin());
+    }else if(s == "studwin"){
+        setCentralWidget(new StudWin());
+    }else if(s == "teachwin"){
+        setCentralWidget(new TeachWin());
+    }else if(s == "studreg"){
+        setCentralWidget(new StudReg());
+    }else if(s == "teachreg"){
+        setCentralWidget(new TeachReg());
+    }
+}
 
 void View::on_pushButton_clicked()
 {

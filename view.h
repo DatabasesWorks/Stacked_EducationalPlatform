@@ -13,6 +13,7 @@ class View : public QMainWindow
 
 public:
     explicit View(QWidget *parent = 0);
+    void setCurrentPage(QString);
     ~View();
 
 private slots:
@@ -25,6 +26,7 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_pushButton_5_clicked();
+
 
 private:
     Ui::View *ui;
