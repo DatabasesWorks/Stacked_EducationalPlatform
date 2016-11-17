@@ -15,6 +15,11 @@ public:
     explicit TeachReg(QWidget *parent = 0);
     ~TeachReg();
 
+private slots:
+    void on_regButton_clicked();
+
+    void on_cancelButton_clicked();
+
 private:
     Ui::TeachReg *ui;
 };

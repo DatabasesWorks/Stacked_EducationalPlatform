@@ -10,6 +10,12 @@
     <height>480</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>300</width>
+    <height>400</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>View</string>
   </property>
@@ -77,6 +83,19 @@
     </property>
     <property name="text">
      <string>TeachReg</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>0</y>
+      <width>181</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Placeholders to troubleshoot</string>
     </property>
    </widget>
   </widget>

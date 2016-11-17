@@ -1,5 +1,6 @@
 #include "studreg.h"
 #include "loginwin.h"
+#include "view.h"
 #include "ui_studreg.h"
 #include "QGridLayout"
 #include "QPushButton"
@@ -18,5 +19,13 @@ StudReg::~StudReg()
 
 void StudReg::on_cancelButton_clicked()
 {
-//    this = new LoginWin();
+    View* par = (View*) this->parentWidget();
+    par->setCurrentPage("login");
+}
+
+void StudReg::on_regButton_clicked()
+{
+    //later add checking for validity and probably a success
+    View* par = (View*) this->parentWidget();
+    par->setCurrentPage("login");
 }
