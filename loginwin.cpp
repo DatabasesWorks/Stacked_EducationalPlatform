@@ -19,11 +19,12 @@ void LoginWin::on_loginButton_clicked()
 {
     //send user and pass to controller and check validity
     int x = 0;
-    //x = Controller->sendLogin(ui->userEntry, ui->passEntry);
+    //x = Controller->sendLogin(ui->userEntry.text(), ui->passEntry.text());
     View* par = (View*) this->parentWidget();
     switch(x){
         case 0:  //if student
             par->setCurrentPage("studwin");
+
             break;
         case 1: //if teacher
             par->setCurrentPage("teachwin");

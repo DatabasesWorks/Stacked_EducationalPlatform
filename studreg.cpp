@@ -30,7 +30,7 @@ void StudReg::on_regButton_clicked()
     //send teacher registration
     int x = 0;
     // sendReg(bool isTeach, Qstring user, Qstring pass, Qstring class)
-    //x = Controller->sendReg(true, ui->userEntry, ui->passEntry, ui->classEntry);
+    //x = Controller->sendReg(true, ui->userEntry.text(), ui->passEntry.text(), ui->classEntry.text());
     View* par = (View*) this->parentWidget();
     switch(x){
         case 0: //success
