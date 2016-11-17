@@ -19,9 +19,7 @@ View::View(QWidget *parent) :
     grid->addWidget(new QPushButton("BUTTON1!"), 1,1,1,1, Qt::AlignCenter);
     grid->addWidget(new QPushButton("BUTTON2!"), 1,2,1,1, Qt::AlignCenter);
 
-
-
-
+    grid->addWidget(new QPushButton("BUTTON3!"), 1,3,1,1, Qt::AlignCenter);
 }
 
 View::~View()

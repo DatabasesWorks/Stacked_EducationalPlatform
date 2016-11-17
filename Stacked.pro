@@ -13,8 +13,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        view.cpp
+        view.cpp \
+    teachwin.cpp \
+    studwin.cpp \
+    loginwin.cpp
 
-HEADERS  += view.h
+HEADERS  += view.h \
+    teachwin.h \
+    studwin.h \
+    loginwin.h
 
-FORMS    += view.ui
+FORMS    += view.ui \
+    teachwin.ui \
+    studwin.ui \
+    loginwin.ui
