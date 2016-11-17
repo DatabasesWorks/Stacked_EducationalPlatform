@@ -10,6 +10,8 @@ StudReg::StudReg(QWidget *parent) :
     ui(new Ui::StudReg)
 {
     ui->setupUi(this);
+    //maybe get rid of this
+    ui->passEntry->setEchoMode(QLineEdit::Password);
 }
 
 StudReg::~StudReg()
@@ -25,7 +27,18 @@ void StudReg::on_cancelButton_clicked()
 
 void StudReg::on_regButton_clicked()
 {
-    //later add checking for validity and probably a success
+    //send teacher registration
+    int x = 0;
+    // sendReg(bool isTeach, Qstring user, Qstring pass, Qstring class)
+    //x = Controller->sendReg(true, ui->userEntry, ui->passEntry, ui->classEntry);
     View* par = (View*) this->parentWidget();
-    par->setCurrentPage("login");
+    switch(x){
+        case 0: //success
+            par->setCurrentPage("login");
+            break;
+        case 1: //user name taken error
+            break;
+        case 2: //class code invalid error
+            break;
+    }
 }

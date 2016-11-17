@@ -7,6 +7,7 @@ LoginWin::LoginWin(QWidget *parent) :
     ui(new Ui::LoginWin)
 {
     ui->setupUi(this);
+    ui->passEntry->setEchoMode(QLineEdit::Password);
 }
 
 LoginWin::~LoginWin()
@@ -16,8 +17,21 @@ LoginWin::~LoginWin()
 
 void LoginWin::on_loginButton_clicked()
 {
+    //send user and pass to controller and check validity
+    int x = 0;
+    //x = Controller->sendLogin(ui->userEntry, ui->passEntry);
     View* par = (View*) this->parentWidget();
-    par->setCurrentPage("studwin");
+    switch(x){
+        case 0:  //if student
+            par->setCurrentPage("studwin");
+            break;
+        case 1: //if teacher
+            par->setCurrentPage("teachwin");
+            break;
+        case 2: //invalid credentials
+            //TODO
+            break;
+    }
 }
 
 void LoginWin::on_regStud_clicked()

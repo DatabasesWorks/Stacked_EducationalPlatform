@@ -23,7 +23,8 @@ View::~View()
     delete ui;
 }
 
-//Move this all to controller later
+//TODO: Move this all to controller later?
+//TODO: Make sure this doesn't cause memory leaks (I think it should be fine)
 void View::setCurrentPage(QString s)
 {
     if(s == "login"){
@@ -39,6 +40,7 @@ void View::setCurrentPage(QString s)
     }
 }
 
+//UI debug individual pages
 void View::on_pushButton_clicked()
 {
     setCentralWidget(new LoginWin());
@@ -53,7 +55,6 @@ void View::on_pushButton_3_clicked()
 {
     setCentralWidget(new TeachWin());
 }
-
 
 void View::on_pushButton_4_clicked()
 {
