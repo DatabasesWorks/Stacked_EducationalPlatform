@@ -16,14 +16,20 @@ SOURCES += main.cpp\
         view.cpp \
     teachwin.cpp \
     studwin.cpp \
-    loginwin.cpp
+    loginwin.cpp \
+    teachreg.cpp \
+    studreg.cpp
 
 HEADERS  += view.h \
     teachwin.h \
     studwin.h \
-    loginwin.h
+    loginwin.h \
+    teachreg.h \
+    studreg.h
 
 FORMS    += view.ui \
     teachwin.ui \
     studwin.ui \
-    loginwin.ui
+    loginwin.ui \
+    teachreg.ui \
+    studreg.ui
