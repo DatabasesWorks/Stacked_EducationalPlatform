@@ -33,3 +33,6 @@ FORMS    += view.ui \
     loginwin.ui \
     teachreg.ui \
     studreg.ui
+
+RESOURCES += \
+    style.qrc

@@ -3,6 +3,7 @@
 #include "studwin.h"
 #include "teachwin.h"
 #include "studreg.h"
+#include "teachreg.h"
 
 #include "ui_view.h"
 #include "QGraphicsView"
@@ -27,17 +28,23 @@ void View::on_pushButton_clicked()
     setCentralWidget(new LoginWin());
 }
 
-void View::on_pushButton_3_clicked()
+void View::on_pushButton_2_clicked()
 {
     setCentralWidget(new StudWin());
 }
 
-void View::on_pushButton_2_clicked()
+void View::on_pushButton_3_clicked()
 {
     setCentralWidget(new TeachWin());
 }
 
+
 void View::on_pushButton_4_clicked()
 {
     setCentralWidget(new StudReg());
+}
+
+void View::on_pushButton_5_clicked()
+{
+    setCentralWidget(new TeachReg());
 }
