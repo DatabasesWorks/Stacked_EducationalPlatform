@@ -15,6 +15,7 @@ View::View(QWidget *parent) :
     ui(new Ui::View)
 {
     ui->setupUi(this);
+    setCentralWidget(new LoginWin());
 }
 
 View::~View()
