@@ -18,14 +18,22 @@ SOURCES += main.cpp\
     studwin.cpp \
     loginwin.cpp \
     teachreg.cpp \
-    studreg.cpp
+    studreg.cpp \
+    datastructure.cpp \
+    level.cpp \
+    puzzle.cpp \
+    puzzlecomponent.cpp
 
 HEADERS  += view.h \
     teachwin.h \
     studwin.h \
     loginwin.h \
     teachreg.h \
-    studreg.h
+    studreg.h \
+    datastructure.h \
+    level.h \
+    puzzle.h \
+    puzzlecomponent.h
 
 FORMS    += view.ui \
     teachwin.ui \
