@@ -2,7 +2,7 @@
 #define STUDWIN_H
 
 #include <QWidget>
-#include <view.h>
+#include <client.h>
 
 namespace Ui {
 class StudWin;

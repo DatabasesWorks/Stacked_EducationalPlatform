@@ -1,6 +1,6 @@
 #include "loginwin.h"
 #include "ui_loginwin.h"
-#include "view.h"
+#include "client.h"
 
 LoginWin::LoginWin(QWidget *parent) :
     QWidget(parent),
@@ -20,7 +20,7 @@ void LoginWin::on_loginButton_clicked()
     //send user and pass to controller and check validity
     int x = 0;
     //x = Controller->sendLogin(ui->userEntry.text(), ui->passEntry.text());
-    View* par = (View*) this->parentWidget();
+    Client* par = (Client*) this->parentWidget();
     switch(x){
         case 0:  //if student
             par->setCurrentPage("studwin");
@@ -37,12 +37,12 @@ void LoginWin::on_loginButton_clicked()
 
 void LoginWin::on_regStud_clicked()
 {
-    View* par = (View*) this->parentWidget();
+    Client* par = (Client*) this->parentWidget();
     par->setCurrentPage("studreg");
 }
 
 void LoginWin::on_regTeach_clicked()
 {
-    View* par = (View*) this->parentWidget();
+    Client* par = (Client*) this->parentWidget();
     par->setCurrentPage("teachreg");
 }

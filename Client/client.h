@@ -1,20 +1,20 @@
-#ifndef VIEW_H
-#define VIEW_H
+#ifndef CLIENT_H
+#define CLIENT_H
 
 #include <QMainWindow>
 
 namespace Ui {
-class View;
+class Client;
 }
 
-class View : public QMainWindow
+class Client : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit View(QWidget *parent = 0);
+    explicit Client(QWidget *parent = 0);
     void setCurrentPage(QString);
-    ~View();
+    ~Client();
 
 private slots:
     void on_pushButton_clicked();
@@ -29,7 +29,7 @@ private slots:
 
 
 private:
-    Ui::View *ui;
+    Ui::Client *ui;
 };
 
-#endif // VIEW_H
+#endif // CLIENT_H

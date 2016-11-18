@@ -1,6 +1,6 @@
 #include "studreg.h"
 #include "loginwin.h"
-#include "view.h"
+#include "client.h"
 #include "ui_studreg.h"
 #include "QGridLayout"
 #include "QPushButton"
@@ -21,7 +21,7 @@ StudReg::~StudReg()
 
 void StudReg::on_cancelButton_clicked()
 {
-    View* par = (View*) this->parentWidget();
+    Client* par = (Client*) this->parentWidget();
     par->setCurrentPage("login");
 }
 
@@ -31,7 +31,7 @@ void StudReg::on_regButton_clicked()
     int x = 0;
     // sendReg(bool isTeach, Qstring user, Qstring pass, Qstring class)
     //x = Controller->sendReg(true, ui->userEntry.text(), ui->passEntry.text(), ui->classEntry.text());
-    View* par = (View*) this->parentWidget();
+    Client* par = (Client*) this->parentWidget();
     switch(x){
         case 0: //success
             par->setCurrentPage("login");

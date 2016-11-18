@@ -1,6 +1,6 @@
 #include "teachreg.h"
 #include "ui_teachreg.h"
-#include "view.h"
+#include "client.h"
 
 TeachReg::TeachReg(QWidget *parent) :
     QWidget(parent),
@@ -18,7 +18,7 @@ TeachReg::~TeachReg()
 
 void TeachReg::on_cancelButton_clicked()
 {
-    View* par = (View*) this->parentWidget();
+    Client* par = (Client*) this->parentWidget();
     par->setCurrentPage("login");
 }
 
@@ -28,7 +28,7 @@ void TeachReg::on_regButton_clicked()
     int x = 0;
     //Controller->sendReg(bool isTeach, Qstring user, Qstring Pass, Qstring class)
     //x = Controller->sendReg(true, ui->userEntry.text(), ui->passEntry.text(), ui->classEntry.text());
-    View* par = (View*) this->parentWidget();
+    Client* par = (Client*) this->parentWidget();
     switch(x){
         case 0: //success
             par->setCurrentPage("login");

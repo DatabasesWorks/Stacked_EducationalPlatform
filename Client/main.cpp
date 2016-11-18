@@ -1,4 +1,4 @@
-#include "view.h"
+#include "client.h"
 #include <QApplication>
 #include <qfile.h>
 #include <QTextStream>
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
             }
             f.close();
 
-    View w;
+    Client w;
     w.show();
 
     return a.exec();

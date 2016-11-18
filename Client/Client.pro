@@ -21,19 +21,21 @@ SOURCES += main.cpp\
     studreg.cpp \
 
 
-HEADERS  += view.h \
+HEADERS  += \
     teachwin.h \
     studwin.h \
     loginwin.h \
     teachreg.h \
     studreg.h \
+    client.h
 
-FORMS    += view.ui \
+FORMS    += \
     teachwin.ui \
     studwin.ui \
     loginwin.ui \
     teachreg.ui \
-    studreg.ui
+    studreg.ui \
+    client.ui
 
 RESOURCES += \
     style.qrc

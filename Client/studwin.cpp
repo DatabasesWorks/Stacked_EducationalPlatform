@@ -1,5 +1,6 @@
 #include "studwin.h"
 #include "ui_studwin.h"
+#include "client.h"
 
 StudWin::StudWin(QWidget *parent) :
     QWidget(parent),
@@ -35,6 +36,6 @@ void StudWin::on_pushButton_clicked()
 //Move to controller?
 void StudWin::on_pushButton_2_clicked()
 {
-    View* par = (View*) this->parentWidget();
+    Client* par = (Client*) this->parentWidget();
     par->setCurrentPage("login");
 }
