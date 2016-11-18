@@ -19,6 +19,10 @@ SOURCES += main.cpp\
     teachreg.cpp \
     studreg.cpp \
     client.cpp
+    datastructure.cpp \
+    level.cpp \
+    puzzle.cpp \
+    puzzlecomponent.cpp
 
 
 HEADERS  += \
@@ -28,6 +32,10 @@ HEADERS  += \
     teachreg.h \
     studreg.h \
     client.h
+    datastructure.h \
+    level.h \
+    puzzle.h \
+    puzzlecomponent.h
 
 FORMS    += \
     teachwin.ui \
@@ -39,3 +47,6 @@ FORMS    += \
 
 RESOURCES += \
     style.qrc
+
+DISTFILES += \
+    Stacked.pro.user
