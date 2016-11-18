@@ -13,12 +13,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        view.cpp \
     teachwin.cpp \
     studwin.cpp \
     loginwin.cpp \
     teachreg.cpp \
     studreg.cpp \
+    client.cpp
 
 
 HEADERS  += \
