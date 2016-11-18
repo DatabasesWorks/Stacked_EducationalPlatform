@@ -8,42 +8,40 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Stacked
+TARGET = Client
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
+    client.cpp \
     teachwin.cpp \
     studwin.cpp \
     loginwin.cpp \
     teachreg.cpp \
     studreg.cpp \
-    client.cpp
     datastructure.cpp \
     level.cpp \
     puzzle.cpp \
     puzzlecomponent.cpp
 
 
-HEADERS  += \
+HEADERS  += client.h \
     teachwin.h \
     studwin.h \
     loginwin.h \
     teachreg.h \
     studreg.h \
-    client.h
     datastructure.h \
     level.h \
     puzzle.h \
     puzzlecomponent.h
 
-FORMS    += \
+FORMS    += client.ui \
     teachwin.ui \
     studwin.ui \
     loginwin.ui \
     teachreg.ui \
-    studreg.ui \
-    client.ui
+    studreg.ui
 
 RESOURCES += \
     style.qrc
