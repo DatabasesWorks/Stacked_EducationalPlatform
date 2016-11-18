@@ -15,7 +15,7 @@ class Server
     void decode(QString, sf::IpAddress);
     sf::TcpListener bind;
 public:
-    Server();
+    Server(int portnumber);
     ~Server();
     void listen();
 };
