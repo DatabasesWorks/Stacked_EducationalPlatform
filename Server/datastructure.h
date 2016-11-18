@@ -12,7 +12,7 @@ public:
     bool progress();
     Level getCurrentLevel();
 private:
-    vector<Level> levels;
+    std::vector<Level> levels;
     QImage backgroundTemplate;
     int currentLevel;
 };

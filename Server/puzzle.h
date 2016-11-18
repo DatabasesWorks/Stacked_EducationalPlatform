@@ -15,7 +15,7 @@ public:
     void changeComponentImage(unsigned int, const QImage);
     void resize(QSize);
 private:
-    vector<PuzzleComponent> components;
+    std::vector<PuzzleComponent> components;
     QSize size;
 };
 
