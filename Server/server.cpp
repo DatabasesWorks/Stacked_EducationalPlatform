@@ -2,7 +2,7 @@
 #include <signal.h>
 
 
-Server::Server(int portnumber = 11777)
+Server::Server(int portnumber)
 {
 
     std::cout << "Binding to Port " << portnumber << std::endl;
@@ -57,7 +57,7 @@ void interrupt_handler(int){
 }
 
 int main(int, const char* []){
-   Server * server = new Server; // loop to run server.
+   Server * server = new Server(11777); // loop to run server.
    struct sigaction signal_handler;
    signal_handler.sa_handler = interrupt_handler;//handle interrupts gracefully
    sigemptyset(&signal_handler.sa_mask);

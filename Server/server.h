@@ -4,10 +4,9 @@
 #include <QtSql/QSqlDatabase>
 #include <QTimer>
 #include <QThread>
-
+#include <iostream>
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/TcpSocket.hpp>
-#include <iostream>
 #include <SFML/Network/IpAddress.hpp>
 
 class Server
