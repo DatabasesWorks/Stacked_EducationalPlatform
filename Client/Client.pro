@@ -21,9 +21,11 @@ linux: LIBS += -L"/usr/local/lib"
 linux: INCLUDEPATH += "/usr/local/include"
 linux: DEPENDPATH += "/usr/local/include"
 #windows
-win32: INCLUDEPATH += "C:/SFML/include"
-win32: DEPENDPATH += "C:/SFML/include"
-win32: LIBS += -L"C:/SFML/lib"
+win32: INCLUDEPATH += "C:\\SFML\\include"
+win32: DEPENDPATH += "C:\\SFML\\include"
+win32: LIBS += -L"C:\\SFML\\lib"
+
+LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 
 CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
@@ -39,7 +41,7 @@ SOURCES += main.cpp\
     level.cpp \
     puzzle.cpp \
     puzzlecomponent.cpp \
-    clientsocket.cpp
+    usersocket.cpp
 
 
 HEADERS  += client.h \
@@ -52,7 +54,7 @@ HEADERS  += client.h \
     level.h \
     puzzle.h \
     puzzlecomponent.h \
-    clientsocket.h
+    usersocket.h
 
 FORMS    += client.ui \
     teachwin.ui \

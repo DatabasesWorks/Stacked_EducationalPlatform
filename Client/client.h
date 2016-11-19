@@ -1,6 +1,7 @@
 #ifndef CLIENT_H
 #define CLIENT_H
-#include <SFML/Network/TCPSocket.hpp>
+
+#include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/IpAddress.hpp>
 #include <QMainWindow>

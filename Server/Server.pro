@@ -9,10 +9,12 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += \
-    server.cpp
+    server.cpp \
+    serversocket.cpp
 
 HEADERS += \
-    server.h
+    server.h \
+    serversocket.h
 
 #osx stuff comment out if it causes problems
 macx: LIBS += -L"/usr/local/lib"

@@ -1,5 +1,5 @@
-#ifndef CLIENTSOCKET_H
-#define CLIENTSOCKET_H
+#ifndef USERSOCKET_H
+#define USERSOCKET_H
 #include <QString>
 #include <SFML/Network/IpAddress.hpp>
 #include <SFML/Network/TcpListener.hpp>
@@ -9,12 +9,11 @@
 #include <time.h>
 #include <QWidget>
 
-class ClientSocket : public QObject
+class UserSocket
 {
-    Q_OBJECT
 public:
-    ClientSocket(QString host, int portnumber);
-    ~ClientSocket();
+    UserSocket(QString host, int portnumber);
+    ~UserSocket();
     QString authenticate(QString username, QString payload);
     QString sendPayload(QString payload);
 private:
@@ -22,8 +21,8 @@ private:
     unsigned int portnumber = 0;
     sf::IpAddress host;
     bool authenticated = false;
-    QString waitForResponse();
+    QString waitForResponse(sf::TcpListener&);
 };
 
-#endif // CLIENTSOCKET_H
+#endif // userSOCKET_H
 

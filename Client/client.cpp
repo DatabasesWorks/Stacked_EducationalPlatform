@@ -8,6 +8,8 @@
 #include "QGraphicsView"
 #include "QGridLayout"
 #include "QPushButton"
+#include <usersocket.h>
+#include <iostream>
 
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
@@ -15,6 +17,11 @@ Client::Client(QWidget *parent) :
 {
     ui->setupUi(this);
     setCentralWidget(new LoginWin());
+    UserSocket sock("127.0.0.1", 11777);
+    QString results = sock.authenticate("test","user");
+    std::cout << results.toStdString() << std::endl;
+   // sock.sendPayload("sending test message, payload: "+results);
+
 }
 
 Client::~Client()
@@ -28,6 +35,7 @@ void Client::setCurrentPage(QString s)
 {
     if(s == "login"){
         setCentralWidget(new LoginWin());
+
     }else if(s == "studwin"){
         setCentralWidget(new StudWin());
     }else if(s == "teachwin"){
@@ -42,21 +50,27 @@ void Client::setCurrentPage(QString s)
 //UI debug individual pages
 void Client::on_pushButton_clicked()
 {
+
     setCentralWidget(new LoginWin());
+
+
 }
 
 void Client::on_pushButton_2_clicked()
 {
+
     setCentralWidget(new StudWin());
 }
 
 void Client::on_pushButton_3_clicked()
 {
+
     setCentralWidget(new TeachWin());
 }
 
 void Client::on_pushButton_4_clicked()
 {
+
     setCentralWidget(new StudReg());
 }
 
