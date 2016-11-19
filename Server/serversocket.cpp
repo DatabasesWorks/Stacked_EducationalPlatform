@@ -1,5 +1,6 @@
 #include "serversocket.h"
 #include <SFML/Network/Packet.hpp>
+#include <QPair>
 
 ServerSocket::ServerSocket(sf::IpAddress host, unsigned int portnumber)
 {
@@ -7,9 +8,17 @@ ServerSocket::ServerSocket(sf::IpAddress host, unsigned int portnumber)
     this->portnumber=portnumber;
 }
 
+ServerSocket::ServerSocket(){
+    this->host = sf::IpAddress::LocalHost;
+    this->portnumber = sf::TcpSocket::AnyPort;
+}
+
+void ServerSocket::bind(unsigned int port){
+    listener.listen(port);
+}
+
 ServerSocket::~ServerSocket(){
-
-
+    listener.close();
 }
 
 bool ServerSocket::sendPayload(QString payload){
@@ -30,14 +39,12 @@ bool ServerSocket::sendPayload(QString payload){
     return false;
 }
 
-QString ServerSocket::listen(unsigned int port){
+QPair<sf::Packet, sf::IpAddress> ServerSocket::waitForResponse(){
     sf::TcpSocket sock;
-    sf::TcpListener listen;
-    sf::IpAddress ip = sock.getRemoteAddress();
-    listen.accept(sock);
     sf::Packet pack;
-    sock.receive(pack);
-    pack << ip.toString();
-    // check the variables of the payload
-    return "UNTESTED";
+    listener.accept(sock);
+    sf::IpAddress ip = sock.getRemoteAddress();
+    sock.receive(pack); // need some error handling here?
+    QPair<sf::Packet, sf::IpAddress> results(pack,ip);
+    return results;
 }

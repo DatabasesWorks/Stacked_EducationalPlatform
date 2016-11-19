@@ -6,28 +6,18 @@
 
 Server::Server(int portnumber)
 {
-
-    std::cout << "Binding to Port " << portnumber << std::endl;
-    bind.listen(portnumber);
-
-    // if the database has not been created yet, create it.
-    // else... we can store the connection for later or discard
+    rport=portnumber;
+    std::cout << "bindingport at " << rport <<std::endl;
+    listener.bind(rport);
 }
 
 Server::~Server(){
-    bind.close();
 
 }
 
-
 void Server::listen(){
-
-    sf::TcpSocket sock;
-    bind.accept(sock);
-    sf::IpAddress ip = sock.getRemoteAddress();
-    sf::Packet pack;
-    sock.receive(pack);
-    decode(pack,ip);
+    QPair<sf::Packet, sf::IpAddress> results = listener.waitForResponse();
+    decode(results.first,results.second);
 }
 
 void Server::decode(sf::Packet pack, sf::IpAddress ip){

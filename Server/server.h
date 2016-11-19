@@ -8,14 +8,19 @@
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Network/IpAddress.hpp>
+#include <serversocket.h>
 
 class Server
 {
     QTimer * timer;
     void decode(sf::Packet, sf::IpAddress);
     sf::TcpListener bind;
+    int rport;
+    ServerSocket listener;
+
 public:
     Server(int portnumber);
+
     ~Server();
     void listen();
 };
