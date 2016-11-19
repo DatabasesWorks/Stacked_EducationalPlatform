@@ -10,7 +10,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Client
 TEMPLATE = app
+LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
 
+win32: INCLUDEPATH += C:/SFML/include/
+win32: DEPENDPATH += C:/SFML/include/
+win32: LIBS += -LC:/SFML/lib
+
+CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-main -lsfml-network -lsfml-window -lsfml-system
 
 SOURCES += main.cpp\
     client.cpp \
@@ -22,7 +28,8 @@ SOURCES += main.cpp\
     datastructure.cpp \
     level.cpp \
     puzzle.cpp \
-    puzzlecomponent.cpp
+    puzzlecomponent.cpp \
+    clientsocket.cpp
 
 
 HEADERS  += client.h \
@@ -34,7 +41,8 @@ HEADERS  += client.h \
     datastructure.h \
     level.h \
     puzzle.h \
-    puzzlecomponent.h
+    puzzlecomponent.h \
+    clientsocket.h
 
 FORMS    += client.ui \
     teachwin.ui \
@@ -48,3 +56,5 @@ RESOURCES += \
 
 DISTFILES += \
     Stacked.pro.user
+
+

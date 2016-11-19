@@ -21,8 +21,9 @@ Server::~Server(){
 void Server::listen(){
 
     char buff[2048];
-    sf::TcpSocket sock;
     std::size_t r;
+    sf::TcpSocket sock;
+
     bind.accept(sock);
 
     sf::IpAddress ip = sock.getRemoteAddress();
