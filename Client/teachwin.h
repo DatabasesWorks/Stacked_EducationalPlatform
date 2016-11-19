@@ -18,9 +18,13 @@ public:
 private slots:
     void on_logoutButton_clicked();
 
+    void on_listWidget_itemSelectionChanged();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::TeachWin *ui;
-    void setupStudents();
+    void updateStudents();
 };
 
 #endif // TEACHWIN_H
