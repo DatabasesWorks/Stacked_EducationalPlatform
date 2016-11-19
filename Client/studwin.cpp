@@ -11,6 +11,10 @@ StudWin::StudWin(QWidget *parent) :
     ui->setupUi(this);
     levelshow = true;
 
+    ui->userLabel->setText("Welcome: TestUser");
+
+    setupLevels();
+
 }
 
 StudWin::~StudWin()

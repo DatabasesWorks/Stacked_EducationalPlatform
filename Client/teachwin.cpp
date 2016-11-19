@@ -7,6 +7,10 @@ TeachWin::TeachWin(QWidget *parent) :
     ui(new Ui::TeachWin)
 {
     ui->setupUi(this);
+    //Query DB and get this info
+    ui->classLabel->setText("Class: CS3505");
+    ui->userLabel->setText("Welcome: TestUser");
+
     updateStudents();
 }
 
@@ -22,12 +26,14 @@ void TeachWin::on_logoutButton_clicked()
 }
 void TeachWin::updateStudents()
 {
-    //query database get list of students in class
     ui->listWidget->clear();
+
+    //query database get list of students in class
     for(int i = 1; i<=20; i++)
     {
          ui->listWidget->addItem("StudentName");
     }
+
     ui->listWidget->setCurrentRow(0);
 }
 
