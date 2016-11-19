@@ -4,6 +4,9 @@
 #include <SFML/Network/IpAddress.hpp>
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/TcpSocket.hpp>
+#include <SFML/Network.hpp>
+#include <time.h>
+#include <QWidget>
 
 class ClientSocket : public QObject
 {
@@ -11,14 +14,14 @@ class ClientSocket : public QObject
 public:
     ClientSocket(sf::IpAddress host, int portnumber);
     ~ClientSocket();
-    bool connect(unsigned int port);
-    bool authenticate(QString username, QString payload);
-     void sendPayload(QString payload);
+    QString connect(unsigned int port);
+    QString authenticate(QString username, QString payload);
+    QString sendPayload(QString payload);
 private:
     unsigned int sessionId = 0;
     unsigned int portnumber = 0;
     sf::IpAddress host;
-    boolean authenticated = false;
+    bool authenticated = false;
     QString waitForResponse();
 };
 

@@ -1,18 +1,19 @@
 #include "clientsocket.h"
 
-ClientSocket::ClientSocket(QString hostname, int portnumber)
+ClientSocket::ClientSocket(sf::IpAddress hostname, int portnumber)
 {
     this->host=sf::IpAddress(hostname);
     this->portnumber = portnumber;
 }
 
-QString ClientSocket::authenticate(QString username, QString passwd){
+QString ClientSocket::authenticate(QString username, QString password){
      if(!this->authenticated){
-         sf::Socket::Status = socket->connect(host,portnumber,100);
-         sf::TcpSocket socket;
+         sf::TcpSocket* socket;
+         sf::Socket::Status status = socket->connect(host,portnumber,sf::milliseconds(100));
          if (status != sf::Socket::Done)
          {
-             return false;
+             return NULL;
+             //return false;
              // some error handling here
          }else{
              socket->send("authenticate;"+username+","+password);
@@ -20,23 +21,25 @@ QString ClientSocket::authenticate(QString username, QString passwd){
              //check results here
              //set the session id etc.
              if(results != "FAILURE"){
-                 this->sessionId = QString::number(results);
+                 this->sessionId = results.toInt();
+
                  this->authenticated = true;
              }
-             socket.close();
+//             socket->close();
              return results;
          }
      }
 }
 
-QString ClientSocket::sendPayLoad(QString payload){
+QString ClientSocket::sendPayload(QString payload){
 
     if(!this->authenticated){
-        sf::TcpSocket socket;
-        sf::Socket::Status = socket->connect(host,portnumber,100);
+        sf::TcpSocket* socket;
+        sf::Socket::Status status = socket->connect(host,portnumber,sf::milliseconds(100));
         if (status != sf::Socket::Done)
         {
-            return false;
+            return NULL;
+//            return false;
             // some error handling here
         }else{
             socket->send("payload;"+payload);
@@ -49,7 +52,7 @@ QString ClientSocket::sendPayLoad(QString payload){
 QString ClientSocket::waitForResponse(){
    char buff[2048];
    std::size_t r;
-   sf::TcpListener listen;
+   sf::TcpListener listener;
    sf::TcpSocket sock;
    listener.listen(11777);
    listener.accept(sock);
