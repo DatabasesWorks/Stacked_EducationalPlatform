@@ -39,7 +39,7 @@ QString ClientSocket::sendPayLoad(QString payload){
             return false;
             // some error handling here
         }else{
-            socket->send("payload;"+username+","+password);
+            socket->send("payload;"+payload);
             QString results = waitForResponse();
             return results;
         }
