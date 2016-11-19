@@ -8,6 +8,7 @@ TeachWin::TeachWin(QWidget *parent) :
 {
     ui->setupUi(this);
     setupStudents();
+    ui->listWidget->setCurrentRow(0);
 }
 
 TeachWin::~TeachWin()
