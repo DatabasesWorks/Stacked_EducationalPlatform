@@ -38,11 +38,23 @@ void Server::decode(sf::Packet pack, sf::IpAddress ip){
     std::string payload;
     if(pack >> command >> payload >> returnport){
         if(command == "authenticate"){
-            ServerSocket sock(ip,returnport);
-            sock.sendPayload("199");
+            QVector<QString> split = QString::fromStdString(payload).split(",").toVector();
+            if(split.size()==2)
+            {
+                QString username(split.front());
+                QString password(split.back());
+                if(username == "test" && password == "user"){
+                    ServerSocket sock(ip,returnport);
+                    sock.sendPayload("199");
+                    return;
+                }
+            }
         }
 
     }
+    ServerSocket sock(ip,returnport);
+    sock.sendPayload("0");
+
 }
 
 void interrupt_handler(int){
@@ -50,7 +62,7 @@ void interrupt_handler(int){
     exit(1);
 }
 
-int main(int argc, const char* []){
+int main(int, const char* []){
    // I need to look at the interrupt code a bit more
    Server * server = new Server(11777); // loop to run server.
    //  struct sigaction signal_handler;

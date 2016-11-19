@@ -21,7 +21,7 @@ bool ServerSocket::sendPayload(QString payload){
             // some error handling here
         }else{
             sf::Packet pack;
-            pack << "payload;";
+            pack << "payload";
             pack << payload.toStdString();
             socket.send(pack);
             return true;
@@ -31,8 +31,6 @@ bool ServerSocket::sendPayload(QString payload){
 }
 
 QString ServerSocket::listen(unsigned int port){
-    char buff[2048];
-    std::size_t r;
     sf::TcpSocket sock;
     sf::TcpListener listen;
     sf::IpAddress ip = sock.getRemoteAddress();
@@ -41,5 +39,5 @@ QString ServerSocket::listen(unsigned int port){
     sock.receive(pack);
     pack << ip.toString();
     // check the variables of the payload
-
+    return "UNTESTED";
 }
