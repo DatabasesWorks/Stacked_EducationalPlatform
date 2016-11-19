@@ -17,9 +17,9 @@ public:
     ~StudWin();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_hideButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_logoutButton_clicked();
 
 private:
     Ui::StudWin *ui;

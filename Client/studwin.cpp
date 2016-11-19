@@ -16,25 +16,25 @@ StudWin::~StudWin()
     delete ui;
 }
 
-void StudWin::on_pushButton_clicked()
+void StudWin::on_hideButton_clicked()
 {
     if(levelshow)
     {
         ui->levelFrame->hide();
         levelshow = false;
-        ui->pushButton->setText(QString("Show Levels"));
+        ui->hideButton->setText(QString("Show Levels"));
     }
     else
     {
         ui->levelFrame->showNormal();
-        ui->pushButton->setText(QString("Hide Levels"));
+        ui->hideButton->setText(QString("Hide Levels"));
         levelshow = true;
     }
 
 }
 
 //Move to controller?
-void StudWin::on_pushButton_2_clicked()
+void StudWin::on_logoutButton_clicked()
 {
     Client* par = (Client*) this->parentWidget();
     par->setCurrentPage("login");

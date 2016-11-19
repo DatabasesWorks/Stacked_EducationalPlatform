@@ -15,6 +15,9 @@ public:
     explicit TeachWin(QWidget *parent = 0);
     ~TeachWin();
 
+private slots:
+    void on_logoutButton_clicked();
+
 private:
     Ui::TeachWin *ui;
 };
