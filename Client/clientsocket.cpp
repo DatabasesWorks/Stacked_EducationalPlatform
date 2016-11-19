@@ -35,6 +35,7 @@ QString ClientSocket::authenticate(QString username, QString passwd){
          }
      }
      return "FAILED";
+
 }
 
 QString ClientSocket::sendPayload(QString payload){
