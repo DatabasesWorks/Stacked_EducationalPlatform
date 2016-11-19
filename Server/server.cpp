@@ -22,37 +22,27 @@ Server::~Server(){
 
 void Server::listen(){
 
-    char buff[2048];
-    std::size_t r;
     sf::TcpSocket sock;
-
     bind.accept(sock);
-
     sf::IpAddress ip = sock.getRemoteAddress();
-    if(!(sock.receive(buff,2048,r)==sf::TcpSocket::Status::Error)){
-        QString str(buff);
-        decode(str, ip);
-
-    }else{
-        // networking error
-    }
-
-
+    sf::Packet pack;
+    sock.receive(pack);
+    decode(pack,ip);
 }
 
-void Server::decode(QString str, sf::IpAddress ip){
+void Server::decode(sf::Packet pack, sf::IpAddress ip){
     // do something with the client message
-    std::cout << ": " << str.toStdString() << "  from: " << ip.toString() << std::endl;
-    // use a class to decode messages from the client
-
-    QVector<QString> split = str.split(";").toVector();
-        bool ok;
-        int returnp = QString(split.back()).toInt(&ok);
-        if(ok){
-            //use this last port number to determine wher
-            ServerSocket sock(ip,returnp);
-            sock.sendPayload("hello there");
+    std::cout << ": " << pack.getData() << "  from: " << ip.toString() << std::endl;
+    unsigned short returnport;
+    std::string command;
+    std::string payload;
+    if(pack >> command >> payload >> returnport){
+        if(command == "authenticate"){
+            ServerSocket sock(ip,returnport);
+            sock.sendPayload("199");
         }
+
+    }
 }
 
 void interrupt_handler(int){

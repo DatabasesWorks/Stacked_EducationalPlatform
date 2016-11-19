@@ -14,76 +14,79 @@ UserSocket::~UserSocket(){
 
 }
 
-QString UserSocket::authenticate(QString username, QString passwd){
+bool UserSocket::authenticate(QString username, QString passwd){
      if(!this->authenticated){
          sf::TcpSocket socket;
          sf::Socket::Status status = socket.connect(host,portnumber);
          if (status == sf::Socket::Status::Error)
          {
-             return "FAILED";
+             return false;
 
              // some error handling here
          }else{
              sf::TcpListener li;
              li.listen(sf::TcpListener::AnyPort);
-             std::stringstream stream;
-
-             stream << "authenticate;";
-             stream << username.toStdString() << "," << passwd.toStdString() << ";";
-             stream << li.getLocalPort();
-
-
-             char buffer[stream.str().length()];
-             std::size_t r;
-             strcpy(buffer,stream.str().c_str());
-             socket.send(buffer, r);
-             QString results = waitForResponse(li);
+             sf::Packet pack;
+             pack << "authenticate";
+             pack << username.toStdString() + "," + passwd.toStdString();
+             pack << li.getLocalPort();
+             socket.send(pack);
+             sf::Packet results = waitForResponse(li);
              //check results here
              //set the session id etc.
+             std::string command;
+             std::string payload;
 
-             if(results != "FAILURE"){
-                 this->sessionId = results.toInt();
+             if(results >> command >> payload){
+                 if(payload!="0"){
+                      QString t = QString::fromStdString(payload);
+                      bool ok;
+                      int sid = t.toInt(&ok);
+                      if(ok){
+                          sessionId=sid;
+                          return true;
+                      }
+                 }
                  this->authenticated = true;
              }
-             return results;
+
+
          }
      }
-     return "FAILED";
+     return false;
 
 }
 
-QString UserSocket::sendPayload(QString payload){
+sf::Packet UserSocket::sendPayload(QString payload){
+    sf::Packet empty;
     if(this->authenticated){
         sf::TcpSocket socket;
         sf::Socket::Status status = socket.connect(host,portnumber);
         if (status == sf::Socket::Status::Error)
         {
-            return "FAILED";
+            return empty;
             // some error handling here
         }else{
             sf::TcpListener li;
             li.listen(sf::TcpListener::AnyPort);
-            std::string pl = ("payload;"+payload+";"+li.getLocalPort()).toStdString();
-            char buffer[2048];
-            std::size_t r;
-            strcpy(buffer, pl.c_str());
-            socket.send(buffer, r);
-            QString results = waitForResponse(li);
+            sf::Packet pack;
+            pack << "payload";
+            pack << payload.toStdString();
+            pack << li.getLocalPort();
+            socket.send(pack);
+            sf::Packet results = waitForResponse(li);
             return results;
         }
     }
-    return "FAILED";
+    return empty;
 }
 
-QString UserSocket::waitForResponse(sf::TcpListener &listener){
-   char buff[512];
-   std::size_t r;
+sf::Packet UserSocket::waitForResponse(sf::TcpListener &listener){
+   sf::Packet pack;
    sf::TcpSocket sock;
    listener.accept(sock);
-   //sf::IpAddress ip = sock.getRemoteAddress();
-   sock.receive(buff,512,r);
-   QString str(buff);
-   return str;
+   sock.receive(pack);
+   return pack;
 }
 
 

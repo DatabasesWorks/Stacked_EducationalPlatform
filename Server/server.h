@@ -12,7 +12,7 @@
 class Server
 {
     QTimer * timer;
-    void decode(QString, sf::IpAddress);
+    void decode(sf::Packet, sf::IpAddress);
     sf::TcpListener bind;
 public:
     Server(int portnumber);

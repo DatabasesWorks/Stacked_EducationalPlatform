@@ -18,8 +18,8 @@ Client::Client(QWidget *parent) :
     ui->setupUi(this);
     setCentralWidget(new LoginWin());
     UserSocket sock("127.0.0.1", 11777);
-    QString results = sock.authenticate("test","user");
-    std::cout << results.toStdString() << std::endl;
+    bool results = sock.authenticate("test","user");
+    std::cout << results << std::endl;
    // sock.sendPayload("sending test message, payload: "+results);
 
 }
