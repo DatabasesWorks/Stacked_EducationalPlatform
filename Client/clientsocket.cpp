@@ -1,12 +1,13 @@
 #include "clientsocket.h"
 
-ClientSocket::ClientSocket(QString hostname)
+ClientSocket::ClientSocket(QString hostname, int portnumber)
 {
     this->host=sf::IpAddress(hostname);
+    this->portnumber = portnumber;
 }
 
-bool ClientSocket::authenticate(QString username, QString passwd){
-     if(!this->isConnected){
+QString ClientSocket::authenticate(QString username, QString passwd){
+     if(!this->authenticated){
          sf::Socket::Status = socket->connect(host,portnumber,100);
          sf::TcpSocket socket;
          if (status != sf::Socket::Done)
@@ -20,7 +21,7 @@ bool ClientSocket::authenticate(QString username, QString passwd){
              //set the session id etc.
              if(results != "FAILURE"){
                  this->sessionId = QString::number(results);
-                 this->isConnected;
+                 this->authenticated = true;
              }
              socket.close();
              return results;
@@ -28,9 +29,9 @@ bool ClientSocket::authenticate(QString username, QString passwd){
      }
 }
 
-QString ClientSocket::sendPayLoad(unsigned int port, QString payload){
+QString ClientSocket::sendPayLoad(QString payload){
 
-    if(!this->isConnected){
+    if(!this->authenticated){
         sf::TcpSocket socket;
         sf::Socket::Status = socket->connect(host,portnumber,100);
         if (status != sf::Socket::Done)
@@ -38,7 +39,7 @@ QString ClientSocket::sendPayLoad(unsigned int port, QString payload){
             return false;
             // some error handling here
         }else{
-            socket->send("authenticate;"+username+","+password);
+            socket->send("payload;"+username+","+password);
             QString results = waitForResponse();
             return results;
         }
