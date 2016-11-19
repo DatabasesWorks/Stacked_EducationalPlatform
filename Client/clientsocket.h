@@ -13,15 +13,13 @@ public:
     ~ClientSocket();
     bool connect(unsigned int port);
     bool authenticate(QString username, QString payload);
-    QString waitForResponse();
-    void sendPayload(QString payload);
+     void sendPayload(QString payload);
 private:
     unsigned int sessionId = 0;
     unsigned int portnumber = 0;
     sf::IpAddress host;
-    sf::TcpListener listener;
-    sf::TcpSocket *socket;//so the socket can be disposable
     boolean authenticated = false;
+    QString waitForResponse();
 };
 
 #endif // CLIENTSOCKET_H
