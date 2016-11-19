@@ -10,13 +10,22 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Client
 TEMPLATE = app
-LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network
 
-win32: INCLUDEPATH += C:/SFML/include/
-win32: DEPENDPATH += C:/SFML/include/
-win32: LIBS += -LC:/SFML/lib
+#osx stuff comment out if it causes problems
+macx: LIBS += -L"/usr/local/lib"
+macx: INCLUDEPATH += "/usr/local/include"
+macx: DEPENDPATH += "/usr/local/include"
+#this should work for a shared library on unix as well.
+linux: LIBS += -L"/usr/local/lib"
+linux: INCLUDEPATH += "/usr/local/include"
+linux: DEPENDPATH += "/usr/local/include"
+#windows
+win32: INCLUDEPATH += "C:/SFML/include"
+win32: DEPENDPATH += "C:/SFML/include"
+win32: LIBS += -L"C:/SFML/lib"
 
-CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-main -lsfml-network -lsfml-window -lsfml-system
+CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
+CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 
 SOURCES += main.cpp\
     client.cpp \

@@ -1,7 +1,6 @@
 #include "server.h"
 #include <signal.h>
 
-
 Server::Server(int portnumber)
 {
 
@@ -56,14 +55,17 @@ void interrupt_handler(int){
     exit(1);
 }
 
-int main(int, const char* []){
+int main(int argc, const char* []){
+   // I need to look at the interrupt code a bit more
+   std::cout <<"rint" << std::endl;
    Server * server = new Server(11777); // loop to run server.
-   struct sigaction signal_handler;
-   signal_handler.sa_handler = interrupt_handler;//handle interrupts gracefully
-   sigemptyset(&signal_handler.sa_mask);
-   signal_handler.sa_flags = 0;
-   sigaction(SIGINT, &signal_handler, NULL);
+   //  struct sigaction signal_handler;
+   // signal_handler.sa_handler = interrupt_handler;//handle interrupts gracefully
+   //   sigemptyset(&signal_handler.sa_mask);
+   //  signal_handler.sa_flags = 0;
+   //  sigaction(SIGINT, &signal_handler, NULL);
    while(true){
+
        server->listen();
        QThread::sleep(1);
    }

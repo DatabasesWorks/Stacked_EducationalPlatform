@@ -18,6 +18,14 @@ HEADERS += \
 macx: LIBS += -L"/usr/local/lib"
 macx: INCLUDEPATH += "/usr/local/include"
 macx: DEPENDPATH += "/usr/local/include"
+#this should work for a shared library on unix as well.
+linux: LIBS += -L"/usr/local/lib"
+linux: INCLUDEPATH += "/usr/local/include"
+linux: DEPENDPATH += "/usr/local/include"
+#windows
+win32: INCLUDEPATH += "C:\\SFML\\include"
+win32: DEPENDPATH += "C:\\SFML\\include"
+win32: LIBS += -L"C:\\SFML\\lib"
 
 #internet says this makes libs add more stable?
 CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
