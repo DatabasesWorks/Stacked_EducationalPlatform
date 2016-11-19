@@ -9,11 +9,11 @@ UserSocket::UserSocket(QString hostname, int portnumber)
     this->portnumber = portnumber;
 }
 
-
 UserSocket::~UserSocket(){
 
 }
 
+//sends an authentication packet to the sever. if this returns true, then we will have a valid session id
 bool UserSocket::authenticate(QString username, QString passwd){
      if(!this->authenticated){
          sf::TcpSocket socket;
@@ -57,6 +57,8 @@ bool UserSocket::authenticate(QString username, QString passwd){
 
 }
 
+//payloads to the server will require a session id, I will integrate that when I get a chance.
+//the packets from the server will follow this format: command; payload
 sf::Packet UserSocket::sendPayload(QString payload){
     sf::Packet empty;
     if(this->authenticated){
@@ -81,6 +83,8 @@ sf::Packet UserSocket::sendPayload(QString payload){
     return empty;
 }
 
+
+//responses from the server will come in the form: command; payload.
 sf::Packet UserSocket::waitForResponse(sf::TcpListener &listener){
    sf::Packet pack;
    sf::TcpSocket sock;

@@ -2,21 +2,26 @@
 #include <SFML/Network/Packet.hpp>
 #include <QPair>
 
+//use this constructor for sending data
 ServerSocket::ServerSocket(sf::IpAddress host, unsigned int portnumber)
 {
     this->host=host;
     this->portnumber=portnumber;
 }
 
+//if you use this constructor, don't try to send a payload.
+//it will send a packet to a random port on your machine.
 ServerSocket::ServerSocket(){
     this->host = sf::IpAddress::LocalHost;
     this->portnumber = sf::TcpSocket::AnyPort;
 }
 
+//You can only bind once. Then call wait for response to capture input on the port
 void ServerSocket::bind(unsigned int port){
     listener.listen(port);
 }
 
+//clean up if the socket was used for listening on a port
 ServerSocket::~ServerSocket(){
     listener.close();
 }
@@ -38,7 +43,8 @@ bool ServerSocket::sendPayload(QString payload){
 
     return false;
 }
-
+//The basic structure for our packets is : command; payload; returnport;
+//The ip address in the qpair is from the requesting client
 QPair<sf::Packet, sf::IpAddress> ServerSocket::waitForResponse(){
     sf::TcpSocket sock;
     sf::Packet pack;
