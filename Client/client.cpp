@@ -16,7 +16,7 @@ Client::Client(QWidget *parent) :
     ui(new Ui::Client)
 {
     ui->setupUi(this);
-    setCentralWidget(new LoginWin());
+//    setCentralWidget(new LoginWin());
     UserSocket sock("127.0.0.1", 11700);
     bool results = sock.authenticate("test","user");
     std::cout << results << std::endl;

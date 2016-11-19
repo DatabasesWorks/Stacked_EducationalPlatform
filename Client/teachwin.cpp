@@ -7,6 +7,7 @@ TeachWin::TeachWin(QWidget *parent) :
     ui(new Ui::TeachWin)
 {
     ui->setupUi(this);
+    setupStudents();
 }
 
 TeachWin::~TeachWin()
@@ -18,4 +19,11 @@ void TeachWin::on_logoutButton_clicked()
 {
     Client* par = (Client*) this->parentWidget();
     par->setCurrentPage("login");
+}
+void TeachWin::setupStudents()
+{
+    for(int i = 1; i<=20; i++)
+    {
+         ui->listWidget->addItem("StudentName");
+    }
 }

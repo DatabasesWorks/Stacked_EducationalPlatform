@@ -1,6 +1,8 @@
 #include "studwin.h"
 #include "ui_studwin.h"
 #include "client.h"
+#include <vector>
+#include "qstandarditemmodel.h"
 
 StudWin::StudWin(QWidget *parent) :
     QWidget(parent),
@@ -14,6 +16,19 @@ StudWin::StudWin(QWidget *parent) :
 StudWin::~StudWin()
 {
     delete ui;
+}
+
+void StudWin::setupLevels()
+{
+    std::vector<QString> dataList;
+    std::vector<QString> levelList;
+    QStandardItemModel model;
+
+    for(int i = 0; i<5; i++)
+    {
+         dataList.push_back("DataStructure "+i);
+         levelList.push_back("Level "+i);
+    }
 }
 
 void StudWin::on_hideButton_clicked()

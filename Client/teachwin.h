@@ -20,6 +20,7 @@ private slots:
 
 private:
     Ui::TeachWin *ui;
+    void setupStudents();
 };
 
 #endif // TEACHWIN_H

@@ -18,12 +18,13 @@ public:
 
 private slots:
     void on_hideButton_clicked();
-
     void on_logoutButton_clicked();
 
 private:
     Ui::StudWin *ui;
     bool levelshow;
+
+    void setupLevels();
 };
 
 #endif // STUDWIN_H
