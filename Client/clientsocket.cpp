@@ -6,6 +6,7 @@ ClientSocket::ClientSocket(QString hostname, int portnumber)
     this->portnumber = portnumber;
 }
 
+
 ClientSocket::~ClientSocket(){
 
 }
@@ -17,6 +18,7 @@ QString ClientSocket::authenticate(QString username, QString passwd){
          if (status != sf::Socket::Done)
          {
              return "FAILED";
+
              // some error handling here
          }else{
              std::string pl = ("authenticate;"+username+","+passwd).toStdString();
@@ -27,7 +29,8 @@ QString ClientSocket::authenticate(QString username, QString passwd){
              QString results = waitForResponse();
              //check results here
              //set the session id etc.
-             if(results != QString("FAILURE")){
+
+             if(results != "FAILURE"){
                  this->sessionId = results.toInt();
                  this->authenticated = true;
              }
@@ -39,7 +42,6 @@ QString ClientSocket::authenticate(QString username, QString passwd){
 }
 
 QString ClientSocket::sendPayload(QString payload){
-
     if(!this->authenticated){
         sf::TcpSocket socket;
         sf::Socket::Status status = socket.connect(host,portnumber);
@@ -63,10 +65,10 @@ QString ClientSocket::sendPayload(QString payload){
 QString ClientSocket::waitForResponse(){
    char buff[2048];
    std::size_t r;
-   sf::TcpListener listen;
+   sf::TcpListener listener;
    sf::TcpSocket sock;
-   listen.listen(11777);
-   listen.accept(sock);
+   listener.listen(11777);
+   listener.accept(sock);
    //sf::IpAddress ip = sock.getRemoteAddress();
    if(!(sock.receive(buff,2048,r)!=sf::Socket::Done)){
        QString str(buff);

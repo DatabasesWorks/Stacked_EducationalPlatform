@@ -5,6 +5,9 @@
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/TcpSocket.hpp>
 #include <QObject>
+#include <SFML/Network.hpp>
+#include <time.h>
+#include <QWidget>
 
 class ClientSocket : public QObject
 {
