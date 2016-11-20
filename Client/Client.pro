@@ -14,6 +14,7 @@ TEMPLATE = app
 
 #osx stuff comment out if it causes problems
 macx: LIBS += -L"/usr/local/lib"
+macx: LIBS += -L"$$PWD"
 macx: INCLUDEPATH += "/usr/local/include"
 macx: DEPENDPATH += "/usr/local/include"
 #this should work for a shared library on unix as well.
@@ -26,7 +27,7 @@ win32: DEPENDPATH += "C:\\SFML\\include"
 win32: LIBS += -L"C:\\SFML\\lib"
 
 LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
-
+LIBS += -lBox2d
 CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 
@@ -57,6 +58,7 @@ HEADERS  += client.h \
     puzzlecomponent.h \
     usersocket.h \
     message.h
+    # Box2D.h
 
 FORMS    += client.ui \
     teachwin.ui \

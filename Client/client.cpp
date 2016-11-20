@@ -35,7 +35,6 @@ void Client::setCurrentPage(QString s)
 {
     if(s == "login"){
         setCentralWidget(new LoginWin());
-
     }else if(s == "studwin"){
         setCentralWidget(new StudWin());
     }else if(s == "teachwin"){
@@ -46,14 +45,17 @@ void Client::setCurrentPage(QString s)
         setCentralWidget(new TeachReg());
     }
 }
+bool Client::sendLogin(QString user, QString pass){
+//    UserSocket sock("127.0.0.1", 11700);
+//    bool results = sock.authenticate(user,pass);
+
+    //send payload and parse payload for usertoken and
+}
 
 //UI debug individual pages
 void Client::on_pushButton_clicked()
 {
-
     setCentralWidget(new LoginWin());
-
-
 }
 
 void Client::on_pushButton_2_clicked()
