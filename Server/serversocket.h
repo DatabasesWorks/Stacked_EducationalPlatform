@@ -1,6 +1,5 @@
 #ifndef SERVERSOCKET_H
 #define SERVERSOCKET_H
-#include <QString>
 #include <QPair>
 #include <SFML/Network/IpAddress.hpp>
 #include <SFML/Network/TcpListener.hpp>
@@ -21,7 +20,7 @@ public:
     ServerSocket();
     ~ServerSocket();
     QPair<Message,sf::IpAddress> waitForResponse();
-    bool sendPayload(QString);
+    bool sendPayload(sf::String);
     void bind(unsigned int);
 private:
     unsigned int portnumber = 0;
