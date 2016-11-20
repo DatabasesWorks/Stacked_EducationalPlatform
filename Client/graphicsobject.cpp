@@ -38,7 +38,7 @@ void GraphicsObject::OnUpdate()
     //nothing
 }
 
-void GraphicsObject::showEvent(QShowEvent* event)
+void GraphicsObject::showEvent(QShowEvent*)
 {
     if (!myInitialized)
     {

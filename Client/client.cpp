@@ -57,6 +57,9 @@ bool Client::sendLogin(QString user, QString pass){
     Message msg2 = sock2.sendPayload("rawpayload","give me something else");
     std::cout << msg2.payload.toAnsiString() << std::endl;
 
+    if(sock2.deauthenticate()){
+        std::cout << "deauthenticated" << std::endl;
+    }
 
     //send payload and parse payload to determine if teach/student
     bool teach = false;

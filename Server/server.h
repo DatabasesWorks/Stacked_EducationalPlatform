@@ -17,9 +17,11 @@ class Server
 {
     ServerSocket listener;
     unsigned int rport;
-    std::vector<QString> sessionids;
+    std::vector<sf::String> sessionids;
     void decode(Message, sf::IpAddress);
     bool verifysid(sf::String);
+    void tryToSend(unsigned int, ServerSocket&, sf::String);
+    void deleteSessionId(sf::String);
 
 public:
     Server(int portnumber);

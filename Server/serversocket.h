@@ -6,6 +6,7 @@
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Network/Packet.hpp>
 #include <SFML/Network/IpAddress.hpp>
+#include <SFML/Network/SocketSelector.hpp>
 #include <SFML/Network.hpp>
 #include <message.h>
 #include <exception>

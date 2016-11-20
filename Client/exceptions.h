@@ -6,6 +6,13 @@
 struct socketexception;
 struct packetexception;
 struct authenticationexception;
+struct timeoutexception;
+
+struct timeoutexception : public std::exception {
+   const char * what() const throw(){
+      return "timeout reached";
+   }
+};
 
 struct authenticationexception : public std::exception {
     const char * what() const throw(){

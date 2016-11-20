@@ -37,8 +37,8 @@ bool UserSocket::authenticate(std::string username, std::string passwd){
          sf::Socket::Status status = socket.connect(host,portnumber);
          if (status == sf::Socket::Status::Error)
          {
-             return false;
-             // some error handling here
+             socketexception ex(host.toString(),portnumber);
+             throw ex;
          }else{
              sf::TcpListener li;
              li.listen(sf::TcpListener::AnyPort);
@@ -54,6 +54,9 @@ bool UserSocket::authenticate(std::string username, std::string passwd){
                 std::cout << sessionId.toAnsiString() << std::endl;
                 this->authenticated = true;
                 return true;
+             }else{
+                 authenticationexception ex;
+                 throw ex;
              }
          }
      }else{
@@ -66,13 +69,13 @@ bool UserSocket::authenticate(std::string username, std::string passwd){
 //payloads to the server will require a session id, I will integrate that when I get a chance.
 //the packets from the server will follow this format: command; payload
 Message UserSocket::sendPayload(std::string command, std::string payload){
-    Message empty;
     if(this->authenticated){
         sf::TcpSocket socket;
         sf::Socket::Status status = socket.connect(host,portnumber);
         if (status == sf::Socket::Status::Error)
         {
-            return empty;
+            socketexception ex(host.toString(),portnumber);
+            throw ex;
             // some error handling here
         }else{
             sf::TcpListener li;
@@ -90,21 +93,57 @@ Message UserSocket::sendPayload(std::string command, std::string payload){
         authenticationexception ex;
         throw ex;
     }
-    return empty;
+}
+
+bool UserSocket::deauthenticate(){
+    if(authenticated){
+
+        sf::TcpListener li;
+        sf::TcpSocket sock;
+        sf::Packet pack;
+        sf::Socket::Status status = sock.connect(host,portnumber);
+        if (status == sf::Socket::Status::Error)
+        {
+            socketexception ex(host.toString(),portnumber);
+            throw ex;
+            // some error handling here
+        }else{
+
+            li.listen(sf::TcpListener::AnyPort);
+            Message msg("deauthenticate","null",li.getLocalPort());
+            msg.addSessionId(sessionId);
+
+            pack << msg;
+            sock.send(pack);
+
+            Message m = waitForResponse(li);
+            if(m.payload=="SUCCESS"){
+                authenticated=false;
+                sessionId = sf::IpAddress::LocalHost.toString();
+                return true;
+            }
+        }
+    }return false;
 }
 
 Message UserSocket::waitForResponse(sf::TcpListener &listener){
    sf::Packet pack;
    sf::TcpSocket sock;
-   listener.accept(sock);
-   sock.receive(pack);
-   Message msg;
-   if(pack >> msg){
-      return msg;
-   }else {
-       packetexception ex;
+   sf::SocketSelector select;
+   select.add(listener);
+   if(select.wait(sf::seconds(10))){
+       listener.accept(sock);
+       sock.receive(pack);
+       Message msg;
+       if(pack >> msg){
+          return msg;
+       }else {
+           packetexception ex;
+           throw ex;
+       }
+   }else{
+       timeoutexception ex;
        throw ex;
    }
+
 }
-
-

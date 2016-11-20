@@ -3,8 +3,14 @@
 Server::Server(int portnumber)
 {
     rport=portnumber;
-    std::cout << "bindingport at " << rport <<std::endl;
-    listener.bind(rport);
+    try{
+        listener.bind(rport);
+        std::cout << "bindingport at " << rport <<std::endl;
+    }catch(socketexception ex){
+        std::cout << "This usually means: " << std::endl;
+                  << "Another process is using port:{ " << rport << " }" << std::endl
+                  << "Please close this process and restart the server" << std::endl;
+    }
 }
 
 Server::~Server(){
@@ -12,38 +18,63 @@ Server::~Server(){
 }
 
 //http://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c#440147
-static std::string RandomString(int len)
+static std::string RandomString(unsigned int len)
 {
    std::srand(time(0));
    std::string str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
    int pos;
    while(str.size() != len) {
-    pos = ((rand() % (str.size() - 1)));
-    str.erase (pos, 1);
+        pos = ((rand() % (str.size() - 1)));
+        str.erase (pos, 1);
    }
    return str;
 }
 
 
 void Server::listen(){
-    QPair<Message, sf::IpAddress> results = listener.waitForResponse();
-    decode(results.first,results.second);
+    try{
+       QPair<Message, sf::IpAddress> results = listener.waitForResponse();
+       decode(results.first,results.second);
+    }catch(timeoutexception){
+       //try, try again.
+    }catch(packetexception){
+       //same here.
+    }
 }
 
 bool Server::verifysid(sf::String sid){
     for(auto it = sessionids.begin(); it < sessionids.end(); it++){
-       if(*it==QString::fromStdString(sid.toAnsiString())){ //check sessionid
+       if(*it==sid){ //check sessionid
             return true;
            // do something with the payload. DB class?
        }
     }return false;
 }
 
+void Server::deleteSessionId(sf::String s){
+    auto it = std::find(sessionids.begin(), sessionids.end(), s);
+    if(it < sessionids.end()){
+        sessionids.erase(it);
+    }
+}
+
+void Server::tryToSend(unsigned int iteration, ServerSocket &sock, sf::String payload){
+   for(unsigned int i = 0; i < iteration; i++){
+       try{
+           sock.sendPayload(payload);
+           break;
+       }catch(socketexception){
+           //if we cant contact the client. Try again.
+           continue;
+       }catch(packetexception){
+           continue;
+       }
+   }
+}
 
 //This is where you will decode packets from clients. ( or pass the input to a DB class )
 void Server::decode(Message msg, sf::IpAddress ip){
     // do something with the client message
-
     if(msg.command=="authenticate"){
        QVector<QString> split = QString::fromStdString(msg.payload).split(",").toVector();
        if(split.size()==2)
@@ -51,20 +82,26 @@ void Server::decode(Message msg, sf::IpAddress ip){
            //check the DB?
            if(split.front() == "test" && split.back() == "user"){
               ServerSocket sock(ip,msg.numerical);
-              QString temp(QString::fromStdString(RandomString(30)));
-              this->sessionids.push_back(temp);
-              sock.sendPayload(temp.toStdString());
+              sf::String temp(RandomString(30));
+              sessionids.push_back(temp);
+              tryToSend(5,sock,temp);
               return;
            }
        }
+    }else if(msg.command=="deauthenticate")
+    {
+        deleteSessionId(msg.sessionid);
+        ServerSocket sock(ip,msg.numerical);
+        tryToSend(5,sock,"SUCCESS");
+        return;
     }else if(msg.command=="rawpayload"){// this is just an example command
         if(verifysid(msg.sessionid)){ //verify session id
             ServerSocket sock(ip,msg.numerical); // send a payload back
-            sock.sendPayload("No Commands Supported Yet");
+            tryToSend(5,sock,"No Commands Supported Yet");
             return;
         }else{
             ServerSocket sock(ip,msg.numerical);
-            sock.sendPayload("Authentication error");
+            tryToSend(5,sock,"Authentication error");
             return;
         }
     }
@@ -85,7 +122,7 @@ int main(int, const char* []){
    //  sigaction(SIGINT, &signal_handler, NULL);
    while(true){
        server->listen();
-       QThread::sleep(1);
+       //QThread::sleep(1);
    }
    delete server;
    return 0;
