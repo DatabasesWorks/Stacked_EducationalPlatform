@@ -18,23 +18,19 @@ class Client : public QMainWindow
 public:
     explicit Client(QWidget *parent = 0);
     void setCurrentPage(QString);
+    bool sendLogin(QString user, QString pass);
     ~Client();
 
 private slots:
     void on_pushButton_clicked();
-
     void on_pushButton_3_clicked();
-
     void on_pushButton_2_clicked();
-
     void on_pushButton_4_clicked();
-
     void on_pushButton_5_clicked();
-
 
 private:
     Ui::Client *ui;
-    bool sendLogin(QString user, QString pass);
+
 };
 
 #endif // CLIENT_H

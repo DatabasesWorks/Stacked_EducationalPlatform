@@ -10,7 +10,7 @@
 #include "QPushButton"
 #include <usersocket.h>
 #include <iostream>
-#include <Box2D.h>
+//#include <Box2D.h>
 
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
@@ -19,9 +19,9 @@ Client::Client(QWidget *parent) :
     ui->setupUi(this);
 //    setCentralWidget(new LoginWin());
 
-    UserSocket sock("127.0.0.1", 11700);
-    bool results = sock.authenticate("test","user");
-    std::cout << results << std::endl;
+//    UserSocket sock("127.0.0.1", 11700);
+//    bool results = sock.authenticate("test","user");
+//    std::cout << results << std::endl;
    //sock.sendPayload("sending test message, payload: "+results);
 
 }
@@ -48,8 +48,8 @@ void Client::setCurrentPage(QString s)
     }
 }
 bool Client::sendLogin(QString user, QString pass){
-//    UserSocket sock("127.0.0.1", 11700);
-//    bool results = sock.authenticate(user,pass);
+    UserSocket sock("127.0.0.1", 11701);
+    bool results = sock.authenticate(user,pass);
 
     //if invalid credentials return false
 
