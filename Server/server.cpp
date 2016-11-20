@@ -35,6 +35,11 @@ void Server::decode(Message msg, sf::IpAddress ip){
            }
        }
     }else if(msg.command=="payload"){
+        //the rest of the server logic will go here.
+        //in methods or encapsuted
+
+
+
 
 
     }
