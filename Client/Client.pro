@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 TARGET = Client
 TEMPLATE = app
-#QT += x11extras
+#linux: QT += x11extras
 
 #osx stuff comment out if it causes problems
 macx: LIBS += -L"/usr/local/lib"
