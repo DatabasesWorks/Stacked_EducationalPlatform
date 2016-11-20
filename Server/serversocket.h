@@ -1,18 +1,22 @@
 #ifndef SERVERSOCKET_H
 #define SERVERSOCKET_H
 #include <QString>
+#include <QPair>
 #include <SFML/Network/IpAddress.hpp>
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Network/Packet.hpp>
 #include <SFML/Network/IpAddress.hpp>
 #include <SFML/Network.hpp>
-#include <QPair>
 #include <message.h>
+#include <exception>
+#include <exceptions.h>
+#include <iostream>
 
 class ServerSocket
 {
 public:
+
     ServerSocket(sf::IpAddress, unsigned int);
     ServerSocket();
     ~ServerSocket();

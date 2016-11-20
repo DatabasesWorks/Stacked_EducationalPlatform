@@ -2,16 +2,19 @@
 #define GRAPHICSOBJECT_H
 
 
+
 #include <SFML/Graphics.hpp>
 #include <QWidget>
 #include <QTimer>
 #include <QPoint>
 #include <QSize>
 
+
 #ifdef Q_WS_X11
     #include <Qt/qx11info_x11.h>
     #include <X11/Xlib.h>
 #endif
+
 
 //Sourced: http://www.sfml-dev.org/tutorials/1.6/graphics-qt.php
 //Also: https://www.youtube.com/watch?v=D9XK1KHI0Xk

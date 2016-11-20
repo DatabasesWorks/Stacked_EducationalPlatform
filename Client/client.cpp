@@ -17,13 +17,6 @@ Client::Client(QWidget *parent) :
     ui(new Ui::Client)
 {
     ui->setupUi(this);
-//    setCentralWidget(new LoginWin());
-
-//    UserSocket sock("127.0.0.1", 11700);
-//    bool results = sock.authenticate("test","user");
-
-   //sock.sendPayload("sending test message, payload: "+results);
-
 }
 
 Client::~Client()
@@ -50,9 +43,10 @@ void Client::setCurrentPage(QString s)
 bool Client::sendLogin(QString user, QString pass){
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
     bool results = sock.authenticate(user,pass);
-    std::cout << results << std::endl;
     //if invalid credentials return false
-
+    if(!results) return results;
+    Message msg = sock.sendPayload("give me something");
+    std::cout << msg.payload.toAnsiString() << std::endl;
 
     //send payload and parse payload to determine if teach/student
     bool teach = false;

@@ -22,7 +22,7 @@ public:
     bool authenticate(QString username, QString payload);
     Message sendPayload(QString payload);
 private:
-    unsigned int sessionId = 0;
+    sf::String sessionId = "";
     unsigned int portnumber = 0;
     sf::IpAddress host;
     bool authenticated = false;
