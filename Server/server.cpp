@@ -30,10 +30,20 @@ void Server::listen(){
     decode(results.first,results.second);
 }
 
+bool Server::verifysid(sf::String sid){
+    for(auto it = sessionids.begin(); it < sessionids.end(); it++){
+       if(*it==QString::fromStdString(sid.toAnsiString())){ //check sessionid
+            return true;
+           // do something with the payload. DB class?
+       }
+    }return false;
+}
+
+
+//This is where you will decode packets from clients. ( or pass the input to a DB class )
 void Server::decode(Message msg, sf::IpAddress ip){
     // do something with the client message
 
-    //std::cout << msg.tostring() << std::endl;
     if(msg.command=="authenticate"){
        QVector<QString> split = QString::fromStdString(msg.payload).split(",").toVector();
        if(split.size()==2)
@@ -43,23 +53,21 @@ void Server::decode(Message msg, sf::IpAddress ip){
               ServerSocket sock(ip,msg.numerical);
               QString temp(QString::fromStdString(RandomString(30)));
               this->sessionids.push_back(temp);
-              sock.sendPayload(temp);
+              sock.sendPayload(temp.toStdString());
               return;
            }
        }
-    }else if(msg.command=="payload"){
-        //the rest of the server logic will go here.
-        //in methods or encapsuted
-        for(auto it = sessionids.begin(); it < sessionids.end(); it++){
-           if(*it==QString::fromStdString(msg.sessionid.toAnsiString())){ //check sessionid
-               // do something with the payload. DB class?
-               ServerSocket sock(ip,msg.numerical);
-               sock.sendPayload("No Commands Supported Yet");
-           }
+    }else if(msg.command=="rawpayload"){// this is just an example command
+        if(verifysid(msg.sessionid)){ //verify session id
+            ServerSocket sock(ip,msg.numerical); // send a payload back
+            sock.sendPayload("No Commands Supported Yet");
+            return;
+        }else{
+            ServerSocket sock(ip,msg.numerical);
+            sock.sendPayload("Authentication error");
+            return;
         }
     }
-    ServerSocket sock(ip,msg.numerical);
-    sock.sendPayload("0");
 }
 
 void interrupt_handler(int){

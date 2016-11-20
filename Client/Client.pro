@@ -63,6 +63,7 @@ HEADERS  += client.h \
     message.h \
     graphicsobject.h \
     graphicsobjecttest.h
+    exceptions.h
     # Box2D.h
 
 FORMS    += client.ui \

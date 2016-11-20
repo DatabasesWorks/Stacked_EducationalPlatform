@@ -42,11 +42,21 @@ void Client::setCurrentPage(QString s)
 }
 bool Client::sendLogin(QString user, QString pass){
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
-    bool results = sock.authenticate(user,pass);
+    bool results = sock.authenticate(user.toStdString(),pass.toStdString());
     //if invalid credentials return false
+
+
+    //Some example code to demonstrate the use of the usersocket class
+
     if(!results) return results;
-    Message msg = sock.sendPayload("give me something");
+    Message msg = sock.sendPayload("rawpayload","give me something");
     std::cout << msg.payload.toAnsiString() << std::endl;
+
+    //create another socket using the same session id
+    UserSocket sock2(sf::IpAddress::LocalHost,11777,sock.sid());
+    Message msg2 = sock2.sendPayload("rawpayload","give me something else");
+    std::cout << msg2.payload.toAnsiString() << std::endl;
+
 
     //send payload and parse payload to determine if teach/student
     bool teach = false;

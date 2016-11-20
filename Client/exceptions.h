@@ -5,6 +5,14 @@
 
 struct socketexception;
 struct packetexception;
+struct authenticationexception;
+
+struct authenticationexception : public std::exception {
+    const char * what() const throw(){
+       return "authentication error";
+    }
+};
+
 
 struct socketexception : public std::exception {
    std::string h;

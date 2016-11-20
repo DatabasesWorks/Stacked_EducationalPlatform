@@ -24,7 +24,7 @@ ServerSocket::~ServerSocket(){
     listener.close();
 }
 
-bool ServerSocket::sendPayload(QString pl){
+bool ServerSocket::sendPayload(sf::String pl){
     sf::TcpSocket socket;
     sf::Socket::Status status = socket.connect(host,portnumber);
     if (status == sf::Socket::Error)
@@ -32,7 +32,7 @@ bool ServerSocket::sendPayload(QString pl){
         socketexception e(host.toString(),portnumber);
         throw e;
     }else{
-        Message msg("payload",pl.toStdString(),0);
+        Message msg("response",pl,0);
         sf::Packet pack;
         pack << msg;
         socket.send(pack);
