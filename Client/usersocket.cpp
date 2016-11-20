@@ -74,7 +74,7 @@ Message UserSocket::sendPayload(QString payload){
 }
 
 
-//responses from the server will come in the form: command; payload.
+//responses from the server will come in the form: command; payload, use a 0 last port
 Message UserSocket::waitForResponse(sf::TcpListener &listener){
    sf::Packet pack;
    sf::TcpSocket sock;
