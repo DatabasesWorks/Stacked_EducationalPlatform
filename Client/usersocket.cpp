@@ -36,16 +36,11 @@ bool UserSocket::authenticate(QString username, QString passwd){
              Message results = waitForResponse(li);
              //check results here
              //set the session id etc.
-             if(results.payload!="0"){
-                QString t = QString::fromStdString(results.payload);
-                bool ok;
-                int sid = t.toInt(&ok);
-                if(ok){
-                   sessionId=sid;
-                   this->authenticated = true;
-                   return true;
-                }
-
+             if(results.payload!=""){
+                sessionId=results.payload;
+                std::cout << sessionId.toAnsiString() << std::endl;
+                this->authenticated = true;
+                return true;
              }
          }
      }
@@ -68,6 +63,7 @@ Message UserSocket::sendPayload(QString payload){
             sf::TcpListener li;
             li.listen(sf::TcpListener::AnyPort);
             Message msg("payload",payload.toStdString(),li.getLocalPort());
+            msg.addSessionId(this->sessionId);
             sf::Packet pack;
             pack << msg;
             socket.send(pack);
