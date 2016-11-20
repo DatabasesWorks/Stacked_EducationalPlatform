@@ -1,8 +1,6 @@
 #ifndef GRAPHICSOBJECT_H
 #define GRAPHICSOBJECT_H
 
-
-
 #include <SFML/Graphics.hpp>
 #include <QWidget>
 #include <QTimer>

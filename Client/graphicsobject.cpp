@@ -49,7 +49,7 @@ void GraphicsObject::showEvent(QShowEvent* event)
         #endif
 
         // Create the SFML window with the widget handle
-//        Create(winId());
+        QWidget::create(QWidget::effectiveWinId());
 
         // Let the derived class do its specific stuff
         OnInit();
@@ -74,4 +74,5 @@ void GraphicsObject::paintEvent(QPaintEvent* event)
 
     // Display on screen
 //    Display();
+    this->show();
 }
