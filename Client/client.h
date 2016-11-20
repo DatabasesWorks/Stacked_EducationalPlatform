@@ -34,6 +34,7 @@ private slots:
 
 private:
     Ui::Client *ui;
+    bool sendLogin(QString user, QString pass);
 };
 
 #endif // CLIENT_H

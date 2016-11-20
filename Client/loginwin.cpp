@@ -21,18 +21,19 @@ void LoginWin::on_loginButton_clicked()
     int x = 0;
     //x = Controller->sendLogin(ui->userEntry.text(), ui->passEntry.text());
     Client* par = (Client*) this->parentWidget();
-    switch(x){
-        case 0:  //if student
-            par->setCurrentPage("studwin");
 
-            break;
-        case 1: //if teacher
-            par->setCurrentPage("teachwin");
-            break;
-        case 2: //invalid credentials
-            //TODO
-            break;
-    }
+//    switch(x){
+//        case 0:  //if student
+//            par->setCurrentPage("studwin");
+
+//            break;
+//        case 1: //if teacher
+//            par->setCurrentPage("teachwin");
+//            break;
+//        case 2: //invalid credentials
+//            //TODO
+//            break;
+//    }
 }
 
 void LoginWin::on_regStud_clicked()
