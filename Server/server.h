@@ -22,6 +22,7 @@ class Server
     bool verifysid(sf::String);
     void tryToSend(unsigned int, ServerSocket&, sf::String);
     void deleteSessionId(sf::String);
+    std::string RandomString(unsigned int);
 
 public:
     Server(int portnumber);

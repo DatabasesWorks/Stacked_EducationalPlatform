@@ -9,7 +9,7 @@ class Message{
 public:
     sf::String command;
     sf::String payload;
-    sf::Uint16 numerical;
+    sf::Uint16 port;
     sf::String sessionid;
     Message(std::string cmd, std::string pl, unsigned short);
     Message();

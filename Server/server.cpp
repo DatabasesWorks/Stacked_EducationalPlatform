@@ -84,19 +84,6 @@ void Server::decode(Message msg, sf::IpAddress ip){
     }
 }
 
-//http://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c#440147
-static std::string RandomString(unsigned int len)
-{
-   std::srand(time(0));
-   std::string str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-   int pos;
-   while(str.size() != len) {
-        pos = ((rand() % (str.size() - 1)));
-        str.erase (pos, 1);
-   }
-   return str;
-}
-
 bool Server::verifysid(sf::String sid){
     for(auto it = sessionids.begin(); it < sessionids.end(); it++){
        if(*it==sid){ //check sessionid
@@ -113,11 +100,24 @@ void Server::deleteSessionId(sf::String s){
     }
 }
 
+//http://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c#440147
+std::string Server::RandomString(unsigned int len)
+{
+   std::srand(time(0));
+   std::string str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+   int pos;
+   while(str.size() != len) {
+        pos = ((rand() % (str.size() - 1)));
+        str.erase (pos, 1);
+   }
+   return str;
+}
+
 int main(int, const char* []){
    Server server(11777);
 
    while(true){//we could make this multithread later on if it becomes an issue.
-       server->listen();
+       server.listen();
    }
 
    return 0;
