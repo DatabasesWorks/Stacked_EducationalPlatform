@@ -1,79 +1,62 @@
-//#include "graphicsobject.h"
+#include "graphicsobject.h"
 
+GraphicsObject::GraphicsObject(QWidget* Parent) :
+QWidget(Parent)
 
-//GraphicsObject::GraphicsObject(QWidget* Parent, const QPoint& Position, const QSize& Size, unsigned int FrameTime) :
-//    QWidget (Parent),
-//    myInitialized (false)
-//{
-////    FrameTime = 0;
-//    // Setup some states to allow direct rendering into the widget
-//    setAttribute(Qt::WA_PaintOnScreen);
-//    setAttribute(Qt::WA_OpaquePaintEvent);
-//    setAttribute(Qt::WA_NoSystemBackground);
+    {
 
-//    // Set strong focus to enable keyboard events to be received
-//    setFocusPolicy(Qt::StrongFocus);
+//        myInitialized=false;
+        // Setup some states to allow direct rendering into the widget
+//        setAttribute(Qt::WA_PaintOnScreen);
+//        setAttribute(Qt::WA_OpaquePaintEvent);
+//        setAttribute(Qt::WA_NoSystemBackground);
 
-//    // Setup the widget geometry
-//    move(Position);
-//    resize(Size);
+        // Set strong focus to enable keyboard events to be received
+//        setFocusPolicy(Qt::StrongFocus);
 
-//    // Setup the timer
-//    myTimer.setInterval(FrameTime);
-//}
-//void GraphicsObject::showEvent(QShowEvent*)
-//{
-//    if (!myInitialized)
-//        {
-////            // Under X11, we need to flush the commands sent to the server to ensure that
-////            // SFML will get an updated view of the windows
-////            #ifdef Q_WS_X11
-////                XFlush(QX11Info::display());
-////            #endif
+        // Setup the widget geometry
+//        move(Position);
+//        resize(Size);
 
-//            // Create the SFML window with the widget handle
-////            Create(winId());
+        // Setup the timer
+//        myTimer.setInterval(FrameTime);
+//        myTimer.setInterval(0);
+    }
 
-//            // Let the derived class do its specific stuff
-//            OnInit();
+void GraphicsObject::showEvent(QShowEvent*)
+{
+    if (!myInitialized)
+    {
+        // Under X11, we need to flush the commands sent to the server to ensure that
+        // SFML will get an updated view of the windows
+//        #ifdef Q_WS_X11
+//            XFlush(QX11Info::display());
+//        #endif
 
-//            // Setup the timer to trigger a refresh at specified framerate
-////            connect(&myTimer, SIGNAL(timeout()), this, SLOT(repaint()));
-//            myTimer.start();
+        // Create the SFML window with the widget handle
+//        Create(winId());
 
-//            myInitialized = true;
-//        }
-//}
+        // Let the derived class do its specific stuff
+//        OnInit();
 
+        // Setup the timer to trigger a refresh at specified framerate
+//        connect(&myTimer, SIGNAL(timeout()), this, SLOT(repaint()));
+//        myTimer.start();
 
+//        myInitialized = true;
+    }
+}
 
-//QPaintEngine* GraphicsObject::paintEngine() const
-//{
-//    return NULL;
-//}
+QPaintEngine* GraphicsObject::paintEngine() const
+{
+    return 0;
+}
 
-//void GraphicsObject::paintEvent(QPaintEvent*)
-//{
-//    RenderWindow::clear();
-//    // Let the derived class do its specific stuff
+void GraphicsObject::paintEvent(QPaintEvent*)
+{
+    // Let the derived class do its specific stuff
 //    OnUpdate();
 
-//    // Display on screen
-//    RenderWindow::display();
-//}
-
-//void GraphicsObject::OnInit()
-//{
-//    //to be overridden
-//}
-//void GraphicsObject::OnUpdate()
-//{
-//    //to be overridden
-//}
-
-
-
-
-
-
-
+    // Display on screen
+//    Display();
+}
