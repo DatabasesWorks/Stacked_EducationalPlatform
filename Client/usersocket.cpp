@@ -4,7 +4,6 @@ UserSocket::UserSocket(std::string hostname, unsigned int portnumber)
 {
     this->host=sf::IpAddress(hostname);
     this->portnumber = portnumber;
-
 }
 
 UserSocket::UserSocket(sf::IpAddress hostname, unsigned int portnumber)
@@ -30,8 +29,9 @@ sf::String UserSocket::sid(){
     return sessionId;
 }
 
-//sends an authentication packet to the sever. if this returns true, then we will have a valid session id
-bool UserSocket::authenticate(std::string username, std::string passwd){
+//sends an authentication packet to the sever.
+//if no exceptions are thrown, we are authenticated
+void UserSocket::authenticate(std::string username, std::string passwd){
      if(!this->authenticated){
          sf::TcpSocket socket;
          sf::Socket::Status status = socket.connect(host,portnumber);
@@ -47,22 +47,16 @@ bool UserSocket::authenticate(std::string username, std::string passwd){
              pack << msg;
              socket.send(pack);
              Message results = waitForResponse(li);
-             //check results here
-             //set the session id etc.
-             if(results.payload!=""){
+             if(results.payload!="FAILED"){
                 sessionId=results.payload;
                 std::cout << sessionId.toAnsiString() << std::endl;
                 this->authenticated = true;
-                return true;
              }else{
-                 authenticationexception ex;
-                 throw ex;
+                authenticationexception ex;
+                throw ex;
              }
          }
-     }else{
-         // we are already authenticated.
      }
-     return false;
 
 }
 
@@ -95,9 +89,9 @@ Message UserSocket::sendPayload(std::string command, std::string payload){
     }
 }
 
-bool UserSocket::deauthenticate(){
+//if no exceptions occur then the deauth worked
+void UserSocket::deauthenticate(){
     if(authenticated){
-
         sf::TcpListener li;
         sf::TcpSocket sock;
         sf::Packet pack;
@@ -120,10 +114,12 @@ bool UserSocket::deauthenticate(){
             if(m.payload=="SUCCESS"){
                 authenticated=false;
                 sessionId = sf::IpAddress::LocalHost.toString();
-                return true;
+            }else{
+                authenticationexception ex;
+                throw ex;
             }
         }
-    }return false;
+    }
 }
 
 Message UserSocket::waitForResponse(sf::TcpListener &listener){

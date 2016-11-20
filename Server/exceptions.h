@@ -29,7 +29,6 @@ struct socketexception : public std::exception {
       p=port;
    }
    const char * what () const throw () {
-
       const char * what = ("Exception on connection: Host{"+h+"} Port{"+(""+p)+"}").c_str();
       return what;
    }

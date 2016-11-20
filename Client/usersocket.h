@@ -27,8 +27,8 @@ public:
     UserSocket(sf::IpAddress host, unsigned int portnumber);
     UserSocket(sf::IpAddress host, unsigned int portnumber, sf::String sessionId);
     ~UserSocket();
-    bool authenticate(std::string username, std::string payload);
-    bool deauthenticate();
+    void authenticate(std::string username, std::string payload);
+    void deauthenticate();
     Message sendPayload(std::string command, std::string payload);
     sf::String sid();
 };

@@ -68,3 +68,14 @@ QPair<Message, sf::IpAddress> ServerSocket::waitForResponse(){
        }
     }
 }
+
+unsigned int ServerSocket::getPortnumber(){
+   return portnumber;
+}
+
+sf::String ServerSocket::getHostname(){
+   return host.toString();
+}
+
+
+

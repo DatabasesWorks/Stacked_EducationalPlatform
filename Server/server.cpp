@@ -5,11 +5,10 @@ Server::Server(int portnumber)
     rport=portnumber;
     try{
         listener.bind(rport);
-        std::cout << "bindingport at " << rport <<std::endl;
-    }catch(socketexception ex){
-        std::cout << "This usually means: " << std::endl;
-                  << "Another process is using port:{ " << rport << " }" << std::endl
-                  << "Please close this process and restart the server" << std::endl;
+        std::cout << "Binding port number: { " << rport << " }" << std::endl;
+    }catch(socketexception){
+        std::cout << "Another process is using port: { " << rport << " }" << std::endl
+                  << "Please close that process and restart the server" << std::endl;
     }
 }
 
@@ -17,52 +16,11 @@ Server::~Server(){
 
 }
 
-//http://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c#440147
-static std::string RandomString(unsigned int len)
-{
-   std::srand(time(0));
-   std::string str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-   int pos;
-   while(str.size() != len) {
-        pos = ((rand() % (str.size() - 1)));
-        str.erase (pos, 1);
-   }
-   return str;
-}
-
-
-void Server::listen(){
-    try{
-       QPair<Message, sf::IpAddress> results = listener.waitForResponse();
-       decode(results.first,results.second);
-    }catch(timeoutexception){
-       //try, try again.
-    }catch(packetexception){
-       //same here.
-    }
-}
-
-bool Server::verifysid(sf::String sid){
-    for(auto it = sessionids.begin(); it < sessionids.end(); it++){
-       if(*it==sid){ //check sessionid
-            return true;
-           // do something with the payload. DB class?
-       }
-    }return false;
-}
-
-void Server::deleteSessionId(sf::String s){
-    auto it = std::find(sessionids.begin(), sessionids.end(), s);
-    if(it < sessionids.end()){
-        sessionids.erase(it);
-    }
-}
-
 void Server::tryToSend(unsigned int iteration, ServerSocket &sock, sf::String payload){
-   for(unsigned int i = 0; i < iteration; i++){
+    for(unsigned int i = 0; i < iteration; i++){
        try{
            sock.sendPayload(payload);
-           break;
+           return;
        }catch(socketexception){
            //if we cant contact the client. Try again.
            continue;
@@ -70,9 +28,23 @@ void Server::tryToSend(unsigned int iteration, ServerSocket &sock, sf::String pa
            continue;
        }
    }
+   std::cout << "Failed to send pl: " << payload.toAnsiString() << std::endl
+             << "To machine: " << sock.getHostname().toAnsiString() <<":"<<sock.getPortnumber()<<std::endl;
 }
 
-//This is where you will decode packets from clients. ( or pass the input to a DB class )
+void Server::listen(){
+    try{
+       QPair<Message, sf::IpAddress> results = listener.waitForResponse();
+       decode(results.first,results.second);
+    }catch(timeoutexception){
+       //let's use update stuff in the server instead of listening all the time.
+    }catch(packetexception){
+       //try to salvage packet? or send request to resend?
+    }
+}
+
+//We shoud make migitate most of the logic in this method
+//to a separate class so this one doesn't grow too large
 void Server::decode(Message msg, sf::IpAddress ip){
     // do something with the client message
     if(msg.command=="authenticate"){
@@ -86,6 +58,9 @@ void Server::decode(Message msg, sf::IpAddress ip){
               sessionids.push_back(temp);
               tryToSend(5,sock,temp);
               return;
+           }else{
+              ServerSocket sock(ip,msg.numerical);
+              tryToSend(2,sock,"FAILED");
            }
        }
     }else if(msg.command=="deauthenticate")
@@ -104,26 +79,46 @@ void Server::decode(Message msg, sf::IpAddress ip){
             tryToSend(5,sock,"Authentication error");
             return;
         }
+    }else{
+        std::cout << "Command: " << msg.command.toAnsiString() << " Not Recognized" << std::endl;
     }
 }
 
-void interrupt_handler(int){
-    std::cout << "You have terminated the Server" << std::endl;
-    exit(1);
+//http://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c#440147
+static std::string RandomString(unsigned int len)
+{
+   std::srand(time(0));
+   std::string str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+   int pos;
+   while(str.size() != len) {
+        pos = ((rand() % (str.size() - 1)));
+        str.erase (pos, 1);
+   }
+   return str;
+}
+
+bool Server::verifysid(sf::String sid){
+    for(auto it = sessionids.begin(); it < sessionids.end(); it++){
+       if(*it==sid){ //check sessionid
+            return true;
+           // do something with the payload. DB class?
+       }
+    }return false;
+}
+
+void Server::deleteSessionId(sf::String s){
+    auto it = std::find(sessionids.begin(), sessionids.end(), s);
+    if(it < sessionids.end()){
+        sessionids.erase(it);
+    }
 }
 
 int main(int, const char* []){
-   // I need to look at the interrupt code a bit more
-   Server * server = new Server(11777); // loop to run server.
-   //  struct sigaction signal_handler;
-   // signal_handler.sa_handler = interrupt_handler;//handle interrupts gracefully
-   //   sigemptyset(&signal_handler.sa_mask);
-   //  signal_handler.sa_flags = 0;
-   //  sigaction(SIGINT, &signal_handler, NULL);
-   while(true){
+   Server server(11777);
+
+   while(true){//we could make this multithread later on if it becomes an issue.
        server->listen();
-       //QThread::sleep(1);
    }
-   delete server;
+
    return 0;
 }

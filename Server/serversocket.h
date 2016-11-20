@@ -21,6 +21,8 @@ public:
     ServerSocket();
     ~ServerSocket();
     QPair<Message,sf::IpAddress> waitForResponse();
+    sf::String getHostname();
+    unsigned int getPortnumber();
     bool sendPayload(sf::String);
     void bind(unsigned int);
 private:
