@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     puzzlecomponent.cpp \
     usersocket.cpp \
     message.cpp \
-    graphicsobject.cpp
+    graphicsobject.cpp \
+    graphicsobjecttest.cpp
 
 
 HEADERS  += client.h \
@@ -61,6 +62,7 @@ HEADERS  += client.h \
     usersocket.h \
     message.h \
     graphicsobject.h \
+    graphicsobjecttest.h
     exceptions.h
     # Box2D.h
 

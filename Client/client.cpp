@@ -11,6 +11,7 @@
 #include <usersocket.h>
 #include <iostream>
 //#include <Box2D.h>
+#include <graphicsobjecttest.h>
 
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
@@ -98,7 +99,7 @@ void Client::on_pushButton_2_clicked()
 
 void Client::on_pushButton_3_clicked()
 {
-    setCentralWidget(new TeachWin());
+    setCentralWidget(new GraphicsObjectTest(this, QPoint(20, 20), QSize(360, 360), 0));
 }
 
 void Client::on_pushButton_4_clicked()
