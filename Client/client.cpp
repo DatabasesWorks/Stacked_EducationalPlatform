@@ -21,7 +21,7 @@ Client::Client(QWidget *parent) :
 
 //    UserSocket sock("127.0.0.1", 11700);
 //    bool results = sock.authenticate("test","user");
-//    std::cout << results << std::endl;
+
    //sock.sendPayload("sending test message, payload: "+results);
 
 }
@@ -50,7 +50,7 @@ void Client::setCurrentPage(QString s)
 bool Client::sendLogin(QString user, QString pass){
     UserSocket sock("127.0.0.1", 11701);
     bool results = sock.authenticate(user,pass);
-
+    std::cout << results << std::endl;
     //if invalid credentials return false
 
 
@@ -65,6 +65,18 @@ bool Client::sendLogin(QString user, QString pass){
     }
     return true;
 }
+int Client::sendReg(bool teach, QString user, QString pass, QString classCode){
+
+    //send payload here
+
+    //return 0 Valid
+    //return 1 user taken
+    //return 2 class taken
+
+    setCentralWidget(new LoginWin());
+    return 0;
+}
+
 
 //UI debug individual pages
 void Client::on_pushButton_clicked()
@@ -74,19 +86,16 @@ void Client::on_pushButton_clicked()
 
 void Client::on_pushButton_2_clicked()
 {
-
     setCentralWidget(new StudWin());
 }
 
 void Client::on_pushButton_3_clicked()
 {
-
     setCentralWidget(new TeachWin());
 }
 
 void Client::on_pushButton_4_clicked()
 {
-
     setCentralWidget(new StudReg());
 }
 

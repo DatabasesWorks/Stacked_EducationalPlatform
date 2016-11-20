@@ -27,18 +27,18 @@ void StudReg::on_cancelButton_clicked()
 
 void StudReg::on_regButton_clicked()
 {
-    //send teacher registration
-    int x = 0;
-    // sendReg(bool isTeach, Qstring user, Qstring pass, Qstring class)
-    //x = Controller->sendReg(true, ui->userEntry.text(), ui->passEntry.text(), ui->classEntry.text());
     Client* par = (Client*) this->parentWidget();
-    switch(x){
+    int x = par->sendReg(false, ui->userEntry->text(), ui->passEntry->text(), ui->classEntry->text());
+
+    switch(x)
+    {
         case 0: //success
-            par->setCurrentPage("login");
-            break;
+            return;
         case 1: //user name taken error
+        //TODO invalid dialog
             break;
         case 2: //class code invalid error
+        //TODO invalid dialog
             break;
     }
 }

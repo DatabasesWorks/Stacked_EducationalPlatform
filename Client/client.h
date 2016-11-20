@@ -19,6 +19,7 @@ public:
     explicit Client(QWidget *parent = 0);
     void setCurrentPage(QString);
     bool sendLogin(QString user, QString pass);
+    int sendReg(bool teach, QString user, QString pass, QString classCode);
     ~Client();
 
 private slots:
