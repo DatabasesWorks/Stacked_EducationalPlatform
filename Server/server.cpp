@@ -1,6 +1,5 @@
 #include "server.h"
 
-
 Server::Server(int portnumber)
 {
     rport=portnumber;
@@ -40,7 +39,7 @@ void Server::listen(){
        // need to make the session ids data structure thread safe.
        //decode(results.first,results.second);
     }catch(timeoutexception){
-       //let's use update stuff in the server instead of listening all the time.
+       //so we aren't listening all the time.
     }catch(packetexception){
        //try to salvage packet? or send request to resend?
     }
@@ -51,48 +50,38 @@ void Server::listen(){
 //Also anything in here needs to be threadsafe for global variables ( the db is threadsafe )
 void Server::decode(Message msg, sf::IpAddress ip){
     // do something with the client message
+    ServerSocket sock(ip,msg.numerical);
+    std::stringstream reply;
     if(msg.command=="authenticate"){
        QVector<QString> split = QString::fromStdString(msg.payload).split(",").toVector();
        if(split.size()==2)
        {
-           //check the DB?
            if(split.front() == "test" && split.back() == "user"){
-              ServerSocket sock(ip,msg.numerical);
               sf::String temp(RandomString(30));
               mute.lock();
               sessionids.push_back(temp);
               mute.unlock();
-              tryToSend(5,sock,temp);
-              return;
+              reply << temp.toAnsiString();
            }else{
-              ServerSocket sock(ip,msg.numerical);
-              tryToSend(2,sock,"FAILED");
+              reply << "FAILED";
            }
        }
     }else if(msg.command=="deauthenticate")
     {
         mute.lock();
-        deleteSessionId(msg.sessionid);
-        mute.unlock();
-        ServerSocket sock(ip,msg.numerical);
-        tryToSend(5,sock,"SUCCESS");
-        return;
-    }
-    // push everything below to another class
-
-    else if(msg.command=="rawpayload"){// this is just an example command
-        if(verifysid(msg.sessionid)){ //verify session id
-            ServerSocket sock(ip,msg.numerical); // send a payload back
-            tryToSend(5,sock,"No Commands Supported Yet");
-            return;
+        if(verifysid(msg.sessionid))
+        {
+            deleteSessionId(msg.sessionid);
+            reply << "SUCCESS";
         }else{
-            ServerSocket sock(ip,msg.numerical);
-            tryToSend(5,sock,"Authentication error");
-            return;
+            reply << "FAILED";
         }
-    }else{
-        std::cout << "Command: " << msg.command.toAnsiString() << " Not Recognized" << std::endl;
+        mute.unlock();
     }
+    else{ // create and check exceptions for the db class
+        reply << database.executeCommand(msg.command,msg.payload);
+    }
+    tryToSend(5,sock,reply.str());
 }
 
 bool Server::verifysid(sf::String sid){
@@ -124,6 +113,7 @@ std::string Server::RandomString(unsigned int len)
    return str;
 }
 
+//entry point for the program
 int main(int, const char* []){
    Server server(11777);
 

@@ -14,11 +14,12 @@
 #include <serversocket.h>
 #include <message.h>
 #include <mutex>
-
+#include <db.h>
 
 class Server
 {
     ServerSocket listener;
+    DB database;
     unsigned int rport;
     std::vector<sf::String> sessionids;
     void decode(Message, sf::IpAddress);
