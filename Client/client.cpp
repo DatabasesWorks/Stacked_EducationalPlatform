@@ -48,7 +48,7 @@ void Client::setCurrentPage(QString s)
     }
 }
 bool Client::sendLogin(QString user, QString pass){
-    UserSocket sock("127.0.0.1", 11701);
+    UserSocket sock(sf::IpAddress::LocalHost, 11777);
     bool results = sock.authenticate(user,pass);
     std::cout << results << std::endl;
     //if invalid credentials return false

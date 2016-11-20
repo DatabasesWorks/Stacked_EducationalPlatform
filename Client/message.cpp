@@ -3,7 +3,7 @@
 Message::Message(std::string cmd, std::string pl, unsigned short port) {
     command=cmd;
     payload=pl;
-    returnport = port;
+    returnport = sf::Int16(port);
 }
 
 Message::Message(){

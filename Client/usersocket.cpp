@@ -4,8 +4,14 @@ UserSocket::UserSocket(QString hostname, int portnumber)
 {
     this->host=sf::IpAddress(hostname.toStdString());
     this->portnumber = portnumber;
+
 }
 
+UserSocket::UserSocket(sf::IpAddress hostname, int portnumber)
+{
+    this->host=hostname;
+    this->portnumber = portnumber;
+}
 UserSocket::~UserSocket(){
 
 }
@@ -30,9 +36,8 @@ bool UserSocket::authenticate(QString username, QString passwd){
              Message results = waitForResponse(li);
              //check results here
              //set the session id etc.
-
-             if(msg.payload!="0"){
-                QString t = QString::fromStdString(msg.payload);
+             if(results.payload!="0"){
+                QString t = QString::fromStdString(results.payload);
                 bool ok;
                 int sid = t.toInt(&ok);
                 if(ok){

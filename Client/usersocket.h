@@ -17,6 +17,7 @@ class UserSocket
 {
 public:
     UserSocket(QString host, int portnumber);
+    UserSocket(sf::IpAddress host, int portnumber);
     ~UserSocket();
     bool authenticate(QString username, QString payload);
     Message sendPayload(QString payload);

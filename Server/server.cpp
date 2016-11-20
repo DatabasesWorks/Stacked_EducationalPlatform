@@ -54,7 +54,7 @@ void interrupt_handler(int){
 
 int main(int, const char* []){
    // I need to look at the interrupt code a bit more
-   Server * server = new Server(11701); // loop to run server.
+   Server * server = new Server(11777); // loop to run server.
    //  struct sigaction signal_handler;
    // signal_handler.sa_handler = interrupt_handler;//handle interrupts gracefully
    //   sigemptyset(&signal_handler.sa_mask);

@@ -9,7 +9,7 @@ class Message{
 public:
     sf::String command;
     sf::String payload;
-    sf::Uint8 returnport;
+    sf::Uint16 returnport;
     Message(std::string cmd, std::string pl, unsigned short);
     Message();
     ~Message();
