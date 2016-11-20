@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <QWidget>
 #include <QTimer>
+#include <QPoint>
+#include <QSize>
 
 #ifdef Q_WS_X11
     #include <Qt/qx11info_x11.h>
@@ -16,12 +18,12 @@
 //Also: http://becomingindiedev.blogspot.com/2013/10/qt-5-and-sfml-20-integration.html
 class GraphicsObject : public QWidget, public sf::RenderWindow
 {
-    Q_OBJECT
+//    Q_OBJECT
 public :
 
-    GraphicsObject(QWidget* Parent, const QPoint& Position, const QSize& Size, unsigned int FrameTime);
+    explicit GraphicsObject(QWidget* Parent, const QPoint& Position, const QSize& Size, unsigned int FrameTime);
 
-    ~GraphicsObject();
+    virtual ~GraphicsObject();
 
 private :
 
