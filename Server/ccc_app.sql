@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2016 at 07:08 AM
+-- Generation Time: Nov 21, 2016 at 12:48 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -50,7 +50,6 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
   `account_permissions` enum('a','b','c') NOT NULL,
   `class_code` int(11) NOT NULL,
   `time` datetime NOT NULL
