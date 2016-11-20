@@ -38,6 +38,7 @@ void Server::decode(Message msg, sf::IpAddress ip){
        QVector<QString> split = QString::fromStdString(msg.payload).split(",").toVector();
        if(split.size()==2)
        {
+           //check the DB?
            if(split.front() == "test" && split.back() == "user"){
               ServerSocket sock(ip,msg.numerical);
               QString temp(QString::fromStdString(RandomString(30)));
@@ -50,9 +51,10 @@ void Server::decode(Message msg, sf::IpAddress ip){
         //the rest of the server logic will go here.
         //in methods or encapsuted
         for(auto it = sessionids.begin(); it < sessionids.end(); it++){
-           if(*it==QString(msg.numerical)){
-
-               break;
+           if(*it==QString::fromStdString(msg.sessionid.toAnsiString())){ //check sessionid
+               // do something with the payload. DB class?
+               ServerSocket sock(ip,msg.numerical);
+               sock.sendPayload("No Commands Supported Yet");
            }
         }
     }

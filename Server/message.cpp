@@ -29,11 +29,9 @@ void Message::addSessionId(sf::String sess){
 //small utility class to clean up code.
 sf::Packet& operator <<(sf::Packet& packet, Message& msg)
 {
-    return packet << msg.command << msg.payload << msg.numerical;
+    return packet << msg.command << msg.payload << msg.numerical << msg.sessionid;
 }
 
 sf::Packet& operator >>(sf::Packet& packet, Message& msg){
-   // return packet >> msg.command >> msg.payload >> msg.returnport;
-    return packet >> msg.command >> msg.payload >> msg.numerical;
-
+    return packet >> msg.command >> msg.payload >> msg.numerical >> msg.sessionid;
 }

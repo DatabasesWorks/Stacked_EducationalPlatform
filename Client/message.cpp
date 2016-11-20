@@ -9,6 +9,9 @@ Message::Message(std::string cmd, std::string pl, unsigned short num) {
 
 Message::Message(){
     sessionid="";
+    numerical=0;
+    payload="";
+    command="";
 }
 
 Message::~Message(){
@@ -26,11 +29,11 @@ std::string Message::tostring(){
 //small utility class to clean up code.
 sf::Packet& operator <<(sf::Packet& packet, Message& msg)
 {
-    return packet << msg.command << msg.payload << msg.numerical;
+    return packet << msg.command << msg.payload << msg.numerical << msg.sessionid;
 }
 
 sf::Packet& operator >>(sf::Packet& packet, Message& msg){
    // return packet >> msg.command >> msg.payload >> msg.returnport;
-    return packet >> msg.command >> msg.payload >> msg.numerical;
+    return packet >> msg.command >> msg.payload >> msg.numerical >> msg.sessionid;
 
 }
