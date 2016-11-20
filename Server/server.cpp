@@ -1,8 +1,4 @@
 #include "server.h"
-#include <signal.h>
-#include <QVector>
-#include <serversocket.h>
-
 
 Server::Server(int portnumber)
 {
@@ -16,35 +12,34 @@ Server::~Server(){
 }
 
 void Server::listen(){
-    QPair<sf::Packet, sf::IpAddress> results = listener.waitForResponse();
+    QPair<Message, sf::IpAddress> results = listener.waitForResponse();
     decode(results.first,results.second);
 }
 
-void Server::decode(sf::Packet pack, sf::IpAddress ip){
+void Server::decode(Message msg, sf::IpAddress ip){
     // do something with the client message
-    std::cout << ": " << pack.getData() << "  from: " << ip.toString() << std::endl;
-    unsigned short returnport;
-    std::string command;
-    std::string payload;
-    if(pack >> command >> payload >> returnport){
-        if(command == "authenticate"){
-            QVector<QString> split = QString::fromStdString(payload).split(",").toVector();
-            if(split.size()==2)
-            {
-                QString username(split.front());
-                QString password(split.back());
-                if(username == "test" && password == "user"){
-                    ServerSocket sock(ip,returnport);
-                    sock.sendPayload("199");
-                    return;
-                }
-            }
-        }
+    std::stringstream ss;
+    ss << ": ";
+    ss << msg.command.toAnsiString();
+    ss << "; " << msg.payload.toAnsiString();
+    ss << "; " << msg.returnport;
+    std::cout << ss.str() << std::endl;
+    if(msg.command=="authenticate"){
+       QVector<QString> split = QString::fromStdString(msg.payload).split(",").toVector();
+       if(split.size()==2)
+       {
+           if(split.front() == "test" && split.back() == "user"){
+              ServerSocket sock(ip,msg.returnport);
+              sock.sendPayload("199");
+              return;
+           }
+       }
+    }else if(msg.command=="payload"){
+
 
     }
-    ServerSocket sock(ip,returnport);
+    ServerSocket sock(ip,msg.returnport);
     sock.sendPayload("0");
-
 }
 
 void interrupt_handler(int){

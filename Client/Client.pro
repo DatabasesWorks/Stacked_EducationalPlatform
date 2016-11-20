@@ -27,7 +27,7 @@ win32: DEPENDPATH += "C:\\SFML\\include"
 win32: LIBS += -L"C:\\SFML\\lib"
 
 LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
-LIBS += -lBox2d
+#LIBS += -lBox2d
 CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 
@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     level.cpp \
     puzzle.cpp \
     puzzlecomponent.cpp \
-    usersocket.cpp
+    usersocket.cpp \
+    message.cpp
 
 
 HEADERS  += client.h \
@@ -56,7 +57,8 @@ HEADERS  += client.h \
     puzzle.h \
     puzzlecomponent.h \
     usersocket.h \
-    Box2D.h
+    message.h
+    # Box2D.h
 
 FORMS    += client.ui \
     teachwin.ui \
