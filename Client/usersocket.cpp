@@ -12,8 +12,23 @@ UserSocket::UserSocket(sf::IpAddress hostname, int portnumber)
     this->host=hostname;
     this->portnumber = portnumber;
 }
+
+//you can use this to reuse a session id
+UserSocket::UserSocket(sf::IpAddress hostname, int portnumber, sf::String sessionId)
+{
+    this->sessionId=sessionId;
+    this->host=hostname;
+    this->portnumber = portnumber;
+    this->authenticated=true;
+}
+
 UserSocket::~UserSocket(){
 
+}
+
+
+sf::String UserSocket::sid(){
+    return sessionId;
 }
 
 //sends an authentication packet to the sever. if this returns true, then we will have a valid session id
@@ -48,6 +63,11 @@ bool UserSocket::authenticate(QString username, QString passwd){
 
 }
 
+
+
+
+
+
 //payloads to the server will require a session id, I will integrate that when I get a chance.
 //the packets from the server will follow this format: command; payload
 Message UserSocket::sendPayload(QString payload){
@@ -70,6 +90,10 @@ Message UserSocket::sendPayload(QString payload){
             Message results = waitForResponse(li);
             return results;
         }
+    }else{
+        // if we are not authenticated anymore then we will need to reauth.
+
+
     }
     return empty;
 }

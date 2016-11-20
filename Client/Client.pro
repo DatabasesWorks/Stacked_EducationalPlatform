@@ -60,7 +60,8 @@ HEADERS  += client.h \
     puzzlecomponent.h \
     usersocket.h \
     message.h \
-    graphicsobject.h
+    graphicsobject.h \
+    exceptions.h
     # Box2D.h
 
 FORMS    += client.ui \

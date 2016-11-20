@@ -18,9 +18,11 @@ class UserSocket
 public:
     UserSocket(QString host, int portnumber);
     UserSocket(sf::IpAddress host, int portnumber);
+    UserSocket(sf::IpAddress host, int portnumber,sf::String sessionId);
     ~UserSocket();
     bool authenticate(QString username, QString payload);
     Message sendPayload(QString payload);
+    sf::String sid();
 private:
     sf::String sessionId = "";
     unsigned int portnumber = 0;

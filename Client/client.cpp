@@ -48,6 +48,17 @@ bool Client::sendLogin(QString user, QString pass){
     Message msg = sock.sendPayload("give me something");
     std::cout << msg.payload.toAnsiString() << std::endl;
 
+
+    //create another socket using the same session id
+    UserSocket sock2(sf::IpAddress::LocalHost,11777,sock.sid());
+    Message msg2 = sock2.sendPayload("give me something else");
+    std::cout << msg2.payload.toAnsiString() << std::endl;
+
+
+
+
+
+
     //send payload and parse payload to determine if teach/student
     bool teach = false;
     if(teach)
