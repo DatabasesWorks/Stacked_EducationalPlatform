@@ -27,7 +27,7 @@ win32: DEPENDPATH += "C:\\SFML\\include"
 win32: LIBS += -L"C:\\SFML\\lib"
 
 LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
-LIBS += -lBox2d
+#LIBS += -lBox2d
 CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 
