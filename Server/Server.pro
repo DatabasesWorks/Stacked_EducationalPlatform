@@ -19,7 +19,7 @@ HEADERS += \
     serversocket.h \
     message.h \
     exceptions.h \
-    db.h
+    db.h \
 
 #osx stuff comment out if it causes problems
 macx: LIBS += -L"/usr/local/lib"
