@@ -1,6 +1,5 @@
 #include "serversocket.h"
-#include <SFML/Network/Packet.hpp>
-#include <QPair>
+
 
 //use this constructor for sending data
 ServerSocket::ServerSocket(sf::IpAddress host, unsigned int portnumber)
@@ -26,7 +25,7 @@ ServerSocket::~ServerSocket(){
     listener.close();
 }
 
-bool ServerSocket::sendPayload(QString payload){
+bool ServerSocket::sendPayload(QString pl){
         sf::TcpSocket socket;
         sf::Socket::Status status = socket.connect(host,portnumber);
         if (status == sf::Socket::Error)
@@ -34,9 +33,9 @@ bool ServerSocket::sendPayload(QString payload){
             return false;
             // some error handling here
         }else{
+            Message msg("payload",pl.toStdString(),0);
             sf::Packet pack;
-            pack << "payload";
-            pack << payload.toStdString();
+            pack << msg;
             socket.send(pack);
             return true;
         }
@@ -45,12 +44,19 @@ bool ServerSocket::sendPayload(QString payload){
 }
 //The basic structure for our packets is : command; payload; returnport;
 //The ip address in the qpair is from the requesting client
-QPair<sf::Packet, sf::IpAddress> ServerSocket::waitForResponse(){
+QPair<Message, sf::IpAddress> ServerSocket::waitForResponse(){
     sf::TcpSocket sock;
     sf::Packet pack;
+    Message msg;
+
     listener.accept(sock);
-    sf::IpAddress ip = sock.getRemoteAddress();
     sock.receive(pack); // need some error handling here?
-    QPair<sf::Packet, sf::IpAddress> results(pack,ip);
-    return results;
+    if(pack >> msg)
+    {
+        sf::IpAddress ip = sock.getRemoteAddress();
+        return QPair<Message, sf::IpAddress>(msg,ip);
+    }else {
+        //packet extraction failed
+        return QPair<Message,sf::IpAddress>(Message("","",0), sf::IpAddress::LocalHost);
+    }
 }

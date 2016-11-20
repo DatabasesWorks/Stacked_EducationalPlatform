@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     level.cpp \
     puzzle.cpp \
     puzzlecomponent.cpp \
-    usersocket.cpp
+    usersocket.cpp \
+    message.cpp
 
 
 HEADERS  += client.h \
@@ -54,7 +55,8 @@ HEADERS  += client.h \
     level.h \
     puzzle.h \
     puzzlecomponent.h \
-    usersocket.h
+    usersocket.h \
+    message.h
 
 FORMS    += client.ui \
     teachwin.ui \

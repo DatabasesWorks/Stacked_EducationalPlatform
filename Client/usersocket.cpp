@@ -1,7 +1,4 @@
 #include "usersocket.h"
-#include <sstream>
-#include <string>
-#include <iostream>
 
 UserSocket::UserSocket(QString hostname, int portnumber)
 {
@@ -27,30 +24,24 @@ bool UserSocket::authenticate(QString username, QString passwd){
              sf::TcpListener li;
              li.listen(sf::TcpListener::AnyPort);
              sf::Packet pack;
-             pack << "authenticate";
-             pack << username.toStdString() + "," + passwd.toStdString();
-             pack << li.getLocalPort();
+             Message msg("authenticate",username.toStdString() + "," + passwd.toStdString(), li.getLocalPort());
+             pack << msg;
              socket.send(pack);
-             sf::Packet results = waitForResponse(li);
+             Message results = waitForResponse(li);
              //check results here
              //set the session id etc.
-             std::string command;
-             std::string payload;
 
-             if(results >> command >> payload){
-                 if(payload!="0"){
-                      QString t = QString::fromStdString(payload);
-                      bool ok;
-                      int sid = t.toInt(&ok);
-                      if(ok){
-                          sessionId=sid;
-                          return true;
-                      }
-                 }
-                 this->authenticated = true;
+             if(msg.payload!="0"){
+                QString t = QString::fromStdString(msg.payload);
+                bool ok;
+                int sid = t.toInt(&ok);
+                if(ok){
+                   sessionId=sid;
+                   this->authenticated = true;
+                   return true;
+                }
+
              }
-
-
          }
      }
      return false;
@@ -59,8 +50,8 @@ bool UserSocket::authenticate(QString username, QString passwd){
 
 //payloads to the server will require a session id, I will integrate that when I get a chance.
 //the packets from the server will follow this format: command; payload
-sf::Packet UserSocket::sendPayload(QString payload){
-    sf::Packet empty;
+Message UserSocket::sendPayload(QString payload){
+    Message empty;
     if(this->authenticated){
         sf::TcpSocket socket;
         sf::Socket::Status status = socket.connect(host,portnumber);
@@ -71,12 +62,11 @@ sf::Packet UserSocket::sendPayload(QString payload){
         }else{
             sf::TcpListener li;
             li.listen(sf::TcpListener::AnyPort);
+            Message msg("payload",payload.toStdString(),li.getLocalPort());
             sf::Packet pack;
-            pack << "payload";
-            pack << payload.toStdString();
-            pack << li.getLocalPort();
+            pack << msg;
             socket.send(pack);
-            sf::Packet results = waitForResponse(li);
+            Message results = waitForResponse(li);
             return results;
         }
     }
@@ -85,12 +75,14 @@ sf::Packet UserSocket::sendPayload(QString payload){
 
 
 //responses from the server will come in the form: command; payload.
-sf::Packet UserSocket::waitForResponse(sf::TcpListener &listener){
+Message UserSocket::waitForResponse(sf::TcpListener &listener){
    sf::Packet pack;
    sf::TcpSocket sock;
    listener.accept(sock);
    sock.receive(pack);
-   return pack;
+   Message msg;
+   pack >> msg;
+   return msg;
 }
 
 
