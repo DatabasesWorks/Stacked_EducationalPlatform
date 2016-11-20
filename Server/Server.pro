@@ -16,7 +16,8 @@ SOURCES += \
 HEADERS += \
     server.h \
     serversocket.h \
-    message.h
+    message.h \
+    exceptions.h
 
 #osx stuff comment out if it causes problems
 macx: LIBS += -L"/usr/local/lib"
