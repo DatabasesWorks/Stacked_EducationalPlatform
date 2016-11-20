@@ -1,5 +1,6 @@
 #include "server.h"
 
+
 Server::Server(int portnumber)
 {
     rport=portnumber;
@@ -35,7 +36,9 @@ void Server::tryToSend(unsigned int iteration, ServerSocket &sock, sf::String pa
 void Server::listen(){
     try{
        QPair<Message, sf::IpAddress> results = listener.waitForResponse();
-       decode(results.first,results.second);
+       QFuture<void> futre = QtConcurrent::run(this,&Server::decode,results.first,results.second);
+       // need to make the session ids data structure thread safe.
+       //decode(results.first,results.second);
     }catch(timeoutexception){
        //let's use update stuff in the server instead of listening all the time.
     }catch(packetexception){
@@ -45,6 +48,7 @@ void Server::listen(){
 
 //We shoud make migitate most of the logic in this method
 //to a separate class so this one doesn't grow too large
+//Also anything in here needs to be threadsafe for global variables ( the db is threadsafe )
 void Server::decode(Message msg, sf::IpAddress ip){
     // do something with the client message
     if(msg.command=="authenticate"){
@@ -55,7 +59,9 @@ void Server::decode(Message msg, sf::IpAddress ip){
            if(split.front() == "test" && split.back() == "user"){
               ServerSocket sock(ip,msg.numerical);
               sf::String temp(RandomString(30));
+              mute.lock();
               sessionids.push_back(temp);
+              mute.unlock();
               tryToSend(5,sock,temp);
               return;
            }else{
@@ -65,11 +71,16 @@ void Server::decode(Message msg, sf::IpAddress ip){
        }
     }else if(msg.command=="deauthenticate")
     {
+        mute.lock();
         deleteSessionId(msg.sessionid);
+        mute.unlock();
         ServerSocket sock(ip,msg.numerical);
         tryToSend(5,sock,"SUCCESS");
         return;
-    }else if(msg.command=="rawpayload"){// this is just an example command
+    }
+    // push everything below to another class
+
+    else if(msg.command=="rawpayload"){// this is just an example command
         if(verifysid(msg.sessionid)){ //verify session id
             ServerSocket sock(ip,msg.numerical); // send a payload back
             tryToSend(5,sock,"No Commands Supported Yet");

@@ -20,7 +20,6 @@ struct authenticationexception : public std::exception {
     }
 };
 
-
 struct socketexception : public std::exception {
    std::string h;
    unsigned int p;

@@ -26,14 +26,10 @@ std::string Message::tostring(){
     return command + payload + (""+port) + sessionid;
 }
 
-//small utility class to clean up code.
-sf::Packet& operator <<(sf::Packet& packet, Message& msg)
-{
+sf::Packet& operator <<(sf::Packet& packet, Message& msg){
     return packet << msg.command << msg.payload << msg.port << msg.sessionid;
 }
 
 sf::Packet& operator >>(sf::Packet& packet, Message& msg){
-   // return packet >> msg.command >> msg.payload >> msg.returnport;
     return packet >> msg.command >> msg.payload >> msg.port >> msg.sessionid;
-
 }

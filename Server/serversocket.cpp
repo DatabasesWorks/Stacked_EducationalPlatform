@@ -18,7 +18,7 @@ ServerSocket::ServerSocket(){
 void ServerSocket::bind(unsigned int port){
     sf::Socket::Status s = listener.listen(port);
     if(s==sf::Socket::Status::Error){
-       socketexception ex(sf::IpAddress::LocalHost.toString(),port);
+       socketexception ex(host.toString(),port);
        throw ex;
     }else{
        this->portnumber=port;
