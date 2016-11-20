@@ -63,7 +63,7 @@ void Server::decode(Message msg, sf::IpAddress ip){
               mute.unlock();
               reply << temp.toAnsiString();
            }else{
-              reply << "FAILED";
+              reply << "AUTHFAILURE";
            }
        }
     }else if(msg.command=="deauthenticate")
@@ -74,12 +74,16 @@ void Server::decode(Message msg, sf::IpAddress ip){
             deleteSessionId(msg.sessionid);
             reply << "SUCCESS";
         }else{
-            reply << "FAILED";
+            reply << "AUTHFAILURE";
         }
         mute.unlock();
     }
     else{ // create and check exceptions for the db class
-        reply << database.executeCommand(msg.command,msg.payload);
+        if(verifysid(msg.sessionid)){
+            reply << database.executeCommand(msg.command,msg.payload);
+        }else{
+            reply << "AUTHFAILURE";
+        }
     }
     tryToSend(5,sock,reply.str());
 }

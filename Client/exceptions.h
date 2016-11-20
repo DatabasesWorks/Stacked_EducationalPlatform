@@ -20,7 +20,6 @@ struct authenticationexception : public std::exception {
     }
 };
 
-
 struct socketexception : public std::exception {
    std::string h;
    unsigned int p;
@@ -29,8 +28,7 @@ struct socketexception : public std::exception {
       p=port;
    }
    const char * what () const throw () {
-      QString p(p);
-      const char * what = ("Exception on connection: Host{"+h+"} Port{"+p.toStdString()+"}").c_str();
+      const char * what = ("Exception on connection: Host{"+h+"} Port{"+(""+p)+"}").c_str();
       return what;
    }
 };

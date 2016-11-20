@@ -47,7 +47,7 @@ void UserSocket::authenticate(std::string username, std::string passwd){
              pack << msg;
              socket.send(pack);
              Message results = waitForResponse(li);
-             if(results.payload!="FAILED"){
+             if(results.payload!="AUTHFAILURE"){
                 sessionId=results.payload;
                 std::cout << sessionId.toAnsiString() << std::endl;
                 this->authenticated = true;
@@ -80,6 +80,10 @@ Message UserSocket::sendPayload(std::string command, std::string payload){
             pack << msg;
             socket.send(pack);
             Message results = waitForResponse(li);
+            if(results.payload=="AUTHFAILURE"){
+                authenticationexception ex;
+                throw ex;
+            }
             return results;
         }
     }else{
@@ -114,7 +118,7 @@ void UserSocket::deauthenticate(){
             if(m.payload=="SUCCESS"){
                 authenticated=false;
                 sessionId = sf::IpAddress::LocalHost.toString();
-            }else{
+            }else if(m.payload=="AUTHFAILURE"){
                 authenticationexception ex;
                 throw ex;
             }
