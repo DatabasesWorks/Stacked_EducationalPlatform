@@ -16,11 +16,12 @@
 //Also: http://becomingindiedev.blogspot.com/2013/10/qt-5-and-sfml-20-integration.html
 class GraphicsObject : public QWidget, public sf::RenderWindow
 {
+    Q_OBJECT
 public :
 
-     GraphicsObject(QWidget* Parent);
+    GraphicsObject(QWidget* Parent, const QPoint& Position, const QSize& Size, unsigned int FrameTime);
 
-    virtual ~GraphicsObject();
+    ~GraphicsObject();
 
 private :
 
