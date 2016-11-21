@@ -84,7 +84,9 @@ bool Client::sendLogin(QString user, QString pass){
 int Client::sendReg(bool teach, QString user, QString pass, QString classCode){
 
     //send payload here
-
+    UserSocket sock(sf::IpAddress::LocalHost, 11777);
+    QString data = user+","+pass+","+classCode+","+QString::number(teach);
+    Message msg = sock.sendPayload("register", data.toStdString());
     //return 0 Valid
     //return 1 user taken
     //return 2 class taken

@@ -47,12 +47,12 @@ CREATE TABLE `questions` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `account_permissions` enum('a','b','c') NOT NULL,
-  `class_code` int(11) NOT NULL,
-  `time` datetime NOT NULL
+  `teacher` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `class_code` varchar(255) NOT NULL,
+  `time` datetime DEFAULT NOW()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
