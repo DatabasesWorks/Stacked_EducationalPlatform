@@ -14,6 +14,7 @@ TEMPLATE = app
 #linux: QT += x11extras
 
 #osx stuff comment out if it causes problems
+macx: QMAKE_CXXFLAGS += -std=c++11
 macx: LIBS += -L"/usr/local/lib"
 macx: LIBS += -L"$$PWD"
 macx: INCLUDEPATH += "/usr/local/include"
@@ -75,7 +76,8 @@ FORMS    += client.ui \
     studreg.ui
 
 RESOURCES += \
-    style.qrc
+    style.qrc \
+    sprites.qrc
 
 DISTFILES += \
     Stacked.pro.user

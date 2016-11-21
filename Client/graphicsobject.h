@@ -1,11 +1,13 @@
 #ifndef GRAPHICSOBJECT_H
 #define GRAPHICSOBJECT_H
 
-#include <SFML/Graphics.hpp>
-#include <QWidget>
+
 #include <QTimer>
+#include <QWidget>
+#include <QObject>
 #include <QPoint>
 #include <QSize>
+#include <SFML/Graphics.hpp>
 
 
 #ifdef Q_WS_X11
@@ -19,27 +21,24 @@
 //Also: http://becomingindiedev.blogspot.com/2013/10/qt-5-and-sfml-20-integration.html
 class GraphicsObject : public QWidget, public sf::RenderWindow
 {
-//    Q_OBJECT
-public :
+    Q_OBJECT
 
-    explicit GraphicsObject(QWidget* Parent, const QPoint& Position, const QSize& Size, unsigned int FrameTime);
+public:
 
-    virtual ~GraphicsObject();
-
-private :
-
-    virtual void OnInit();
-
-    virtual void OnUpdate();
+    explicit GraphicsObject(QWidget* Parent = 0);
 
     virtual QPaintEngine* paintEngine() const;
 
     virtual void showEvent(QShowEvent*);
-
     virtual void paintEvent(QPaintEvent*);
+    virtual void OnInit();
+    virtual void OnUpdate();
 
-    QTimer myTimer;
-    bool   myInitialized;
+
+private:
+
+    QTimer gotimer;
+    bool   goinitialized;
 };
 
 #endif //GRAPHICSOBJECT_H

@@ -84,7 +84,9 @@ bool Client::sendLogin(QString user, QString pass){
 int Client::sendReg(bool teach, QString user, QString pass, QString classCode){
 
     //send payload here
-
+    UserSocket sock(sf::IpAddress::LocalHost, 11777);
+    QString data = user+","+pass+","+classCode+","+QString::number(teach);
+    Message msg = sock.sendPayload("register", data.toStdString());
     //return 0 Valid
     //return 1 user taken
     //return 2 class taken
@@ -107,7 +109,7 @@ void Client::on_pushButton_2_clicked()
 
 void Client::on_pushButton_3_clicked()
 {
-    setCentralWidget(new GraphicsObjectTest(this, QPoint(20, 20), QSize(360, 360), 0));
+    setCentralWidget(new TeachWin());
 }
 
 void Client::on_pushButton_4_clicked()
@@ -118,4 +120,9 @@ void Client::on_pushButton_4_clicked()
 void Client::on_pushButton_5_clicked()
 {
     setCentralWidget(new TeachReg());
+}
+
+void Client::on_pushButton_6_clicked()
+{
+    setCentralWidget(new GraphicsObjectTest());
 }
