@@ -107,7 +107,7 @@ void Client::on_pushButton_2_clicked()
 
 void Client::on_pushButton_3_clicked()
 {
-    setCentralWidget(new GraphicsObjectTest());
+    setCentralWidget(new TeachWin());
 }
 
 void Client::on_pushButton_4_clicked()
@@ -118,4 +118,9 @@ void Client::on_pushButton_4_clicked()
 void Client::on_pushButton_5_clicked()
 {
     setCentralWidget(new TeachReg());
+}
+
+void Client::on_pushButton_6_clicked()
+{
+    setCentralWidget(new GraphicsObjectTest());
 }

@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <iostream>
 
+//This is a demo of an object that inherits from the Graphics Object class to draw a sprite
 class GraphicsObjectTest : public GraphicsObject
 {
 public :
@@ -17,7 +18,7 @@ private:
     sf::Sprite spr;
     void OnInit();
     void OnUpdate();
-    int rot=1;
+    float rot=1;
 
 };
 

@@ -1,5 +1,6 @@
 #include "graphicsobject.h"
 
+//A QWidget for rending SFML sprites in QT
 GraphicsObject::GraphicsObject(QWidget* Parent):
 QWidget(Parent), goinitialized(false)
 
@@ -33,8 +34,8 @@ void GraphicsObject::showEvent(QShowEvent *event)
             goinitialized=true;
         }
 
-//
 
+//***OLD STUFF*** DELETE LATER
 //        // Create the SFML window with the widget handle
 //        //UPDATED
 //        QWidget::create(QWidget::effectiveWinId());
@@ -47,14 +48,16 @@ void GraphicsObject::showEvent(QShowEvent *event)
 //        myTimer.start();
 
 //        myInitialized = true;
-
+//***END DELETE
 }
 
+//Don't know what this does
 QPaintEngine* GraphicsObject::paintEngine() const
 {
     return 0;
 }
 
+//Updates the window or something
 void GraphicsObject::paintEvent(QPaintEvent* event)
 {
     RenderWindow::clear();
@@ -62,11 +65,13 @@ void GraphicsObject::paintEvent(QPaintEvent* event)
     RenderWindow::display();
 }
 
+//Will be written by derived class
 void GraphicsObject::OnInit()
 {
     //to override
 }
 
+//Will be written by derived class
 void GraphicsObject::OnUpdate()
 {
     //to override

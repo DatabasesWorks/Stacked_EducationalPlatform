@@ -76,7 +76,8 @@ FORMS    += client.ui \
     studreg.ui
 
 RESOURCES += \
-    style.qrc
+    style.qrc \
+    sprites.qrc
 
 DISTFILES += \
     Stacked.pro.user
