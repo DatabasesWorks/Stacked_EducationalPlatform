@@ -85,10 +85,8 @@ int Client::sendReg(QString data) {
     try{
         Message msg = sock.sendPayload("register", data.toStdString());
     }catch (reguserexception){
-        std::cout << "user invalid" << std::endl;
         return 1;
     }catch (regclassexception){
-        std::cout << "class invalid" << std::endl;
         return 2;
     }
 
