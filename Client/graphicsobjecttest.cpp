@@ -1,38 +1,35 @@
 #include "graphicsobjecttest.h"
 
-GraphicsObjectTest::GraphicsObjectTest(QWidget* Parent, const QPoint& Position, const QSize& Size, unsigned int FrameTime):
-    GraphicsObject(Parent, Position, Size, 0)
+GraphicsObjectTest::GraphicsObjectTest(QWidget* Parent):
+    GraphicsObject(Parent)
 {
 
-
-}
-
-GraphicsObjectTest::~GraphicsObjectTest()
-{
 
 }
 
 void GraphicsObjectTest::OnInit()
 {
-    // Load the image
-    myImage.loadFromFile("datas/qt/sfml.png");
+    if(!tex.loadFromFile("/Users/tgardner/CS3505/A7/cs3505-a7-sprite-editor-stragglers/spritesheet.png"))
+    {
+        std::cout << "Failed to find texture" << std::endl;
+    }
 
     // Setup the sprite
-    mySprite.setTexture(myImage);
-    mySprite.setOrigin(mySprite.getScale() / 2.f);
+    spr.setTexture(tex);
+    spr.setPosition(sf::Vector2f(300, 200));
 
 }
 
 void GraphicsObjectTest::OnUpdate()
 {
-    // Clear screen
-    clear(sf::Color(0, 128, 0));
 
-    // Rotate the sprite
+    RenderWindow::draw(spr);
 
-    mySprite.rotate(rot++);
+//    // Rotate the sprite
 
-    // Draw it
-    draw(mySprite);
+//    mySprite.rotate(rot++);
+
+//    // Draw it
+//    draw(mySprite);
 
 }
