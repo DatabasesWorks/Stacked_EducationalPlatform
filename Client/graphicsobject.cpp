@@ -27,7 +27,16 @@ void GraphicsObject::showEvent(QShowEvent *event)
             #ifdef Q_WS_X11
                 XFlush(QX11Info::display());
             #endif
-            sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
+            #ifdef __APPLE__
+                sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
+            #elif __linux__
+                sf::RenderWindow::create((sf::WindowHandle) winId());
+            #elif __unix__ // all unices not caught above
+                sf::RenderWindow::create((sf::WindowHandle) winId());
+            #elif _WIN32
+                sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
+            #endif
+
             OnInit();
             connect(&gotimer, SIGNAL(timeout()), this, SLOT(repaint()));
             gotimer.start();

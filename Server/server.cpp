@@ -36,7 +36,6 @@ void Server::listen(){
     try{
        QPair<Message, sf::IpAddress> results = listener.waitForResponse();
        QFuture<void> futre = QtConcurrent::run(this,&Server::decode,results.first,results.second);
-       // need to make the session ids data structure thread safe.
        //decode(results.first,results.second);
     }catch(timeoutexception){
        //so we aren't listening all the time.
@@ -53,20 +52,15 @@ void Server::decode(Message msg, sf::IpAddress ip){
     ServerSocket sock(ip,msg.numerical);
     std::stringstream reply;
     if(msg.command=="authenticate"){
-       QVector<QString> split = QString::fromStdString(msg.payload).split(",").toVector();
-       if(split.size()==2)
-       {
-           //if(split.front() == "test" && split.back() == "user"){
-           if(database.executeCommand(msg.command, msg.payload)=="VALID"){
-              sf::String temp(RandomString(30));
-              mute.lock();
-              sessionids.push_back(temp);
-              mute.unlock();
-              reply << temp.toAnsiString();
-           }else{
-              reply << "AUTHFAILURE";
-           }
-       }
+        if(database.executeCommand(msg.command, msg.payload)=="VALID"){
+            sf::String temp(RandomString(30));
+            mute.lock();
+            sessionids.push_back(temp);
+            mute.unlock();
+            reply << temp.toAnsiString();
+        }else{
+            reply << "AUTHFAILURE";
+        }
     }else if(msg.command=="deauthenticate")
     {
         mute.lock();
@@ -97,7 +91,6 @@ bool Server::verifysid(sf::String sid){
     for(auto it = sessionids.begin(); it < sessionids.end(); it++){
        if(*it==sid){ //check sessionid
             return true;
-           // do something with the payload. DB class?
        }
     }return false;
 }
@@ -126,7 +119,7 @@ std::string Server::RandomString(unsigned int len)
 int main(int, const char* []){
    Server server(11777);
 
-   while(true){//we could make this multithread later on if it becomes an issue.
+   while(true){
        server.listen();
    }
 
