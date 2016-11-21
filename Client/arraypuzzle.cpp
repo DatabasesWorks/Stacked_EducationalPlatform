@@ -1,6 +1,4 @@
 #include "arraypuzzle.h"
 
-ArrayPuzzle::ArrayPuzzle()
-{
-
+ArrayPuzzle::ArrayPuzzle() {
 }

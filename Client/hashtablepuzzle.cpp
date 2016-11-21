@@ -1,6 +1,4 @@
 #include "hashtablepuzzle.h"
 
-HashTablePuzzle::HashTablePuzzle()
-{
-
+HashTablePuzzle::HashTablePuzzle() {
 }

@@ -4,33 +4,31 @@
 
 LoginWin::LoginWin(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::LoginWin)
-{
+    ui(new Ui::LoginWin) {
     ui->setupUi(this);
     ui->passEntry->setEchoMode(QLineEdit::Password);
 }
 
-LoginWin::~LoginWin()
-{
+LoginWin::~LoginWin() {
     delete ui;
 }
 
-void LoginWin::on_loginButton_clicked()
-{
-    Client* par = (Client*) this->parentWidget();
-    if(!par->sendLogin(ui->userEntry->text(), ui->passEntry->text())){
+void LoginWin::on_loginButton_clicked() {
+    Client *par = (Client *)this->parentWidget();
+
+    if (!par->sendLogin(ui->userEntry->text(), ui->passEntry->text())) {
         //TODO invalid credentials dialog
     }
 }
 
-void LoginWin::on_regStud_clicked()
-{
-    Client* par = (Client*) this->parentWidget();
+void LoginWin::on_regStud_clicked() {
+    Client *par = (Client *)this->parentWidget();
+
     par->setCurrentPage("studreg");
 }
 
-void LoginWin::on_regTeach_clicked()
-{
-    Client* par = (Client*) this->parentWidget();
+void LoginWin::on_regTeach_clicked() {
+    Client *par = (Client *)this->parentWidget();
+
     par->setCurrentPage("teachreg");
 }

@@ -1,6 +1,4 @@
 #include "datastructure.h"
 
-DataStructure::DataStructure()
-{
-
+DataStructure::DataStructure() {
 }

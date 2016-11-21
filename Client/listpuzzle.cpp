@@ -1,6 +1,4 @@
 #include "listpuzzle.h"
 
-ListPuzzle::ListPuzzle()
-{
-
+ListPuzzle::ListPuzzle() {
 }

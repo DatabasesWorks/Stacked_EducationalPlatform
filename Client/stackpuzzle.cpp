@@ -1,6 +1,4 @@
 #include "stackpuzzle.h"
 
-StackPuzzle::StackPuzzle()
-{
-
+StackPuzzle::StackPuzzle() {
 }

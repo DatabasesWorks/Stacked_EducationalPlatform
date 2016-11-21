@@ -21,18 +21,19 @@ HEADERS += \
     exceptions.h \
     db.h \
 
-#osx stuff comment out if it causes problems
+#osx
 macx: LIBS += -L"/usr/local/lib"
 macx: LIBS += -L"/usr/local/mysql/lib"
-
 macx: INCLUDEPATH += "/usr/local/include"
 macx: INCLUDEPATH += "/usr/local/mysql/include"
 macx: DEPENDPATH += "/usr/local/include"
 macx: DEPENDPATH += "/usr/local/mysql/include"
+
 #this should work for a shared library on unix as well.
 linux: LIBS += -L"/usr/local/lib"
 linux: INCLUDEPATH += "/usr/local/include"
 linux: DEPENDPATH += "/usr/local/include"
+
 #windows
 win32: INCLUDEPATH += "C:\\SFML\\include"
 win32: DEPENDPATH += "C:\\SFML\\include"

@@ -1,6 +1,4 @@
 #include "puzzlecomponent.h"
 
-PuzzleComponent::PuzzleComponent()
-{
-
+PuzzleComponent::PuzzleComponent() {
 }
