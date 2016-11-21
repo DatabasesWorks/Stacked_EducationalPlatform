@@ -2,19 +2,19 @@
 #define GRAPHICSOBJECTTEST_H
 #include <graphicsobject.h>
 #include <SFML/Graphics/Drawable.hpp>
+#include <iostream>
 
 class GraphicsObjectTest : public GraphicsObject
 {
 public :
 
-    GraphicsObjectTest(QWidget* Parent, const QPoint& Position, const QSize& Size, unsigned int FrameTime);
-
-    ~GraphicsObjectTest();
+    explicit GraphicsObjectTest(QWidget *Parent = 0);
+    void onInit();
+    void onUpdate();
 
 private:
-//    sf::Image  myImage;
-    sf::Texture myImage;
-    sf::Sprite mySprite;
+    sf::Texture tex;
+    sf::Sprite spr;
     void OnInit();
     void OnUpdate();
     int rot=1;
