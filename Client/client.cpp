@@ -60,6 +60,8 @@ bool Client::sendLogin(QString user, QString pass) {
         sock2.deauthenticate(); //when you are done deauthenticate, or save the sid for later
         //(note: the server will be configured to auto check for expired session ids -- probably every like 20 minutes or something )
     } catch (authenticationexception) { // if the client was not authenticated properly, or the session key was invalid
+        //if invalid credentials
+        return false;
     } catch (socketexception) { // if the there was some socket binding error
     } catch (packetexception) { // if a packet was made incorrectly
     } catch (timeoutexception) { // this can happen with a bad connection ( or no response from the server )
@@ -77,15 +79,18 @@ bool Client::sendLogin(QString user, QString pass) {
     return true;
 }
 
-int Client::sendReg(bool teach, QString user, QString pass, QString classCode) {
+int Client::sendReg(QString data) {
     //send payload here
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
-    QString data = user + "," + pass + "," + classCode + "," + QString::number(teach);
-    Message msg = sock.sendPayload("register", data.toStdString());
-
-    //return 0 Valid
-    //return 1 user taken
-    //return 2 class taken
+    try{
+        Message msg = sock.sendPayload("register", data.toStdString());
+    }catch (reguserexception){
+        std::cout << "user invalid" << std::endl;
+        return 1;
+    }catch (regclassexception){
+        std::cout << "class invalid" << std::endl;
+        return 2;
+    }
 
     setCentralWidget(new LoginWin());
     return 0;

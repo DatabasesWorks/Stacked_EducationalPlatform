@@ -25,18 +25,25 @@ void StudReg::on_cancelButton_clicked() {
 
 void StudReg::on_regButton_clicked() {
     Client *par = (Client *)this->parentWidget();
-    int x = par->sendReg(false, ui->userEntry->text(), ui->passEntry->text(), ui->classEntry->text());
+    QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",0" ;
+    int x = par->sendReg(data);
 
     switch (x) {
         case 0: //success
             return;
 
         case 1: //user name taken error
-            //TODO invalid dialog
+            //TODO Make dialog
+            ui->userEntry->setText("USERNAME TAKEN");
+            ui->passEntry->setText("");
+            ui->classEntry->setText("");
             break;
 
         case 2: //class code invalid error
             //TODO invalid dialog
+            ui->classEntry->setText("CLASS DOES NOT EXIST");
+            ui->passEntry->setText("");
+            ui->userEntry->setText("");
             break;
     }
 }

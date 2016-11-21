@@ -22,18 +22,24 @@ void TeachReg::on_cancelButton_clicked() {
 
 void TeachReg::on_regButton_clicked() {
     Client *par = (Client *)this->parentWidget();
-    int x = par->sendReg(true, ui->userEntry->text(), ui->passEntry->text(), ui->classEntry->text());
-
+    QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",1" ;
+    int x = par->sendReg(data);
     switch (x) {
         case 0: //success
             return;
 
         case 1: //user name taken error
-            //TODO invalid dialog
+            //TODO Placeholder add invalid dialog
+            ui->userEntry->setText("USERNAME TAKEN");
+            ui->passEntry->setText("");
+            ui->classEntry->setText("");
             break;
 
         case 2: //class code invalid error
-            //TODO invalid dialog
+            //TODO Placeholder add invalid dialog
+            ui->classEntry->setText("CLASS TAKEN");
+            ui->passEntry->setText("");
+            ui->userEntry->setText("");
             break;
     }
 }

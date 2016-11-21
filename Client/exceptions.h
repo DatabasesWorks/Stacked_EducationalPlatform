@@ -19,6 +19,16 @@ struct authenticationexception : public std::exception {
        return "authentication error";
     }
 };
+struct reguserexception : public std::exception {
+    const char * what() const throw(){
+       return "user invalid error";
+    }
+};
+struct regclassexception : public std::exception {
+    const char * what() const throw(){
+       return "class invalid error";
+    }
+};
 
 struct socketexception : public std::exception {
    std::string h;

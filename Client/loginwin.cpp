@@ -17,7 +17,9 @@ void LoginWin::on_loginButton_clicked() {
     Client *par = (Client *)this->parentWidget();
 
     if (!par->sendLogin(ui->userEntry->text(), ui->passEntry->text())) {
-        //TODO invalid credentials dialog
+        //TODO Make dialog
+        ui->userEntry->setText("INVALID CREDENTIALS");
+        ui->passEntry->setText("");
     }
 }
 
