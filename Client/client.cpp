@@ -42,22 +42,33 @@ void Client::setCurrentPage(QString s)
     }
 }
 bool Client::sendLogin(QString user, QString pass){
-    UserSocket sock(sf::IpAddress::LocalHost, 11777);
-    bool results = sock.authenticate(user.toStdString(),pass.toStdString());
-    //if invalid credentials return false
-
-
     //Some example code to demonstrate the use of the usersocket class
 
-    if(!results) return results;
-    Message msg = sock.sendPayload("rawpayload","give me something");
-    std::cout << msg.payload.toAnsiString() << std::endl;
+    try{
 
-    //create another socket using the same session id
-    UserSocket sock2(sf::IpAddress::LocalHost,11777,sock.sid());
-    Message msg2 = sock2.sendPayload("rawpayload","give me something else");
-    std::cout << msg2.payload.toAnsiString() << std::endl;
+        //you can create your own custom commands to the server in this format:
+        //sock.sendPayload(command, payload);
 
+        UserSocket sock(sf::IpAddress::LocalHost, 11777);
+        sock.authenticate(user.toStdString(),pass.toStdString()); //if no exceptions thrown, then we are authenticated
+
+        Message msg = sock.sendPayload("rawpayload","give me something"); //once authenticated you can send commands and payloads
+        std::cout << msg.payload.toAnsiString() << std::endl;
+
+        //create another socket using the same session id
+        UserSocket sock2(sf::IpAddress::LocalHost,11777,sock.sid());
+        Message msg2 = sock2.sendPayload("rawpayload","give me something else");
+        std::cout << msg2.payload.toAnsiString() << std::endl;
+
+        sock2.deauthenticate(); //when you are done deauthenticate, or save the sid for later
+        //(note: the server will be configured to auto check for expired session ids -- probably every like 20 minutes or something )
+
+    }catch(authenticationexception){ // if the client was not authenticated properly, or the session key was invalid
+    }catch(socketexception){ // if the there was some socket binding error
+    }catch(packetexception){ // if a packet was made incorrectly
+    }catch(timeoutexception){ // this can happen with a bad connection ( or no response from the server )
+
+    }
 
     //send payload and parse payload to determine if teach/student
     bool teach = false;

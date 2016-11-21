@@ -3,90 +3,127 @@
 Server::Server(int portnumber)
 {
     rport=portnumber;
-    std::cout << "bindingport at " << rport <<std::endl;
-    listener.bind(rport);
+    try{
+        listener.bind(rport);
+        std::cout << "Binding port number: { " << rport << " }" << std::endl;
+    }catch(socketexception){
+        std::cout << "Another process is using port: { " << rport << " }" << std::endl
+                  << "Please close that process and restart the server" << std::endl;
+    }
 }
 
 Server::~Server(){
 
 }
 
-//http://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c#440147
-static std::string RandomString(int len)
-{
-   std::srand(time(0));
-   std::string str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-   int pos;
-   while(str.size() != len) {
-    pos = ((rand() % (str.size() - 1)));
-    str.erase (pos, 1);
+void Server::tryToSend(unsigned int iteration, ServerSocket &sock, sf::String payload){
+    for(unsigned int i = 0; i < iteration; i++){
+       try{
+           sock.sendPayload(payload);
+           return;
+       }catch(socketexception){
+           //if we cant contact the client. Try again.
+           continue;
+       }catch(packetexception){
+           continue;
+       }
    }
-   return str;
+   std::cout << "Failed to send pl: " << payload.toAnsiString() << std::endl
+             << "To machine: " << sock.getHostname().toAnsiString() <<":"<<sock.getPortnumber()<<std::endl;
 }
 
-
 void Server::listen(){
-    QPair<Message, sf::IpAddress> results = listener.waitForResponse();
-    decode(results.first,results.second);
+    try{
+       QPair<Message, sf::IpAddress> results = listener.waitForResponse();
+       QFuture<void> futre = QtConcurrent::run(this,&Server::decode,results.first,results.second);
+       // need to make the session ids data structure thread safe.
+       //decode(results.first,results.second);
+    }catch(timeoutexception){
+       //so we aren't listening all the time.
+    }catch(packetexception){
+       //try to salvage packet? or send request to resend?
+    }
+}
+
+//We shoud make migitate most of the logic in this method
+//to a separate class so this one doesn't grow too large
+//Also anything in here needs to be threadsafe for global variables ( the db is threadsafe )
+void Server::decode(Message msg, sf::IpAddress ip){
+    // do something with the client message
+    ServerSocket sock(ip,msg.numerical);
+    std::stringstream reply;
+    if(msg.command=="authenticate"){
+       QVector<QString> split = QString::fromStdString(msg.payload).split(",").toVector();
+       if(split.size()==2)
+       {
+           if(split.front() == "test" && split.back() == "user"){
+              sf::String temp(RandomString(30));
+              mute.lock();
+              sessionids.push_back(temp);
+              mute.unlock();
+              reply << temp.toAnsiString();
+           }else{
+              reply << "AUTHFAILURE";
+           }
+       }
+    }else if(msg.command=="deauthenticate")
+    {
+        mute.lock();
+        if(verifysid(msg.sessionid))
+        {
+            deleteSessionId(msg.sessionid);
+            reply << "SUCCESS";
+        }else{
+            reply << "AUTHFAILURE";
+        }
+        mute.unlock();
+    }
+    else{ // create and check exceptions for the db class
+        if(verifysid(msg.sessionid)){
+            reply << database.executeCommand(msg.command,msg.payload);
+        }else{
+            reply << "AUTHFAILURE";
+        }
+    }
+    tryToSend(5,sock,reply.str());
 }
 
 bool Server::verifysid(sf::String sid){
     for(auto it = sessionids.begin(); it < sessionids.end(); it++){
-       if(*it==QString::fromStdString(sid.toAnsiString())){ //check sessionid
+       if(*it==sid){ //check sessionid
             return true;
            // do something with the payload. DB class?
        }
     }return false;
 }
 
-
-//This is where you will decode packets from clients. ( or pass the input to a DB class )
-void Server::decode(Message msg, sf::IpAddress ip){
-    // do something with the client message
-
-    if(msg.command=="authenticate"){
-       QVector<QString> split = QString::fromStdString(msg.payload).split(",").toVector();
-       if(split.size()==2)
-       {
-           //check the DB?
-           if(split.front() == "test" && split.back() == "user"){
-              ServerSocket sock(ip,msg.numerical);
-              QString temp(QString::fromStdString(RandomString(30)));
-              this->sessionids.push_back(temp);
-              sock.sendPayload(temp.toStdString());
-              return;
-           }
-       }
-    }else if(msg.command=="rawpayload"){// this is just an example command
-        if(verifysid(msg.sessionid)){ //verify session id
-            ServerSocket sock(ip,msg.numerical); // send a payload back
-            sock.sendPayload("No Commands Supported Yet");
-            return;
-        }else{
-            ServerSocket sock(ip,msg.numerical);
-            sock.sendPayload("Authentication error");
-            return;
-        }
+void Server::deleteSessionId(sf::String s){
+    auto it = std::find(sessionids.begin(), sessionids.end(), s);
+    if(it < sessionids.end()){
+        sessionids.erase(it);
     }
 }
 
-void interrupt_handler(int){
-    std::cout << "You have terminated the Server" << std::endl;
-    exit(1);
+//http://stackoverflow.com/questions/440133/how-do-i-create-a-random-alpha-numeric-string-in-c#440147
+std::string Server::RandomString(unsigned int len)
+{
+   std::srand(time(0));
+   std::string str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+   int pos;
+   while(str.size() != len) {
+        pos = ((rand() % (str.size() - 1)));
+        str.erase (pos, 1);
+   }
+   return str;
 }
 
+//entry point for the program
 int main(int, const char* []){
-   // I need to look at the interrupt code a bit more
-   Server * server = new Server(11777); // loop to run server.
-   //  struct sigaction signal_handler;
-   // signal_handler.sa_handler = interrupt_handler;//handle interrupts gracefully
-   //   sigemptyset(&signal_handler.sa_mask);
-   //  signal_handler.sa_flags = 0;
-   //  sigaction(SIGINT, &signal_handler, NULL);
-   while(true){
-       server->listen();
-       QThread::sleep(1);
+   Server server(11777);
+
+   while(true){//we could make this multithread later on if it becomes an issue.
+       server.listen();
    }
-   delete server;
+
    return 0;
 }

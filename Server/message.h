@@ -16,10 +16,8 @@ public:
     ~Message();
     std::string tostring();
     void addSessionId(sf::String);
-    //small utility class to clean up code.
     friend sf::Packet& operator <<(sf::Packet& packet, Message& msg);
     friend sf::Packet& operator >>(sf::Packet& packet, Message& msg);
 };
-
 
 #endif

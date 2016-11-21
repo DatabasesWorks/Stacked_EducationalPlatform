@@ -11,13 +11,15 @@ TEMPLATE = app
 SOURCES += \
     server.cpp \
     serversocket.cpp \
-    message.cpp
+    message.cpp \
+    db.cpp
 
 HEADERS += \
     server.h \
     serversocket.h \
     message.h \
-    exceptions.h
+    exceptions.h \
+    db.h \
 
 #osx stuff comment out if it causes problems
 macx: LIBS += -L"/usr/local/lib"

@@ -1,17 +1,18 @@
 #include <message.h>
+//small data class to clean up code.
 
 Message::Message(std::string cmd, std::string pl, unsigned short num) {
     command=cmd;
-    payload=pl;
     numerical=num;
+    payload=pl;
     sessionid="";
 }
 
 Message::Message(){
-    sessionid="";
-    numerical=0;
-    sessionid="";
     command="";
+    numerical=0;
+    payload="";
+    sessionid="";
 }
 
 Message::~Message(){
@@ -26,7 +27,6 @@ void Message::addSessionId(sf::String sess){
     sessionid=sess;
 }
 
-//small utility class to clean up code.
 sf::Packet& operator <<(sf::Packet& packet, Message& msg)
 {
     return packet << msg.command << msg.payload << msg.numerical << msg.sessionid;

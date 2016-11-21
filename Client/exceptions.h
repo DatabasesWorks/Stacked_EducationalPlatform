@@ -6,13 +6,19 @@
 struct socketexception;
 struct packetexception;
 struct authenticationexception;
+struct timeoutexception;
+
+struct timeoutexception : public std::exception {
+   const char * what() const throw(){
+      return "timeout reached";
+   }
+};
 
 struct authenticationexception : public std::exception {
     const char * what() const throw(){
        return "authentication error";
     }
 };
-
 
 struct socketexception : public std::exception {
    std::string h;
@@ -22,8 +28,7 @@ struct socketexception : public std::exception {
       p=port;
    }
    const char * what () const throw () {
-      QString p(p);
-      const char * what = ("Exception on connection: Host{"+h+"} Port{"+p.toStdString()+"}").c_str();
+      const char * what = ("Exception on connection: Host{"+h+"} Port{"+(""+p)+"}").c_str();
       return what;
    }
 };

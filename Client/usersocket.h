@@ -5,6 +5,8 @@
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Network.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/Network/SocketSelector.hpp>
 #include <sstream>
 #include <string>
 #include <iostream>
@@ -18,13 +20,15 @@ class UserSocket
     sf::IpAddress host;
     bool authenticated = false;
     Message waitForResponse(sf::TcpListener&);
+    sf::Time timeout;
 
 public:
     UserSocket(std::string, unsigned int portnumber);
     UserSocket(sf::IpAddress host, unsigned int portnumber);
     UserSocket(sf::IpAddress host, unsigned int portnumber, sf::String sessionId);
     ~UserSocket();
-    bool authenticate(std::string username, std::string payload);
+    void authenticate(std::string username, std::string payload);
+    void deauthenticate();
     Message sendPayload(std::string command, std::string payload);
     sf::String sid();
 };

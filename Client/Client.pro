@@ -63,7 +63,8 @@ HEADERS  += client.h \
     usersocket.h \
     message.h \
     graphicsobject.h \
-    graphicsobjecttest.h
+    graphicsobjecttest.h \
+    exceptions.h
     exceptions.h
     # Box2D.h
 

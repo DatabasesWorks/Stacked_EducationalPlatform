@@ -16,7 +16,13 @@ ServerSocket::ServerSocket(){
 
 //You can only bind once. Then call wait for response to capture input on the port
 void ServerSocket::bind(unsigned int port){
-    listener.listen(port);
+    sf::Socket::Status s = listener.listen(port);
+    if(s==sf::Socket::Status::Error){
+       socketexception ex(host.toString(),port);
+       throw ex;
+    }else{
+       this->portnumber=port;
+    }
 }
 
 //clean up if the socket was used for listening on a port
@@ -47,16 +53,29 @@ QPair<Message, sf::IpAddress> ServerSocket::waitForResponse(){
     sf::Packet pack;
     Message msg;
     if(listener.accept(sock)==sf::Socket::Error){
-        std::cout << "Client Connection Failed" << std::endl;
-    }
-    sock.receive(pack); // need some error handling here?
-    if(pack >> msg)
-    {
-        sf::IpAddress ip = sock.getRemoteAddress();
-        return QPair<Message, sf::IpAddress>(msg,ip);
-    }else {
-        //packet extraction failed
-        packetexception ex;
-        throw ex;
+       timeoutexception ex;
+       throw ex;
+    }else{
+       sock.receive(pack);
+       if(pack >> msg)
+       {
+           sf::IpAddress ip = sock.getRemoteAddress();
+           return QPair<Message, sf::IpAddress>(msg,ip);
+       }else {
+           //packet extraction failed
+           packetexception ex;
+           throw ex;
+       }
     }
 }
+
+unsigned int ServerSocket::getPortnumber(){
+   return portnumber;
+}
+
+sf::String ServerSocket::getHostname(){
+   return host.toString();
+}
+
+
+
