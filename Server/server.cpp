@@ -56,7 +56,8 @@ void Server::decode(Message msg, sf::IpAddress ip){
        QVector<QString> split = QString::fromStdString(msg.payload).split(",").toVector();
        if(split.size()==2)
        {
-           if(split.front() == "test" && split.back() == "user"){
+           //if(split.front() == "test" && split.back() == "user"){
+           if(database.executeCommand(msg.command, msg.payload)=="VALID"){
               sf::String temp(RandomString(30));
               mute.lock();
               sessionids.push_back(temp);
@@ -77,6 +78,10 @@ void Server::decode(Message msg, sf::IpAddress ip){
             reply << "AUTHFAILURE";
         }
         mute.unlock();
+    }
+    else if(msg.command=="register")
+    {
+        reply << database.executeCommand(msg.command,msg.payload);
     }
     else{ // create and check exceptions for the db class
         if(verifysid(msg.sessionid)){
