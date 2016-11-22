@@ -13,7 +13,8 @@ sprite2dObject::sprite2dObject()
 static sf::Sprite addTexture(std::string filename) {
     sf::Texture texture;
     if (!texture.loadFromFile(filename)) {
-        return EXIT_FAILURE;
+        // failed to load
     }
-    return sprite(texture);
+    sf::Sprite sprite(texture);
+    return sprite;
 }
