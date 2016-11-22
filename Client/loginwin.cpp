@@ -34,3 +34,8 @@ void LoginWin::on_regTeach_clicked() {
 
     par->setCurrentPage("teachreg");
 }
+
+void LoginWin::on_passEntry_returnPressed()
+{
+    on_loginButton_clicked();
+}

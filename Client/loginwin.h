@@ -22,6 +22,8 @@ private slots:
 
     void on_regTeach_clicked();
 
+    void on_passEntry_returnPressed();
+
 private:
     Ui::LoginWin *ui;
 };

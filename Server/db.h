@@ -6,6 +6,7 @@
 class DB
 {
     std::string regUser(MYSQL* connection, std::string payload);
+    std::string getStudents(MYSQL* connection, std::string payload);
     std::string authenticate(MYSQL* connection, std::string payload);
 public:
     DB();

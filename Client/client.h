@@ -5,6 +5,7 @@
 #include <SFML/Network/TcpListener.hpp>
 #include <SFML/Network/IpAddress.hpp>
 #include <QMainWindow>
+#include <usersocket.h>
 
 
 namespace Ui {
@@ -20,6 +21,7 @@ public:
     void setCurrentPage(QString);
     bool sendLogin(QString user, QString pass);
     int sendReg(QString data);
+    QVector<QString> getStudents(QString classcode);
     ~Client();
 
 private slots:
@@ -33,7 +35,7 @@ private slots:
 
 private:
     Ui::Client *ui;
-
+    //UserSocket currsock;
 };
 
 #endif // CLIENT_H

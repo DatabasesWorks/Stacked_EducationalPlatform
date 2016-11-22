@@ -41,7 +41,6 @@ void Client::setCurrentPage(QString s) {
 
 bool Client::sendLogin(QString user, QString pass) {
     //Some example code to demonstrate the use of the usersocket class
-
     try {
         //you can create your own custom commands to the server in this format:
         //sock.sendPayload(command, payload);
@@ -49,8 +48,8 @@ bool Client::sendLogin(QString user, QString pass) {
         UserSocket sock(sf::IpAddress::LocalHost, 11777);
         sock.authenticate(user.toStdString(), pass.toStdString()); //if no exceptions thrown, then we are authenticated
 
-        Message msg = sock.sendPayload("rawpayload", "give me something"); //once authenticated you can send commands and payloads
-        std::cout << msg.payload.toAnsiString() << std::endl;
+        Message msg1 = sock.sendPayload("rawpayload", "give me something"); //once authenticated you can send commands and payloads
+        std::cout << msg1.payload.toAnsiString() << std::endl;
 
         //create another socket using the same session id
         UserSocket sock2(sf::IpAddress::LocalHost, 11777, sock.sid());
@@ -60,7 +59,6 @@ bool Client::sendLogin(QString user, QString pass) {
         sock2.deauthenticate(); //when you are done deauthenticate, or save the sid for later
         //(note: the server will be configured to auto check for expired session ids -- probably every like 20 minutes or something )
     } catch (authenticationexception) { // if the client was not authenticated properly, or the session key was invalid
-        //if invalid credentials
         return false;
     } catch (socketexception) { // if the there was some socket binding error
     } catch (packetexception) { // if a packet was made incorrectly
@@ -92,6 +90,14 @@ int Client::sendReg(QString data) {
 
     setCentralWidget(new LoginWin());
     return 0;
+}
+//hardcoded to class "" for now
+QVector<QString> Client::getStudents(QString classcode){
+    UserSocket sock(sf::IpAddress::LocalHost, 11777);
+    sock.authenticate("", "");
+    Message msg = sock.sendPayload("getstudents", "");//classcode.toStdString());
+    QVector<QString> students = QString::fromStdString(msg.payload).split(",").toVector();
+    return students;
 }
 
 //UI debug individual pages

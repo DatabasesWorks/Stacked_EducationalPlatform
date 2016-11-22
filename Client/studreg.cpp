@@ -47,3 +47,4 @@ void StudReg::on_regButton_clicked() {
             break;
     }
 }
+
