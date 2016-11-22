@@ -1,6 +1,8 @@
 #include "teachwin.h"
 #include "ui_teachwin.h"
 #include "client.h"
+#include <vector>
+#include <iostream>
 
 TeachWin::TeachWin(QWidget *parent) :
     QWidget(parent),
@@ -24,11 +26,14 @@ void TeachWin::on_logoutButton_clicked() {
 }
 
 void TeachWin::updateStudents() {
-    ui->listWidget->clear();
 
-    //query database get list of students in class
-    for (int i = 1; i <= 20; i++) {
-        ui->listWidget->addItem("StudentName");
+
+    ui->listWidget->clear();
+    Client *par = (Client *)this->parentWidget();
+    QVector<QString> students = par->getStudents("class");
+
+    for(int i = 0; i< students.length(); i++){
+        ui->listWidget->addItem(students.at(i));
     }
 
     ui->listWidget->setCurrentRow(0);

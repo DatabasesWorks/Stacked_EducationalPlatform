@@ -33,6 +33,10 @@ std::string DB::executeCommand(std::string command, std::string payload) {
         return authenticate(connection, payload);
     }
 
+    if (command == "getstudents"){
+        return getStudents(connection, payload);
+    }
+
     //idk how necessary these are
     // mysql_free_result(result);
     //mysql_close(connection);
@@ -62,6 +66,30 @@ std::string DB::authenticate(MYSQL *connection, std::string payload) {
     }
 
     return "INVALID";
+}
+
+//Method to register users
+std::string DB::getStudents(MYSQL *connection, std::string payload) {
+    MYSQL_RES *result;
+
+    QString query = "SELECT username FROM users WHERE class_code=\"" + QString::fromStdString(payload) + "\";";
+    int state = mysql_query(connection, query.toLatin1().data());
+
+    if (state != 0) {
+        std::cout << mysql_error(connection) << std::endl;
+        return "SQLERROR";
+    }
+
+    result = mysql_store_result(connection);
+    MYSQL_FIELD *field = mysql_fetch_field(result);
+    MYSQL_ROW row;
+    QString res= "";
+
+    while(row = mysql_fetch_row(result)) {
+        res += QString(row[0]) + ",";
+    }
+    res.chop(1); //remove last comma
+    return res.toStdString();
 }
 
 //Method to register users
