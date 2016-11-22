@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     arraypuzzle.cpp \
     listpuzzle.cpp \
     hashtablepuzzle.cpp \
-    stackpuzzle.cpp
+    stackpuzzle.cpp \
+    sprite2dobject.cpp
 
 
 HEADERS  += client.h \
@@ -72,7 +73,8 @@ HEADERS  += client.h \
     arraypuzzle.h \
     listpuzzle.h \
     hashtablepuzzle.h \
-    stackpuzzle.h
+    stackpuzzle.h \
+    sprite2dobject.h
     exceptions.h
     # Box2D.h
 
