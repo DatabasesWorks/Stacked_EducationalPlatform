@@ -34,7 +34,7 @@ void StudReg::on_regButton_clicked() {
     }
 
     Client *par = (Client *)this->parentWidget();
-    QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",0" ;
+    QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",0,"+ ui->dobEntry->text();
     int x = par->sendReg(data);
 
     switch (x) {
