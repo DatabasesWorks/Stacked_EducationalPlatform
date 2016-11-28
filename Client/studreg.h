@@ -22,6 +22,7 @@ private slots:
 
 private:
     Ui::StudReg *ui;
+    bool Validate(QString s);
 };
 
 #endif // STUDREG_H
