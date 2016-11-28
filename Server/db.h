@@ -1,7 +1,7 @@
 #ifndef DB_H
 #define DB_H
 #include <string>
-#include <mysql.h>
+#include <mysql/mysql.h>
 
 class DB
 {
