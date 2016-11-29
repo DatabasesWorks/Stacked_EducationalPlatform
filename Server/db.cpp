@@ -19,7 +19,7 @@ std::string DB::executeCommand(std::string command, std::string payload) {
     int state;
     mysql_init(&mysql);
 
-    connection = mysql_real_connect(&mysql, "localhost", "root", "pass", "stacked", 0, 0, 0);
+    connection = mysql_real_connect(&mysql, "localhost", "root", "atomforpeace", "ccc_app", 0, 0, 0);
 
     if (connection == NULL) {
         std::cout << mysql_error(&mysql) << std::endl;
@@ -126,8 +126,11 @@ std::string DB::regUser(MYSQL *connection, std::string payload) {
     }
 
     //construct insert command
-    query = "INSERT INTO `users` (`username`,`password`,`teacher`,`class_code`)  VALUES (\"";
-    query += split.at(0) + "\",\"" + split.at(1) + "\",\"" + split.at(3) + "\",\"" + split.at(2) + "\");";
+    query = "INSERT INTO `users` (`username`,`password`,`class_code`,`teacher`, `dateofbirth`)  VALUES (\"";
+    query += split.at(0) + "\",\"" + split.at(1) + "\",\"" + split.at(2) + "\",\"" + split.at(3) + "\",\"" + split.at(4) + "\");";
+
+    //For debug, remove later
+    std::cout << query.toLatin1().data() << std::endl;
 
     //execute
     state = mysql_query(connection, query.toLatin1().data());

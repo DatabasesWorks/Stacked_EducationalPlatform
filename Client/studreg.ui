@@ -27,7 +27,7 @@
        <property name="minimumSize">
         <size>
          <width>200</width>
-         <height>210</height>
+         <height>280</height>
         </size>
        </property>
        <property name="autoFillBackground">
@@ -109,7 +109,7 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>137</y>
+          <y>200</y>
           <width>171</width>
           <height>32</height>
          </rect>
@@ -122,13 +122,46 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>170</y>
+          <y>240</y>
           <width>171</width>
           <height>32</height>
          </rect>
         </property>
         <property name="text">
          <string>Cancel</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="classLabel_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>151</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Date of Birth:</string>
+        </property>
+       </widget>
+       <widget class="QDateEdit" name="dobEntry">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>160</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="displayFormat">
+         <string>yyyy-MM-dd</string>
+        </property>
+        <property name="date">
+         <date>
+          <year>2016</year>
+          <month>12</month>
+          <day>31</day>
+         </date>
         </property>
        </widget>
       </widget>
