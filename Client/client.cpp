@@ -103,5 +103,7 @@ void Client::on_pushButton_5_clicked() {
 }
 
 void Client::on_pushButton_6_clicked() {
+    GraphicsObjectTest t;
+
     setCentralWidget(new GraphicsObjectTest());
 }
