@@ -4,6 +4,7 @@
 #include "puzzlecomponent.h"
 #include <QSize>
 #include <QPoint>
+#include <action.h>
 
 class Puzzle
 {
@@ -14,6 +15,7 @@ public:
     PuzzleComponent getComponent(unsigned int);
     void changeComponentImage(unsigned int, const QImage);
     void resize(QSize);
+    virtual void runAction(Action action);
 private:
     std::vector<PuzzleComponent> components;
     QSize size;

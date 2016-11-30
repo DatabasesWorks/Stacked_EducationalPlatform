@@ -1,8 +1,34 @@
 #include "stackpuzzle.h"
 
 template<class T>
+StackPuzzle<T>::StackPuzzle(){
+
+
+
+
+}
+
+template<class T>
+StackPuzzle<T>::~StackPuzzle(){
+
+}
+
+template<class T>
+void StackPuzzle<T>::runAction(Action action){
+   double accel = action.acceleration;
+   std::string d  = action.description;
+   if(d=="pop"){
+
+       // do something .
+
+
+   }
+
+}
+
+template<class T>
 T StackPuzzle<T>::peekAction(){
-    return s.top();
+   return s.top();
 }
 
 template<class T>

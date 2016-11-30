@@ -5,10 +5,10 @@ sprite2dObject::sprite2dObject()
 {
 }
 
-//sprite2dObject::sprite2dObject(b2BodyDef newBodyDef)
-//{
-//    bodyDef = newBodyDef;
-//}
+sprite2dObject::sprite2dObject(b2BodyDef newBodyDef)
+{
+    bodyDef = newBodyDef;
+}
 
 static sf::Sprite addTexture(std::string filename) {
     sf::Texture texture;

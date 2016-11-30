@@ -10,6 +10,7 @@ public:
     void resize(QSize);
     void setPosition(QPoint);
     QPoint getPosition();
+
 private:
     QImage * image;
     QSize size;
