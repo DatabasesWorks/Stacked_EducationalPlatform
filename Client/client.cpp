@@ -88,10 +88,8 @@ void Client::on_pushButton_clicked() {
 
 void Client::on_pushButton_2_clicked() {
     //This logic will need to be changed later
-    StudWin *studwin;
-    studwin->setMainGameWidget(new PuzzleWindow(this));
-//    studwin->setMainGameWidget(puzzlewindow);
-//    setCentralWidget(new StudWin());
+    StudWin *studwin = new StudWin(this);
+    studwin->setMainGameWidget(new PuzzleWindow());
     setCentralWidget(studwin);
 }
 
