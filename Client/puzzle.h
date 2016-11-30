@@ -26,10 +26,12 @@ public:
     //polymorphic stuff
     virtual void runAction(Action action);
 
+protected:
+    std::vector<sprite2dObject>components;
+    b2World *thisWorld;
+
 private:
 
-    b2World *thisWorld;
-    std::vector<sprite2dObject>components;
     QSize size;
     int numComponents;
 
