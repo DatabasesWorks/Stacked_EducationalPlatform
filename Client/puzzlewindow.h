@@ -21,7 +21,7 @@ public:
     void setPuzzle(Puzzle *puzzle);
 
 private:
-    std::vector<sprite2dObject> components;
+    std::vector<sprite2dObject*> components;
     Puzzle* puzzle;
     void OnInit();
     void OnUpdate();

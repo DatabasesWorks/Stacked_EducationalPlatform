@@ -29,7 +29,7 @@ public:
     virtual void runAction(Action action);
 
 protected:
-    std::vector<sprite2dObject*>components;
+    std::vector<sprite2dObject*> components;
     b2World *thisWorld;
 
 private:

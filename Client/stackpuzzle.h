@@ -12,7 +12,7 @@ public:
     StackPuzzle(QSize size);
     ~StackPuzzle();
     void virtual runAction(Action action) override;
-    sprite2dObject peekAction();
+    std::string peekAction();
     void popAction(b2Body*);
     void pushAction();
 
