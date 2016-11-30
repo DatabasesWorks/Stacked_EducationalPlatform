@@ -21,7 +21,6 @@ public:
     virtual sprite2dObject getComponent(unsigned int);
     std::vector<sprite2dObject> getAllComponents();
     virtual void changeComponentImage(unsigned int, const QImage);
-    sprite2dObject getComponent(unsigned int);
     std::vector<sprite2dObject> getComponents();
     void changeComponentImage(unsigned int, sf::Image);
     int getnumComponents();
