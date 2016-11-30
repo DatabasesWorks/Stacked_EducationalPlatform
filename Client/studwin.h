@@ -15,6 +15,7 @@ class StudWin : public QWidget
 public:
     explicit StudWin(QWidget *parent = 0);
     ~StudWin();
+    void setMainGameWidget(QWidget *widget);
 
 private slots:
     void on_hideButton_clicked();
