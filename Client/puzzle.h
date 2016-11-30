@@ -7,21 +7,32 @@
 #include <action.h>
 #include <Box2D.h>
 #include <sprite2dobject.h>
+#include <iterator>
 
 
 class Puzzle
 {
 public:
+
     Puzzle(QSize);
+
+    //managing components
     void addComponent(sprite2dObject);
-    virtual sprite2dObject getComponent(unsigned int);
-    virtual void changeComponentImage(unsigned int, const QImage);
+    sprite2dObject getComponent(unsigned int);
+    std::vector<sprite2dObject> getComponents();
+    void changeComponentImage(unsigned int, const QImage);
+    int getnumComponents();
+
+    //polymorphic stuff
     virtual void runAction(Action action);
-    b2World *thisWorld;
+
 private:
+
+    b2World *thisWorld;
     std::vector<sprite2dObject>components;
     QSize size;
     int numComponents;
+
 };
 
 #endif // PUZZLE_H

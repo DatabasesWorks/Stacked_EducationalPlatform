@@ -13,6 +13,21 @@ void Puzzle::addComponent(sprite2dObject obj){
     numComponents++;
 }
 
-void Puzzle::changeComponentImage(unsigned int, const QImage){}
-sprite2dObject Puzzle::getComponent(unsigned int){sprite2dObject ob; return ob;}
+std::vector<sprite2dObject> Puzzle::getComponents(){
+   return components;
+}
+
+int Puzzle::getnumComponents(){
+    return numComponents;
+}
+
+void Puzzle::changeComponentImage(unsigned int, const QImage){
+    //todo
+
+}
+sprite2dObject Puzzle::getComponent(unsigned int i){
+    return components[i];
+}
+
+//polymorphic stuff
 void Puzzle::runAction(Action){}
