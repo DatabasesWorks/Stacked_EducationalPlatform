@@ -13,6 +13,7 @@ class sprite2dObject{
 public:
 
     sprite2dObject();
+    ~sprite2dObject();
     sprite2dObject(std::string,b2World, b2BodyDef);
     b2Body * getBody();
     sf::Sprite * getSprite();

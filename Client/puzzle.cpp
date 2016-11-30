@@ -14,5 +14,5 @@ void Puzzle::addComponent(sprite2dObject obj){
 }
 
 void Puzzle::changeComponentImage(unsigned int, const QImage){}
-sprite2dObject Puzzle::getComponent(unsigned int){}
+sprite2dObject Puzzle::getComponent(unsigned int){sprite2dObject ob; return ob;}
 void Puzzle::runAction(Action){}

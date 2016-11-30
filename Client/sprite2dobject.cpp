@@ -1,6 +1,13 @@
 #include "sprite2dobject.h"
 
 // A class to integrate the SFML sprite class with the Box2D objects.
+sprite2dObject::sprite2dObject(){
+
+}
+
+sprite2dObject::~sprite2dObject(){
+
+}
 
 sprite2dObject::sprite2dObject(std::string filename, b2World world, b2BodyDef def) // call the super constructor
 {
