@@ -1,55 +1,67 @@
 #include "stackpuzzle.h"
 
-template<class T>
-StackPuzzle<T>::StackPuzzle(){
+StackPuzzle::StackPuzzle(){
 
-
+    b2BodyDef myBody;
     b2PolygonShape rectShape;
-    //This sets the shape as a rectangle
     rectShape.SetAsBox(2, 1);
-
     b2FixtureDef rectFixtureDef;
     rectFixtureDef.shape = &rectShape;
     rectFixtureDef.density = 1;
-    b2Body * bod;
 
-    //We need to decide what we want the default stack to look like.
-    foreach (sprite2dObject obj, components) {
-        bod = obj.getBody();
-        bod->CreateFixture(&rectFixtureDef);
+    int x = 0;
+    int y = 0;
+
+    for(int i = 0; i < 5; i++) {
+       myBody.position.Set(x, y+(2*i));
+       sprite2dObject * sprite = new sprite2dObject("", this->thisWorld, myBody);
+       sprite.setFixture(rectFixtureDef);
+       components.push_back(sprite);
     }
+}
+
+StackPuzzle::~StackPuzzle(){
 
 }
 
-template<class T>
-StackPuzzle<T>::~StackPuzzle(){
+void StackPuzzle::runAction(Action action){
 
-}
-
-template<class T>
-void StackPuzzle<T>::runAction(Action action){
    double accel = action.acceleration;
+   double veloc = action.velocity;
+   double direct = action.direction;
    std::string d  = action.description;
+   b2Body * bod;
    if(d == "pop"){
-
-
-
-
+       popAction(bod);
+   }
+   if(d == "push"){
+       pushAction();
    }
 
 }
-
-template<class T>
-T StackPuzzle<T>::peekAction(){
-   return s.top();
+std::string StackPuzzle::peekAction(){
+    //need to extract component content string
+    std::string s = "";
+   return s;
 }
 
-template<class T>
-void StackPuzzle<T>::popAction(){
-    s.pop();
+void StackPuzzle::popAction(b2Body* bod){
+    bod = components.front()->getBody();
+    bod->ApplyAngularImpulse(20, true);
+    components.erase(components.begin());
 }
 
-template<class T>
-void StackPuzzle<T>::pushAction(T val){
-    s.push(val);
+void StackPuzzle::pushAction(){
+    b2BodyDef myBody;
+    b2PolygonShape rectShape;
+    rectShape.SetAsBox(2, 1);
+    b2FixtureDef rectFixtureDef;
+    rectFixtureDef.shape = &rectShape;
+    rectFixtureDef.density = 1;
+
+    myBody.position.Set(0, 0);
+    sprite2dObject * sprite = new sprite2dObject("", this->thisWorld, myBody);
+    sprite.setFixture(rectFixtureDef);
+    components.push_back(sprite);
+
 }
