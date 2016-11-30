@@ -19,19 +19,23 @@ macx: LIBS += -L"/usr/local/lib"
 macx: LIBS += -L"$$PWD"
 macx: INCLUDEPATH += "/usr/local/include"
 macx: DEPENDPATH += "/usr/local/include"
-#this should work for a shared library on unix as well.
+
+#linux
+#these will only work if you have the libraries installed to your system:)
 linux: LIBS += -L"/usr/lib"
 linux: LIBS += -L"/usr/local/lib"
 linux: INCLUDEPATH += "/usr/local/include"
 linux: INCLUDEPATH += "/usr/include/"
 linux: DEPENDPATH += "/usr/local/include"
+linux: DEPENDPATH += "/usr/include"
 linux: INCLUDEPATH += "/usr/include/mysql/"
+
 #windows
 win32: INCLUDEPATH += "C:\\SFML\\include"
 win32: DEPENDPATH += "C:\\SFML\\include"
 win32: LIBS += -L"C:\\SFML\\lib"
 
-LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
+LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window -lBox2D
 #LIBS += -lBox2d
 CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
 CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
