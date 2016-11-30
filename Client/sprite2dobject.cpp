@@ -31,6 +31,29 @@ void sprite2dObject::setSprite(sf::Image image){
 }
 
 sf::Sprite * sprite2dObject::getSprite(){
+
+    //Draw sprite from box2d information
+    //http://en.sfml-dev.org/forums/index.php?topic=20216.0
+    //http://www.iforce2d.net/b2dtut/fixtures
+
+    b2PolygonShape* polyShape = new b2PolygonShape(); //delete this line -- added so it would compile
+    //Need fixture var?
+//    b2PolygonShape* polyShape = (b2PolygonShape*) bodyFixture->GetShape();
+
+    sf::ConvexShape shapeToFill;
+    shapeToFill.setPosition(body->GetPosition().x*SCALE, -body->GetPosition().y*SCALE);
+
+    int vertCount = polyShape->GetVertexCount();
+    shapeToFill.setPointCount(vertCount);
+
+    for(int vert = 0 ; vert < vertCount ; vert++) {
+       b2Vec2 aVertex = polyShape->GetVertex(vert);
+       sf::Vector2f sfVect;
+       sfVect.x = aVertex.x*SCALE;
+       sfVect.y = aVertex.y*SCALE;
+       shapeToFill.setPoint(vert,sfVect);
+    }
+    shapeToFill.setRotation(180/b2_pi * body->GetAngle());
     return sprite;
 }
 
