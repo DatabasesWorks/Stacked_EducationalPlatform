@@ -24,6 +24,7 @@ private:
     b2Fixture * fixture;
     b2Body * body; //Body definitions
     sf::Sprite * sprite;
+    double SCALE=1;
 };
 
 #endif // SPRITE2DOBJECT_H

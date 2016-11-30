@@ -45,9 +45,11 @@ void PuzzleWindow::OnUpdate()
     //Get all the drawing components from the puzzle
     if(puzzle!=0)
     {
+         //attempt to get all components from puzzle
          components = puzzle->getAllComponents();
          for(sprite2dObject s2d: components)
          {
+             //Use sf::RenderWindow to draw each sprite component of puzzle
              RenderWindow::draw(*s2d.getSprite());
          }
     }
