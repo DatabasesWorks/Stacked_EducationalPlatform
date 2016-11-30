@@ -14,14 +14,14 @@ struct timeoutexception : public std::exception {
    }
 };
 
-struct filenotfoundexecption : public std::exception {
+struct filenotfoundexception : public std::exception {
     std::string msg;
-    filenotfoundexecption(std::string filename){
+    filenotfoundexception(std::string filename){
         msg=filename;
     }
 
     const char * what() const throw(){
-        return "file : "+ msg +"not found";
+        return ("file : "+ msg+"not found").c_str();
     }
 };
 

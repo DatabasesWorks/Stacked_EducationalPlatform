@@ -5,6 +5,7 @@
 #include "Box2D/Dynamics/b2Body.h"
 #include <Box2D.h>
 #include <Box2D/Box2D.h>
+#include <exceptions.h>
 
 // A class to integrate SFML sprites with Box2D shapes and bodies.
 class sprite2dObject{

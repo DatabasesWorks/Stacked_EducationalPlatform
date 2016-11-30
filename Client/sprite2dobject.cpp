@@ -5,7 +5,7 @@
 sprite2dObject::sprite2dObject(std::string filename, b2World world, b2BodyDef def) // call the super constructor
 {
     sf::Texture texture;
-    if(!texture.loadFromFile(imagename)){
+    if(!texture.loadFromFile(filename)){
         //throw exception
         filenotfoundexception ex(filename);
         throw ex;
