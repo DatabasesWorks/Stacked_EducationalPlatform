@@ -5,6 +5,8 @@
 #include <QSize>
 #include <QPoint>
 #include <action.h>
+#include <bmi2intrin.h>
+#include <Box2D.h>
 
 class Puzzle
 {
@@ -16,6 +18,7 @@ public:
     void changeComponentImage(unsigned int, const QImage);
     void resize(QSize);
     virtual void runAction(Action action);
+    b2World *thisWorld;
 private:
     std::vector<PuzzleComponent> components;
     QSize size;

@@ -7,7 +7,7 @@
 #include <puzzle.h>
 
 template <class T>
-class StackPuzzle : public QGraphicsScene, public Puzzle
+class StackPuzzle : public Puzzle
 {
 public:
     StackPuzzle();
