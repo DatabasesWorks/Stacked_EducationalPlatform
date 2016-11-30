@@ -30,9 +30,12 @@ macx: DEPENDPATH += "/usr/local/include"
 macx: DEPENDPATH += "/usr/local/mysql/include"
 
 #this should work for a shared library on unix as well.
+linux: LIBS += -L"/usr/lib"
 linux: LIBS += -L"/usr/local/lib"
 linux: INCLUDEPATH += "/usr/local/include"
+linux: INCLUDEPATH += "/usr/include/"
 linux: DEPENDPATH += "/usr/local/include"
+linux: INCLUDEPATH += "/usr/include/mysql/"
 
 #windows
 win32: INCLUDEPATH += "C:\\SFML\\include"

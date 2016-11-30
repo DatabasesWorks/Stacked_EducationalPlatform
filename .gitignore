@@ -1,0 +1,4 @@
+*.h
+moc*
+*.cpp
+Makefile
