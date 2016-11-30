@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 30, 2016 at 12:17 AM
+-- Generation Time: Nov 30, 2016 at 12:55 AM
 -- Server version: 5.7.16-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.3
 
@@ -29,8 +29,15 @@ SET time_zone = "+00:00";
 CREATE TABLE `puzzles` (
   `userid` int(11) NOT NULL,
   `puzzleid` int(11) NOT NULL,
-  `date` datetime NOT NULL
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `puzzles`
+--
+
+INSERT INTO `puzzles` (`userid`, `puzzleid`, `date`) VALUES
+(2, 1, '2016-11-30 07:28:08');
 
 -- --------------------------------------------------------
 
