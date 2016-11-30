@@ -12,11 +12,11 @@ DB::DB() {
 }
 
 std::string DB::executeCommand(std::string command, std::string payload) {
-    std::vector<std::string> tables;
-    MYSQL_RES *result;
-    MYSQL_ROW row;
+    //std::vector<std::string> tables;
+    //MYSQL_RES *result;
+    //MYSQL_ROW row;
     MYSQL *connection, mysql;
-    int state;
+    //int state;
     mysql_init(&mysql);
 
     connection = mysql_real_connect(&mysql, "localhost", "root", "atomforpeace", "ccc_app", 0, 0, 0);
@@ -81,11 +81,11 @@ std::string DB::getStudents(MYSQL *connection, std::string payload) {
     }
 
     result = mysql_store_result(connection);
-    MYSQL_FIELD *field = mysql_fetch_field(result);
+    //MYSQL_FIELD *field = mysql_fetch_field(result);
     MYSQL_ROW row;
     QString res= "";
 
-    while(row = mysql_fetch_row(result)) {
+    while((row = mysql_fetch_row(result))) {
         res += QString(row[0]) + ",";
     }
     res.chop(1); //remove last comma

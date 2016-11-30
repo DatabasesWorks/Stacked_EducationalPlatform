@@ -59,7 +59,7 @@ void UserSocket::authenticate(std::string username, std::string passwd) {
 //payloads to the server will require a session id, I will integrate that when I get a chance.
 //the packets from the server will follow this format: command; payload
 Message UserSocket::sendPayload(std::string command, std::string payload) {
-    if (this->authenticated | command == "register") {
+    if ((this->authenticated || command == "register")) {
         sf::TcpSocket socket;
         sf::Socket::Status status = socket.connect(host, portnumber);
 

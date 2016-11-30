@@ -12,8 +12,8 @@ GraphicsObject::GraphicsObject(QWidget *Parent) :
     setFocusPolicy(Qt::StrongFocus);
 }
 
-void GraphicsObject::showEvent(QShowEvent *event) {
-    if (goinitialized == false) {
+void GraphicsObject::showEvent(QShowEvent *) {
+    if (!goinitialized) {
         //Under X11, we need to flush the commands sent to the server to ensure that
         //SFML will get an updated view of the windows
             #ifdef Q_WS_X11
@@ -57,7 +57,7 @@ QPaintEngine * GraphicsObject::paintEngine() const {
 }
 
 //Updates the window or something
-void GraphicsObject::paintEvent(QPaintEvent *event) {
+void GraphicsObject::paintEvent(QPaintEvent *) {
     RenderWindow::clear();
     OnUpdate();
     RenderWindow::display();
