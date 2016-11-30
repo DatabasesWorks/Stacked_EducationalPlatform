@@ -20,7 +20,7 @@ public:
     void addComponent(sprite2dObject);
     sprite2dObject getComponent(unsigned int);
     std::vector<sprite2dObject> getComponents();
-    void changeComponentImage(unsigned int, const QImage);
+    void changeComponentImage(unsigned int, sf::Image);
     int getnumComponents();
 
     //polymorphic stuff

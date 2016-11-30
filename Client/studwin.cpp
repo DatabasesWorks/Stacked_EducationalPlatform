@@ -3,6 +3,7 @@
 #include "client.h"
 #include <vector>
 #include "qstandarditemmodel.h"
+#include <graphicsobjecttest.h>
 
 StudWin::StudWin(QWidget *parent) :
     QWidget(parent),

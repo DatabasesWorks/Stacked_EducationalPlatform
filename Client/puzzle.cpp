@@ -2,7 +2,6 @@
 
 Puzzle::Puzzle(QSize size) {
     b2Vec2 gravity(0.0f, -10.0f);
-
     this->size=size;
     this->thisWorld = new b2World(gravity);
     this->numComponents = 0;
@@ -10,7 +9,6 @@ Puzzle::Puzzle(QSize size) {
 
 void Puzzle::addComponent(sprite2dObject obj){
     components.push_back(obj);
-    numComponents++;
 }
 
 std::vector<sprite2dObject> Puzzle::getComponents(){
@@ -18,12 +16,22 @@ std::vector<sprite2dObject> Puzzle::getComponents(){
 }
 
 int Puzzle::getnumComponents(){
-    return numComponents;
+    return components.size();
 }
 
-void Puzzle::changeComponentImage(unsigned int, const QImage){
-    //todo
+void Puzzle::changeComponentImage(unsigned int i, sf::Image image){
+    if(this->components.size()<i){
+        unsigned int temp = 0;
+        for(auto it = components.begin(); it < components.end(); it++){
+            if(temp==i){
+                static_cast<sprite2dObject>(*it).setSprite(image);
+                break;
+            }
+        }
 
+    }else{
+        // throw exception
+    }
 }
 sprite2dObject Puzzle::getComponent(unsigned int i){
     return components[i];
