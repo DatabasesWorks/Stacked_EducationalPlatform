@@ -19,9 +19,9 @@ public:
     //managing components
     void addComponent(sprite2dObject);
     virtual sprite2dObject getComponent(unsigned int);
-    std::vector<sprite2dObject> getAllComponents();
+    std::vector<sprite2dObject*> getAllComponents();
 //    virtual void changeComponentImage(unsigned int, const QImage);
-    std::vector<sprite2dObject> getComponents();
+    std::vector<sprite2dObject*> getComponents();
     void changeComponentImage(unsigned int, sf::Image);
     int getnumComponents();
 
@@ -29,7 +29,7 @@ public:
     virtual void runAction(Action action);
 
 protected:
-    std::vector<sprite2dObject>components;
+    std::vector<sprite2dObject*>components;
     b2World *thisWorld;
 
 private:

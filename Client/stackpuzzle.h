@@ -6,19 +6,18 @@
 #include <QObject>
 #include <puzzle.h>
 
-template <class T>
 class StackPuzzle : public Puzzle
 {
 public:
     StackPuzzle();
     ~StackPuzzle();
     void virtual runAction(Action action) override;
-    T peekAction();
-    void popAction();
-    void pushAction(T);
+    sprite2dObject peekAction();
+    void popAction(b2Body*);
+    void pushAction();
 
 private:
-    std::stack <T> s;
+    std::stack <sprite2dObject> s;
 };
 
 #endif // STACKPUZZLE_H

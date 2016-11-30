@@ -11,10 +11,6 @@ void Puzzle::addComponent(sprite2dObject obj){
     components.push_back(obj);
 }
 
-std::vector<sprite2dObject> Puzzle::getComponents(){
-   return components;
-}
-
 int Puzzle::getnumComponents(){
     return components.size();
 }
