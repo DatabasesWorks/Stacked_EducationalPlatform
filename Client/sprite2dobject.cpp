@@ -5,6 +5,7 @@ sprite2dObject::sprite2dObject(){
 
 }
 
+//
 sprite2dObject::~sprite2dObject(){
 
 }
@@ -37,7 +38,7 @@ sf::Sprite * sprite2dObject::getSprite(){
     //http://www.iforce2d.net/b2dtut/fixtures
 
     b2PolygonShape* polyShape = new b2PolygonShape(); //delete this line -- added so it would compile
-    //Need fixture var?
+    //Need b2Fixture var, ie bodyFixture?
 //    b2PolygonShape* polyShape = (b2PolygonShape*) bodyFixture->GetShape();
 
     sf::ConvexShape shapeToFill;
