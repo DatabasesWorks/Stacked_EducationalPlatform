@@ -12,8 +12,8 @@ public:
     sprite2dObject();
     static sf::Sprite addTexture();
     sprite2dObject(b2World world);
-    changeShape(std::string shape);
-    changeImage(QImage image);
+    void changeShape(std::string shape);
+    void changeImage(QImage image);
 
 
 private:
