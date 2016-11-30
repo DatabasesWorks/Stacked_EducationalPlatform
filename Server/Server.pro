@@ -42,8 +42,9 @@ win32: INCLUDEPATH += "C:\\SFML\\include"
 win32: DEPENDPATH += "C:\\SFML\\include"
 win32: LIBS += -L"C:\\SFML\\lib"
 win32: INCLUDEPATH += "C:\\mysql\\include"
-win32: DEPENDPATH += "C:\\mysql\\include"
+win32: DEPENDPATH += "C:\\mysql\\include\\mysql"
 win32: LIBS += -L"C:\\mysql\\lib"
+win32: LIBS += -L"C:\\mysql\\lib\\mysql"
 
 #internet says this makes libs add more stable?
 CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window -lmysqlclient
