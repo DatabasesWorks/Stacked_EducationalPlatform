@@ -11,7 +11,7 @@ sprite2dObject::sprite2dObject(b2World world)
     //
 
 
-    bodyDef = newBodyDef;
+//    bodyDef = new BodyDef;
 }
 
 static sf::Sprite addTexture(std::string filename) {
