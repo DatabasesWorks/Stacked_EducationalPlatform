@@ -14,19 +14,6 @@ void GraphicsObjectTest::OnInit() {
     QFile f(":/spritesheet.png");
     f.copy(QString("spritesheet.png"));
 
-//***DELETE****
-//    QString qst = f.filname;
-//    std::string filepath = qst.toStdString();
-//    std::cout<<filepath;
-
-//    QDir dir = QDir::current();
-//    dir.cdUp();
-//    dir.absoluteFilePath("spritesheet.png");
-//    QString qst = dir.currentPath();
-//    std::string filepath = qst.toStdString();
-//    std::cout<<filepath;
-//****END DELETE***/////
-
     //load the png that will be the "sprite"
     if (!tex.loadFromFile("spritesheet.png")) {
         //Error handling

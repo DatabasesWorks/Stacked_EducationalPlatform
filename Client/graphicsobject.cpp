@@ -34,21 +34,6 @@ void GraphicsObject::showEvent(QShowEvent *) {
         gotimer.start();
         goinitialized = true;
     }
-
-//***OLD STUFF*** DELETE LATER
-//        // Create the SFML window with the widget handle
-//        //UPDATED
-//        QWidget::create(QWidget::effectiveWinId());
-
-//        // Let the derived class do its specific stuff
-//        OnInit();
-
-//        // Setup the timer to trigger a refresh at specified framerate
-//        connect(&myTimer, SIGNAL(timeout()), this, SLOT(repaint()));
-//        myTimer.start();
-
-//        myInitialized = true;
-//***END DELETE
 }
 
 //Don't know what this does

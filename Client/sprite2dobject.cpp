@@ -11,7 +11,6 @@ sprite2dObject::sprite2dObject(std::string imagename, b2World world, b2BodyDef d
     sprite=new sf::Sprite(texture);
     body = world.CreateBody(&def);
 
-
 }
 
 sf::Sprite * sprite2dObject::getSprite(){
