@@ -16,9 +16,10 @@ public:
     sprite2dObject(std::string,b2World, b2BodyDef);
     b2Body * getBody();
     sf::Sprite * getSprite();
+    void addFixture(b2FixtureDef);
 
 private:
-
+    b2Fixture * fixture;
     b2Body * body; //Body definitions
     sf::Sprite * sprite;
 };
