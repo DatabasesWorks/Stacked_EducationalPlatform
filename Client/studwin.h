@@ -3,12 +3,13 @@
 
 #include <QWidget>
 #include <client.h>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace Ui {
 class StudWin;
 }
 
-class StudWin : public QWidget
+class StudWin : public QWidget, sf::RenderWindow
 {
     Q_OBJECT
 

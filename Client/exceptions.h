@@ -14,6 +14,18 @@ struct timeoutexception : public std::exception {
    }
 };
 
+struct filenotfoundexception : public std::exception {
+    std::string msg;
+    filenotfoundexception(std::string filename){
+        msg=filename;
+    }
+
+    const char * what() const throw(){
+        return ("file : "+ msg+"not found").c_str();
+    }
+};
+
+
 struct authenticationexception : public std::exception {
     const char * what() const throw(){
        return "authentication error";

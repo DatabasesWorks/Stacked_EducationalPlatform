@@ -1,16 +1,33 @@
 #include "sprite2dobject.h"
 
 // A class to integrate the SFML sprite class with the Box2D objects.
+sprite2dObject::sprite2dObject(){
 
-sprite2dObject::sprite2dObject(std::string imagename, b2World world, b2BodyDef def) // call the super constructor
+}
+
+sprite2dObject::~sprite2dObject(){
+
+}
+
+sprite2dObject::sprite2dObject(std::string filename, b2World world, b2BodyDef def) // call the super constructor
 {
     sf::Texture texture;
-    if(!texture.loadFromFile(imagename)){
+    if(!texture.loadFromFile(filename)){
         //throw exception
+        filenotfoundexception ex(filename);
+        throw ex;
     }
     sprite=new sf::Sprite(texture);
     body = world.CreateBody(&def);
 
+}
+
+void sprite2dObject::setFixture(b2FixtureDef def){
+    fixture = body->CreateFixture(&def);
+}
+
+void sprite2dObject::setSprite(sf::Image image){
+  // sprite = new sf::Sprite(sf::Texture::loadFromImage(image)));
 }
 
 sf::Sprite * sprite2dObject::getSprite(){
