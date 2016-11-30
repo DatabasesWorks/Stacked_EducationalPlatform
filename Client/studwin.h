@@ -3,18 +3,20 @@
 
 #include <QWidget>
 #include <client.h>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace Ui {
 class StudWin;
 }
 
-class StudWin : public QWidget
+class StudWin : public QWidget, sf::RenderWindow
 {
     Q_OBJECT
 
 public:
     explicit StudWin(QWidget *parent = 0);
     ~StudWin();
+    void setMainGameWidget(QWidget *widget);
 
 private slots:
     void on_hideButton_clicked();

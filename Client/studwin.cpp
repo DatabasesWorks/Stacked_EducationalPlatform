@@ -3,6 +3,7 @@
 #include "client.h"
 #include <vector>
 #include "qstandarditemmodel.h"
+#include <graphicsobjecttest.h>
 
 StudWin::StudWin(QWidget *parent) :
     QWidget(parent),
@@ -47,4 +48,12 @@ void StudWin::on_logoutButton_clicked() {
     Client *par = (Client *)this->parentWidget();
 
     par->setCurrentPage("login");
+}
+
+void StudWin::setMainGameWidget(QWidget *widget)
+{
+
+    QGridLayout *layout = new QGridLayout(this);
+    layout->addWidget(widget);
+    ui->mainGameWidget->setLayout(layout);
 }

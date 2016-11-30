@@ -87,7 +87,12 @@ void Client::on_pushButton_clicked() {
 }
 
 void Client::on_pushButton_2_clicked() {
-    setCentralWidget(new StudWin());
+    //This logic will need to be changed later
+    StudWin *studwin;
+    studwin->setMainGameWidget(new PuzzleWindow(this));
+//    studwin->setMainGameWidget(puzzlewindow);
+//    setCentralWidget(new StudWin());
+    setCentralWidget(studwin);
 }
 
 void Client::on_pushButton_3_clicked() {
@@ -103,5 +108,6 @@ void Client::on_pushButton_5_clicked() {
 }
 
 void Client::on_pushButton_6_clicked() {
-    setCentralWidget(new GraphicsObjectTest());
+//    PuzzleWindow pw;
+    setCentralWidget(new PuzzleWindow());
 }

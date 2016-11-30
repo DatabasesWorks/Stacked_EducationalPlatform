@@ -31,9 +31,15 @@ linux: DEPENDPATH += "/usr/include"
 linux: INCLUDEPATH += "/usr/include/mysql/"
 
 #windows
+#windows
 win32: INCLUDEPATH += "C:\\SFML\\include"
 win32: DEPENDPATH += "C:\\SFML\\include"
 win32: LIBS += -L"C:\\SFML\\lib"
+win32: INCLUDEPATH += "C:\\mysql\\include"
+win32: DEPENDPATH += "C:\\mysql\\include\\mysql"
+win32: LIBS += -L"C:\\mysql\\lib"
+win32: LIBS += -L"C:\\mysql\\lib\\mysql"
+
 
 LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window -lBox2D
 #LIBS += -lBox2d
@@ -59,7 +65,8 @@ SOURCES += main.cpp\
     hashtablepuzzle.cpp \
     stackpuzzle.cpp \
     sprite2dobject.cpp \
-    action.cpp
+    action.cpp \
+    puzzlewindow.cpp
 
 
 HEADERS  += client.h \
@@ -81,7 +88,8 @@ HEADERS  += client.h \
     hashtablepuzzle.h \
     stackpuzzle.h \
     sprite2dobject.h \
-    action.h
+    action.h \
+    puzzlewindow.h
     exceptions.h
     #Box2D.h
 

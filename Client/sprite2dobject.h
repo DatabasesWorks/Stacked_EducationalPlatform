@@ -16,8 +16,9 @@ public:
     ~sprite2dObject();
     sprite2dObject(std::string,b2World, b2BodyDef);
     b2Body * getBody();
+    void setSprite(sf::Image);
     sf::Sprite * getSprite();
-    void addFixture(b2FixtureDef);
+    void setFixture(b2FixtureDef);
 
 private:
     b2Fixture * fixture;

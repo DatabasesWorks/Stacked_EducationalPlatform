@@ -6,7 +6,7 @@
 #include <SFML/Network/IpAddress.hpp>
 #include <QMainWindow>
 #include <usersocket.h>
-
+#include <puzzlewindow.h>
 
 namespace Ui {
 class Client;

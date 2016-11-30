@@ -22,8 +22,12 @@ sprite2dObject::sprite2dObject(std::string filename, b2World world, b2BodyDef de
 
 }
 
-void sprite2dObject::addFixture(b2FixtureDef def){
+void sprite2dObject::setFixture(b2FixtureDef def){
     fixture = body->CreateFixture(&def);
+}
+
+void sprite2dObject::setSprite(sf::Image image){
+  // sprite = new sf::Sprite(sf::Texture::loadFromImage(image)));
 }
 
 sf::Sprite * sprite2dObject::getSprite(){
