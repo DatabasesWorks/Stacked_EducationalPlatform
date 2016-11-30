@@ -5,8 +5,12 @@ sprite2dObject::sprite2dObject()
 {
 }
 
-sprite2dObject::sprite2dObject(b2BodyDef newBodyDef)
+sprite2dObject::sprite2dObject(b2World world)
 {
+
+    //
+
+
     bodyDef = newBodyDef;
 }
 
