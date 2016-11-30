@@ -2,6 +2,7 @@
 #define LEVEL_H
 #include "puzzle.h"
 #include <QString>
+#include <QSize>
 
 class Level
 {
@@ -12,7 +13,7 @@ public:
     bool isCompleted();
     QString serializeProperties();
 private:
-    Puzzle puzzle;
+   // Puzzle puzzle(QSize(0,0));
     bool completed;
     int difficulty;
     QString description;

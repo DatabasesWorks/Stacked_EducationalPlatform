@@ -1,26 +1,24 @@
 #ifndef PUZZLE_H
 #define PUZZLE_H
 #include <vector>
-#include "puzzlecomponent.h"
 #include <QSize>
 #include <QPoint>
+#include <QImage>
 #include <action.h>
-#include <bmi2intrin.h>
 #include <Box2D.h>
+#include <sprite2dobject.h>
 
 class Puzzle
 {
 public:
-    Puzzle();
-    void moveComponent(unsigned int, QPoint);
-    PuzzleComponent getComponentAt(QPoint);
-    PuzzleComponent getComponent(unsigned int);
-    void changeComponentImage(unsigned int, const QImage);
-    void resize(QSize);
+    Puzzle(QSize);
+    void addComponent(sprite2dObject);
+    virtual sprite2dObject getComponent(unsigned int);
+    virtual void changeComponentImage(unsigned int, const QImage);
     virtual void runAction(Action action);
     b2World *thisWorld;
 private:
-    std::vector<PuzzleComponent> components;
+    std::vector<sprite2dObject>components;
     QSize size;
 };
 

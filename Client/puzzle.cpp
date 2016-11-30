@@ -1,30 +1,15 @@
 #include "puzzle.h"
 
-Puzzle::Puzzle() {
+Puzzle::Puzzle(QSize size) {
+    this->size=size;
 }
 
-void Puzzle::changeComponentImage(unsigned int, const QImage){
+void Puzzle::addComponent(sprite2dObject){
 
-}
-
-PuzzleComponent Puzzle::getComponent(unsigned int)
-{
-
-}
-
-PuzzleComponent Puzzle::getComponentAt(QPoint){
+//todo
 
 }
 
-void Puzzle::moveComponent(unsigned int, QPoint){
-
-}
-
-void Puzzle::resize(QSize){
-
-
-}
-
-void Puzzle::runAction(Action){
-
-}
+void Puzzle::changeComponentImage(unsigned int, const QImage){}
+sprite2dObject Puzzle::getComponent(unsigned int){}
+void Puzzle::runAction(Action){}

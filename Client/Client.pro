@@ -46,7 +46,6 @@ SOURCES += main.cpp\
     datastructure.cpp \
     level.cpp \
     puzzle.cpp \
-    puzzlecomponent.cpp \
     usersocket.cpp \
     message.cpp \
     graphicsobject.cpp \
@@ -68,7 +67,6 @@ HEADERS  += client.h \
     datastructure.h \
     level.h \
     puzzle.h \
-    puzzlecomponent.h \
     usersocket.h \
     message.h \
     graphicsobject.h \
