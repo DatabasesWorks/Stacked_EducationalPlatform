@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 27, 2016 at 11:24 PM
+-- Generation Time: Nov 29, 2016 at 01:41 PM
 -- Server version: 5.7.16-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.3
 
@@ -51,16 +51,19 @@ CREATE TABLE `users` (
   `dateofbirth` date NOT NULL,
   `teacher` tinyint(1) NOT NULL DEFAULT '0',
   `userlevel` int(11) NOT NULL DEFAULT '1',
-  `class_code` varchar(255) NOT NULL
+  `class_code` varchar(255) NOT NULL,
+  `puzzle` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `dateofbirth`, `teacher`, `userlevel`, `class_code`) VALUES
-(1, 'meysam', 'test', '1995-07-30', 1, 1, 'test'),
-(2, 'reza', '123123', '2016-12-31', 0, 1, 'test');
+INSERT INTO `users` (`id`, `username`, `password`, `dateofbirth`, `teacher`, `userlevel`, `class_code`, `puzzle`) VALUES
+(1, 'meysam', 'test', '1995-07-30', 1, 1, 'test', ''),
+(2, 'reza', '123123', '2016-12-31', 0, 1, 'test', ''),
+(3, 'tom', '1234', '1987-12-22', 1, 1, '021', ''),
+(4, 'sam123', '123', '1983-12-01', 0, 1, '021', '');
 
 --
 -- Indexes for dumped tables
@@ -91,7 +94,7 @@ ALTER TABLE `questions`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
