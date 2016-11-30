@@ -4,6 +4,7 @@
 #include "ui_studreg.h"
 #include "QGridLayout"
 #include "QPushButton"
+#include <QRegExp>
 
 StudReg::StudReg(QWidget *parent) :
     QWidget(parent),
@@ -24,6 +25,14 @@ void StudReg::on_cancelButton_clicked() {
 }
 
 void StudReg::on_regButton_clicked() {
+    if(!Validate(ui->userEntry->text())){
+        ui->userEntry->setText("bad chars");
+        //make an error dialog here
+    }else if(!Validate(ui->passEntry->text())){
+         ui->passEntry->setText("bad chars");
+         //make an error dialog here
+    }
+
     Client *par = (Client *)this->parentWidget();
     QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",0,"+ ui->dobEntry->text();
     int x = par->sendReg(data);
@@ -46,5 +55,11 @@ void StudReg::on_regButton_clicked() {
             ui->userEntry->setText("");
             break;
     }
+}
+
+//alphanumeric 4-16
+bool StudReg::Validate(QString s){
+    QRegExp re("[A-Za-z0-9]{4,16}");
+    return re.exactMatch(s);
 }
 
