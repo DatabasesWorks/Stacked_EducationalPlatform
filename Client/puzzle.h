@@ -8,6 +8,7 @@
 #include <Box2D.h>
 #include <sprite2dobject.h>
 
+
 class Puzzle
 {
 public:
@@ -20,7 +21,7 @@ public:
 private:
     std::vector<sprite2dObject>components;
     QSize size;
-    Qint numComponents;
+    int numComponents;
 };
 
 #endif // PUZZLE_H

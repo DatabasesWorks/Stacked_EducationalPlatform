@@ -8,13 +8,9 @@ Puzzle::Puzzle(QSize size) {
     this->numComponents = 0;
 }
 
-void Puzzle::addComponent(sprite2dObject){
-
-//todo
-
-    components[numComponents] = sprite2dObject;
+void Puzzle::addComponent(sprite2dObject obj){
+    components.push_back(obj);
     numComponents++;
-
 }
 
 void Puzzle::changeComponentImage(unsigned int, const QImage){}
