@@ -45,9 +45,10 @@ void StudWin::on_hideButton_clicked() {
 
 //Move to controller?
 void StudWin::on_logoutButton_clicked() {
-    Client *par = (Client *)this->parentWidget();
-
+    Client *par = (Client *)this->parentWidget();   
     par->setCurrentPage("login");
+
+    //emit signal to release sources?
 }
 
 void StudWin::setMainGameWidget(QWidget *widget)

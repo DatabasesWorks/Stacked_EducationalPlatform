@@ -7,7 +7,7 @@ Puzzle::Puzzle(QSize size) {
     this->numComponents = 0;
 }
 
-void Puzzle::addComponent(sprite2dObject obj){
+void Puzzle::addComponent(sprite2dObject *obj){
     components.push_back(obj);
 }
 
@@ -20,7 +20,7 @@ void Puzzle::changeComponentImage(unsigned int i, sf::Image image){
         unsigned int temp = 0;
         for(auto it = components.begin(); it < components.end(); it++){
             if(temp==i){
-                static_cast<sprite2dObject>(*it).setSprite(image);
+                static_cast<sprite2dObject*>(*it)->setSprite(image);
                 break;
             }
         }
@@ -30,7 +30,7 @@ void Puzzle::changeComponentImage(unsigned int i, sf::Image image){
     }
 }
 sprite2dObject Puzzle::getComponent(unsigned int i){
-    return components[i];
+    return *components[i];
 }
 
 //polymorphic stuff
@@ -38,7 +38,7 @@ void Puzzle::runAction(Action){}
 
 //returns vector of all of the sprites2dobjects/sprites
 //(i.e. so they can be pulled and drawn by PuzzleWindow)
-std::vector<sprite2dObject> Puzzle::getAllComponents()
+std::vector<sprite2dObject*> Puzzle::getAllComponents()
 {
     return components;
 }

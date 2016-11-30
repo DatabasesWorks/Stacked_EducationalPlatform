@@ -1,6 +1,6 @@
 #include "stackpuzzle.h"
 
-StackPuzzle::StackPuzzle(){
+StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
 
     b2BodyDef myBody;
     b2PolygonShape rectShape;
@@ -11,10 +11,10 @@ StackPuzzle::StackPuzzle(){
 
     int x = 0;
     int y = 0;
-
+    std::string st = "";
     for(int i = 0; i < 5; i++) {
        myBody.position.Set(x, y+(2*i));
-       sprite2dObject * sprite = new sprite2dObject("", this->thisWorld, myBody);
+       sprite2dObject * sprite = new sprite2dObject(st, this->thisWorld, myBody);
        sprite.setFixture(rectFixtureDef);
        components.push_back(sprite);
     }

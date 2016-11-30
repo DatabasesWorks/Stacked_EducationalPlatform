@@ -17,7 +17,7 @@ public:
     Puzzle(QSize);
 
     //managing components
-    void addComponent(sprite2dObject);
+    void addComponent(sprite2dObject*);
     virtual sprite2dObject getComponent(unsigned int);
     std::vector<sprite2dObject*> getAllComponents();
 //    virtual void changeComponentImage(unsigned int, const QImage);

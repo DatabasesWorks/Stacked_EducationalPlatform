@@ -9,7 +9,7 @@
 class StackPuzzle : public Puzzle
 {
 public:
-    StackPuzzle();
+    StackPuzzle(QSize size);
     ~StackPuzzle();
     void virtual runAction(Action action) override;
     sprite2dObject peekAction();
