@@ -20,6 +20,7 @@ public:
 private:
     std::vector<sprite2dObject>components;
     QSize size;
+    Qint numComponents;
 };
 
 #endif // PUZZLE_H
