@@ -14,15 +14,14 @@ public:
 
     sprite2dObject();
     ~sprite2dObject();
-    sprite2dObject(std::string,b2World, b2BodyDef);
+    sprite2dObject(std::string,b2World*, b2BodyDef*);
     b2Body * getBody();
     void setSprite(sf::Image);
-    sf::Sprite * getSprite();
-    void setFixture(b2FixtureDef);
+    sf::ConvexShape* getShape();
+    void setFixture(b2FixtureDef*);
 
 private:
-    b2Fixture * fixture;
-    b2Body * body; //Body definitions
+    b2Body * body;
     sf::Sprite * sprite;
     double SCALE=1;
 };

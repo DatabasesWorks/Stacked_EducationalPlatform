@@ -5,18 +5,20 @@
 #include <stack>
 #include <QObject>
 #include <puzzle.h>
-
+#include <QSize>
+#include <action.h>
+#include <sprite2dobject.h>
 class StackPuzzle : public Puzzle
 {
 public:
+    StackPuzzle();
     StackPuzzle(QSize size);
     ~StackPuzzle();
     void virtual runAction(Action action) override;
-    std::string peekAction();
-    void popAction(b2Body*);
-    void pushAction();
-
 private:
+    std::string peekAction();
+    void popAction();
+    void pushAction();
     std::stack <sprite2dObject> s;
 };
 

@@ -1,11 +1,25 @@
 #include "puzzle.h"
 
+Puzzle::~Puzzle(){
+
+}
+
+
 Puzzle::Puzzle(QSize size) {
     b2Vec2 gravity(0.0f, -10.0f);
     this->size=size;
     this->thisWorld = new b2World(gravity);
     this->numComponents = 0;
 }
+
+Puzzle::Puzzle(){
+
+}
+
+void Puzzle::step(float time){
+   this->thisWorld->Step(time,1,1);
+}
+
 
 void Puzzle::addComponent(sprite2dObject *obj){
     components.push_back(obj);

@@ -50,7 +50,7 @@ void PuzzleWindow::OnUpdate()
          for(sprite2dObject* s2d: components)
          {
              //Use sf::RenderWindow to draw each sprite component of puzzle
-             RenderWindow::draw(*s2d->getSprite());
+             RenderWindow::draw(*s2d->getShape());
          }
     }
     else

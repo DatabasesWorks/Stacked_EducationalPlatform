@@ -3,7 +3,7 @@
 #include <graphicsobject.h>
 #include <SFML/Graphics/Drawable.hpp>
 #include "SFML/Graphics.hpp"
-#include <sprite2dObject.h>
+#include <sprite2dobject.h>
 #include <iostream>
 #include <puzzle.h>
 #include <QDir>

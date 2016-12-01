@@ -89,7 +89,7 @@ void Client::on_pushButton_clicked() {
 void Client::on_pushButton_2_clicked() {
     //This logic will need to be changed later
     StudWin *studwin = new StudWin(this);
-    studwin->setMainGameWidget(new PuzzleWindow());
+    studwin->setMainGameWidget(new GraphicsObjectTest);
     setCentralWidget(studwin);
 }
 
@@ -107,5 +107,5 @@ void Client::on_pushButton_5_clicked() {
 
 void Client::on_pushButton_6_clicked() {
 //    PuzzleWindow pw;
-    setCentralWidget(new PuzzleWindow());
+    setCentralWidget(new GraphicsObjectTest);
 }

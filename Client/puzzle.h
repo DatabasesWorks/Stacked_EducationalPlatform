@@ -15,7 +15,8 @@ class Puzzle
 public:
 
     Puzzle(QSize);
-
+    Puzzle();
+    ~Puzzle();
     //managing components
     void addComponent(sprite2dObject*);
     virtual sprite2dObject getComponent(unsigned int);
@@ -24,7 +25,7 @@ public:
     std::vector<sprite2dObject*> getComponents();
     void changeComponentImage(unsigned int, sf::Image);
     int getnumComponents();
-
+    void step(float time);
     //polymorphic stuff
     virtual void runAction(Action action);
 
