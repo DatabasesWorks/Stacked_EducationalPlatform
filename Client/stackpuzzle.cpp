@@ -12,7 +12,7 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
       rectShape->SetAsBox(20, 5);
       b2FixtureDef * rectFixtureDef = new b2FixtureDef;
       rectFixtureDef->shape = rectShape;
-      rectFixtureDef->density = 100;
+      rectFixtureDef->density = 1;
 
       myBody->position.Set(x, y-(5*i));
       sprite2dObject * sprite = new sprite2dObject("stack_element_"+i, this->thisWorld, myBody);
