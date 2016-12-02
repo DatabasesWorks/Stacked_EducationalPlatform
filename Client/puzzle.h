@@ -19,9 +19,9 @@ public:
     ~Puzzle();
     //managing components
     void addComponent(sprite2dObject*);
+    void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type);
     virtual sprite2dObject getComponent(unsigned int);
     std::vector<sprite2dObject*> getAllComponents();
-//    virtual void changeComponentImage(unsigned int, const QImage);
     std::vector<sprite2dObject*> getComponents();
     void changeComponentImage(unsigned int, sf::Image);
     int getnumComponents();

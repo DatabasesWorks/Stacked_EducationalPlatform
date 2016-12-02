@@ -21,6 +21,14 @@ void Puzzle::step(float time){
 }
 
 
+void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type){
+    SpriteDefinition tempdef(x,y, type,name);
+    tempdef.setShape(points,width,height); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
+    sprite2dObject *temp = new sprite2dObject(thisWorld,tempdef);
+    components.push_back(temp);
+
+}
+
 void Puzzle::addComponent(sprite2dObject *obj){
     components.push_back(obj);
 }

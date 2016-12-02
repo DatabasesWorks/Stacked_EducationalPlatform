@@ -3,7 +3,7 @@
 
 StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
 
-    b2Vec2 graf(0,1);
+    b2Vec2 graf(0,1.1);
     thisWorld->SetGravity(graf);
     SpriteDefinition triangledef(100,10,b2_dynamicBody,"testbox");
     triangledef.setShape(3,0,0);
@@ -14,6 +14,13 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     floordef.setShape(4,1000,0); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
     sprite2dObject *floor = new sprite2dObject(thisWorld,floordef);
     components.push_back(floor);
+
+
+    //or alternatively
+    for(int i = 0; i < 5; i++){
+        this->addComponent("stack_"+i,4,100,5,100,50+(i*10),b2_dynamicBody);
+    }
+
 
 }
 
