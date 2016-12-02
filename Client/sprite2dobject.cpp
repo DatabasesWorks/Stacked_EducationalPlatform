@@ -25,6 +25,7 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) // call the
 {
     sprite=new sf::Sprite;
     body = world->CreateBody(def.body);
+
     for(auto it = def.fixtures.begin(); it < def.fixtures.end(); it++){
         body->CreateFixture(*it);
     }
@@ -49,7 +50,7 @@ sf::ConvexShape *  sprite2dObject::getShape(){
            b2PolygonShape* polyShape= (b2PolygonShape*)f->GetShape();
            sf::ConvexShape * shapeToFill = new sf::ConvexShape;
            shapeToFill->setFillColor(sf::Color::White);
-           shapeToFill->setPosition(body->GetPosition().x*SCALE, -body->GetPosition().y*SCALE);
+           shapeToFill->setPosition(body->GetPosition().x*SCALE, body->GetPosition().y*SCALE);
            int vertCount = polyShape->GetVertexCount();
            shapeToFill->setPointCount(vertCount);
            for(int vert = 0 ; vert < vertCount ; vert++) {
