@@ -2,22 +2,28 @@
 #define ARRAYPUZZLE_H
 
 #include <QString>
+#include <QGraphicsScene>
+#include <QWidget>
+#include <QObject>
+#include <puzzle.h>
+#include <QSize>
+#include <action.h>
+#include <sprite2dobject.h>
 #include <array>
 #include <algorithm>
 
-template <class T>
-class ArrayPuzzle
+class ArrayPuzzle : public Puzzle
 {
 public:
     ArrayPuzzle();
-    //Do we want to delete and shift, then copy to new array? or do we want to simulate resizable arrays and use vectors?
-    void deleteAtIndex(int);
-
-    void addAtIndex(int, T);
-    void sortArray();
-
+    ArrayPuzzle(QSize size);
+    ~ArrayPuzzle();
+    void virtual runAction(Action action) override;
 private:
-    std::array<T, 10> arr;
+    void deleteAtIndexAction(int);
+    void addAtIndexAction(int, T);
+    void sortArrayAction();
+
 };
 
 #endif // ARRAYPUZZLE_H
