@@ -6,6 +6,7 @@ sprite2dObject::sprite2dObject(){
 
 }
 
+#include <spritedefinition.h>
 //
 sprite2dObject::~sprite2dObject(){
 
@@ -18,6 +19,15 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
     sprite=new sf::Sprite;
     body = world->CreateBody(def);
 
+}
+
+sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) // call the super constructor
+{
+    sprite=new sf::Sprite;
+    body = world->CreateBody(def.body);
+    for(auto it = def.fixtures.begin(); it < def.fixtures.end(); it++){
+        body->CreateFixture(*it);
+    }
 }
 
 void sprite2dObject::setFixture(b2FixtureDef* def){

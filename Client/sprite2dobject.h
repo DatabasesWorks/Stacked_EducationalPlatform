@@ -6,6 +6,7 @@
 #include <Box2D.h>
 #include <Box2D/Box2D.h>
 #include <exceptions.h>
+#include <spritedefinition.h>
 
 // A class to integrate SFML sprites with Box2D shapes and bodies.
 class sprite2dObject{
@@ -15,6 +16,7 @@ public:
     sprite2dObject();
     ~sprite2dObject();
     sprite2dObject(std::string,b2World*, b2BodyDef*);
+    sprite2dObject(b2World*,SpriteDefinition);
     b2Body * getBody();
     void setSprite(sf::Image);
     sf::ConvexShape* getShape();

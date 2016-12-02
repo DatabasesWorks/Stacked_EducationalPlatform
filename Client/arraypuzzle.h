@@ -21,7 +21,7 @@ public:
     void virtual runAction(Action action) override;
 private:
     void deleteAtIndexAction(int);
-    void addAtIndexAction(int, T);
+   // void addAtIndexAction(int, T);
     void sortArrayAction();
 
 };

@@ -4,22 +4,30 @@
 StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     int x = 100;
     int y = -5;
-    for(int i = 0; i < 5; i++) {
-      b2BodyDef * myBody = new b2BodyDef;
-      myBody->active=true;
-      myBody->type = b2_dynamicBody;
-      b2PolygonShape * rectShape = new b2PolygonShape;
-      rectShape->SetAsBox(20, 5);
-      b2FixtureDef * rectFixtureDef = new b2FixtureDef;
-      rectFixtureDef->shape = rectShape;
-      rectFixtureDef->density = 1;
+     b2Vec2 graf(0,-.001);
+    thisWorld->SetGravity(graf);
+    SpriteDefinition def(100,10, b2_dynamicBody,"testbox");
+    def.setShape(3,0,0);
+    sprite2dObject *sprite = new sprite2dObject(thisWorld,def);
 
-      myBody->position.Set(x, y-(5*i));
-      sprite2dObject * sprite = new sprite2dObject("stack_element_"+i, this->thisWorld, myBody);
-      sprite->getBody()->CreateFixture(rectFixtureDef);
-      components.push_back(sprite);
-    }
+    SpriteDefinition def2(100,20, b2_dynamicBody,"testbox");
+    def2.setShape(4,100,0); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
+    sprite2dObject *sprite2 = new sprite2dObject(thisWorld,def2);
+
+    components.push_back(sprite);
+    components.push_back(sprite2);
+
 }
+
+
+
+
+
+
+
+
+
+
 
 StackPuzzle::StackPuzzle() : Puzzle() {
 

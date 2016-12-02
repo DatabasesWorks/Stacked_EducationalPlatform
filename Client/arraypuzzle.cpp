@@ -50,8 +50,8 @@ void ArrayPuzzle::deleteAtIndexAction(int ind){
     bod->SetTransform(b2Vec2(10, 20), 0);
 }
 
-void ArrayPuzzle::addAtIndexAction(int ind, sprite2dObject obj){
-}
+//void ArrayPuzzle::addAtIndexAction(int ind, sprite2dObject obj){
+//}
 
 void ArrayPuzzle::sortArrayAction(){
 }

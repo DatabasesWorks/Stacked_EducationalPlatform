@@ -48,7 +48,7 @@ void GraphicsObjectTest::updateSet(){
 
 void GraphicsObjectTest::OnUpdate() {
     //Draw sprite on window
-    this->testpuzzle->step(10);
+    this->testpuzzle->step(1);
     updateSet();
     for(auto it = drawnSprites.begin(); it < drawnSprites.end(); it++)
     {
