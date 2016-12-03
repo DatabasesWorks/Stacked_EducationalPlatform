@@ -42,11 +42,20 @@ void ArrayPuzzle::runAction(Qt::Key action){
 
 void ArrayPuzzle::deleteAtIndexAction(int ind){
     b2Body *bod;
-    bod = components[ind]->getBody();
-    bod->ApplyAngularImpulse(60, true);
-    //This will teleport the body to another location
-    //test the coordinates
-    bod->SetTransform(b2Vec2(10, 20), 0);
+    switch (components.size()) {
+    case 1:
+        bod = components[ind]->getBody();
+        this->thisWorld->DestroyBody(bod);
+        break;
+    default:
+        bod = components[ind]->getBody();
+        this->thisWorld->DestroyBody(bod);
+        for(int i = ind+1; i < components.size(); i++){
+            bod = components[i]->getBody();
+            bod->SetTransform(b2Vec2(-40, 0), 0);
+        }
+        break;
+    }
 }
 
 //void ArrayPuzzle::addAtIndexAction(int ind, sprite2dObject obj){

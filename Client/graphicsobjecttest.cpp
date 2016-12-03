@@ -8,6 +8,8 @@ StackPuzzle test;
 GraphicsObjectTest::GraphicsObjectTest(QWidget *Parent) :
     GraphicsObject(Parent) {
     currentPuzzle = new StackPuzzle;
+//  testpuzzle = new TreePuzzle(s);
+
 }
 
 void GraphicsObjectTest::OnInit() {

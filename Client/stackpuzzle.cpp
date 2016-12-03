@@ -15,6 +15,15 @@ StackPuzzle::StackPuzzle() : Puzzle() {
     for(int i = 0; i < 5; i++){
         this->addComponent("stack_"+i,4,100,5,100,-200+(i*35),b2_dynamicBody);
     }
+<<<<<<< HEAD
+=======
+
+
+}
+
+StackPuzzle::StackPuzzle() : Puzzle() {
+
+>>>>>>> e018ccd22082672e0d9a99c4795f90edbeef269d
 }
 
 StackPuzzle::~StackPuzzle() {
