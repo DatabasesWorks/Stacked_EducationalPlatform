@@ -4,7 +4,6 @@
 #include <QSize>
 #include <QPoint>
 #include <QImage>
-#include <action.h>
 #include <Box2D.h>
 #include <sprite2dobject.h>
 #include <iterator>

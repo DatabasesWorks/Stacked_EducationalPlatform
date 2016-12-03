@@ -1,6 +1,6 @@
 #include "treepuzzle.h"
 
-TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
+TreePuzzle::TreePuzzle() : Puzzle()
 {
     b2Vec2 graf(0,.2);
     thisWorld->SetGravity(graf);
@@ -23,11 +23,6 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 
 }
 
-
-TreePuzzle::TreePuzzle() : Puzzle()
-{
-
-}
 
 TreePuzzle::~TreePuzzle() {
 

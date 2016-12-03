@@ -5,7 +5,6 @@
 #include <QObject>
 #include <puzzle.h>
 #include <QSize>
-#include <action.h>
 #include <sprite2dobject.h>
 
 class TreePuzzle : public Puzzle

@@ -53,7 +53,6 @@ SOURCES += main.cpp\
     loginwin.cpp \
     teachreg.cpp \
     studreg.cpp \
-    datastructure.cpp \
     puzzle.cpp \
     usersocket.cpp \
     message.cpp \
@@ -75,7 +74,6 @@ HEADERS  += client.h \
     loginwin.h \
     teachreg.h \
     studreg.h \
-    datastructure.h \
     puzzle.h \
     usersocket.h \
     message.h \
