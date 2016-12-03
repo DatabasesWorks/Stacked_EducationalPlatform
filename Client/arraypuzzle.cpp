@@ -1,41 +1,32 @@
 #include "arraypuzzle.h"
 ArrayPuzzle::ArrayPuzzle() : Puzzle() {
-    int x = 100;
-    int y = -5;
-    for(int i = 0; i < 5; i++){
-        b2BodyDef * myBody = new b2BodyDef;
-        myBody->active = true;
-        myBody->type = b2_dynamicBody;
-        b2PolygonShape * rectShape = new b2PolygonShape;
-        rectShape->SetAsBox(20, 5);
-        b2FixtureDef * rectFixtureDef = new b2FixtureDef;
-        rectFixtureDef->shape = rectShape;
-        rectFixtureDef->density = 1;
 
-        myBody->position.Set(x-(5*i), y);
-        sprite2dObject * sprite = new sprite2dObject("array_element_"+i, this->thisWorld, myBody);
-        sprite->getBody()->CreateFixture(rectFixtureDef);
-        components.push_back(sprite);
+    b2Vec2 grav(0, 0.1);
+    thisWorld->SetGravity(grav);
+
+    SpriteDefinition floordef(100, 200, b2_staticBody, "testbox");
+    floordef.setShape(4, 1500, 0);
+    sprite2dObject *floor = new sprite2dObject(thisWorld, floordef);
+    inactive_components.push_back(floor);
+
+    for(int i = 0; i < 5; i++){
+        this->addComponent("array_"+i, 4, 100, 25, 100+(i*75), -200, b2_dynamicBody);
     }
 }
 
 
 ArrayPuzzle::~ArrayPuzzle() {}
 
-void ArrayPuzzle::runAction(Qt::Key action){
-    //std::string d = action.description;
+void ArrayPuzzle::runAction(Qt::Key key){
     std::string d = "something";// "figured we can use keystrokes as a universal selector"
     int ind = 0;
-    //maybe we can append the index to the end of the
-    //description, remove it and use it as the index,
-    //or we can just add an index property to the action class
-    if(d == "delete"){
+    if(key == Qt::Key_E){
         deleteAtIndexAction(ind);
     }
-    if(d == "add"){
+    if(key == Qt::Key_R){
        // addAtIndexAction(ind, );
     }
-    if(d == "sort"){
+    if(key == Qt::Key_S){
         sortArrayAction();
     }
 }

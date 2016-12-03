@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stackpuzzle.h>
 #include <treepuzzle.h>
+#include <arraypuzzle.h>
 #include <sprite2dobject.h>
 #include <vector>
 #include <QSize>

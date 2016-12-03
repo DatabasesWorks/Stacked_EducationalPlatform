@@ -9,6 +9,7 @@ GraphicsObjectTest::GraphicsObjectTest(QWidget *Parent) :
     GraphicsObject(Parent) {
     currentPuzzle = new StackPuzzle;
 //  testpuzzle = new TreePuzzle(s);
+    //currentPuzzle = new ArrayPuzzle;
 
 }
 
