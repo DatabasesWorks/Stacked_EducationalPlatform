@@ -24,16 +24,6 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
 
 }
 
-
-
-
-
-
-
-
-
-
-
 StackPuzzle::StackPuzzle() : Puzzle() {
 
 }
