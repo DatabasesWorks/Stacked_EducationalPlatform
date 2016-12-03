@@ -43,19 +43,16 @@ void ArrayPuzzle::runAction(Action action){
 
 void ArrayPuzzle::deleteAtIndexAction(int ind){
     b2Body *bod;
-    switch (components.size()) {
-    case 1:
-        bod = components[ind]->getBody();
-        this->thisWorld->DestroyBody(bod);
-        break;
-    default:
-        bod = components[ind]->getBody();
-        this->thisWorld->DestroyBody(bod);
-        for(int i = ind+1; i < components.size(); i++){
+    bod = components[ind]->getBody();
+    this->thisWorld->DestroyBody(bod);
+    //might want to restrict the deletion if size = 1
+    components.erase(components.begin() + ind);
+
+    if(components.size() > 1){
+        for(int i = ind; i < components.size(); i++){
             bod = components[i]->getBody();
             bod->SetTransform(b2Vec2(-40, 0), 0);
         }
-        break;
     }
 }
 
