@@ -9,7 +9,8 @@ StackPuzzle test;
 GraphicsObjectTest::GraphicsObjectTest(QWidget *Parent) :
     GraphicsObject(Parent) {
     QSize s(100,100);
-    testpuzzle = new StackPuzzle(s);
+//    testpuzzle = new StackPuzzle(s);
+    testpuzzle = new TreePuzzle(s);
 }
 
 void GraphicsObjectTest::OnInit() {

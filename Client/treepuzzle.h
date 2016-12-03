@@ -2,7 +2,6 @@
 #define BINARYTREEPUZZLE_H
 #include <QGraphicsScene>
 #include <QWidget>
-#include <stack>
 #include <QObject>
 #include <puzzle.h>
 #include <QSize>

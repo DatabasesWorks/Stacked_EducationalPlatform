@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <iostream>
 #include <stackpuzzle.h>
+#include <treepuzzle.h>
 #include <sprite2dobject.h>
 #include <vector>
 #include <QSize>
@@ -16,7 +17,7 @@ public :
     explicit GraphicsObjectTest(QWidget *Parent = 0);
     void onInit();
     void onUpdate();
-    StackPuzzle * testpuzzle;
+    Puzzle * testpuzzle;
     std::vector<sf::ConvexShape>drawnSprites;
 
 private:
