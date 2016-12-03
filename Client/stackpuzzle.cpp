@@ -1,72 +1,52 @@
 #include "stackpuzzle.h"
 
+StackPuzzle::StackPuzzle() : Puzzle() {
 
-StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
-
-    b2Vec2 graf(0,1.1);
+    b2Vec2 graf(0,0.1); // gravity is set low here
     thisWorld->SetGravity(graf);
-    SpriteDefinition triangledef(300,10,b2_dynamicBody,"testbox");
-    triangledef.setShape(3,0,0);
-    sprite2dObject *triangle = new sprite2dObject(thisWorld,triangledef);
-    components.push_back(triangle);
 
+    //create a floor
     SpriteDefinition floordef(100,200, b2_staticBody,"testbox");
     floordef.setShape(4,1000,0); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
     sprite2dObject *floor = new sprite2dObject(thisWorld,floordef);
-    components.push_back(floor);
-
+    inactive_components.push_back(floor);
 
     //or alternatively
     for(int i = 0; i < 5; i++){
         this->addComponent("stack_"+i,4,100,5,100,-200+(i*35),b2_dynamicBody);
     }
-
-
-}
-
-StackPuzzle::StackPuzzle() : Puzzle() {
-
 }
 
 StackPuzzle::~StackPuzzle() {
 
 }
 
-void StackPuzzle::runAction(Action action){
-   std::string d  = action.description;
-
-   if(d == "pop"){
+void StackPuzzle::runAction(Qt::Key key){
+   if(key==Qt::Key_E){
        popAction();
    }
-   if(d == "push"){
+   if(key==Qt::Key_R){
        pushAction();
    }
-
 }
+
 std::string StackPuzzle::peekAction(){
    //need to extract component content string
    std::string s = "";
    return s;
 }
 
+#include <iostream>
 void StackPuzzle::popAction(){
-    b2Body * bod;
-    bod = components.front()->getBody();
-    bod->ApplyAngularImpulse(20, true);
+    if(components.size()<1)return;
+    std::cout << "popping" << std::endl;
+    sprite2dObject * obj = (components.front());
+    obj->push(sprite2dObject::up,7);
+    obj->push(sprite2dObject::right,10);
+    inactive_components.push_back(obj);
     components.erase(components.begin());
 }
 
 void StackPuzzle::pushAction(){
-//    b2BodyDef * myBody = new myBody;
-//    b2PolygonShape rectShape;
-//    rectShape.SetAsBox(2, 1);
-//    b2FixtureDef rectFixtureDef;
-//    rectFixtureDef.shape = &rectShape;
-//    rectFixtureDef.density = 1;
-
-//    myBody.position.Set(0, 0);
-//    sprite2dObject * sprite = new sprite2dObject("", *this->thisWorld, myBody);
-//    sprite->setFixture(rectFixtureDef);
-//    components.push_back(sprite);
-
+    addComponent("stack_"+components.size(),4,100,5,100,-200,b2_dynamicBody);
 }

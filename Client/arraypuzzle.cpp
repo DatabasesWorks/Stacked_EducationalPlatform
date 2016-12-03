@@ -1,6 +1,5 @@
 #include "arraypuzzle.h"
-
-ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size) {
+ArrayPuzzle::ArrayPuzzle() : Puzzle() {
     int x = 100;
     int y = -5;
     for(int i = 0; i < 5; i++){
@@ -20,12 +19,12 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size) {
     }
 }
 
-ArrayPuzzle::ArrayPuzzle() : Puzzle(){}
 
 ArrayPuzzle::~ArrayPuzzle() {}
 
-void ArrayPuzzle::runAction(Action action){
-    std::string d = action.description;
+void ArrayPuzzle::runAction(Qt::Key action){
+    //std::string d = action.description;
+    std::string d = "something";// "figured we can use keystrokes as a universal selector"
     int ind = 0;
     //maybe we can append the index to the end of the
     //description, remove it and use it as the index,

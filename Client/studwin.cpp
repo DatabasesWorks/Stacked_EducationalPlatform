@@ -17,7 +17,7 @@ StudWin::StudWin(QWidget *parent) :
 }
 
 StudWin::~StudWin() {
-    delete ui;
+    //delete ui;
 }
 
 void StudWin::setupLevels() {

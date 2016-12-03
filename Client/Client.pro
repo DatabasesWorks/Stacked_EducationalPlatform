@@ -53,8 +53,6 @@ SOURCES += main.cpp\
     loginwin.cpp \
     teachreg.cpp \
     studreg.cpp \
-    datastructure.cpp \
-    level.cpp \
     puzzle.cpp \
     usersocket.cpp \
     message.cpp \
@@ -65,9 +63,9 @@ SOURCES += main.cpp\
     hashtablepuzzle.cpp \
     stackpuzzle.cpp \
     sprite2dobject.cpp \
-    action.cpp \
     puzzlewindow.cpp \
-    spritedefinition.cpp
+    spritedefinition.cpp \
+    treepuzzle.cpp
 
 
 HEADERS  += client.h \
@@ -76,8 +74,6 @@ HEADERS  += client.h \
     loginwin.h \
     teachreg.h \
     studreg.h \
-    datastructure.h \
-    level.h \
     puzzle.h \
     usersocket.h \
     message.h \
@@ -89,9 +85,9 @@ HEADERS  += client.h \
     hashtablepuzzle.h \
     stackpuzzle.h \
     sprite2dobject.h \
-    action.h \
     puzzlewindow.h \
-    spritedefinition.h
+    spritedefinition.h \
+    treepuzzle.h
     exceptions.h
     #Box2D.h
 
