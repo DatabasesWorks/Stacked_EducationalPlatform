@@ -3,6 +3,8 @@
 #include <Box2D.h>
 #include <Box2D/Dynamics/b2Fixture.h>
 #include <Box2D/Dynamics/b2Body.h>
+#include <vector>
+#include <string>
 
 class SpriteDefinition
 {

@@ -43,11 +43,20 @@ void ArrayPuzzle::runAction(Action action){
 
 void ArrayPuzzle::deleteAtIndexAction(int ind){
     b2Body *bod;
-    bod = components[ind]->getBody();
-    bod->ApplyAngularImpulse(60, true);
-    //This will teleport the body to another location
-    //test the coordinates
-    bod->SetTransform(b2Vec2(10, 20), 0);
+    //Make sure no out of bounds is happening here
+    if(ind > 0 && components.size()>=2) {
+        bod = components[ind]->getBody();
+        //test the destroy body function
+        this->thisWorld->DestroyBody(bod);
+        //make sure the bod var is still available after destroy
+        bod = components[ind-1]->getBody();
+        bod->SetTransform(b2Vec2(40, 0), 0);
+    }
+    //move after index back one
+    if(components.size() >= ind+1) {
+        bod = components[ind+1]->getBody();
+        bod->SetTransform(b2Vec2(-40, 0), 0);
+    }
 }
 
 //void ArrayPuzzle::addAtIndexAction(int ind, sprite2dObject obj){
