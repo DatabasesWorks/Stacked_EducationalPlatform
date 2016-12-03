@@ -54,7 +54,6 @@ SOURCES += main.cpp\
     teachreg.cpp \
     studreg.cpp \
     datastructure.cpp \
-    level.cpp \
     puzzle.cpp \
     usersocket.cpp \
     message.cpp \
@@ -65,7 +64,6 @@ SOURCES += main.cpp\
     hashtablepuzzle.cpp \
     stackpuzzle.cpp \
     sprite2dobject.cpp \
-    action.cpp \
     puzzlewindow.cpp \
     spritedefinition.cpp
 
@@ -77,7 +75,6 @@ HEADERS  += client.h \
     teachreg.h \
     studreg.h \
     datastructure.h \
-    level.h \
     puzzle.h \
     usersocket.h \
     message.h \
@@ -89,7 +86,6 @@ HEADERS  += client.h \
     hashtablepuzzle.h \
     stackpuzzle.h \
     sprite2dobject.h \
-    action.h \
     puzzlewindow.h \
     spritedefinition.h
     exceptions.h

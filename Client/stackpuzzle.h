@@ -12,9 +12,8 @@ class StackPuzzle : public Puzzle
 {
 public:
     StackPuzzle();
-    StackPuzzle(QSize size);
     ~StackPuzzle();
-    void virtual runAction(Action action) override;
+    void virtual runAction(Qt::Key action) override;
 private:
     std::string peekAction();
     void popAction();

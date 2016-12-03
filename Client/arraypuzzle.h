@@ -18,7 +18,7 @@ public:
     ArrayPuzzle();
     ArrayPuzzle(QSize size);
     ~ArrayPuzzle();
-    void virtual runAction(Action action) override;
+    void virtual runAction(Qt::Key) override;
 private:
     void deleteAtIndexAction(int);
    // void addAtIndexAction(int, T);

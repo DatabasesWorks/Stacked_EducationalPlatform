@@ -16,27 +16,59 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
 {
     description.begin();
     //do something w/ description
-    sprite=new sf::Sprite;
     body = world->CreateBody(def);
-
 }
 
 sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) // call the super constructor
 {
-    sprite=new sf::Sprite;
     body = world->CreateBody(def.body);
-
     for(auto it = def.fixtures.begin(); it < def.fixtures.end(); it++){
         body->CreateFixture(*it);
     }
 }
 
-void sprite2dObject::setFixture(b2FixtureDef* def){
-    body->CreateFixture(def);
+void sprite2dObject::push(Direction d, int magnitude){
+
+    body->SetAwake(true);
+    switch (d) {
+       case left:
+       {
+           b2Vec2 vec(-1*magnitude,0);
+           body->ApplyForce(vec,body->GetPosition(),true);
+           break;
+       }
+       case right:
+       {
+           b2Vec2 vec(1*magnitude,0);
+           body->ApplyForce(vec,body->GetPosition(),true);
+           break;
+       }
+       case up:
+       {
+           b2Vec2 vec(0,-1*magnitude);
+           body->ApplyLinearImpulse(vec,body->GetPosition(),true);
+           break;
+       }
+       case down:
+       {
+           b2Vec2 vec(0,-1*magnitude);
+           body->ApplyLinearImpulse(vec,body->GetPosition(),true);
+           break;
+       }
+       default:
+       {
+           break;
+       }
+    }
 }
 
-void sprite2dObject::setSprite(sf::Image image){
-  // sprite = new sf::Sprite(sf::Texture::loadFromImage(image)));
+void sprite2dObject::connect(sprite2dObject * other, b2World* world, int length){
+     b2DistanceJointDef jd;
+     jd.bodyA=this->getBody();
+     jd.bodyB=other->getBody();
+     jd.length=length;
+     b2Joint * joint = world->CreateJoint(&jd);
+     joints.push_back(joint);
 }
 
 sf::ConvexShape *  sprite2dObject::getShape(){
@@ -62,6 +94,8 @@ sf::ConvexShape *  sprite2dObject::getShape(){
            }
 
            shapeToFill->setRotation(180/b2_pi * body->GetAngle());
+           width = shapeToFill->getLocalBounds().width;
+           height = shapeToFill->getLocalBounds().height;
            return shapeToFill;
          }
     }

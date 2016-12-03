@@ -14,12 +14,13 @@ class Puzzle
 {
 public:
 
-    Puzzle(QSize);
     Puzzle();
     ~Puzzle();
     //managing components
     void addComponent(sprite2dObject*);
+    void addInactiveComponent(sprite2dObject*);
     void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type);
+    void addInactiveComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type);
     virtual sprite2dObject getComponent(unsigned int);
     std::vector<sprite2dObject*> getAllComponents();
     std::vector<sprite2dObject*> getComponents();
@@ -27,10 +28,11 @@ public:
     int getnumComponents();
     void step(float time);
     //polymorphic stuff
-    virtual void runAction(Action action);
+    virtual void runAction(Qt::Key);
 
 protected:
     std::vector<sprite2dObject*> components;
+    std::vector<sprite2dObject*> inactive_components;
     b2World *thisWorld;
 
 private:
