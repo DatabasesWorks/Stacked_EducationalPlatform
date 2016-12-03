@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/Joints/b2DistanceJoint.h>
-#include <Box2D.h>
 #include <Box2D/Box2D.h>
 #include <exceptions.h>
 #include <spritedefinition.h>
