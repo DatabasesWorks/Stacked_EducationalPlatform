@@ -67,7 +67,8 @@ SOURCES += main.cpp\
     sprite2dobject.cpp \
     action.cpp \
     puzzlewindow.cpp \
-    spritedefinition.cpp
+    spritedefinition.cpp \
+    binarytreepuzzle.cpp
 
 
 HEADERS  += client.h \
@@ -91,7 +92,8 @@ HEADERS  += client.h \
     sprite2dobject.h \
     action.h \
     puzzlewindow.h \
-    spritedefinition.h
+    spritedefinition.h \
+    binarytreepuzzle.h
     exceptions.h
     #Box2D.h
 

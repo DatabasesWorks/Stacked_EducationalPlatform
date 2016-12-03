@@ -10,7 +10,6 @@
 #include "QPushButton"
 #include <usersocket.h>
 #include <iostream>
-//#include <Box2D.h>
 #include <graphicsobjecttest.h>
 
 Client::Client(QWidget *parent) :
@@ -59,8 +58,8 @@ bool Client::sendLogin(QString user, QString pass) {
 }
 
 int Client::sendReg(QString data) {
-    //send payload here
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
+
     try{
         Message msg = sock.sendPayload("register", data.toStdString());
     }catch (reguserexception){
