@@ -29,29 +29,31 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) // call the
 
 void sprite2dObject::push(Direction d, int magnitude){
 
+
+    int scale = body->GetMass()*magnitude;
     body->SetAwake(true);
     switch (d) {
        case left:
        {
-           b2Vec2 vec(-1*magnitude,0);
+           b2Vec2 vec(-1*scale,0);
            body->ApplyForce(vec,body->GetPosition(),true);
            break;
        }
        case right:
        {
-           b2Vec2 vec(1*magnitude,0);
+           b2Vec2 vec(1*scale,0);
            body->ApplyForce(vec,body->GetPosition(),true);
            break;
        }
        case up:
        {
-           b2Vec2 vec(0,-1*magnitude);
+           b2Vec2 vec(0,-1*scale);
            body->ApplyLinearImpulse(vec,body->GetPosition(),true);
            break;
        }
        case down:
        {
-           b2Vec2 vec(0,-1*magnitude);
+           b2Vec2 vec(0,-1*scale);
            body->ApplyLinearImpulse(vec,body->GetPosition(),true);
            break;
        }
