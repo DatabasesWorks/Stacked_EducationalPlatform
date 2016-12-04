@@ -7,6 +7,8 @@ sprite2dObject::sprite2dObject(){
 
 #include <spritedefinition.h>
 sprite2dObject::~sprite2dObject(){
+    destroy();
+
 }
 
 sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) // call the super constructor
@@ -24,6 +26,10 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) // call the
     }
     color = def.color;
     name = def.name;
+}
+
+void sprite2dObject::destroy(){
+   body=nullptr;
 }
 
 void sprite2dObject::moveBody(Direction d, int magnitude){
@@ -70,6 +76,20 @@ void sprite2dObject::connect(sprite2dObject * other, b2World* world, int length)
      jd.length=length;
      b2Joint * joint = world->CreateJoint(&jd);
      joints.push_back(joint);
+}
+
+void sprite2dObject::ignoreObject(){
+     b2Fixture * fi = body->GetFixtureList();
+     b2Filter fill;
+     fill.categoryBits=0;
+     fill.maskBits=0;
+     fi->SetFilterData(fill);
+     ignore = true;
+     //call a timer that will give this a lifespan
+}
+
+bool sprite2dObject::isIgnored(){
+    return ignore;
 }
 
 sf::ConvexShape * sprite2dObject::getShape(){

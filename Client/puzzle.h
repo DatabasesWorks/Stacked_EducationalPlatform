@@ -7,7 +7,7 @@
 #include <Box2D/Box2D.h>
 #include <sprite2dobject.h>
 #include <iterator>
-
+#include <string>
 
 class Puzzle
 {
@@ -16,17 +16,19 @@ public:
     Puzzle();
     ~Puzzle();
     //managing components
-    void addComponent(sprite2dObject*);
-    void addInactiveComponent(sprite2dObject*);
     void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type);
-    void addInactiveComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type);
-    virtual sprite2dObject getComponent(unsigned int);
-    std::vector<sprite2dObject*> getAllComponents();
-    std::vector<sprite2dObject*> getComponents();
     void changeComponentImage(unsigned int, sf::Image);
-    int getnumComponents();
+    void addComponent(SpriteDefinition);
+    std::vector<sprite2dObject*> getAllComponents();
+
+    //garbage collection monitored set
+    void garbageCollection();
+    void addIgnoredComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type);
+
+    //phy engine step
     void step(float time);
     //polymorphic stuff
+
     virtual void runAction(Qt::Key);
 
 protected:
@@ -37,9 +39,7 @@ protected:
     void establishFloor();
 
 private:
-
     QSize size;
-    int numComponents;
 
 };
 

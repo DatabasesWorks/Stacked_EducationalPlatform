@@ -10,6 +10,11 @@
 #include <cmath>
 #include <math.h>
 #include <vector>
+#include <functional>
+#include <chrono>
+#include <future>
+#include <cstdio>
+
 
 // A class to integrate SFML sprites with Box2D shapes and bodies.
 class sprite2dObject{
@@ -25,10 +30,14 @@ public:
     sprite2dObject(b2World*,SpriteDefinition);
     b2Body * getBody();
     sf::ConvexShape* getShape();
+    void destroy();
     void moveBody(Direction, int);
     void connect(sprite2dObject*,b2World*,int);
+    void ignoreObject();
+    bool isIgnored();
 
 private:
+    bool ignore = false;
     std::vector<b2Joint*> joints;
     std::string name;
     sf::Color color;

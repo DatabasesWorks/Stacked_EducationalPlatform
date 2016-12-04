@@ -13,6 +13,7 @@
 #include <QString>
 #include <QKeyEvent>
 #include <SFML/Graphics.hpp>
+#include <QTimer>
 
 
 class PuzzleWindow : public GraphicsObject
@@ -27,6 +28,8 @@ public:
 private:
     std::vector<sprite2dObject*> components;
     Puzzle* puzzle;
+    QTimer slowUpdateTimer;
+
     void OnInit();
     void OnUpdate();
 
@@ -35,6 +38,9 @@ private:
     sf::Texture tex;
     void updateSet();
     float rot=1;
+
+protected slots:
+    void SlowUpdate();
 
 protected:
     void keyPressEvent(QKeyEvent*);

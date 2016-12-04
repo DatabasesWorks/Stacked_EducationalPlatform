@@ -5,6 +5,8 @@
 PuzzleWindow::PuzzleWindow(QWidget *Parent) : GraphicsObject(Parent)
 {
     puzzle = 0;
+    QObject::connect(&slowUpdateTimer,&QTimer::timeout, this, &PuzzleWindow::SlowUpdate);
+    slowUpdateTimer.start(1000);
 }
 
 void PuzzleWindow::OnInit()
@@ -19,8 +21,14 @@ void PuzzleWindow::updateSet(){
     std::vector<sprite2dObject*> objs = puzzle->getAllComponents();
     for(auto ptr = objs.begin(); ptr < objs.end(); ptr++){
         sprite2dObject obj = (**ptr);
-        drawnSprites.push_back(*obj.getShape());
-    }
+        if(obj.getBody()!=nullptr){
+            drawnSprites.push_back(*obj.getShape());
+        }
+     }
+}
+
+void PuzzleWindow::SlowUpdate(){
+    puzzle->garbageCollection();
 }
 
 //This is called by a timer and will draw every component into the set puzzle
