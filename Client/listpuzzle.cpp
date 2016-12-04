@@ -1,26 +1,28 @@
 #include "listpuzzle.h"
 
-template <class T>
-void ListPuzzle<T>::pushFront(T val){
-    l.push_front(val);
+ListPuzzle::ListPuzzle() : Puzzle() {
+    establishGravity();
+    establishFloor();
+
+    this->addComponent("list body", 4, 10, 10, 100, -200, b2_dynamicBody);
 }
 
-template <class T>
-void ListPuzzle<T>::pushBack(T val){
-    l.push_back(val);
+void ListPuzzle::pushFront(){
+
 }
 
-template <class T>
-void ListPuzzle<T>::popFront(){
-    l.pop_front();
+void ListPuzzle::pushBack(){
+
 }
 
-template <class T>
-void ListPuzzle<T>::popBack(){
-    l.pop_back();
+void ListPuzzle::popFront(){
+
 }
 
-template <class T>
-void ListPuzzle<T>::sortList(){
-    l.sort();
+void ListPuzzle::popBack(){
+
+}
+
+void ListPuzzle::sortList(){
+
 }

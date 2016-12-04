@@ -7,6 +7,7 @@
 #include <stackpuzzle.h>
 #include <treepuzzle.h>
 #include <arraypuzzle.h>
+#include <listpuzzle.h>
 
 namespace Ui {
 class StudWin;
