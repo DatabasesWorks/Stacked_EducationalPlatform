@@ -18,8 +18,8 @@ public:
     ~SpriteDefinition();
     std::string name;
     sf::Color color;
-    void setDensity(int);
-    void setFriction(int);
+    void setDensity(double);
+    void setFriction(double);
     void setPosition(int,int);
     void setInitialVelocity(double,b2Vec2);
     void setColor(sf::Color);

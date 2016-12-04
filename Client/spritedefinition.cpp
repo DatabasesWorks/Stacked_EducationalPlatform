@@ -33,11 +33,11 @@ void SpriteDefinition::setType(b2BodyType type){
     body->type=type;
 }
 
-void SpriteDefinition::setDensity(int set){
+void SpriteDefinition::setDensity(double set){
    fixture->density=set;
 }
 
-void SpriteDefinition::setFriction(int set){
+void SpriteDefinition::setFriction(double set){
    fixture->friction=set;
 }
 

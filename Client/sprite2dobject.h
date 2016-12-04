@@ -27,11 +27,14 @@ public:
     sf::ConvexShape getShape();
     void destroy();
     void moveBody(Direction, int);
+    void applyAngularForce(Direction,double);
     void connect(sprite2dObject*,b2World*,int);
     void ignoreObject();
     bool isIgnored();
     void changeColor(sf::Color color);
     void setName(std::string);
+    void setFriction(double);
+    void setDensity(double);
     void mark();
     bool marked();
     b2Vec2 getSize();

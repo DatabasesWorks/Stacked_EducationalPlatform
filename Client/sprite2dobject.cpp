@@ -66,6 +66,11 @@ void sprite2dObject::moveBody(Direction d, int magnitude){
     }
 }
 
+void sprite2dObject::applyAngularForce(Direction d, double magnitude){
+    if(d==right||d==down){
+        body->ApplyAngularImpulse(magnitude,true);
+    }else if(d==left||d==up) return;
+}
 
 void sprite2dObject::connect(sprite2dObject * other, b2World* world, int length){
      b2DistanceJointDef jd;
@@ -122,6 +127,14 @@ sf::ConvexShape sprite2dObject::getShape(){
 
 void sprite2dObject::setName(std::string n){
     name=n;
+}
+
+void sprite2dObject::setFriction(double f){
+    body->GetFixtureList()->SetFriction(f);
+}
+
+void sprite2dObject::setDensity(double f){
+    body->GetFixtureList()->SetDensity(f);
 }
 
 b2Vec2 sprite2dObject::getSize(){

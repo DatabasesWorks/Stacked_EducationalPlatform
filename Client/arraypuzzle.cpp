@@ -6,6 +6,7 @@ ArrayPuzzle::ArrayPuzzle() : Puzzle() {
 
     SpriteDefinition floordef(100, 200, b2_staticBody, "testbox");
     floordef.setShape(4, 1500, 0);
+
     sprite2dObject *floor = new sprite2dObject(thisWorld, floordef);
     inactive_components.push_back(floor);
 
@@ -53,6 +54,7 @@ void ArrayPuzzle::deleteAtIndexAction(){
     if(components.size() > 1){
         for(int i = activeIndex; i < components.size(); i++){
             sprite2dObject * obj = (components[i]);
+
             obj->moveBody(sprite2dObject::left, 15);
         }
     }
