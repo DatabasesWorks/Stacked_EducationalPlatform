@@ -56,6 +56,14 @@ void ArrayPuzzle::deleteAtIndexAction(){
 }
 
 void ArrayPuzzle::addAtIndexAction(){
+    b2Body *bod;
+    int x;
+    bod = components[activeIndex]->getBody();
+    x = bod->GetPosition().x;
+    this->thisWorld->DestroyBody(bod);
+    //might want to restrict the deletion if size = 1
+    components.erase(components.begin() + activeIndex);
+    addComponent("array_"+activeIndex, 4, 100, 25, x, -200, b2_dynamicBody);
 }
 
 void ArrayPuzzle::sortArrayAction(){
