@@ -57,7 +57,6 @@ SOURCES += main.cpp\
     usersocket.cpp \
     message.cpp \
     graphicsobject.cpp \
-    graphicsobjecttest.cpp \
     arraypuzzle.cpp \
     listpuzzle.cpp \
     hashtablepuzzle.cpp \
@@ -78,7 +77,6 @@ HEADERS  += client.h \
     usersocket.h \
     message.h \
     graphicsobject.h \
-    graphicsobjecttest.h \
     exceptions.h \
     arraypuzzle.h \
     listpuzzle.h \

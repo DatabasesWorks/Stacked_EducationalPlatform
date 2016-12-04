@@ -4,7 +4,7 @@
 #include <QSize>
 #include <QPoint>
 #include <QImage>
-#include <Box2D.h>
+#include <Box2D/Box2D.h>
 #include <sprite2dobject.h>
 #include <iterator>
 
@@ -33,6 +33,8 @@ protected:
     std::vector<sprite2dObject*> components;
     std::vector<sprite2dObject*> inactive_components;
     b2World *thisWorld;
+    void establishGravity();
+    void establishFloor();
 
 private:
 

@@ -19,9 +19,11 @@ public:
     ~ArrayPuzzle();
     void virtual runAction(Qt::Key) override;
 private:
-    void deleteAtIndexAction(int);
-   // void addAtIndexAction(int, T);
+    int activeIndex;
+    void deleteAtIndexAction();
+    void addAtIndexAction();
     void sortArrayAction();
+
 
 };
 

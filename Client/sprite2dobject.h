@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/Joints/b2DistanceJoint.h>
-#include <Box2D.h>
 #include <Box2D/Box2D.h>
 #include <exceptions.h>
 #include <spritedefinition.h>
@@ -26,7 +25,7 @@ public:
     sprite2dObject(b2World*,SpriteDefinition);
     b2Body * getBody();
     sf::ConvexShape* getShape();
-    void push(Direction, int);
+    void moveBody(Direction, int);
     void connect(sprite2dObject*,b2World*,int);
 
 private:

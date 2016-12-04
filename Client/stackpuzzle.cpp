@@ -56,8 +56,8 @@ void StackPuzzle::popAction(){
     if(components.size()<1)return;
     std::cout << "popping" << std::endl;
     sprite2dObject * obj = (components.front());
-    obj->push(sprite2dObject::up,7);
-    obj->push(sprite2dObject::right,10);
+    obj->moveBody(sprite2dObject::up,7);
+    obj->moveBody(sprite2dObject::right,10);
     inactive_components.push_back(obj);
     components.erase(components.begin());
 }

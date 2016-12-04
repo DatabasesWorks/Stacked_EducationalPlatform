@@ -3,7 +3,6 @@
 #include "client.h"
 #include <vector>
 #include "qstandarditemmodel.h"
-#include <graphicsobjecttest.h>
 
 StudWin::StudWin(QWidget *parent) :
     QWidget(parent),
@@ -12,23 +11,32 @@ StudWin::StudWin(QWidget *parent) :
     levelshow = true;
 
     ui->userLabel->setText("Welcome: TestUser");
-
     setupLevels();
+    pw = new PuzzleWindow();
+    pw->setPuzzle(new StackPuzzle());
+
+    QGridLayout *lay = new QGridLayout(this);
+    lay->addWidget(pw);
+    ui->mainGameWidget->setLayout(lay);
 }
 
 StudWin::~StudWin() {
-    //delete ui;
+    delete ui;
 }
 
 void StudWin::setupLevels() {
-    std::vector<QString> dataList;
-    std::vector<QString> levelList;
-    QStandardItemModel model;
+//    std::vector<QString> dataList;
+//    std::vector<QString> levelList;
+//    QStandardItemModel model;
 
-    for (int i = 0; i < 5; i++) {
-        dataList.push_back("DataStructure " + i);
-        levelList.push_back("Level " + i);
-    }
+//    for (int i = 0; i < 5; i++) {
+//        dataList.push_back("DataStructure " + i);
+//        levelList.push_back("Level " + i);
+//    }
+    ui->listWidget->addItem("stack");
+    ui->listWidget->addItem("array");
+    ui->listWidget->addItem("tree");
+    ui->listWidget->addItem("list");
 }
 
 void StudWin::on_hideButton_clicked() {
@@ -51,10 +59,20 @@ void StudWin::on_logoutButton_clicked() {
     //emit signal to release sources?
 }
 
-void StudWin::setMainGameWidget(QWidget *widget)
+void StudWin::on_listWidget_currentRowChanged(int currentRow)
 {
-
-    QGridLayout *layout = new QGridLayout(this);
-    layout->addWidget(widget);
-    ui->mainGameWidget->setLayout(layout);
+    switch(currentRow){
+        case 0:
+            pw->setPuzzle(new StackPuzzle());
+            break;
+        case 1:
+            pw->setPuzzle(new ArrayPuzzle());
+            break;
+        case 2:
+            pw->setPuzzle(new TreePuzzle());
+            break;
+        case 3:
+            pw->setPuzzle(new ListPuzzle());
+            break;
+    }
 }
