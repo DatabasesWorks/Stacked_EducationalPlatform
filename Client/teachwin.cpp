@@ -26,8 +26,6 @@ void TeachWin::on_logoutButton_clicked() {
 }
 
 void TeachWin::updateStudents() {
-
-
     ui->listWidget->clear();
     Client *par = (Client *)this->parentWidget();
     QVector<QString> students = par->getStudents("class");
