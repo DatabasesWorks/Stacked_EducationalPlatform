@@ -7,23 +7,20 @@ StackPuzzle::StackPuzzle() : Puzzle() {
 
     //create a floor
     SpriteDefinition floord(0,200, b2_staticBody,"floor");
-    SpriteDefinition leftwalld(0,0, b2_staticBody,"leftwalld");
-    SpriteDefinition rightwalld(200,0, b2_staticBody,"rightwalld");
-
     floord.setShape(4,500,0);
     floord.setColor(sf::Color::Blue);
+
+    addIgnoredComponent(floord);
+
+    SpriteDefinition leftwalld(0,0, b2_staticBody,"leftwalld");
     leftwalld.setShape(4,0,500);
     leftwalld.setColor(sf::Color::Red);
+    addIgnoredComponent(leftwalld);
+
+    SpriteDefinition rightwalld(200,0, b2_staticBody,"rightwalld");
     rightwalld.setShape(4,0,500);
     rightwalld.setColor(sf::Color::White);
-
-    sprite2dObject *floor = new sprite2dObject(thisWorld,floord);
-    sprite2dObject *lwall = new sprite2dObject(thisWorld,leftwalld);
-    sprite2dObject *rwall = new sprite2dObject(thisWorld,rightwalld);
-
-    inactive_components.push_back(floor);
-    inactive_components.push_back(lwall);
-    inactive_components.push_back(rwall);
+    addIgnoredComponent(rightwalld);
 
     //or alternatively
     for(int i = 0; i < 5; i++){

@@ -24,6 +24,7 @@ public:
     //garbage collection monitored set
     void garbageCollection();
     void addIgnoredComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type);
+    void addIgnoredComponent(SpriteDefinition);
 
     //phy engine step
     void step(float time);

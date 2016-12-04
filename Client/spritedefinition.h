@@ -11,16 +11,18 @@ class SpriteDefinition
 {
 public:
     b2BodyDef * body;
-    std::vector<b2FixtureDef *> fixtures;
+    b2FixtureDef * fixture;
     SpriteDefinition(int, int, b2BodyType, std::string);
     SpriteDefinition();
     ~SpriteDefinition();
     std::string name;
     sf::Color color;
+    void setDensity(int);
+    void setFriction(int);
+    void setPosition(int,int);
+    void setInitialVelocity(double,b2Vec2);
     void setColor(sf::Color);
-    void friction(bool);
     void setShape(int,int,int);
-
 };
 
 #endif // SPRITEDEFINITION_H

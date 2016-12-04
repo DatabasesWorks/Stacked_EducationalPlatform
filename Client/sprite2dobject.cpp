@@ -8,7 +8,6 @@ sprite2dObject::sprite2dObject(){
 #include <spritedefinition.h>
 sprite2dObject::~sprite2dObject(){
     destroy();
-
 }
 
 sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) // call the super constructor
@@ -21,9 +20,7 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
 sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) // call the super constructor
 {
     body = world->CreateBody(def.body);
-    for(auto it = def.fixtures.begin(); it < def.fixtures.end(); it++){
-        body->CreateFixture(*it);
-    }
+    body->CreateFixture(def.fixture);
     color = def.color;
     name = def.name;
 }
@@ -32,11 +29,15 @@ void sprite2dObject::destroy(){
    body=nullptr;
 }
 
-void sprite2dObject::moveBody(Direction d, int magnitude){
+void sprite2dObject::changeColor(sf::Color color){
+   this->color=color;
+}
 
+void sprite2dObject::moveBody(Direction d, int magnitude){
 
     int scale = body->GetMass()*magnitude;
     body->SetAwake(true);
+
     switch (d) {
        case left:
        {
@@ -68,6 +69,7 @@ void sprite2dObject::moveBody(Direction d, int magnitude){
        }
     }
 }
+
 
 void sprite2dObject::connect(sprite2dObject * other, b2World* world, int length){
      b2DistanceJointDef jd;
@@ -121,6 +123,15 @@ sf::ConvexShape * sprite2dObject::getShape(){
          }
     }
     return nullptr;
+}
+
+void sprite2dObject::setName(std::string n){
+    name=n;
+}
+
+b2Vec2 sprite2dObject::getSize(){
+    b2Vec2 vec(width,height);
+    return vec;
 }
 
 b2Body * sprite2dObject::getBody(){

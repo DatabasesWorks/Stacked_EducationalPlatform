@@ -36,7 +36,7 @@ void PuzzleWindow::SlowUpdate(){
 void PuzzleWindow::OnUpdate()
 {
     //Draw sprite on window
-    puzzle->step(.09);
+    puzzle->step(1/30.0f);
     updateSet();
     for(auto it = drawnSprites.begin(); it < drawnSprites.end(); it++)
     {

@@ -10,7 +10,8 @@ Puzzle::~Puzzle(){
 }
 
 void Puzzle::step(float time){
-   this->thisWorld->Step(time,1,1);
+   thisWorld->Step(time,10,10);
+   //apparently there are performance issues when the last two numbers are < 10
 }
 
 void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type){
@@ -20,7 +21,7 @@ void Puzzle::addComponent(std::string name, int points, int width, int height, i
     components.push_back(temp);
 }
 
-void Puzzle::addIgnoredComponent(std::__cxx11::string name, int points, int width, int height, int x, int y, b2BodyType type){
+void Puzzle::addIgnoredComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type){
     SpriteDefinition tempdef(x,y, type,name);
     tempdef.setShape(points,width,height); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
     sprite2dObject *temp = new sprite2dObject(thisWorld,tempdef);
@@ -31,6 +32,12 @@ void Puzzle::addComponent(SpriteDefinition def){
     sprite2dObject * temp = new sprite2dObject(thisWorld,def);
     components.push_back(temp);
 }
+
+void Puzzle::addIgnoredComponent(SpriteDefinition def){
+    sprite2dObject * temp = new sprite2dObject(thisWorld,def);
+    inactive_components.push_back(temp);
+}
+
 
 //polymorphic stuff
 void Puzzle::runAction(Qt::Key){}
@@ -56,7 +63,6 @@ void Puzzle::establishFloor() {
     sprite2dObject *floor = new sprite2dObject(thisWorld,floordef);
     inactive_components.push_back(floor);
 }
-
 
 //here be dragons.
 void Puzzle::garbageCollection(){

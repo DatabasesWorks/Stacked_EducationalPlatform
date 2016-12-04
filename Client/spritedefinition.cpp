@@ -4,7 +4,9 @@
 
 SpriteDefinition::SpriteDefinition(int x, int y, b2BodyType type, std::string s){
     body = new b2BodyDef;
+    fixture = new b2FixtureDef;
     body->active=true;
+    body->allowSleep=true;
     body->type = type ;
     body->position.x=x;
     body->position.y=y;
@@ -17,30 +19,34 @@ SpriteDefinition::SpriteDefinition(){
     body->active=true;
 }
 
-
 SpriteDefinition::~SpriteDefinition(){
 
 }
 
-
-void SpriteDefinition::friction(bool yes){
-    b2FixtureDef * def = (fixtures.front());
-    if(yes){
-        def->friction=1;
-    }else if (!yes) {
-        def->friction=0;
-    }
-
-
+void SpriteDefinition::setInitialVelocity(double angular, b2Vec2 linear){
+    body->angularVelocity=angular;
+    body->linearVelocity=linear;
 }
-void SpriteDefinition::setColor(sf::Color color){
-   this->color=color;
+
+void SpriteDefinition::setPosition(int x, int y){
+    body->position.Set(x,y);
+}
+
+void SpriteDefinition::setDensity(int set){
+   fixture->density=set;
+}
+
+void SpriteDefinition::setFriction(int set){
+   fixture->friction=set;
+}
+
+void SpriteDefinition::setColor(sf::Color c){
+   color=c;
 }
 
 void SpriteDefinition::setShape(int count, int width, int height){
     b2PolygonShape * shape = new b2PolygonShape;
-    b2FixtureDef * def = new b2FixtureDef;
-    def->density=1;
+    fixture->density=1;
 
     //SETUP
     if(width<9)width=10; // filter bad input
@@ -69,6 +75,5 @@ void SpriteDefinition::setShape(int count, int width, int height){
 
     //CREATE SHAPE and return
     shape->Set(&*points.begin(),count);
-    def->shape = shape;
-    fixtures.push_back(def);
+    fixture->shape = shape;
 }

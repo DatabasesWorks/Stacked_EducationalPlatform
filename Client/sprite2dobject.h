@@ -35,6 +35,9 @@ public:
     void connect(sprite2dObject*,b2World*,int);
     void ignoreObject();
     bool isIgnored();
+    void changeColor(sf::Color color);
+    void setName(std::string);
+    b2Vec2 getSize();
 
 private:
     bool ignore = false;
