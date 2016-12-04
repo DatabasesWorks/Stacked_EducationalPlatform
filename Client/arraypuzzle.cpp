@@ -12,42 +12,51 @@ ArrayPuzzle::ArrayPuzzle() : Puzzle() {
     for(int i = 0; i < 5; i++){
         this->addComponent("array_"+i, 4, 100, 25, 100+(i*75), -200, b2_dynamicBody);
     }
+    activeIndex = 0;
 }
 
 
 ArrayPuzzle::~ArrayPuzzle() {}
 
 void ArrayPuzzle::runAction(Qt::Key key){
-    std::string d = "something";// "figured we can use keystrokes as a universal selector"
-    int ind = 0;
+    if(key == Qt::Key_Left){
+        if(activeIndex != 0){
+            activeIndex--;
+        }
+    }
+    if(key == Qt::Key_Right){
+        if(activeIndex < components.size()-1){
+            activeIndex++;
+        }
+    }
     if(key == Qt::Key_E){
-        deleteAtIndexAction(ind);
+        deleteAtIndexAction();
     }
     if(key == Qt::Key_R){
-       // addAtIndexAction(ind, );
+        addAtIndexAction();
     }
     if(key == Qt::Key_S){
         sortArrayAction();
     }
 }
 
-void ArrayPuzzle::deleteAtIndexAction(int ind){
+void ArrayPuzzle::deleteAtIndexAction(){
     b2Body *bod;
-    bod = components[ind]->getBody();
+    bod = components[activeIndex]->getBody();
     this->thisWorld->DestroyBody(bod);
     //might want to restrict the deletion if size = 1
-    components.erase(components.begin() + ind);
+    components.erase(components.begin() + activeIndex);
 
     if(components.size() > 1){
-        for(int i = ind; i < components.size(); i++){
-            bod = components[i]->getBody();
-            bod->SetTransform(b2Vec2(-40, 0), 0);
+        for(int i = activeIndex; i < components.size(); i++){
+            sprite2dObject * obj = (components[i]);
+            obj->moveBody(sprite2dObject::left, 15);
         }
     }
 }
 
-//void ArrayPuzzle::addAtIndexAction(int ind, sprite2dObject obj){
-//}
+void ArrayPuzzle::addAtIndexAction(){
+}
 
 void ArrayPuzzle::sortArrayAction(){
 }

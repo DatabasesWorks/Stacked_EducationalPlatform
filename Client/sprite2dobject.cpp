@@ -27,7 +27,7 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) // call the
     }
 }
 
-void sprite2dObject::push(Direction d, int magnitude){
+void sprite2dObject::moveBody(Direction d, int magnitude){
 
 
     int scale = body->GetMass()*magnitude;

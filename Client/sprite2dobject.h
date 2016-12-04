@@ -25,7 +25,7 @@ public:
     sprite2dObject(b2World*,SpriteDefinition);
     b2Body * getBody();
     sf::ConvexShape* getShape();
-    void push(Direction, int);
+    void moveBody(Direction, int);
     void connect(sprite2dObject*,b2World*,int);
 
 private:
