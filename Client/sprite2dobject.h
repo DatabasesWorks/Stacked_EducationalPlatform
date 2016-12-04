@@ -29,7 +29,7 @@ public:
     sprite2dObject(std::string,b2World*, b2BodyDef*);
     sprite2dObject(b2World*,SpriteDefinition);
     b2Body * getBody();
-    sf::ConvexShape* getShape();
+    sf::ConvexShape getShape();
     void destroy();
     void moveBody(Direction, int);
     void connect(sprite2dObject*,b2World*,int);

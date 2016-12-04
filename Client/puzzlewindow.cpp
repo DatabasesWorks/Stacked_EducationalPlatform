@@ -22,7 +22,7 @@ void PuzzleWindow::updateSet(){
     for(auto ptr = objs.begin(); ptr < objs.end(); ptr++){
         sprite2dObject obj = (**ptr);
         if(obj.getBody()!=nullptr){
-            drawnSprites.push_back(*obj.getShape());
+            drawnSprites.push_back(obj.getShape());
         }
      }
 }
