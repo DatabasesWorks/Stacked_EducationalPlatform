@@ -13,7 +13,9 @@ StudWin::StudWin(QWidget *parent) :
     ui->userLabel->setText("Welcome: TestUser");
     setupLevels();
     pw = new PuzzleWindow();
-    pw->setPuzzle(new StackPuzzle());
+    pw->setPuzzle(puzzles.front());
+    pw->setFocus();
+
 
     QGridLayout *lay = new QGridLayout(this);
     lay->addWidget(pw);
@@ -22,6 +24,9 @@ StudWin::StudWin(QWidget *parent) :
 
 StudWin::~StudWin() {
     delete ui;
+    for(auto it = puzzles.begin(); it < puzzles.end(); it++){
+        delete *it;
+    }
 }
 
 void StudWin::setupLevels() {
@@ -33,6 +38,13 @@ void StudWin::setupLevels() {
 //        dataList.push_back("DataStructure " + i);
 //        levelList.push_back("Level " + i);
 //    }
+
+
+    puzzles.push_back(new StackPuzzle);
+    puzzles.push_back(new ArrayPuzzle);
+    puzzles.push_back(new TreePuzzle);
+    puzzles.push_back(new ListPuzzle);
+
     ui->listWidget->addItem("stack");
     ui->listWidget->addItem("array");
     ui->listWidget->addItem("tree");
@@ -61,18 +73,23 @@ void StudWin::on_logoutButton_clicked() {
 
 void StudWin::on_listWidget_currentRowChanged(int currentRow)
 {
-    switch(currentRow){
-        case 0:
-            pw->setPuzzle(new StackPuzzle());
-            break;
-        case 1:
-            pw->setPuzzle(new ArrayPuzzle());
-            break;
-        case 2:
-            pw->setPuzzle(new TreePuzzle());
-            break;
-        case 3:
-            pw->setPuzzle(new ListPuzzle());
-            break;
+    if(currentRow>0&&currentRow<4){
+        pw->setPuzzle(puzzles[currentRow]);
+        pw->setFocus();
     }
+    // memory leak here.
+//    switch(currentRow){
+//        case 0:
+//            pw->setPuzzle(new StackPuzzle);
+//            break;
+//        case 1:
+//            pw->setPuzzle(new ArrayPuzzle);
+//            break;
+//        case 2:
+//            pw->setPuzzle(new TreePuzzle);
+//            break;
+//        case 3:
+//            pw->setPuzzle(new ListPuzzle);
+//            break;
+//    }
 }

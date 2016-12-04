@@ -7,6 +7,10 @@ ListPuzzle::ListPuzzle() : Puzzle() {
     this->addComponent("list body", 4, 10, 10, 100, 50, b2_dynamicBody);
 }
 
+ListPuzzle::~ListPuzzle(){
+
+}
+
 void ListPuzzle::runAction(Qt::Key key) {
     if (key == Qt::Key_Left) {
         pushFront();

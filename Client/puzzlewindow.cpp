@@ -20,9 +20,9 @@ void PuzzleWindow::updateSet(){
     drawnSprites.clear();
     std::vector<sprite2dObject*> objs = puzzle->getAllComponents();
     for(auto ptr = objs.begin(); ptr < objs.end(); ptr++){
-        sprite2dObject obj = (**ptr);
-        if(obj.getBody()!=nullptr){
-            drawnSprites.push_back(obj.getShape());
+        sprite2dObject * obj = (*ptr);
+        if(obj->getBody()!=nullptr){
+            drawnSprites.push_back(obj->getShape());
         }
      }
 }

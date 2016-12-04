@@ -7,6 +7,14 @@ Puzzle::Puzzle() {
 
 Puzzle::~Puzzle(){
     delete thisWorld;
+    for(auto it = inactive_components.begin(); it < inactive_components.end(); it++){
+        sprite2dObject * obj = *it;
+        delete obj;
+    }
+    for(auto it = components.begin(); it < components.end(); it++){
+        sprite2dObject * obj = *it;
+        delete obj;
+    }
 }
 
 void Puzzle::step(float time){
@@ -14,30 +22,23 @@ void Puzzle::step(float time){
    //apparently there are performance issues when the last two numbers are < 10
 }
 
-void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type){
+void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored){
     SpriteDefinition tempdef(x,y, type,name);
     tempdef.setShape(points,width,height); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
-    sprite2dObject *temp = new sprite2dObject(thisWorld,tempdef);
-    components.push_back(temp);
+    if(!ignored){
+        components.push_back(new sprite2dObject(thisWorld,tempdef));
+    }else{
+        inactive_components.push_back(new sprite2dObject(thisWorld,tempdef));
+    }
 }
 
-void Puzzle::addIgnoredComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type){
-    SpriteDefinition tempdef(x,y, type,name);
-    tempdef.setShape(points,width,height); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
-    sprite2dObject *temp = new sprite2dObject(thisWorld,tempdef);
-    inactive_components.push_back(temp);
+void Puzzle::addComponent(SpriteDefinition def, bool ignored){
+    if(!ignored){
+        components.push_back(new sprite2dObject(thisWorld,def));
+    }else{
+        inactive_components.push_back(new sprite2dObject(thisWorld,def));
+    }
 }
-
-void Puzzle::addComponent(SpriteDefinition def){
-    sprite2dObject * temp = new sprite2dObject(thisWorld,def);
-    components.push_back(temp);
-}
-
-void Puzzle::addIgnoredComponent(SpriteDefinition def){
-    sprite2dObject * temp = new sprite2dObject(thisWorld,def);
-    inactive_components.push_back(temp);
-}
-
 
 //polymorphic stuff
 void Puzzle::runAction(Qt::Key){}
@@ -70,17 +71,22 @@ void Puzzle::garbageCollection(){
     for(auto it = inactive_components.begin(); it < inactive_components.end(); it++){
         sprite2dObject * obj = *it;
         if(obj==nullptr||obj->getBody()==nullptr){
+            delete obj;
             inactive_components.erase(inactive_components.begin()+i); // erase if we need to
             break;
         }
         else if(obj->isIgnored()){
             b2Vec2 vec(obj->getBody()->GetPosition());
             if(vec.x<-10000||vec.x>10000||vec.y>10000){ // magic numbers here << we should probably tie in some sort of size
-                thisWorld->DestroyBody(obj->getBody());
-                obj->destroy();
+                delete obj;
                 inactive_components.erase(inactive_components.begin()+i); // erase if we need to
                 break;
             }
+        }
+        if(obj->marked()){
+            delete obj;
+            inactive_components.erase(inactive_components.begin()+i); // erase if we need to
+            break;
         }
         i++;
     }

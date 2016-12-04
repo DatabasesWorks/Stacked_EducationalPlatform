@@ -20,6 +20,7 @@ class StudWin : public QWidget, sf::RenderWindow
 public:
     explicit StudWin(QWidget *parent = 0);
     ~StudWin();
+
 //    void setMainGameWidget(QWidget *widget);
 
 private slots:
@@ -32,6 +33,7 @@ private:
     bool levelshow;
     PuzzleWindow* pw;
     void setupLevels();
+    std::vector<Puzzle*> puzzles;
 };
 
 #endif // STUDWIN_H

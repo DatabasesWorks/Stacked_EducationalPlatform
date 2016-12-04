@@ -16,6 +16,7 @@ public:
 private:
     std::string peekAction();
     void popAction();
+    void generateStackPiece(int,int);
     void pushAction();
     std::stack <sprite2dObject> s;
 };

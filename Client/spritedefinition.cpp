@@ -2,11 +2,7 @@
 #include <cmath>
 #include <math.h>
 
-SpriteDefinition::SpriteDefinition(int x, int y, b2BodyType type, std::string s){
-    body = new b2BodyDef;
-    fixture = new b2FixtureDef;
-    body->active=true;
-    body->allowSleep=true;
+SpriteDefinition::SpriteDefinition(int x, int y, b2BodyType type, std::string s) : SpriteDefinition() {
     body->type = type ;
     body->position.x=x;
     body->position.y=y;
@@ -16,11 +12,12 @@ SpriteDefinition::SpriteDefinition(int x, int y, b2BodyType type, std::string s)
 
 SpriteDefinition::SpriteDefinition(){
     body = new b2BodyDef;
+    fixture = new b2FixtureDef;
+    body->allowSleep=true;
     body->active=true;
 }
 
 SpriteDefinition::~SpriteDefinition(){
-
 }
 
 void SpriteDefinition::setInitialVelocity(double angular, b2Vec2 linear){
@@ -30,6 +27,10 @@ void SpriteDefinition::setInitialVelocity(double angular, b2Vec2 linear){
 
 void SpriteDefinition::setPosition(int x, int y){
     body->position.Set(x,y);
+}
+
+void SpriteDefinition::setType(b2BodyType type){
+    body->type=type;
 }
 
 void SpriteDefinition::setDensity(int set){

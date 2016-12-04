@@ -14,17 +14,13 @@ class Puzzle
 public:
 
     Puzzle();
-    ~Puzzle();
+    virtual ~Puzzle();
     //managing components
-    void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type);
+    void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored = false);
     void changeComponentImage(unsigned int, sf::Image);
-    void addComponent(SpriteDefinition);
+    void addComponent(SpriteDefinition, bool ignored = false);
     std::vector<sprite2dObject*> getAllComponents();
-
-    //garbage collection monitored set
     void garbageCollection();
-    void addIgnoredComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type);
-    void addIgnoredComponent(SpriteDefinition);
 
     //phy engine step
     void step(float time);
