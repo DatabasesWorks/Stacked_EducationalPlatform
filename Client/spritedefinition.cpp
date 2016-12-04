@@ -9,6 +9,7 @@ SpriteDefinition::SpriteDefinition(int x, int y, b2BodyType type, std::string s)
     body->position.x=x;
     body->position.y=y;
     name = s;
+    color = sf::Color::Green;
 }
 
 SpriteDefinition::SpriteDefinition(){
@@ -19,6 +20,21 @@ SpriteDefinition::SpriteDefinition(){
 
 SpriteDefinition::~SpriteDefinition(){
 
+}
+
+
+void SpriteDefinition::friction(bool yes){
+    b2FixtureDef * def = (fixtures.front());
+    if(yes){
+        def->friction=1;
+    }else if (!yes) {
+        def->friction=0;
+    }
+
+
+}
+void SpriteDefinition::setColor(sf::Color color){
+   this->color=color;
 }
 
 void SpriteDefinition::setShape(int count, int width, int height){

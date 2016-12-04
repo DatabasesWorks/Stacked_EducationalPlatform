@@ -7,15 +7,16 @@ sprite2dObject::sprite2dObject(){
 }
 
 #include <spritedefinition.h>
-//
 sprite2dObject::~sprite2dObject(){
-
+    color = sf::Color::Green;
+    body = nullptr; // no body. a little dangerous.
+    name = "DEFAULT";
 }
 
 sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) // call the super constructor
 {
-    description.begin();
-    //do something w/ description
+    name = description;
+    color = sf::Color::Green;
     body = world->CreateBody(def);
 }
 
@@ -25,6 +26,8 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) // call the
     for(auto it = def.fixtures.begin(); it < def.fixtures.end(); it++){
         body->CreateFixture(*it);
     }
+    color = def.color;
+    name = def.name;
 }
 
 void sprite2dObject::moveBody(Direction d, int magnitude){
@@ -83,7 +86,7 @@ sf::ConvexShape * sprite2dObject::getShape(){
          if(type==b2Shape::e_polygon){
            b2PolygonShape* polyShape= (b2PolygonShape*)f->GetShape();
            sf::ConvexShape * shapeToFill = new sf::ConvexShape;
-           shapeToFill->setFillColor(sf::Color::White);
+           shapeToFill->setFillColor(color);
            shapeToFill->setPosition(body->GetPosition().x*SCALE, body->GetPosition().y*SCALE);
            int vertCount = polyShape->GetVertexCount();
            shapeToFill->setPointCount(vertCount);

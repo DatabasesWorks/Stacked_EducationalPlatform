@@ -30,6 +30,8 @@ public:
 
 private:
     std::vector<b2Joint*> joints;
+    std::string name;
+    sf::Color color;
     b2Body * body;
     int width = 0;
     int height = 0;

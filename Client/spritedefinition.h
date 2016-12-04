@@ -5,6 +5,7 @@
 #include <Box2D/Dynamics/b2Body.h>
 #include <vector>
 #include <string>
+#include <SFML/Graphics/Color.hpp>
 
 class SpriteDefinition
 {
@@ -15,6 +16,9 @@ public:
     SpriteDefinition();
     ~SpriteDefinition();
     std::string name;
+    sf::Color color;
+    void setColor(sf::Color);
+    void friction(bool);
     void setShape(int,int,int);
 
 };
