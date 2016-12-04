@@ -2,21 +2,18 @@
 
 // A class to integrate the SFML sprite class with the Box2D objects.
 sprite2dObject::sprite2dObject(){
-
-
+   body=nullptr;
 }
 
 #include <spritedefinition.h>
 sprite2dObject::~sprite2dObject(){
-    color = sf::Color::Green;
-    body = nullptr; // no body. a little dangerous.
-    name = "DEFAULT";
+   if(body!=nullptr) delete body;
 }
 
 sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) // call the super constructor
 {
+    color = sf::Color::White;
     name = description;
-    color = sf::Color::Green;
     body = world->CreateBody(def);
 }
 

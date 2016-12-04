@@ -12,11 +12,15 @@ StackPuzzle::StackPuzzle() : Puzzle() {
     SpriteDefinition rightwalld(200,0, b2_staticBody,"rightwalld");
 
     ceilingd.setShape(4,1000,0);
+    ceilingd.setColor(sf::Color::Yellow);
     floord.setShape(4,1000,0);
+    floord.setColor(sf::Color::Blue);
     leftwalld.setShape(4,0,1000);
+    leftwalld.setColor(sf::Color::Red);
     rightwalld.setShape(4,0,400);
+    rightwalld.setColor(sf::Color::White);
 
-  //  sprite2dObject *ceiling = new sprite2dObject(thisWorld,ceilingd);
+    //  sprite2dObject *ceiling = new sprite2dObject(thisWorld,ceilingd);
     sprite2dObject *floor = new sprite2dObject(thisWorld,floord);
     sprite2dObject *lwall = new sprite2dObject(thisWorld,leftwalld);
     sprite2dObject *rwall = new sprite2dObject(thisWorld,rightwalld);
