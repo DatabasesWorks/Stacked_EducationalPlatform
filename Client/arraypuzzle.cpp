@@ -46,7 +46,9 @@ void ArrayPuzzle::deleteAtIndexAction(){
     this->thisWorld->DestroyBody(bod);
     //might want to restrict the deletion if size = 1
     components.erase(components.begin() + activeIndex);
-
+    if(activeIndex > 0){
+        activeIndex--;
+    }
     if(components.size() > 1){
         for(int i = activeIndex; i < components.size(); i++){
             sprite2dObject * obj = (components[i]);
