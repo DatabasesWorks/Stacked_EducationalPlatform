@@ -16,7 +16,6 @@ int main(int argc, char *argv[]) {
         QTextStream ts(&f);
         qApp->setStyleSheet(ts.readAll());
     }
-
     f.close();
 
     Client w;

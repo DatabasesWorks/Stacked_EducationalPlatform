@@ -21,7 +21,7 @@ StudWin::StudWin(QWidget *parent) :
 }
 
 StudWin::~StudWin() {
-    //delete ui;
+    delete ui;
 }
 
 void StudWin::setupLevels() {
@@ -57,14 +57,6 @@ void StudWin::on_logoutButton_clicked() {
 
     //emit signal to release sources?
 }
-
-//void StudWin::setMainGameWidget(QWidget *widget)
-//{
-
-//    QGridLayout *layout = new QGridLayout(this);
-//    layout->addWidget(widget);
-//    ui->mainGameWidget->setLayout(layout);
-//}
 
 void StudWin::on_listWidget_currentRowChanged(int currentRow)
 {

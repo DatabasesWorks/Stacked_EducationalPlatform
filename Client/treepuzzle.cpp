@@ -16,9 +16,13 @@ TreePuzzle::TreePuzzle() : Puzzle()
     sprite2dObject *floor = new sprite2dObject(thisWorld,floordef);
     components.push_back(floor);
 
+    int mid = 200;
     //or alternatively
-    for(int i = 0; i < 5; i++){
-        this->addComponent("stack_"+i,4,100,5,100,600+(i*35),b2_dynamicBody);
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j<=i; j++){
+            this->addComponent("stack_"+i,4,100,5,j*50+mid,i*50,b2_dynamicBody);
+        }
+
     }
 
 }
