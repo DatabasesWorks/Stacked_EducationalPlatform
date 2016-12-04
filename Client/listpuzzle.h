@@ -15,9 +15,10 @@ public:
     void popFront();
     void popBack();
     void sortList();
+    void virtual runAction(Qt::Key) override;
 
 private:
-    std::list <sprite2dObject> l;
+    //std::list <sprite2dObject> l;
 };
 
 #endif // LISTPUZZLE_H
