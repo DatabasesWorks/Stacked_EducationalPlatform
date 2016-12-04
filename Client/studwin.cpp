@@ -36,6 +36,7 @@ void StudWin::setupLevels() {
     ui->listWidget->addItem("stack");
     ui->listWidget->addItem("array");
     ui->listWidget->addItem("tree");
+    ui->listWidget->addItem("list");
 }
 
 void StudWin::on_hideButton_clicked() {
@@ -69,6 +70,9 @@ void StudWin::on_listWidget_currentRowChanged(int currentRow)
             break;
         case 2:
             pw->setPuzzle(new TreePuzzle());
+            break;
+        case 3:
+            pw->setPuzzle(new ListPuzzle());
             break;
     }
 }

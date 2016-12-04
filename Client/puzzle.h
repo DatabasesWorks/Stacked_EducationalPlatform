@@ -33,6 +33,8 @@ protected:
     std::vector<sprite2dObject*> components;
     std::vector<sprite2dObject*> inactive_components;
     b2World *thisWorld;
+    void establishGravity();
+    void establishFloor();
 
 private:
 
