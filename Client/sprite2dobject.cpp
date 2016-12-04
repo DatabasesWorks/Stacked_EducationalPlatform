@@ -7,7 +7,6 @@ sprite2dObject::sprite2dObject(){
 
 #include <spritedefinition.h>
 sprite2dObject::~sprite2dObject(){
-   if(body!=nullptr) delete body;
 }
 
 sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) // call the super constructor
