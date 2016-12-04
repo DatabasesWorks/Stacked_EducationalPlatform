@@ -2,14 +2,29 @@
 
 StackPuzzle::StackPuzzle() : Puzzle() {
 
-    b2Vec2 graf(0,0.1); // gravity is set low here
+    b2Vec2 graf(0,0.09); // gravity is set low here
     thisWorld->SetGravity(graf);
 
     //create a floor
-    SpriteDefinition floordef(100,200, b2_staticBody,"testbox");
-    floordef.setShape(4,1000,0); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
-    sprite2dObject *floor = new sprite2dObject(thisWorld,floordef);
+    SpriteDefinition ceilingd(0,0, b2_staticBody,"ceiling");
+    SpriteDefinition floord(0,200, b2_staticBody,"floor");
+    SpriteDefinition leftwalld(0,0, b2_staticBody,"leftwalld");
+    SpriteDefinition rightwalld(200,0, b2_staticBody,"rightwalld");
+
+    ceilingd.setShape(4,1000,0);
+    floord.setShape(4,1000,0);
+    leftwalld.setShape(4,0,1000);
+    rightwalld.setShape(4,0,400);
+
+  //  sprite2dObject *ceiling = new sprite2dObject(thisWorld,ceilingd);
+    sprite2dObject *floor = new sprite2dObject(thisWorld,floord);
+    sprite2dObject *lwall = new sprite2dObject(thisWorld,leftwalld);
+    sprite2dObject *rwall = new sprite2dObject(thisWorld,rightwalld);
+
+   // inactive_components.push_back(ceiling);
     inactive_components.push_back(floor);
+    inactive_components.push_back(lwall);
+    inactive_components.push_back(rwall);
 
     //or alternatively
     for(int i = 0; i < 5; i++){
