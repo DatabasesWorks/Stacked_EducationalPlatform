@@ -57,3 +57,15 @@ std::vector<sprite2dObject*> Puzzle::getAllComponents()
     vec.insert(vec.end(), inactive_components.begin(), inactive_components.end());
     return vec;
 }
+
+void Puzzle::establishGravity() {
+    b2Vec2 graf(0,0.1); // gravity is set low here
+    thisWorld->SetGravity(graf);
+}
+
+void Puzzle::establishFloor() {
+    SpriteDefinition floordef(100,200, b2_staticBody,"testbox");
+    floordef.setShape(4,1000,0); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
+    sprite2dObject *floor = new sprite2dObject(thisWorld,floordef);
+    inactive_components.push_back(floor);
+}
