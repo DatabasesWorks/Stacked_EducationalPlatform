@@ -9,7 +9,7 @@ SpriteDefinition::SpriteDefinition(int x, int y, b2BodyType type, std::string s)
     body->position.x=x;
     body->position.y=y;
     name = s;
-    color = sf::Color::Green;
+    color = sf::Color::White;
 }
 
 SpriteDefinition::SpriteDefinition(){
