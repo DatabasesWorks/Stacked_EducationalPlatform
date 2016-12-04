@@ -73,7 +73,7 @@ void sprite2dObject::connect(sprite2dObject * other, b2World* world, int length)
      joints.push_back(joint);
 }
 
-sf::ConvexShape *  sprite2dObject::getShape(){
+sf::ConvexShape * sprite2dObject::getShape(){
     //Draw sprite from box2d information
     //http://en.sfml-dev.org/forums/index.php?topic=20216.0
     //http://www.iforce2d.net/b2dtut/fixtures

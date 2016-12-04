@@ -43,10 +43,11 @@ void ArrayPuzzle::runAction(Qt::Key key){
 void ArrayPuzzle::deleteAtIndexAction(){
     b2Body *bod;
     bod = components[activeIndex]->getBody();
-    this->thisWorld->DestroyBody(bod);
     //might want to restrict the deletion if size = 1
-    components.erase(components.begin() + activeIndex);
-    if(activeIndex > 0){
+    if(components.size()>0){
+        thisWorld->DestroyBody(bod);
+        components.erase(components.begin() + activeIndex);
+    }if(activeIndex > 0){
         activeIndex--;
     }
     if(components.size() > 1){
