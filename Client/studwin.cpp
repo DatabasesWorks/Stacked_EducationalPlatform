@@ -73,7 +73,7 @@ void StudWin::on_logoutButton_clicked() {
 
 void StudWin::on_listWidget_currentRowChanged(int currentRow)
 {
-    if(currentRow>0&&currentRow<4){
+    if(currentRow>-1&&currentRow<4){
         pw->setPuzzle(puzzles[currentRow]);
         pw->setFocus();
     }

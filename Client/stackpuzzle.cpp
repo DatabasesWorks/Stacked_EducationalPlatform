@@ -57,7 +57,6 @@ std::string StackPuzzle::peekAction(){
 #include <iostream>
 void StackPuzzle::popAction(){
     if(components.size()<1)return;
-    std::cout << "popping" << std::endl;
     sprite2dObject * obj = (components.back());
     obj->moveBody(sprite2dObject::up,7);
     obj->moveBody(sprite2dObject::right,10);
