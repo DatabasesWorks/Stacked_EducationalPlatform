@@ -2,7 +2,7 @@
 
 StackPuzzle::StackPuzzle() : Puzzle() {
 
-    b2Vec2 graf(0,0.09); // gravity is set low here
+    b2Vec2 graf(0,0.98); // normalish gravity
     thisWorld->SetGravity(graf);
 
     //create a floor
@@ -28,7 +28,7 @@ void StackPuzzle::generateStackPiece(int x, int y){
     stack_p.setFriction(0); // wraps the fixture and bodydef into one entity
     b2Vec2 vec(0,0);
     stack_p.setInitialVelocity(0,vec);
-    stack_p.setDensity(5);
+    stack_p.setDensity(55);
     stack_p.setColor(sf::Color::Cyan);
     stack_p.setPosition(x,y);
     stack_p.setType(b2_dynamicBody);
@@ -59,7 +59,7 @@ void StackPuzzle::popAction(){
     if(components.size()<1)return;
     sprite2dObject * obj = (components.back());
     obj->moveBody(sprite2dObject::up,7);
-    obj->moveBody(sprite2dObject::right,10);
+   // obj->moveBody(sprite2dObject::right,100);
     obj->ignoreObject();
     inactive_components.push_back(obj);
     // inactive objects will be collected by garbage collection if they are too far out from the screens view ( besides from above )

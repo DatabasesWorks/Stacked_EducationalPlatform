@@ -65,29 +65,46 @@ void Puzzle::establishFloor() {
     inactive_components.push_back(floor);
 }
 
+
+void Puzzle::collectGarbage(){
+    garbageCollection(components);
+     garbageCollection(inactive_components);
+}
+
+
 //here be dragons.
-void Puzzle::garbageCollection(){
+void Puzzle::garbageCollection(std::vector<sprite2dObject*>& objs){
     int i = 0;
-    for(auto it = inactive_components.begin(); it < inactive_components.end(); it++){
+    for(auto it = objs.begin(); it < objs.end(); it++){
         sprite2dObject * obj = *it;
         if(obj==nullptr||obj->getBody()==nullptr){
             delete obj;
-            inactive_components.erase(inactive_components.begin()+i); // erase if we need to
+            objs.erase(objs.begin()+i); // erase if we need to
             break;
         }
         else if(obj->isIgnored()){
             b2Vec2 vec(obj->getBody()->GetPosition());
             if(vec.x<-10000||vec.x>10000||vec.y>10000){ // magic numbers here << we should probably tie in some sort of size
                 delete obj;
-                inactive_components.erase(inactive_components.begin()+i); // erase if we need to
+                objs.erase(objs.begin()+i); // erase if we need to
                 break;
             }
         }
         if(obj->marked()){
             delete obj;
-            inactive_components.erase(inactive_components.begin()+i); // erase if we need to
+            objs.erase(objs.begin()+i); // erase if we need to
             break;
         }
         i++;
     }
 }
+
+
+
+
+
+
+
+
+
+

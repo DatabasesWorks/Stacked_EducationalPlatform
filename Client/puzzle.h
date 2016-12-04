@@ -20,8 +20,7 @@ public:
     void changeComponentImage(unsigned int, sf::Image);
     void addComponent(SpriteDefinition, bool ignored = false);
     std::vector<sprite2dObject*> getAllComponents();
-    void garbageCollection();
-
+    void collectGarbage();
     //phy engine step
     void step(float time);
     //polymorphic stuff
@@ -36,6 +35,7 @@ protected:
     void establishFloor();
 
 private:
+    void garbageCollection(std::vector<sprite2dObject*>&);
     QSize size;
 
 };

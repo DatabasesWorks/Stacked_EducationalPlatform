@@ -28,7 +28,7 @@ void PuzzleWindow::updateSet(){
 }
 
 void PuzzleWindow::SlowUpdate(){
-    puzzle->garbageCollection();
+    puzzle->collectGarbage();
 }
 
 //This is called by a timer and will draw every component into the set puzzle
@@ -36,39 +36,12 @@ void PuzzleWindow::SlowUpdate(){
 void PuzzleWindow::OnUpdate()
 {
     //Draw sprite on window
-    puzzle->step(1/30.0f);
+    puzzle->step(1/60.0f);
     updateSet();
     for(auto it = drawnSprites.begin(); it < drawnSprites.end(); it++)
     {
         RenderWindow::draw(*it);
     }
-    //old code from Tyler
-//    //Get all the drawing components from the puzzle
-//    if(puzzle!=0)
-//    {
-//         //attempt to get all components from puzzle
-//         components = puzzle->getAllComponents();
-//         for(sprite2dObject* s2d: components)
-//         {
-//             //Use sf::RenderWindow to draw each sprite component of puzzle
-//             RenderWindow::draw(*s2d->getShape());
-//         }
-//    }
-//    else
-//    {
-//        //nullptr?
-
-
-//        //**DEMO** Delete later:
-//        //starting location of sprite
-//        spr.setPosition(sf::Vector2f(300, 200));
-//        this->draw(spr);
-//        spr.rotate(1);
-//        //END DELETE
-
-//     }
-
-
 }
 
 //For setting or changing the puzzle in the window
