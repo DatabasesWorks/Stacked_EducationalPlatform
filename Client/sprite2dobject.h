@@ -35,6 +35,7 @@ public:
     bool isIgnored();
     void changeColor(sf::Color color);
     void setName(std::string);
+    std::string getName();
     void setFriction(double);
     void setDensity(double);
     void setSprite(std::string pathname);

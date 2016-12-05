@@ -21,6 +21,7 @@ public:
     void changeComponentImage(unsigned int, sf::Image);
     void addComponent(SpriteDefinition, bool ignored = false);
     void addComponent(sprite2dObject*, bool ignored = false);
+    sprite2dObject* getComponent(std::string name);
     std::vector<sprite2dObject*> getAllComponents();
     void collectGarbage();
     //phy engine step

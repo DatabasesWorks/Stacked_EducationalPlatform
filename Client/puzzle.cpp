@@ -55,6 +55,22 @@ void Puzzle::addComponent(sprite2dObject* obj, bool ignored){
 
 }
 
+sprite2dObject* Puzzle::getComponent(std::string name)
+{
+    int i = 0;
+    for(auto it = components.begin(); it < components.end(); it++)
+    {
+        sprite2dObject * obj = *it;
+//        sf::Sprite * sprite = obj->getSprite();
+
+        if(obj->getName()==name)
+        {
+            return obj;
+        }
+   }
+
+}
+
 
 
 
@@ -102,7 +118,7 @@ void Puzzle::establishSides() {
 
 void Puzzle::collectGarbage(){
     garbageCollection(components);
-     garbageCollection(inactive_components);
+    garbageCollection(inactive_components);
 }
 
 

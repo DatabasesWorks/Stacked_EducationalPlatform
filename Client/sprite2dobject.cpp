@@ -186,6 +186,11 @@ void sprite2dObject::setName(std::string n){
     name=n;
 }
 
+std::string sprite2dObject::getName()
+{
+    return name;
+}
+
 void sprite2dObject::setFriction(double f){
     body->GetFixtureList()->SetFriction(f);
 }
