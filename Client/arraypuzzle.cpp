@@ -1,5 +1,5 @@
 #include "arraypuzzle.h"
-ArrayPuzzle::ArrayPuzzle() : Puzzle() {
+ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
 
     b2Vec2 grav(0, 0.98);
     thisWorld->SetGravity(grav);

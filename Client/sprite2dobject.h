@@ -28,7 +28,8 @@ public:
     void destroy();
     void moveBody(Direction, int);
     void applyAngularForce(Direction,double);
-    void connect(sprite2dObject*,b2World*,int);
+    void connectRope(sprite2dObject*);
+    void connectBar(sprite2dObject*);
     void ignoreObject();
     bool isIgnored();
     void changeColor(sf::Color color);

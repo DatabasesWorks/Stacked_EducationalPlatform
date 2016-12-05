@@ -17,9 +17,12 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
     name = description;
 }
 
-sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) // call the super constructor
+sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def)  // call the super constructor
 {
+
+
     body = world->CreateBody(def.body);
+
     body->CreateFixture(def.fixture);
     color = def.color;
     name = def.name;
@@ -72,14 +75,43 @@ void sprite2dObject::applyAngularForce(Direction d, double magnitude){
     }else if(d==left||d==up) return;
 }
 
-void sprite2dObject::connect(sprite2dObject * other, b2World* world, int length){
-     b2DistanceJointDef jd;
-     jd.bodyA=this->getBody();
+void sprite2dObject::connectRope(sprite2dObject * other){
+     b2RopeJointDef jd;
+     b2Vec2 vec(other->getBody()->GetPosition()-getBody()->GetPosition());
+     b2Vec2 tmp(vec.x,vec.y);
+     jd.maxLength=tmp.Normalize();
+     jd.bodyA=getBody();
      jd.bodyB=other->getBody();
-     jd.length=length;
-     b2Joint * joint = world->CreateJoint(&jd);
+     jd.localAnchorA=getBody()->GetLocalVector(getBody()->GetPosition());
+     jd.localAnchorB=other->getBody()->GetLocalVector(other->getBody()->GetPosition());
+     jd.collideConnected=false;
+     b2Joint * joint = getBody()->GetWorld()->CreateJoint(&jd);
      joints.push_back(joint);
 }
+
+void sprite2dObject::connectBar(sprite2dObject * other){
+     b2DistanceJointDef jd;
+     b2Vec2 vec(other->getBody()->GetPosition()-getBody()->GetPosition());
+     b2Vec2 tmp(std::abs(vec.x),std::abs(vec.y));
+     jd.dampingRatio=0.01;
+     jd.frequencyHz=0;
+     jd.length=tmp.Normalize();
+     jd.bodyA=getBody();
+     jd.bodyB=other->getBody();
+     jd.localAnchorA=getBody()->GetLocalVector(getBody()->GetPosition());
+     jd.localAnchorB=other->getBody()->GetLocalVector(other->getBody()->GetPosition());
+     jd.collideConnected=false;
+     b2Joint * joint = getBody()->GetWorld()->CreateJoint(&jd);
+     joints.push_back(joint);
+}
+
+
+
+
+
+
+
+
 
 void sprite2dObject::ignoreObject(){
      b2Fixture * fi = body->GetFixtureList();

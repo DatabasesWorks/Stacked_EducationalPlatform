@@ -21,7 +21,7 @@ void PuzzleWindow::updateSet(){
     std::vector<sprite2dObject*> objs = puzzle->getAllComponents();
     for(auto ptr = objs.begin(); ptr < objs.end(); ptr++){
         sprite2dObject * obj = (*ptr);
-        if(obj->getBody()!=nullptr){
+        if(obj->getBody()!=nullptr&&!obj->marked()){
             drawnSprites.push_back(obj->getShape());
         }
      }

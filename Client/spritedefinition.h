@@ -19,6 +19,7 @@ public:
     std::string name;
     sf::Color color;
     void setDensity(double);
+    void dampen(double amount);
     void setFriction(double);
     void setPosition(int,int);
     void setInitialVelocity(double,b2Vec2);
