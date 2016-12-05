@@ -10,6 +10,7 @@ sprite2dObject::~sprite2dObject(){
     body->GetWorld()->DestroyBody(body);
     body = NULL;
     color = sf::Color::White;
+    text.setString("");
 }
 
 sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) : sprite2dObject() // call the super constructor
@@ -20,6 +21,7 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
 
 sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dObject(def.name,world,def.body) // call the super constructor
 {
+    setText(def.text);
     text.setString(def.text);
     body->CreateFixture(def.fixture);
     color = def.color;
@@ -33,6 +35,11 @@ void sprite2dObject::setText(std::string string, sf::Color color){
 
    text.setColor(color);
    text.setString(string);
+   sf::Font font;
+   font.loadFromFile("font.ttf");
+   text.setFont(font);
+   text.setCharacterSize(20000);
+
 }
 
 sf::Text sprite2dObject::getText(){

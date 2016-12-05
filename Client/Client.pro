@@ -101,6 +101,7 @@ RESOURCES += \
     sprites.qrc
 
 DISTFILES += \
-    Stacked.pro.user
+    Stacked.pro.user \
+    rc/font.ttf
 
 
