@@ -3,33 +3,44 @@
 // A class to integrate the SFML sprite class with the Box2D objects.
 sprite2dObject::sprite2dObject(){
     body=NULL;
+    sprite = NULL;
 }
 
 sprite2dObject::~sprite2dObject(){
     body->GetWorld()->DestroyBody(body);
     body = NULL;
+    color = sf::Color::White;
 }
 
-sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) // call the super constructor
+sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) : sprite2dObject() // call the super constructor
 {
     body = world->CreateBody(def);
-    color = sf::Color::White;
     name = description;
 }
 
-sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def)  // call the super constructor
+sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dObject(def.name,world,def.body) // call the super constructor
 {
-
-
-    body = world->CreateBody(def.body);
-
+    text.setString(def.text);
     body->CreateFixture(def.fixture);
     color = def.color;
-    name = def.name;
 }
 
 void sprite2dObject::changeColor(sf::Color color){
    this->color=color;
+}
+
+void sprite2dObject::setText(std::string string, sf::Color color){
+
+   text.setColor(color);
+   text.setString(string);
+}
+
+sf::Text sprite2dObject::getText(){
+
+   b2Vec2 vec(body->GetLocalVector(body->GetPosition()));
+   text.setPosition(vec.x,vec.y);
+   text.setScale(100,100);
+   return text;
 }
 
 void sprite2dObject::moveBody(Direction d, int magnitude){
@@ -69,8 +80,9 @@ void sprite2dObject::moveBody(Direction d, int magnitude){
     }
 }
 
+//not implemented
 void sprite2dObject::applyAngularForce(Direction d, double magnitude){
-    if(d==right||d==down){
+    if(d==right||d==down){ // not implemented
         body->ApplyAngularImpulse(magnitude,true);
     }else if(d==left||d==up) return;
 }
@@ -105,14 +117,6 @@ void sprite2dObject::connectBar(sprite2dObject * other){
      joints.push_back(joint);
 }
 
-
-
-
-
-
-
-
-
 void sprite2dObject::ignoreObject(){
      b2Fixture * fi = body->GetFixtureList();
      b2Filter fill;
@@ -120,7 +124,6 @@ void sprite2dObject::ignoreObject(){
      fill.maskBits=0;
      fi->SetFilterData(fill);
      ignore = true;
-     //call a timer that will give this a lifespan
 }
 
 bool sprite2dObject::isIgnored(){
@@ -138,7 +141,8 @@ sf::ConvexShape sprite2dObject::getShape(){
          if(type==b2Shape::e_polygon){
            b2PolygonShape* polyShape= (b2PolygonShape*)f->GetShape();
            shapeToFill.setFillColor(color);
-           shapeToFill.setPosition(body->GetPosition().x*SCALE, body->GetPosition().y*SCALE);
+           b2Vec2 vec(body->GetLocalVector(body->GetPosition()));
+           shapeToFill.setPosition(vec.x*SCALE, vec.y*SCALE);
            int vertCount = polyShape->GetVertexCount();
            shapeToFill.setPointCount(vertCount);
            for(int vert = 0 ; vert < vertCount ; vert++) {
@@ -155,6 +159,20 @@ sf::ConvexShape sprite2dObject::getShape(){
          }
     }
     return shapeToFill;
+}
+
+void sprite2dObject::setSprite(std::string pathname){
+    sf::Texture tex;
+    tex.loadFromFile(pathname);
+    sprite = new sf::Sprite(tex);
+}
+
+sf::Sprite * sprite2dObject::getSprite(){
+    if(sprite!=nullptr){
+        b2Vec2 vec(getBody()->GetLocalVector(body->GetPosition()));
+        sprite->setPosition(vec.x,vec.y);
+    }
+    return sprite;
 }
 
 void sprite2dObject::setName(std::string n){

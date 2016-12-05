@@ -23,10 +23,10 @@ public:
     void onInit();
     void onUpdate();
     void setPuzzle(Puzzle *puzzle);
-    std::vector<sf::ConvexShape>drawnSprites;
 
 private:
-    std::vector<sprite2dObject*> components;
+
+    std::vector<sprite2dObject *> spritesToDraw;
     Puzzle* puzzle;
     QTimer slowUpdateTimer;
 

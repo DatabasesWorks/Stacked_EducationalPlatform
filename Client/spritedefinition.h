@@ -11,13 +11,10 @@
 class SpriteDefinition
 {
 public:
-    b2BodyDef * body;
-    b2FixtureDef * fixture;
     SpriteDefinition(int, int, b2BodyType, std::string);
     SpriteDefinition();
     ~SpriteDefinition();
-    std::string name;
-    sf::Color color;
+    void setText(std::string);
     void setDensity(double);
     void dampen(double amount);
     void setFriction(double);
@@ -26,6 +23,12 @@ public:
     void setColor(sf::Color);
     void setShape(int,int,int);
     void setType(b2BodyType);
+    b2BodyDef * body;
+    b2FixtureDef * fixture;
+    std::string name;
+    sf::Color color;
+    std::string text;
+
 };
 
 #endif // SPRITEDEFINITION_H

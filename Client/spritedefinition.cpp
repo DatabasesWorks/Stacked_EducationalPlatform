@@ -32,6 +32,10 @@ void SpriteDefinition::setPosition(int x, int y){
     body->position=v;
 }
 
+void SpriteDefinition::setText(std::string s){
+    text = s;
+}
+
 void SpriteDefinition::setType(b2BodyType type){
     body->type=type;
 }

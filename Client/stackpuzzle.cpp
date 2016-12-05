@@ -30,9 +30,6 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     generateTree();
 
 
-
-
-
     for(int i = 0; i < 5; i++){
         generateStackPiece(400,i*-35);
     }
@@ -56,6 +53,16 @@ void StackPuzzle::generateTree(){
     sprite2dObject * hsp2 = createNode(150,120,b2_dynamicBody);
     sprite2dObject * hsp2_right = createNode(175,160,b2_dynamicBody);
 
+
+
+    SpriteDefinition def;
+    def.text="RRRRRRRRRRRRRAWWWWWWWWWWWWWWWWWWWR";
+    def.setShape(4,40,40);
+    def.setType(b2_dynamicBody);
+    def.setDensity(1);
+    def.setColor(sf::Color::Green);
+    def.setPosition(10,100);
+    addComponent(def,true);
 
     //create the body connections
     //bars are solid and will hold objects away at a fixed point

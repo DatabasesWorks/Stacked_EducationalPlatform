@@ -17,12 +17,12 @@ void PuzzleWindow::OnInit()
 
 //copied form graphics object test
 void PuzzleWindow::updateSet(){
-    drawnSprites.clear();
+    spritesToDraw.clear();
     std::vector<sprite2dObject*> objs = puzzle->getAllComponents();
     for(auto ptr = objs.begin(); ptr < objs.end(); ptr++){
         sprite2dObject * obj = (*ptr);
         if(obj->getBody()!=nullptr&&!obj->marked()){
-            drawnSprites.push_back(obj->getShape());
+            spritesToDraw.push_back(obj);
         }
      }
 }
@@ -38,10 +38,18 @@ void PuzzleWindow::OnUpdate()
     //Draw sprite on window
     puzzle->step(1/60.0f);
     updateSet();
-    for(auto it = drawnSprites.begin(); it < drawnSprites.end(); it++)
+    for(auto it = spritesToDraw.begin(); it < spritesToDraw.end(); it++)
     {
-        RenderWindow::draw(*it);
-    }
+        sprite2dObject * obj = *it;
+        RenderWindow::draw(obj->getShape());
+        sf::Sprite * sprite = obj->getSprite();
+        if(sprite!=nullptr){
+            RenderWindow::draw(*sprite);
+        }
+        if(obj->getText().getString()!=""){
+            RenderWindow::draw(obj->getText());
+        }
+   }
 }
 
 //For setting or changing the puzzle in the window
