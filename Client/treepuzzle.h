@@ -14,6 +14,8 @@ public:
     TreePuzzle();
     TreePuzzle(QSize size);
     ~TreePuzzle();
+private:
+    std::vector<sf::Color*> colors;
 };
 
 #endif // BINARYTREEPUZZLE_H

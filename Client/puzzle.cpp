@@ -84,7 +84,7 @@ void Puzzle::establishSides() {
 
 void Puzzle::collectGarbage(){
     garbageCollection(components);
-     garbageCollection(inactive_components);
+    garbageCollection(inactive_components);
 }
 
 
