@@ -15,6 +15,7 @@
 #include <QKeyEvent>
 #include <SFML/Graphics.hpp>
 #include <QTimer>
+#include <QPoint>
 
 
 class PuzzleWindow : public GraphicsObject

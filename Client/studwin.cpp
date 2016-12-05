@@ -9,10 +9,9 @@ StudWin::StudWin(QWidget *parent) :
     ui(new Ui::StudWin) {
     ui->setupUi(this);
     levelshow = true;
-
+    pw = new PuzzleWindow;
     ui->userLabel->setText("Welcome: TestUser");
     setupLevels();
-    pw = new PuzzleWindow();
     pw->setPuzzle(puzzles.front());
     pw->setFocus();
 
@@ -50,9 +49,12 @@ void StudWin::setupLevels() {
 
    //"Failed to load font "font.ttf" (failed to create the font face)"
 
-//    connect(pw, SIGNAL(mousePressedSignal(QPoint)), treepuzzle, SLOT(mousePressedSlot(QPoint)));
-//    connect(pw, SIGNAL(mouseMovedSignal(QPoint)), treepuzzle, SLOT(mouseMovedSlot(QPoint)));
-//    connect(pw, SIGNAL(mouseReleasedSignal(QPoint)), treepuzzle, SLOT(mouseReleasedSlot(QPoint)));
+   // QObject::connect(&slowUpdateTimer,&QTimer::timeout, this, &PuzzleWindow::SlowUpdate);
+
+
+   QObject::connect(pw, &PuzzleWindow::mousePressedSignal, treepuzzle, &Puzzle::mousePressedSlot);
+ QObject::connect(pw, &PuzzleWindow::mouseMovedSignal, treepuzzle, &Puzzle::mouseMovedSlot);
+ QObject::connect(pw, &PuzzleWindow::mouseReleasedSignal, treepuzzle, &Puzzle::mouseReleasedSlot);
 
     ui->listWidget->addItem("stack");
     ui->listWidget->addItem("array");
