@@ -1,5 +1,5 @@
 #include "treepuzzle.h"
-#include "cmath";
+#include "cmath"
 
 TreePuzzle::TreePuzzle() : Puzzle()
 {
@@ -65,4 +65,4 @@ TreePuzzle::~TreePuzzle() {
  * if box and platform are not in contact with each other set default colour
  *
  * when all platforms are green puzzle is solved
- * /
+ * */
