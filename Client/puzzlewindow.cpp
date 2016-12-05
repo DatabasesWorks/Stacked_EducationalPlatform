@@ -46,9 +46,9 @@ void PuzzleWindow::OnUpdate()
         if(sprite!=nullptr){
             RenderWindow::draw(*sprite);
         }
-        if(obj->getText().getString()!=""){
-            RenderWindow::draw(obj->getText());
-        }
+        //if(obj->getText().getString()!=""){
+        //    RenderWindow::draw(obj->getText());
+        //}
    }
 }
 
