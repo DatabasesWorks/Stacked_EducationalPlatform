@@ -1,32 +1,59 @@
 #include "treepuzzle.h"
-#include "cmath";
+#include "cmath"
 
-TreePuzzle::TreePuzzle() : Puzzle()
+TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
     b2Vec2 graf(0,1);
     thisWorld->SetGravity(graf);
 
-    SpriteDefinition floordef(100,200, b2_staticBody,"testbox");
-    floordef.setShape(4,1000,0); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
-    sprite2dObject *floor = new sprite2dObject(thisWorld,floordef);
-    components.push_back(floor);
-
-    int w = 4;
+    this->establishFloor();
+    this->establishGravity(100);
+    this->establishSides();
+    int sides = 4;
     int l = 50;
-    int h = 5;
-    //sloppy hardcode
-    this->addComponent("plat_3",w,l,h, 200, 50, b2_staticBody);
-    this->addComponent("plat_1",w,l,h, 100,100, b2_staticBody);
-    this->addComponent("plat_5",w,l,h, 300,100, b2_staticBody);
-    this->addComponent("plat_0",w,l,h, 50, 150, b2_staticBody);
-    this->addComponent("plat_2",w,l,h, 150, 150,b2_staticBody);
-    this->addComponent("plat_4",w,l,h, 250, 150,b2_staticBody);
-    this->addComponent("plat_6",w,l,h, 350, 150,b2_staticBody);
+    int h = 0;
+
+    int boxsize=15;
+//    int tri=3;
+
+    //platforms (i.e. tree)
+    this->addComponent("plat_3",sides,l,h, 200, 50, b2_staticBody);
+    this->addComponent("plat_1",sides,l,h, 100,100, b2_staticBody);
+    this->addComponent("plat_5",sides,l,h, 300,100, b2_staticBody);
+    this->addComponent("plat_0",sides,l,h, 50, 150, b2_staticBody);
+    this->addComponent("plat_2",sides,l,h, 150, 150,b2_staticBody);
+    this->addComponent("plat_4",sides,l,h, 250, 150,b2_staticBody);
+    this->addComponent("plat_6",sides,l,h, 350, 150,b2_staticBody);
+
+    //boxes (i.e. data to go into the tree)
+    std::string name;
+    for(int i = 0; i<10; i++)
+    {   name = "box" +i;
+        this->addComponent(name,sides,boxsize,boxsize, 10+i*16, 10, b2_dynamicBody);
+    }
+
+
 
 }
 
 
 TreePuzzle::~TreePuzzle() {
+
+}
+
+
+void TreePuzzle::mousePressedSlot(QPoint qpoint)
+{
+
+}
+
+void TreePuzzle::mouseMovedSlot(QPoint qpoint)
+{
+
+}
+
+void TreePuzzle::mouseReleasedSlot(QPoint qpoint)
+{
 
 }
 
@@ -43,4 +70,5 @@ TreePuzzle::~TreePuzzle() {
  * if box and platform are not in contact with each other set default colour
  *
  * when all platforms are green puzzle is solved
+<<<<<<< HEAD
  */

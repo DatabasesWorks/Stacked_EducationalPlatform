@@ -14,6 +14,13 @@ public:
     TreePuzzle();
     TreePuzzle(QSize size);
     ~TreePuzzle();
+private:
+    std::vector<sf::Color*> colors;
+
+public slots:
+    void mousePressedSlot(QPoint qpoint);
+    void mouseMovedSlot(QPoint qpoint);
+    void mouseReleasedSlot(QPoint qpoint);
 };
 
 #endif // BINARYTREEPUZZLE_H

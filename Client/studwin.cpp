@@ -9,10 +9,9 @@ StudWin::StudWin(QWidget *parent) :
     ui(new Ui::StudWin) {
     ui->setupUi(this);
     levelshow = true;
-
+    pw = new PuzzleWindow;
     ui->userLabel->setText("Welcome: TestUser");
     setupLevels();
-    pw = new PuzzleWindow();
     pw->setPuzzle(puzzles.front());
     pw->setFocus();
 
@@ -39,11 +38,27 @@ void StudWin::setupLevels() {
 //        levelList.push_back("Level " + i);
 //    }
 
+//    Puzzle *treepuzzle = new TreePuzzle(size()); //trying this for debugging?
 
-    puzzles.push_back(new StackPuzzle);
-    puzzles.push_back(new ArrayPuzzle);
-    puzzles.push_back(new TreePuzzle);
-    puzzles.push_back(new ListPuzzle);
+
+    puzzles.push_back(new StackPuzzle(size()));
+    puzzles.push_back(new ArrayPuzzle(size()));
+    puzzles.push_back(new TreePuzzle(size()));
+    puzzles.push_back(new ListPuzzle(size()));
+
+//    Connect TreePuzzle slots to PuzzleWindow singals
+     Puzzle *treepuzzle = puzzles[2]; //trying this for debugging?
+
+   //"Failed to load font "font.ttf" (failed to create the font face)" (unrelated ?)
+    //The program has unexpectedly finished. (after Torie commented out)
+
+
+  QObject::connect(pw, &PuzzleWindow::mousePressedSignal, treepuzzle, &Puzzle::mousePressedSlot);
+  QObject::connect(pw, &PuzzleWindow::mouseMovedSignal, treepuzzle, &Puzzle::mouseMovedSlot);
+  QObject::connect(pw, &PuzzleWindow::mouseReleasedSignal, treepuzzle, &Puzzle::mouseReleasedSlot);
+  //  connect(pw, SIGNAL(mousePressedSignal(QPoint)), treepuzzle, SLOT(mousePressedSlot(QPoint)));
+//    connect(pw, SIGNAL(mouseMovedSignal(QPoint)), treepuzzle, SLOT(mouseMovedSlot(QPoint)));
+  //  connect(pw, SIGNAL(mouseReleasedSignal(QPoint)), treepuzzle, SLOT(mouseReleasedSlot(QPoint)));
 
     ui->listWidget->addItem("stack");
     ui->listWidget->addItem("array");

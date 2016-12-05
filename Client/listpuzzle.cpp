@@ -1,6 +1,6 @@
 #include "listpuzzle.h"
 
-ListPuzzle::ListPuzzle() : Puzzle() {
+ListPuzzle::ListPuzzle(QSize size) : Puzzle(size) {
     establishGravity();
     establishFloor();
 

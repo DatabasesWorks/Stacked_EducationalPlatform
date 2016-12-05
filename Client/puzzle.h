@@ -1,5 +1,6 @@
 #ifndef PUZZLE_H
 #define PUZZLE_H
+#include <QObject>
 #include <vector>
 #include <QSize>
 #include <QPoint>
@@ -9,16 +10,20 @@
 #include <iterator>
 #include <string>
 
-class Puzzle
+class Puzzle : public QObject
 {
+    Q_OBJECT
 public:
 
-    Puzzle();
+    Puzzle(QSize size, QObject *parent = 0);
+    Puzzle(QObject *parent = 0);
     virtual ~Puzzle();
     //managing components
     void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored = false);
     void changeComponentImage(unsigned int, sf::Image);
     void addComponent(SpriteDefinition, bool ignored = false);
+    void addComponent(sprite2dObject*, bool ignored = false);
+    sprite2dObject* getComponent(std::string name);
     std::vector<sprite2dObject*> getAllComponents();
     void collectGarbage();
     //phy engine step
@@ -32,11 +37,18 @@ protected:
     std::vector<sprite2dObject*> inactive_components;
     b2World *thisWorld;
     void establishGravity();
+    void establishGravity(int gravityfactor);
     void establishFloor();
+    void establishSides();
 
 private:
     void garbageCollection(std::vector<sprite2dObject*>&);
     QSize size;
+
+public slots:
+    virtual void mousePressedSlot(QPoint qpoint);
+    virtual void mouseMovedSlot(QPoint qpoint);
+    virtual void mouseReleasedSlot(QPoint qpoint);
 
 };
 

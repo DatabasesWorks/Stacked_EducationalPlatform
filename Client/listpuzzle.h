@@ -9,6 +9,7 @@ class ListPuzzle : public Puzzle
 {
 public:
     ListPuzzle();
+    ListPuzzle(QSize);
     ~ListPuzzle();
     void pushFront();
     void pushBack();

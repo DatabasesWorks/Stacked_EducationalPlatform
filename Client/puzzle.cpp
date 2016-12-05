@@ -1,8 +1,12 @@
 #include "puzzle.h"
 
-Puzzle::Puzzle() {
+Puzzle::Puzzle(QObject *parent) :  QObject(parent) {
     b2Vec2 g(0,9.8);
     thisWorld = new b2World(g);
+}
+
+Puzzle::Puzzle(QSize size, QObject *parent) : Puzzle(){
+    this->size=size;
 }
 
 Puzzle::~Puzzle(){
@@ -22,6 +26,8 @@ void Puzzle::step(float time){
    //apparently there are performance issues when the last two numbers are < 10
 }
 
+
+
 void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored){
     SpriteDefinition tempdef(x,y, type,name);
     tempdef.setShape(points,width,height); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
@@ -39,6 +45,34 @@ void Puzzle::addComponent(SpriteDefinition def, bool ignored){
         inactive_components.push_back(new sprite2dObject(thisWorld,def));
     }
 }
+
+void Puzzle::addComponent(sprite2dObject* obj, bool ignored){
+    if(!ignored){
+        components.push_back(obj);
+    }else{
+        inactive_components.push_back(obj);
+    }
+
+}
+
+sprite2dObject* Puzzle::getComponent(std::string name)
+{
+    int i = 0;
+    for(auto it = components.begin(); it < components.end(); it++)
+    {
+        sprite2dObject * obj = *it;
+//        sf::Sprite * sprite = obj->getSprite();
+
+        if(obj->getName()==name)
+        {
+            return obj;
+        }
+   }
+
+}
+
+
+
 
 //polymorphic stuff
 void Puzzle::runAction(Qt::Key){}
@@ -58,6 +92,11 @@ void Puzzle::establishGravity() {
     thisWorld->SetGravity(graf);
 }
 
+void Puzzle::establishGravity(int gravityfactor) {
+    b2Vec2 graf(0,0.1*gravityfactor); // gravity is set low here
+    thisWorld->SetGravity(graf);
+}
+
 void Puzzle::establishFloor() {
     SpriteDefinition floordef(100,200, b2_staticBody,"floor");
     floordef.setShape(4,1000,0); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
@@ -65,12 +104,38 @@ void Puzzle::establishFloor() {
     inactive_components.push_back(floor);
 }
 
+void Puzzle::establishSides() {
+    SpriteDefinition lsidedef(1,0, b2_staticBody,"lside");
+    SpriteDefinition rsidedef(225,0, b2_staticBody,"rside");
+    lsidedef.setShape(4,0,650); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
+    rsidedef.setShape(4,0,650);
+    sprite2dObject *lside = new sprite2dObject(thisWorld,lsidedef);
+    sprite2dObject *rside = new sprite2dObject(thisWorld,rsidedef);
+    inactive_components.push_back(lside);
+    inactive_components.push_back(rside);
+}
+
 
 void Puzzle::collectGarbage(){
     garbageCollection(components);
-     garbageCollection(inactive_components);
+    garbageCollection(inactive_components);
 }
 
+
+void Puzzle::mousePressedSlot(QPoint qpoint)
+{
+    //to be implemented in child class
+}
+
+void Puzzle::mouseMovedSlot(QPoint qpoint)
+{
+    //to be implemented in child class
+}
+
+void Puzzle::mouseReleasedSlot(QPoint qpoint)
+{
+    //to be implemented in child class
+}
 
 //here be dragons.
 void Puzzle::garbageCollection(std::vector<sprite2dObject*>& objs){
