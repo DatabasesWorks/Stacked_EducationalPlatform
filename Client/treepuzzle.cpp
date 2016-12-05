@@ -26,13 +26,13 @@ TreePuzzle::TreePuzzle() : Puzzle()
     int l = 50;
     int h = 5;
     //sloppy hardcode
-    this->addComponent("plat_4",w,l,h, 200, 50, b2_staticBody);
-    this->addComponent("plat_2",w,l,h, 100,100, b2_staticBody);
-    this->addComponent("plat_6",w,l,h, 300,100, b2_staticBody);
-    this->addComponent("plat_1",w,l,h, 50, 150, b2_staticBody);
-    this->addComponent("plat_3",w,l,h, 150, 150,b2_staticBody);
-    this->addComponent("plat_5",w,l,h, 250, 150,b2_staticBody);
-    this->addComponent("plat_7",w,l,h, 350, 150,b2_staticBody);
+    this->addComponent("plat_3",w,l,h, 200, 50, b2_staticBody);
+    this->addComponent("plat_1",w,l,h, 100,100, b2_staticBody);
+    this->addComponent("plat_5",w,l,h, 300,100, b2_staticBody);
+    this->addComponent("plat_0",w,l,h, 50, 150, b2_staticBody);
+    this->addComponent("plat_2",w,l,h, 150, 150,b2_staticBody);
+    this->addComponent("plat_4",w,l,h, 250, 150,b2_staticBody);
+    this->addComponent("plat_6",w,l,h, 350, 150,b2_staticBody);
 
 
     //couldnt make a clean loop so hardcode above
