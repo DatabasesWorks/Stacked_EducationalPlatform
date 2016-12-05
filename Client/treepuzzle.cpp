@@ -25,24 +25,26 @@ TreePuzzle::TreePuzzle() : Puzzle()
     int w = 4;
     int l = 50;
     int h = 5;
-    this->addComponent("plat_0",w,l,h, 200, 50, b2_staticBody);
-    this->addComponent("plat_1",w,l,h, 100,100, b2_staticBody);
-    this->addComponent("plat_2",w,l,h, 300,100, b2_staticBody);
-    this->addComponent("plat_3",w,l,h, 50, 150, b2_staticBody);
-    this->addComponent("plat_4",w,l,h, 150, 150,b2_staticBody);
+    //sloppy hardcode
+    this->addComponent("plat_4",w,l,h, 200, 50, b2_staticBody);
+    this->addComponent("plat_2",w,l,h, 100,100, b2_staticBody);
+    this->addComponent("plat_6",w,l,h, 300,100, b2_staticBody);
+    this->addComponent("plat_1",w,l,h, 50, 150, b2_staticBody);
+    this->addComponent("plat_3",w,l,h, 150, 150,b2_staticBody);
     this->addComponent("plat_5",w,l,h, 250, 150,b2_staticBody);
-    this->addComponent("plat_6",w,l,h, 350, 150,b2_staticBody);
+    this->addComponent("plat_7",w,l,h, 350, 150,b2_staticBody);
 
-    //failed to make loop so just hardcoded above
+
+    //couldnt make a clean loop so hardcode above
 //    for(int i = 0; i < 3; i++){
 
 //       for(int j = 0; j < pow(2,i); j++){
 //            this->addComponent("plat_"+j+i,4,50,5, (j*(i+1))*200/pow(2,i) , i*50+50,b2_staticBody);
 //       }
 //    }
-    for(int i = 1; i < 8; i++){
-        this->addComponent("plat_"+i,4,50,5, i*50, 200-(i/4)*50, b2_staticBody);
-    }
+//    for(int i = 1; i < 7; i++){
+//        this->addComponent("plat_"+i,4,50,5, i*50, 50, b2_staticBody);
+//    }
 
 }
 
@@ -50,3 +52,17 @@ TreePuzzle::TreePuzzle() : Puzzle()
 TreePuzzle::~TreePuzzle() {
 
 }
+
+/*
+ * 1. add 7 ints to puzzle and generate array
+ * 2. sort that array.
+ * 3. for solution compare the indices of that array against the platform indices
+ *
+ * add draggable boxes with ints
+ * if box is in contact with the correct platform
+ * set colour of plat and box to green
+ * if incorrect set red
+ * if box and platform are not in contact with each other set default colour
+ *
+ * when all platforms are green puzzle is solved
+ * /
