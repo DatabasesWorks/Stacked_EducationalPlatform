@@ -74,6 +74,22 @@ TreePuzzle::~TreePuzzle() {
 
 }
 
+
+void TreePuzzle::mousePressedSlot(QPoint qpoint)
+{
+
+}
+
+void TreePuzzle::mouseMovedSlot(QPoint qpoint)
+{
+
+}
+
+void TreePuzzle::mouseReleasedSlot(QPoint qpoint)
+{
+
+}
+
 /*
  * 1. add 7 ints to puzzle and generate array
  * 2. sort that array.

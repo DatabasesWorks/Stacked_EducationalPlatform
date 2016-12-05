@@ -1,6 +1,6 @@
 #ifndef STUDWIN_H
 #define STUDWIN_H
-
+#include <QObject>
 #include <QWidget>
 #include <client.h>
 #include <SFML/Graphics/RenderWindow.hpp>

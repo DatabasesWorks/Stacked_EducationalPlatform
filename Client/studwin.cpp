@@ -39,11 +39,20 @@ void StudWin::setupLevels() {
 //        levelList.push_back("Level " + i);
 //    }
 
+    Puzzle *treepuzzle = new TreePuzzle(size()); //trying this for debugging?
 
     puzzles.push_back(new StackPuzzle(size()));
     puzzles.push_back(new ArrayPuzzle(size()));
-    puzzles.push_back(new TreePuzzle(size()));
+    puzzles.push_back(treepuzzle);
     puzzles.push_back(new ListPuzzle(size()));
+
+    //Connect TreePuzzle slots to PuzzleWindow singals
+
+   //"Failed to load font "font.ttf" (failed to create the font face)"
+
+//    connect(pw, SIGNAL(mousePressedSignal(QPoint)), treepuzzle, SLOT(mousePressedSlot(QPoint)));
+//    connect(pw, SIGNAL(mouseMovedSignal(QPoint)), treepuzzle, SLOT(mouseMovedSlot(QPoint)));
+//    connect(pw, SIGNAL(mouseReleasedSignal(QPoint)), treepuzzle, SLOT(mouseReleasedSlot(QPoint)));
 
     ui->listWidget->addItem("stack");
     ui->listWidget->addItem("array");

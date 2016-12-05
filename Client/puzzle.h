@@ -46,7 +46,6 @@ private:
     QSize size;
 
 public slots:
-
     virtual void mousePressedSlot(QPoint qpoint);
     virtual void mouseMovedSlot(QPoint qpoint);
     virtual void mouseReleasedSlot(QPoint qpoint);
