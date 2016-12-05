@@ -76,11 +76,27 @@ void Puzzle::establishGravity() {
     thisWorld->SetGravity(graf);
 }
 
+void Puzzle::establishGravity(int gravityfactor) {
+    b2Vec2 graf(0,0.1*gravityfactor); // gravity is set low here
+    thisWorld->SetGravity(graf);
+}
+
 void Puzzle::establishFloor() {
     SpriteDefinition floordef(100,200, b2_staticBody,"floor");
     floordef.setShape(4,1000,0); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
     sprite2dObject *floor = new sprite2dObject(thisWorld,floordef);
     inactive_components.push_back(floor);
+}
+
+void Puzzle::establishSides() {
+    SpriteDefinition lsidedef(1,0, b2_staticBody,"lside");
+    SpriteDefinition rsidedef(225,0, b2_staticBody,"rside");
+    lsidedef.setShape(4,0,650); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
+    rsidedef.setShape(4,0,650);
+    sprite2dObject *lside = new sprite2dObject(thisWorld,lsidedef);
+    sprite2dObject *rside = new sprite2dObject(thisWorld,rsidedef);
+    inactive_components.push_back(lside);
+    inactive_components.push_back(rside);
 }
 
 
