@@ -55,7 +55,18 @@ void PuzzleWindow::OnUpdate()
 //For setting or changing the puzzle in the window
 void PuzzleWindow::setPuzzle(Puzzle *puzzle)
 {
+    //disconnect
+    QObject::disconnect(this, &PuzzleWindow::mousePressedSignal, this->puzzle, &Puzzle::mousePressedSlot);
+    QObject::disconnect(this, &PuzzleWindow::mouseMovedSignal, this->puzzle, &Puzzle::mouseMovedSlot);
+    QObject::disconnect(this, &PuzzleWindow::mouseReleasedSignal, this->puzzle, &Puzzle::mouseReleasedSlot);
+
+    //change puzzle
     this->puzzle = puzzle;
+
+    //reconnect
+    QObject::connect(this, &PuzzleWindow::mousePressedSignal, this->puzzle, &Puzzle::mousePressedSlot);
+    QObject::connect(this, &PuzzleWindow::mouseMovedSignal, this->puzzle, &Puzzle::mouseMovedSlot);
+    QObject::connect(this, &PuzzleWindow::mouseReleasedSignal, this->puzzle, &Puzzle::mouseReleasedSlot);
 }
 
 //add some key capture for testing

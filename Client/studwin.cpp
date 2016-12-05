@@ -44,13 +44,6 @@ void StudWin::setupLevels() {
     puzzles.push_back(new TreePuzzle(size()));
     puzzles.push_back(new ListPuzzle(size()));
 
-//    Connect TreePuzzle slots to PuzzleWindow singals
-     Puzzle *treepuzzle = puzzles[2]; //trying this for debugging?
-
-  QObject::connect(pw, &PuzzleWindow::mousePressedSignal, treepuzzle, &Puzzle::mousePressedSlot);
-  QObject::connect(pw, &PuzzleWindow::mouseMovedSignal, treepuzzle, &Puzzle::mouseMovedSlot);
-  QObject::connect(pw, &PuzzleWindow::mouseReleasedSignal, treepuzzle, &Puzzle::mouseReleasedSlot);
-
 
     ui->listWidget->addItem("stack");
     ui->listWidget->addItem("array");
@@ -84,7 +77,7 @@ void StudWin::on_listWidget_currentRowChanged(int currentRow)
         pw->setPuzzle(puzzles[currentRow]);
         pw->setFocus();
     }
-    // memory leak here.
+//     memory leak here.
 //    switch(currentRow){
 //        case 0:
 //            pw->setPuzzle(new StackPuzzle);
