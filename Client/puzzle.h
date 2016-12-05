@@ -32,7 +32,9 @@ protected:
     std::vector<sprite2dObject*> inactive_components;
     b2World *thisWorld;
     void establishGravity();
+    void establishGravity(int gravityfactor);
     void establishFloor();
+    void establishSides();
 
 private:
     void garbageCollection(std::vector<sprite2dObject*>&);
