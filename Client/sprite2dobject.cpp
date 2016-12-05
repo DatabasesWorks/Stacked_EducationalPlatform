@@ -36,8 +36,8 @@ void sprite2dObject::setText(std::string string, sf::Color color){
    text.setColor(color);
    text.setString(string);
    sf::Font font;
-   font.loadFromFile("font.ttf");
-   text.setFont(font);
+ //  font.loadFromFile("font.ttf");
+  // text.setFont(font);
    text.setCharacterSize(20000);
 
 }

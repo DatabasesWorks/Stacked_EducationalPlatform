@@ -53,10 +53,13 @@ void StackPuzzle::generateTree(){
     sprite2dObject * hsp2 = createNode(150,120,b2_dynamicBody);
     sprite2dObject * hsp2_right = createNode(175,160,b2_dynamicBody);
 
+    root->changeColor(sf::Color::Yellow);
 
+    hsp1->changeColor(sf::Color::Red);
+    hsp2->changeColor(sf::Color::Green);
 
     SpriteDefinition def;
-    def.text="RRRRRRRRRRRRRAWWWWWWWWWWWWWWWWWWWR";
+    def.setText("RRRRRRRRRRRRRAWWWWWWWWWWWWWWWWWWWR");
     def.setShape(4,40,40);
     def.setType(b2_dynamicBody);
     def.setDensity(1);
