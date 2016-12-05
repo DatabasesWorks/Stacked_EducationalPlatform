@@ -62,3 +62,21 @@ void PuzzleWindow::setPuzzle(Puzzle *puzzle)
 void PuzzleWindow::keyPressEvent(QKeyEvent *event){
     puzzle->runAction(Qt::Key(event->key()));
 }
+
+//Mouse events:
+void PuzzleWindow::mousePressEvent(QMouseEvent* e)
+{
+    emit mousePressedSignal(e->globalPos()); //Emit QPoint?
+}
+
+void PuzzleWindow::mouseMoveEvent(QMouseEvent* e)
+{
+        emit mouseMovedSignal(e->globalPos()); //Emit QPoint?
+}
+
+void PuzzleWindow::mouseReleaseEvent(QMouseEvent* e)
+{
+        emit mouseReleasedSignal(e->globalPos());  //Emit QPoint?
+}
+
+
