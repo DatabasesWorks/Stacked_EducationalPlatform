@@ -32,12 +32,12 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 
     int sides = 4;
     int l = 50;
-    int h = 5;
+    int h = 0;
 
     int boxsize=15;
 //    int tri=3;
 
-    //sloppy hardcode
+    //platforms (i.e. tree)
     this->addComponent("plat_3",sides,l,h, 200, 50, b2_staticBody);
     this->addComponent("plat_1",sides,l,h, 100,100, b2_staticBody);
     this->addComponent("plat_5",sides,l,h, 300,100, b2_staticBody);
@@ -46,11 +46,13 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     this->addComponent("plat_4",sides,l,h, 250, 150,b2_staticBody);
     this->addComponent("plat_6",sides,l,h, 350, 150,b2_staticBody);
 
+    //boxes (i.e. data to go into the tree)
     std::string name;
     for(int i = 0; i<10; i++)
     {   name = "box" +i;
         this->addComponent(name,sides,boxsize,boxsize, 10+i*16, 10, b2_dynamicBody);
     }
+
 
 
 
