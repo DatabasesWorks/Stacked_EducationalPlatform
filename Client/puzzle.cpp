@@ -5,6 +5,10 @@ Puzzle::Puzzle() {
     thisWorld = new b2World(g);
 }
 
+Puzzle::Puzzle(QSize size) : Puzzle(){
+    this->size=size;
+}
+
 Puzzle::~Puzzle(){
     delete thisWorld;
     for(auto it = inactive_components.begin(); it < inactive_components.end(); it++){
@@ -21,6 +25,8 @@ void Puzzle::step(float time){
    thisWorld->Step(time,10,10);
    //apparently there are performance issues when the last two numbers are < 10
 }
+
+
 
 void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored){
     SpriteDefinition tempdef(x,y, type,name);
@@ -39,6 +45,18 @@ void Puzzle::addComponent(SpriteDefinition def, bool ignored){
         inactive_components.push_back(new sprite2dObject(thisWorld,def));
     }
 }
+
+void Puzzle::addComponent(sprite2dObject* obj, bool ignored){
+    if(!ignored){
+        components.push_back(obj);
+    }else{
+        inactive_components.push_back(obj);
+    }
+
+}
+
+
+
 
 //polymorphic stuff
 void Puzzle::runAction(Qt::Key){}

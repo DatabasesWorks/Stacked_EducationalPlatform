@@ -2,6 +2,7 @@
 #define SPRITE2DOBJECT_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/Joints/b2DistanceJoint.h>
 #include <Box2D/Box2D.h>
@@ -28,24 +29,31 @@ public:
     void destroy();
     void moveBody(Direction, int);
     void applyAngularForce(Direction,double);
-    void connect(sprite2dObject*,b2World*,int);
+    void connectRope(sprite2dObject*);
+    void connectBar(sprite2dObject*);
     void ignoreObject();
     bool isIgnored();
     void changeColor(sf::Color color);
     void setName(std::string);
     void setFriction(double);
     void setDensity(double);
+    void setSprite(std::string pathname);
+    void setText(std::string, sf::Color c = sf::Color::White);
+    sf::Text getText();
+    sf::Sprite * getSprite();
     void mark();
     bool marked();
     b2Vec2 getSize();
 
 private:
+    sf::Text text;
     bool ignore = false;
     bool remove = false;
     std::vector<b2Joint*> joints;
     std::string name;
     sf::Color color;
     b2Body * body;
+    sf::Sprite * sprite;
     int width = 0;
     int height = 0;
     double SCALE=1;

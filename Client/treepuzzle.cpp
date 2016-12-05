@@ -1,7 +1,7 @@
 #include "treepuzzle.h"
 #include "cmath"
 
-TreePuzzle::TreePuzzle() : Puzzle()
+TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
     b2Vec2 graf(0,.2);
     thisWorld->SetGravity(graf);

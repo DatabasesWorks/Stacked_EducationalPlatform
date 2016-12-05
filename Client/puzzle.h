@@ -13,12 +13,14 @@ class Puzzle
 {
 public:
 
+    Puzzle(QSize size);
     Puzzle();
     virtual ~Puzzle();
     //managing components
     void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored = false);
     void changeComponentImage(unsigned int, sf::Image);
     void addComponent(SpriteDefinition, bool ignored = false);
+    void addComponent(sprite2dObject*, bool ignored = false);
     std::vector<sprite2dObject*> getAllComponents();
     void collectGarbage();
     //phy engine step

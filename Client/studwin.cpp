@@ -40,10 +40,10 @@ void StudWin::setupLevels() {
 //    }
 
 
-    puzzles.push_back(new StackPuzzle);
-    puzzles.push_back(new ArrayPuzzle);
-    puzzles.push_back(new TreePuzzle);
-    puzzles.push_back(new ListPuzzle);
+    puzzles.push_back(new StackPuzzle(size()));
+    puzzles.push_back(new ArrayPuzzle(size()));
+    puzzles.push_back(new TreePuzzle(size()));
+    puzzles.push_back(new ListPuzzle(size()));
 
     ui->listWidget->addItem("stack");
     ui->listWidget->addItem("array");
