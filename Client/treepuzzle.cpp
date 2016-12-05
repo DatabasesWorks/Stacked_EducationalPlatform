@@ -1,5 +1,6 @@
 #include "treepuzzle.h"
 #include "cmath"
+#include <iostream>
 
 TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
@@ -77,6 +78,15 @@ TreePuzzle::~TreePuzzle() {
 
 void TreePuzzle::mousePressedSlot(QPoint qpoint)
 {
+
+    int x = qpoint.x();
+    std::cout << "x" << x << std::endl;
+
+    int y = qpoint.y();
+    std::cout << "y" << y << std::endl;
+
+    this->addComponent("name", 4 ,15,15, x-539, y-188, b2_dynamicBody);
+
 
 }
 
