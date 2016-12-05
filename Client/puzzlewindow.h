@@ -1,5 +1,6 @@
 #ifndef PUZZLEWINDOW_H
 #define PUZZLEWINDOW_H
+#include <QObject>
 #include <graphicsobject.h>
 #include <SFML/Graphics/Drawable.hpp>
 #include "SFML/Graphics.hpp"
@@ -18,6 +19,7 @@
 
 class PuzzleWindow : public GraphicsObject
 {
+    Q_OBJECT
 public:
     explicit PuzzleWindow(QWidget *Parent=0);
     void onInit();
@@ -39,11 +41,19 @@ private:
     void updateSet();
     float rot=1;
 
+signals:
+    void mousePressedSignal(QPoint qpoint);
+    void mouseMovedSignal(QPoint qpoint);
+    void mouseReleasedSignal(QPoint qpoint);
+
 protected slots:
     void SlowUpdate();
 
 protected:
     void keyPressEvent(QKeyEvent*);
+    void mousePressEvent(QMouseEvent* e);
+    void mouseMoveEvent(QMouseEvent* e);
+    void mouseReleaseEvent(QMouseEvent* e);
 };
 
 #endif // PUZZLEWINDOW_H

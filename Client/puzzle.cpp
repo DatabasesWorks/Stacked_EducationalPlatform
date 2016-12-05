@@ -1,11 +1,11 @@
 #include "puzzle.h"
 
-Puzzle::Puzzle() {
+Puzzle::Puzzle(QObject *parent) :  QObject(parent) {
     b2Vec2 g(0,9.8);
     thisWorld = new b2World(g);
 }
 
-Puzzle::Puzzle(QSize size) : Puzzle(){
+Puzzle::Puzzle(QSize size, QObject *parent) : Puzzle(){
     this->size=size;
 }
 
@@ -121,6 +121,21 @@ void Puzzle::collectGarbage(){
     garbageCollection(inactive_components);
 }
 
+
+void Puzzle::mousePressedSlot(QPoint qpoint)
+{
+    //to be implemented in child class
+}
+
+void Puzzle::mouseMovedSlot(QPoint qpoint)
+{
+    //to be implemented in child class
+}
+
+void Puzzle::mouseReleasedSlot(QPoint qpoint)
+{
+    //to be implemented in child class
+}
 
 //here be dragons.
 void Puzzle::garbageCollection(std::vector<sprite2dObject*>& objs){
