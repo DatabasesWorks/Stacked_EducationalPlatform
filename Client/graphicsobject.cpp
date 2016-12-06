@@ -26,6 +26,7 @@ void GraphicsObject::showEvent(QShowEvent *) {
         XFlush(QX11Info::display());
             #endif
             #ifdef __APPLE__
+//        sf::RenderWindow::create((sf::WindowHandle)winId());
         sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
             #elif __linux__
         sf::RenderWindow::create((sf::WindowHandle)winId());
@@ -41,6 +42,13 @@ void GraphicsObject::showEvent(QShowEvent *) {
         gotimer.start();
         goinitialized = true;
     }
+}
+
+void GraphicsObject::onResize()
+{
+    sf::Vector2u dimensions(800,600);
+    sf::RenderWindow::setSize(dimensions);
+    QWidget::setFixedSize(800, 600);
 }
 
 //Don't know what this does
