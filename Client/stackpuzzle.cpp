@@ -27,7 +27,28 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     leftwalld.setColor(sf::Color::Red);
     addComponent(leftwalld,true);
 
-    generateTree();
+
+    int root_x = 100;
+    int root_y = 1;
+    int levelh = 50;
+    sprite2dObject * root = createNode(root_x,root_y,b2_staticBody);
+
+
+    SpriteDefinition pend;
+    pend.setShape(4,50,50);
+    pend.setPosition(100,120);
+    pend.setDensity(1);
+    pend.setColor(sf::Color::Red);
+    pend.setType(b2_dynamicBody);
+    sprite2dObject * underroot = new sprite2dObject(thisWorld,pend);
+    root->connectRope(underroot);
+    underroot->setSprite("");
+
+    addComponent(root);
+    addComponent(underroot);
+
+    //generateTree();
+
 
 
     for(int i = 0; i < 5; i++){
