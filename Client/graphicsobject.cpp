@@ -39,7 +39,7 @@ void GraphicsObject::showEvent(QShowEvent *) {
         this->setView(view1);
 
 
-        sf::Vector2u dimensions(800,600);
+        sf::Vector2u dimensions(1600,1200);
         sf::RenderWindow::setSize(dimensions);
         sf::RenderWindow::display();
         QWidget::setFixedSize(800, 600);
