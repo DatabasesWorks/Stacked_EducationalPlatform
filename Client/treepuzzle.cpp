@@ -7,9 +7,8 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
     b2Vec2 graf(0,0.98);
     thisWorld->SetGravity(graf);
-
     this->establishFloor();
-    this->establishGravity(1000);
+    this->establishGravity(100);
     this->establishSides();
     int sides = 4;
     int l = 50;
@@ -80,9 +79,6 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
         sprite2dObject * obj = *it;
         sf::Color color(std::rand()%200+55, std::rand()%200+55, std::rand()%200+55, std::rand()%200+55);
         obj->changeColor(color);
-
-       // obj->setDensity(10);
-       // obj->setFriction(.01);
    }
 
     for(auto it = inactive_components.begin(); it < inactive_components.end(); it++)
@@ -90,8 +86,6 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
         sprite2dObject * obj = *it;
         sf::Color color(std::rand()%200+55, std::rand()%200+55, std::rand()%200+55, std::rand()%200+55);
         obj->changeColor(color);
-        //obj->setDensity(10);
-        //obj->setFriction(.01);
    }
 
 

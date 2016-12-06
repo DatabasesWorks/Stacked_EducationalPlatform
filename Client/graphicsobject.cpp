@@ -8,6 +8,12 @@ GraphicsObject::GraphicsObject(QWidget *Parent) :
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
 
+    //set up size?
+    sf::Vector2u dimensions(300,300);
+    sf::RenderWindow::setSize(dimensions);
+    this->setSize(dimensions);
+    QWidget::setFixedSize(300, 300);
+
     // Set strong focus to enable keyboard events to be received
     setFocusPolicy(Qt::StrongFocus);
 }
@@ -28,6 +34,7 @@ void GraphicsObject::showEvent(QShowEvent *) {
             #elif _WIN32
         sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
             #endif
+
 
         OnInit();
         connect(&gotimer, SIGNAL(timeout()), this, SLOT(repaint()));
