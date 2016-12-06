@@ -15,6 +15,7 @@ public:
     SpriteDefinition();
     ~SpriteDefinition();
     void setText(std::string);
+    void setRestitution(double value);
     void setDensity(double);
     void dampen(double amount);
     void setFriction(double);

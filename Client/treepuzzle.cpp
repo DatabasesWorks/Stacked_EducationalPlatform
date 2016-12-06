@@ -5,8 +5,8 @@
 
 TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
-//    b2Vec2 graf(0,1);
-//    thisWorld->SetGravity(graf);
+    b2Vec2 graf(0,0.98);
+    thisWorld->SetGravity(graf);
 
     this->establishFloor();
     this->establishGravity(1000);
@@ -46,16 +46,33 @@ TreePuzzle::~TreePuzzle() {
 
 void TreePuzzle::mousePressedSlot(QPointF qpoint)
 {
-    int scale = 2;
+    int scale = 1;
 
-    int x = (qpoint.x())/scale;
+
+    b2Vec2 vec(qpoint.x(),qpoint.y());
+   // thisWorld->
+
+
+
+    int x = (vec.x)/scale;
     std::cout << "x" << x << std::endl;
 
-    int y = (qpoint.y())/scale;
+    int y = (vec.y)/scale;
     std::cout << "y" << y << std::endl;
 
-     this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
 
+    SpriteDefinition def;
+    def.name="name";
+    def.setPosition(x,y);
+    def.setShape(4,15,15);
+    def.setType(b2_dynamicBody);
+    def.setRestitution(0);
+    def.dampen(1000);
+    //def.setFriction(.01);
+
+    //this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
+
+    this->addComponent(def, true);
     int i = 0;
 
     for(auto it = components.begin(); it < components.end(); it++)
@@ -63,8 +80,9 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
         sprite2dObject * obj = *it;
         sf::Color color(std::rand()%200+55, std::rand()%200+55, std::rand()%200+55, std::rand()%200+55);
         obj->changeColor(color);
-        obj->setDensity(10);
-        obj->setFriction(.01);
+
+       // obj->setDensity(10);
+       // obj->setFriction(.01);
    }
 
     for(auto it = inactive_components.begin(); it < inactive_components.end(); it++)
@@ -72,8 +90,8 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
         sprite2dObject * obj = *it;
         sf::Color color(std::rand()%200+55, std::rand()%200+55, std::rand()%200+55, std::rand()%200+55);
         obj->changeColor(color);
-        obj->setDensity(10);
-        obj->setFriction(.01);
+        //obj->setDensity(10);
+        //obj->setFriction(.01);
    }
 
 

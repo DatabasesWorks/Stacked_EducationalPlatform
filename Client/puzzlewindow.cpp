@@ -77,17 +77,17 @@ void PuzzleWindow::keyPressEvent(QKeyEvent *event){
 //Mouse events:
 void PuzzleWindow::mousePressEvent(QMouseEvent* e)
 {
-    emit mousePressedSignal(e->localPos()); //Emit QPoint?
+    emit mousePressedSignal(this->mapFromParent(e->pos())); //Emit QPoint?
 }
 
 void PuzzleWindow::mouseMoveEvent(QMouseEvent* e)
 {
-        emit mouseMovedSignal(e->localPos()); //Emit QPoint?
+        emit mouseMovedSignal(this->mapFromParent(e->pos())); //Emit QPoint?
 }
 
 void PuzzleWindow::mouseReleaseEvent(QMouseEvent* e)
 {
-        emit mouseReleasedSignal(e->localPos());  //Emit QPoint?
+        emit mouseReleasedSignal(this->mapFromParent(e->pos()));  //Emit QPoint?
 }
 
 

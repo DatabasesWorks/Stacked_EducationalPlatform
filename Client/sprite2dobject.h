@@ -27,6 +27,8 @@ public:
     b2Body * getBody();
     sf::ConvexShape getShape();
     void destroy();
+    void bindToMouse();
+    void unbind();
     void moveBody(Direction, int);
     void applyAngularForce(Direction,double);
     void connectRope(sprite2dObject*);
