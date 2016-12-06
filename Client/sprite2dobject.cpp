@@ -100,6 +100,11 @@ void sprite2dObject::moveBody(Direction d, int magnitude){
        }
     }
 }
+void sprite2dObject::moveToPoint(int x, int y){
+    b2Vec2 v(x, y);
+    body->SetTransform(body->GetPosition(), body->GetAngle());
+
+}
 
 //not implemented
 void sprite2dObject::applyAngularForce(Direction d, double magnitude){

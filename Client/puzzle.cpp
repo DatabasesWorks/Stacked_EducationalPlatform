@@ -28,7 +28,16 @@ void Puzzle::step(float time){
 
 
 sprite2dObject * Puzzle::getComponentAt(int x, int y ){
-    thisWorld->GetBodyList();
+    for(auto it = components.begin(); it < components.end(); it++)
+    {
+        sprite2dObject * obj = *it;
+//        sf::Sprite * sprite = obj->getSprite();
+
+        if(obj->getBody())
+        {
+            return obj;
+        }
+   }
 
 }
 

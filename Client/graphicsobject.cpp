@@ -35,11 +35,11 @@ void GraphicsObject::showEvent(QShowEvent *) {
             #endif
 
         //set up size?
-        sf::Vector2u dimensions(1600,1200);
-        sf::RenderWindow::setSize(dimensions);
-        sf::RenderWindow::display();
-        QWidget::setFixedSize(800, 600);
-        QWidget::showMaximized();
+//        sf::Vector2u dimensions(800,600);
+//        sf::RenderWindow::setSize(dimensions);
+//        sf::RenderWindow::display();
+//        QWidget::setFixedSize(800, 600);
+//        QWidget::showMaximized();
 
         OnInit();
         connect(&gotimer, SIGNAL(timeout()), this, SLOT(repaint()));

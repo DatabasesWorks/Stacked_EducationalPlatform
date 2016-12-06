@@ -57,7 +57,7 @@ TreePuzzle::~TreePuzzle() {
 
 void TreePuzzle::mousePressedSlot(QPointF qpoint)
 {
-    int scale = 2;
+    int scale = 1;
 
     int x = (qpoint.x())/scale;
     std::cout << "x" << x << std::endl;
@@ -68,16 +68,56 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
     this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
 
     int i = 0;
+    sprite2dObject* s = getComponent("name");
+    s->moveToPoint(x+100,y+100);
+    sprite2dObject* b = getComponent("box_1");
+    if(b==nullptr){
+
+    }
+    if(b->getName().find("box") != -1){
+        curr = b;
+        curr->bindToMouse();
+    }
+
 }
 
 void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 {
+//    if(curr != NULL){
+//    int scale = 1;
+//    int x = (qpoint.x())/scale;
+//    std::cout << "x" << x << std::endl;
 
+//    int y = (qpoint.y())/scale;
+//    std::cout << "y" << y << std::endl;
+//    sprite2dObject* s = getComponent("name");
+//    s->moveToPoint(x,y);
+//    }
 }
 
 void TreePuzzle::mouseReleasedSlot(QPointF qpoint)
 {
+        int scale = 1;
+        int x = (qpoint.x())/scale;
+        std::cout << "x" << x << std::endl;
 
+        int y = (qpoint.y())/scale;
+        std::cout << "y" << y << std::endl;
+    sprite2dObject* s = getComponent("name");
+    s->moveToPoint(x,y);
+//    int scale = 1;
+//    int x = (qpoint.x())/scale;
+//    std::cout << "x" << x << std::endl;
+
+//    int y = (qpoint.y())/scale;
+//    std::cout << "y" << y << std::endl;
+//    sprite2dObject* s = getComponent("name");
+//    s->moveToPoint(x,y);
+//    if(curr != NULL){
+//        curr->unbind();
+//        curr = NULL;
+//    }
+//    curr = NULL;
 }
 
 
