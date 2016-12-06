@@ -43,8 +43,8 @@ win32: LIBS += -L"C:\\mysql\\lib\\mysql"
 
 LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window -lBox2D
 #LIBS += -lBox2d
-CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
-CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-graphics -lsfml-system -lsfml-network -lsfml-window
+CONFIG(release, debug|release): LIBS += -lsfml-audio -lsfml-window -lsfml-graphics -lsfml-system -lsfml-network
+CONFIG(debug, debug|release): LIBS += -lsfml-audio -lsfml-window -lsfml-graphics -lsfml-system -lsfml-network
 
 SOURCES += main.cpp\
     client.cpp \
