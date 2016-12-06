@@ -20,6 +20,8 @@ public:
 
 private:
     //std::list <sprite2dObject> l;
+    const int CubeSideLength = 10;
+    const int YSpawn = 195;
 };
 
 #endif // LISTPUZZLE_H
