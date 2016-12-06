@@ -30,7 +30,8 @@ void GraphicsObject::showEvent(QShowEvent *) {
             #endif
 //        this->setFixedHeight(400);
 //        this->setFixedWidth(800);
-//        this->setBaseSize(400, 800);
+        sf::Vector2u dimensions(800,600);
+        sf::RenderWindow::setSize(dimensions);
         OnInit();
         connect(&gotimer, SIGNAL(timeout()), this, SLOT(repaint()));
         gotimer.start();

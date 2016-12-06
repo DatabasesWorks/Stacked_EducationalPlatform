@@ -229,7 +229,7 @@
           <item row="1" column="0">
            <widget class="QWidget" name="mainGameWidget" native="true">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
               <horstretch>1</horstretch>
               <verstretch>1</verstretch>
              </sizepolicy>

@@ -106,7 +106,7 @@ void Puzzle::establishFloor() {
 
 void Puzzle::establishSides() {
     SpriteDefinition lsidedef(0,0, b2_staticBody,"lside");
-    SpriteDefinition rsidedef(500,0, b2_staticBody,"rside");
+    SpriteDefinition rsidedef(390,0, b2_staticBody,"rside");
     lsidedef.setShape(4,0,650); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
     rsidedef.setShape(4,0,650);
     sprite2dObject *lside = new sprite2dObject(thisWorld,lsidedef);
