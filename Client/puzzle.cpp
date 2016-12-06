@@ -32,27 +32,39 @@ sprite2dObject * Puzzle::getComponentAt(int x, int y ){
 
 }
 
-void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored){
+void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored, bool pushFront){
     SpriteDefinition tempdef(x,y, type,name);
     tempdef.setShape(points,width,height); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
     if(!ignored){
-        components.push_back(new sprite2dObject(thisWorld,tempdef));
+        if (pushFront) {
+            components.insert(components.begin(), new sprite2dObject(thisWorld,tempdef));
+        } else {
+            components.push_back(new sprite2dObject(thisWorld,tempdef));
+        }
     }else{
         inactive_components.push_back(new sprite2dObject(thisWorld,tempdef));
     }
 }
 
-void Puzzle::addComponent(SpriteDefinition def, bool ignored){
+void Puzzle::addComponent(SpriteDefinition def, bool ignored, bool pushFront){
     if(!ignored){
-        components.push_back(new sprite2dObject(thisWorld,def));
+        if (pushFront) {
+            components.insert(components.begin(), new sprite2dObject(thisWorld,def));
+        } else {
+            components.push_back(new sprite2dObject(thisWorld,def));
+        }
     }else{
         inactive_components.push_back(new sprite2dObject(thisWorld,def));
     }
 }
 
-void Puzzle::addComponent(sprite2dObject* obj, bool ignored){
+void Puzzle::addComponent(sprite2dObject* obj, bool ignored, bool pushFront){
     if(!ignored){
-        components.push_back(obj);
+        if (pushFront) {
+            components.insert(components.begin(), obj);
+        } else {
+            components.push_back(obj);
+        }
     }else{
         inactive_components.push_back(obj);
     }

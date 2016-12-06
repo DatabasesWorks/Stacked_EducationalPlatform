@@ -19,10 +19,10 @@ public:
     Puzzle(QObject *parent = 0);
     virtual ~Puzzle();
     //managing components
-    void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored = false);
+    void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored = false, bool pushFront = false);
     void changeComponentImage(unsigned int, sf::Image);
-    void addComponent(SpriteDefinition, bool ignored = false);
-    void addComponent(sprite2dObject*, bool ignored = false);
+    void addComponent(SpriteDefinition, bool ignored = false, bool pushFront = false);
+    void addComponent(sprite2dObject*, bool ignored = false, bool pushFront = false);
     sprite2dObject* getComponent(std::string name);
     std::vector<sprite2dObject*> getAllComponents();
     void collectGarbage();

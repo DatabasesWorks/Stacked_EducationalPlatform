@@ -22,7 +22,7 @@ void ListPuzzle::runAction(Qt::Key key) {
 void ListPuzzle::pushFront(){
     b2Body *bod;
     bod = components.front()->getBody();
-    this->addComponent("list body", 4, 10, 10, bod->GetPosition().x - 10, bod->GetPosition().y, b2_dynamicBody);
+    this->addComponent("list body", 4, 10, 10, bod->GetPosition().x - 10, bod->GetPosition().y, b2_dynamicBody, false, true);
 }
 
 void ListPuzzle::pushBack(){
