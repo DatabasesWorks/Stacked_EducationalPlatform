@@ -44,7 +44,7 @@ TreePuzzle::~TreePuzzle() {
 
 void TreePuzzle::mousePressedSlot(QPointF qpoint)
 {
-    int scale = 2;
+    int scale = 1;
 
     int x = (qpoint.x())/scale;
     std::cout << "x" << x << std::endl;
