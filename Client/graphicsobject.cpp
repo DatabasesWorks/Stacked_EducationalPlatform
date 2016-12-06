@@ -2,17 +2,16 @@
 
 //A QWidget for rending SFML sprites in QT
 GraphicsObject::GraphicsObject(QWidget *Parent) :
-    QWidget(Parent), goinitialized(false) {
+    QWidget(Parent), goinitialized(false), sf::RenderWindow() {
     // Setup some states to allow direct rendering into the widget
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
 
     //set up size?
-    sf::Vector2u dimensions(300,300);
+    sf::Vector2u dimensions(800,600);
     sf::RenderWindow::setSize(dimensions);
-    this->setSize(dimensions);
-    QWidget::setFixedSize(300, 300);
+    QWidget::setFixedSize(800, 600);
 
     // Set strong focus to enable keyboard events to be received
     setFocusPolicy(Qt::StrongFocus);
@@ -26,7 +25,6 @@ void GraphicsObject::showEvent(QShowEvent *) {
         XFlush(QX11Info::display());
             #endif
             #ifdef __APPLE__
-//        sf::RenderWindow::create((sf::WindowHandle)winId());
         sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
             #elif __linux__
         sf::RenderWindow::create((sf::WindowHandle)winId());
@@ -42,13 +40,6 @@ void GraphicsObject::showEvent(QShowEvent *) {
         gotimer.start();
         goinitialized = true;
     }
-}
-
-void GraphicsObject::onResize()
-{
-    sf::Vector2u dimensions(800,600);
-    sf::RenderWindow::setSize(dimensions);
-    QWidget::setFixedSize(800, 600);
 }
 
 //Don't know what this does
