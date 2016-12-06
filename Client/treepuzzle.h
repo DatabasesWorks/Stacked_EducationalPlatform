@@ -13,6 +13,7 @@ class TreePuzzle : public Puzzle
 public:
     TreePuzzle();
     TreePuzzle(QSize size);
+    void loadColors();
     ~TreePuzzle();
 private:
     std::vector<sf::Color*> colors;
