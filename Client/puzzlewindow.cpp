@@ -6,6 +6,7 @@ PuzzleWindow::PuzzleWindow(QWidget *Parent) : GraphicsObject(Parent)
 {
     puzzle = 0;
     QObject::connect(&slowUpdateTimer,&QTimer::timeout, this, &PuzzleWindow::SlowUpdate);
+
     slowUpdateTimer.start(1000);
 }
 
