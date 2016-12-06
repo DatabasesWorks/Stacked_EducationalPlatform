@@ -1,17 +1,15 @@
 #include "graphicsobject.h"
 
+#include <SFML/Window/WindowStyle.hpp>
+
 //A QWidget for rending SFML sprites in QT
 GraphicsObject::GraphicsObject(QWidget *Parent) :
-    QWidget(Parent), goinitialized(false) {
+    QWidget(Parent), sf::RenderWindow(), goinitialized(false) {
     // Setup some states to allow direct rendering into the widget
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
-
-
-
-
-    // Set strong focus to enable keyboard events to be received
+  // Set strong focus to enable keyboard events to be received
     setFocusPolicy(Qt::StrongFocus);
 }
 
@@ -35,7 +33,13 @@ void GraphicsObject::showEvent(QShowEvent *) {
             #endif
 
         //set up size?
-        sf::Vector2u dimensions(1600,1200);
+
+
+        sf::View view1(sf::FloatRect(0, 0, 800, 600));
+        this->setView(view1);
+
+
+        sf::Vector2u dimensions(800,600);
         sf::RenderWindow::setSize(dimensions);
         sf::RenderWindow::display();
         QWidget::setFixedSize(800, 600);
