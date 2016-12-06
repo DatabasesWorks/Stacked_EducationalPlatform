@@ -50,6 +50,7 @@ public:
 
 private:
     sf::Text text;
+    sf::Font font;
     bool ignore = false;
     bool remove = false;
     std::vector<b2Joint*> joints;

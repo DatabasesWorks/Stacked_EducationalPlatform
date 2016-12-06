@@ -17,6 +17,13 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
 {
     body = world->CreateBody(def);
     name = description;
+
+    if (!font.loadFromFile("datacontrol.ttf"))
+    {
+       // error
+    }
+    text.setFont(font);
+    text.setCharacterSize(20);
 }
 
 sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dObject(def.name,world,def.body) // call the super constructor
@@ -49,10 +56,7 @@ void sprite2dObject::setText(std::string string, sf::Color color){
 
    text.setColor(color);
    text.setString(string);
-   sf::Font font;
- //  font.loadFromFile("font.ttf");
-  // text.setFont(font);
-   text.setCharacterSize(20000);
+
 
 }
 
