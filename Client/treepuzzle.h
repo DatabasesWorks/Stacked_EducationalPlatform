@@ -18,9 +18,9 @@ private:
     std::vector<sf::Color*> colors;
 
 public slots:
-    void mousePressedSlot(QPoint qpoint);
-    void mouseMovedSlot(QPoint qpoint);
-    void mouseReleasedSlot(QPoint qpoint);
+    void mousePressedSlot(QPointF qpoint);
+    void mouseMovedSlot(QPointF qpoint);
+    void mouseReleasedSlot(QPointF qpoint);
 };
 
 #endif // BINARYTREEPUZZLE_H

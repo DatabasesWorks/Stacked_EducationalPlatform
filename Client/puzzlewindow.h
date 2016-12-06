@@ -43,9 +43,9 @@ private:
     float rot=1;
 
 signals:
-    void mousePressedSignal(QPoint qpoint);
-    void mouseMovedSignal(QPoint qpoint);
-    void mouseReleasedSignal(QPoint qpoint);
+    void mousePressedSignal(QPointF qpoint);
+    void mouseMovedSignal(QPointF qpoint);
+    void mouseReleasedSignal(QPointF qpoint);
 
 protected slots:
     void SlowUpdate();

@@ -122,17 +122,17 @@ void Puzzle::collectGarbage(){
 }
 
 
-void Puzzle::mousePressedSlot(QPoint qpoint)
+void Puzzle::mousePressedSlot(QPointF qpoint)
 {
     //to be implemented in child class
 }
 
-void Puzzle::mouseMovedSlot(QPoint qpoint)
+void Puzzle::mouseMovedSlot(QPointF qpoint)
 {
     //to be implemented in child class
 }
 
-void Puzzle::mouseReleasedSlot(QPoint qpoint)
+void Puzzle::mouseReleasedSlot(QPointF qpoint)
 {
     //to be implemented in child class
 }
