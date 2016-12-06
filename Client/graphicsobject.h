@@ -33,6 +33,7 @@ public:
     virtual void paintEvent(QPaintEvent*);
     virtual void OnInit();
     virtual void OnUpdate();
+    virtual void onResize();
 
 
 private:
