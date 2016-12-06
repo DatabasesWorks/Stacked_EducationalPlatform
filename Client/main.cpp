@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     }
     f.close();
     sf::Music music;
-    if (!music.openFromFile(":rc/music.ogg")){
+    if (!music.openFromFile("music.flac")){
         std::cout << "music broke" << std::endl;
     }else{
         music.setVolume(50);

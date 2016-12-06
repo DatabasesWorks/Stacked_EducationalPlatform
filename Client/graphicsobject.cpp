@@ -29,7 +29,9 @@ void GraphicsObject::showEvent(QShowEvent *) {
             #elif _WIN32
         sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
             #endif
-
+//        this->setFixedHeight(400);
+//        this->setFixedWidth(800);
+//        this->setBaseSize(400, 800);
         OnInit();
         connect(&gotimer, SIGNAL(timeout()), this, SLOT(repaint()));
         gotimer.start();
