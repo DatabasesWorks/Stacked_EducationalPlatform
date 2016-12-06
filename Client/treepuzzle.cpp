@@ -54,7 +54,16 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
     int y = (qpoint.y())/scale;
     std::cout << "y" << y << std::endl;
 
-    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
+     this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
+
+    int i = 0;
+
+    for(auto it = components.begin(); it < components.end(); it++)
+    {
+        sprite2dObject * obj = *it;
+        sf::Color color(std::rand()%255, std::rand()%255, std::rand()%255, std::rand()%255 );
+        obj->changeColor(color);
+   }
 
 
 }
@@ -65,6 +74,12 @@ void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 }
 
 void TreePuzzle::mouseReleasedSlot(QPointF qpoint)
+{
+
+}
+
+
+void TreePuzzle::loadColors()
 {
 
 }
