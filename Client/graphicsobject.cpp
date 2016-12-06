@@ -2,16 +2,14 @@
 
 //A QWidget for rending SFML sprites in QT
 GraphicsObject::GraphicsObject(QWidget *Parent) :
-    QWidget(Parent), goinitialized(false), sf::RenderWindow() {
+    QWidget(Parent), goinitialized(false) {
     // Setup some states to allow direct rendering into the widget
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
 
-    //set up size?
-    sf::Vector2u dimensions(800,600);
-    sf::RenderWindow::setSize(dimensions);
-    QWidget::setFixedSize(800, 600);
+
+
 
     // Set strong focus to enable keyboard events to be received
     setFocusPolicy(Qt::StrongFocus);
@@ -34,6 +32,12 @@ void GraphicsObject::showEvent(QShowEvent *) {
         sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
             #endif
 
+        //set up size?
+        sf::Vector2u dimensions(1600,1200);
+        sf::RenderWindow::setSize(dimensions);
+        sf::RenderWindow::display();
+        QWidget::setFixedSize(800, 600);
+        QWidget::showMaximized();
 
         OnInit();
         connect(&gotimer, SIGNAL(timeout()), this, SLOT(repaint()));
