@@ -23,7 +23,9 @@ void GraphicsObject::showEvent(QShowEvent *) {
         XFlush(QX11Info::display());
             #endif
             #ifdef __APPLE__
+//        sf::RenderWindow::create((sf::WindowHandle)winId());
         sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
+
             #elif __linux__
         sf::RenderWindow::create((sf::WindowHandle)winId());
             #elif __unix__ // all unices not caught above

@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <qfile.h>
 #include <QTextStream>
+#include <SFML/Audio.hpp>
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
@@ -17,7 +18,13 @@ int main(int argc, char *argv[]) {
         qApp->setStyleSheet(ts.readAll());
     }
     f.close();
-
+    sf::Music music;
+    if (!music.openFromFile("music.flac")){
+        std::cout << "music broke" << std::endl;
+    }else{
+        music.setVolume(50);
+        music.play();
+    }
     Client w;
     w.show();
 

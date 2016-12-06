@@ -2,6 +2,7 @@
 #include "cmath"
 #include <iostream>
 #include <math.h>
+#include <puzzle.h>
 
 TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
@@ -13,7 +14,7 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     int l = 50;
     int h = 0;
 
-    int boxsize=15;
+    int boxsize=25;
 //    int tri=3;
 
     //platforms (i.e. tree)
@@ -27,12 +28,24 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 
     //boxes (i.e. data to go into the tree)
     std::string name;
-    for(int i = 0; i<10; i++)
-    {   name = "box" +i;
-        this->addComponent(name,sides,boxsize,boxsize, 10+i*16, 10, b2_dynamicBody);
+    for(int i = 0; i<7; i++)
+    {
+        name = "box_";
+        name += i;
+        this->addComponent(name,sides,boxsize,boxsize, 50+i*50, 185, b2_dynamicBody);
     }
-
-
+    for(auto it = components.begin(); it < components.end(); it++)
+    {
+       sprite2dObject * obj = *it;
+       if(obj->getName().find("box") != -1){
+            sf::Color color = sf::Color::Magenta;
+            obj->changeColor(color);
+       }
+       else if(obj->getName().find("plat") != -1){
+           sf::Color color = sf::Color::Yellow;
+           obj->changeColor(color);
+      }
+    }
 
 }
 
@@ -52,24 +65,9 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
     int y = (qpoint.y())/scale;
     std::cout << "y" << y << std::endl;
 
-     this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
+    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
 
-    for(auto it = components.begin(); it < components.end(); it++)
-    {
-        sprite2dObject * obj = *it;
-        sf::Color color(std::rand()%200+55, std::rand()%200+55, std::rand()%200+55, std::rand()%200+55);
-        obj->changeColor(color);
-        obj->setDensity(1);
-        obj->setFriction(.01);
-    }
-    for(auto it = inactive_components.begin(); it < inactive_components.end(); it++)
-    {
-        sprite2dObject * obj = *it;
-        sf::Color color(std::rand()%200+55, std::rand()%200+55, std::rand()%200+55, std::rand()%200+55);
-        obj->changeColor(color);
-        obj->setDensity(.5);
-        obj->setFriction(1);
-    }
+    int i = 0;
 }
 
 void TreePuzzle::mouseMovedSlot(QPointF qpoint)

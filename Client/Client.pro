@@ -102,6 +102,8 @@ RESOURCES += \
 
 DISTFILES += \
     Stacked.pro.user \
-    rc/font.ttf
+    rc/font.ttf \
+    music.ogg \
+    music.flac
 
 

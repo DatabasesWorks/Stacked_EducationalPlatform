@@ -10,11 +10,15 @@
 #include "QPushButton"
 #include <usersocket.h>
 #include <iostream>
+#include <SFML/Audio.hpp>
 
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Client) {
     ui->setupUi(this);
+
+
+
 }
 
 Client::~Client() {
