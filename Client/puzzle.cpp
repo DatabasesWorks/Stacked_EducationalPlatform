@@ -27,6 +27,10 @@ void Puzzle::step(float time){
 }
 
 
+sprite2dObject * Puzzle::getComponentAt(int x, int y ){
+    thisWorld->GetBodyList();
+
+}
 
 void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored){
     SpriteDefinition tempdef(x,y, type,name);

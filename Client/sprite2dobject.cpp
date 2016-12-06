@@ -27,6 +27,20 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dO
     color = def.color;
 }
 
+void sprite2dObject::bindToMouse()
+{
+
+
+
+}
+
+void sprite2dObject::unbind(){
+
+
+
+}
+
+
 void sprite2dObject::changeColor(sf::Color color){
    this->color=color;
 }
@@ -148,7 +162,8 @@ sf::ConvexShape sprite2dObject::getShape(){
          if(type==b2Shape::e_polygon){
            b2PolygonShape* polyShape= (b2PolygonShape*)f->GetShape();
            shapeToFill.setFillColor(color);
-           b2Vec2 vec(body->GetLocalVector(body->GetPosition()));
+           b2Vec2 vec(body->GetPosition());
+           //b2Vec2 vec(body->GetLocalVector(body->GetPosition()));
            shapeToFill.setPosition(vec.x*SCALE, vec.y*SCALE);
            int vertCount = polyShape->GetVertexCount();
            shapeToFill.setPointCount(vertCount);

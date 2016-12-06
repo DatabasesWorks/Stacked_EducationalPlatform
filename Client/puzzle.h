@@ -40,6 +40,7 @@ protected:
     void establishGravity(int gravityfactor);
     void establishFloor();
     void establishSides();
+    sprite2dObject * getComponentAt(int,int);
 
 private:
     void garbageCollection(std::vector<sprite2dObject*>&);

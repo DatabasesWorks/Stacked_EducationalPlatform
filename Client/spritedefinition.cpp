@@ -19,6 +19,14 @@ SpriteDefinition::SpriteDefinition(){
 
 }
 
+void SpriteDefinition::setRestitution(double value){
+    fixture->restitution=value;
+
+
+
+}
+
+
 SpriteDefinition::~SpriteDefinition(){
 }
 
@@ -29,7 +37,7 @@ void SpriteDefinition::setInitialVelocity(double angular, b2Vec2 linear){
 
 void SpriteDefinition::setPosition(int x, int y){
     b2Vec2 v(x,y);
-    body->position=v;
+    body->position.Set(x,y);
 }
 
 void SpriteDefinition::setText(std::string s){
