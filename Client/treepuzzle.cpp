@@ -66,14 +66,10 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
 
 //    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
 
-//    int i = 0;
-//    sprite2dObject* s = getComponent("name");
-//    s->moveToPoint(x+100,y+100);
     sprite2dObject* b = getComponent("box_0");
 
 
     if(b!=NULL){
-        std::cout << b->getName() <<std::endl;
         curr = b;
         curr->bindToMouse();
     }
@@ -97,6 +93,12 @@ void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 void TreePuzzle::mouseReleasedSlot(QPointF qpoint)
 {
     curr->unbind();
+//    std::string val = curr->getText();
+
+    if (curr->inContact(getComponent("plat_0"))){
+        curr->changeColor(sf::Color::Green);
+    }
+
     curr = NULL;
 }
 

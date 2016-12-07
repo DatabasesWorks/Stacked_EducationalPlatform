@@ -235,3 +235,16 @@ void sprite2dObject::mark(){
 bool sprite2dObject::marked(){
     return remove;
 }
+bool sprite2dObject::inContact(sprite2dObject* s){
+    b2Body * b;
+    b2ContactEdge* ce = body->GetContactList();
+    for (ce = body->GetContactList(); ce != NULL; ce = ce->next)
+    {
+         if (ce->other == b && ce->contact->IsTouching())
+         {
+               return true;
+         }
+    }
+    return false;
+
+}

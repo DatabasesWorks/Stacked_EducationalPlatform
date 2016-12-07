@@ -47,6 +47,7 @@ public:
     sf::Sprite * getSprite();
     void mark();
     bool marked();
+    bool inContact(sprite2dObject* s);
     b2Vec2 getSize();
 
 private:
