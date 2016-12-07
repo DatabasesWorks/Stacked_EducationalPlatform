@@ -30,13 +30,9 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dO
 void sprite2dObject::bindToMouse()
 {
 
-
-
 }
 
 void sprite2dObject::unbind(){
-
-
 
 }
 
@@ -102,7 +98,7 @@ void sprite2dObject::moveBody(Direction d, int magnitude){
 }
 void sprite2dObject::moveToPoint(int x, int y){
     b2Vec2 v(x, y);
-    body->SetTransform(body->GetPosition(), body->GetAngle());
+    body->SetTransform(v, body->GetAngle());
 
 }
 

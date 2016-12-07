@@ -1,17 +1,14 @@
 #include "graphicsobject.h"
 
+#include <SFML/Window/WindowStyle.hpp>
+
 //A QWidget for rending SFML sprites in QT
 GraphicsObject::GraphicsObject(QWidget *Parent) :
-    QWidget(Parent), goinitialized(false) {
-    // Setup some states to allow direct rendering into the widget
+    QWidget(Parent), sf::RenderWindow(), goinitialized(false) {    // Setup some states to allow direct rendering into the widget
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);
-
-
-
-
-    // Set strong focus to enable keyboard events to be received
+  // Set strong focus to enable keyboard events to be received
     setFocusPolicy(Qt::StrongFocus);
 }
 
@@ -21,25 +18,35 @@ void GraphicsObject::showEvent(QShowEvent *) {
         //SFML will get an updated view of the windows
             #ifdef Q_WS_X11
         XFlush(QX11Info::display());
-            #endif
-            #ifdef __APPLE__
-//        sf::RenderWindow::create((sf::WindowHandle)winId());
-        sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
+        #endif
+        #ifdef __APPLE__
+            sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
+        #elif __linux__
+            sf::RenderWindow::create((sf::WindowHandle)winId());
+        #elif __unix__ // all unices not caught above
+            sf::RenderWindow::create((sf::WindowHandle)winId());
+        #elif _WIN32
+            sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
+        #endif
+        #ifdef __APPLE__
+            sf::Vector2u dimensions(1600,1200);
+            sf::RenderWindow::setSize(dimensions);
 
-            #elif __linux__
-        sf::RenderWindow::create((sf::WindowHandle)winId());
-            #elif __unix__ // all unices not caught above
-        sf::RenderWindow::create((sf::WindowHandle)winId());
-            #elif _WIN32
-        sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
-            #endif
-
+        #elif __linux__
+             sf::Vector2u dimensions(800,600);
+            sf::RenderWindow::setSize(dimensions);
+        #elif __unix__ // all unices not caught above
+            sf::Vector2u dimensions(800,600);
+            sf::RenderWindow::setSize(dimensions);
         //set up size?
-//        sf::Vector2u dimensions(800,600);
-//        sf::RenderWindow::setSize(dimensions);
-//        sf::RenderWindow::display();
-//        QWidget::setFixedSize(800, 600);
-//        QWidget::showMaximized();
+        #endif
+
+        sf::View view1(sf::FloatRect(0, 0, 800, 600));
+        this->setView(view1);
+
+        sf::RenderWindow::display();
+     //   QWidget::setFixedSize(800, 600);
+        QWidget::showMaximized();
 
         OnInit();
         connect(&gotimer, SIGNAL(timeout()), this, SLOT(repaint()));
