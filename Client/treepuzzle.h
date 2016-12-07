@@ -24,7 +24,6 @@ private:
     std::vector<std::string> plats;
     sprite2dObject* curr;
     QTimer treetime;
-    void updateContact();
 
 public slots:
     void mousePressedSlot(QPointF qpoint);
