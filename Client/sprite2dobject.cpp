@@ -236,7 +236,7 @@ bool sprite2dObject::marked(){
     return remove;
 }
 bool sprite2dObject::inContact(sprite2dObject* s){
-    b2Body * b;
+    b2Body * b = s->getBody();
     b2ContactEdge* ce = body->GetContactList();
     for (ce = body->GetContactList(); ce != NULL; ce = ce->next)
     {

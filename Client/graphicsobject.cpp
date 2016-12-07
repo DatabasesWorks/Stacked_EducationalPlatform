@@ -31,6 +31,8 @@ void GraphicsObject::showEvent(QShowEvent *) {
         #endif
         #ifdef __APPLE__
             sf::Vector2u dimensions(1200,600);
+//            sf::Vector2u dimensions(1600,1200);
+//            sf::Vector2u dimensions(800,600);
             sf::RenderWindow::setSize(dimensions);
 
         #elif __linux__

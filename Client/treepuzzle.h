@@ -6,6 +6,8 @@
 #include <puzzle.h>
 #include <QSize>
 #include <sprite2dobject.h>
+#include <QTimer>
+
 
 class TreePuzzle : public Puzzle
 
@@ -16,13 +18,18 @@ public:
     void loadColors();
     ~TreePuzzle();
 private:
-    std::vector<sf::Color*> colors;
+    std::vector<std::string> boxes;
+    std::vector<std::string> plats;
     sprite2dObject* curr;
+    QTimer treetime;
+
+    void resetColors();
 
 public slots:
     void mousePressedSlot(QPointF qpoint);
     void mouseMovedSlot(QPointF qpoint);
     void mouseReleasedSlot(QPointF qpoint);
+    void updateContact();
 };
 
 #endif // BINARYTREEPUZZLE_H
