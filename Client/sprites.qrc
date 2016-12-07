@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>../spritesheet.png</file>
+        <file>datacontrol.ttf</file>
+        <file>music.flac</file>
     </qresource>
 </RCC>

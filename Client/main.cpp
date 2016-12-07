@@ -18,6 +18,12 @@ int main(int argc, char *argv[]) {
         qApp->setStyleSheet(ts.readAll());
     }
     f.close();
+
+    //There may be better way to get directory
+     Q_INIT_RESOURCE(sprites);
+     QFile musicfile(":/music.flac");
+     musicfile.copy(QString("music.flac"));
+
     sf::Music music;
     if (!music.openFromFile("music.flac")){
         std::cout << "music broke" << std::endl;

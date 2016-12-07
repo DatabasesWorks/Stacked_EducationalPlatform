@@ -1,4 +1,5 @@
 #include "sprite2dobject.h"
+#include <iostream>
 
 // A class to integrate the SFML sprite class with the Box2D objects.
 sprite2dObject::sprite2dObject(){
@@ -18,7 +19,13 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
 {
     body = world->CreateBody(def);
     name = description;
-    if (!font.loadFromFile("./datacontrol.ttf"))
+    //There may be better way to get directory
+     Q_INIT_RESOURCE(sprites);
+     QFile f(":/datacontrol.ttf");
+     f.copy(QString("datacontrol.ttf"));
+
+
+    if (!font.loadFromFile("datacontrol.ttf"))
     {
        // throw new std::exception;
     }
