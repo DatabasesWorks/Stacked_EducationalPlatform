@@ -18,13 +18,14 @@ public:
     void sortList();
     void addAtActiveIndex();
     void virtual runAction(Qt::Key) override;
+    void reset();
 
 private:
     const int CubeSideLength = 10;
-    const int YSpawn = 195;
+    const int YSpawn = 190;
     const int InitialXSpawn = 200;
     const int deltaX = 10;
-    const int deltaY = 15;
+    const int deltaY = 10;
     const sf::Color DefaultColor = sf::Color::White;
     const sf::Color ActiveColor = sf::Color::Yellow;
 
