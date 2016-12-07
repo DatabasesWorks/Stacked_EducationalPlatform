@@ -19,9 +19,18 @@ public:
     void virtual runAction(Qt::Key) override;
 
 private:
-    //std::list <sprite2dObject> l;
     const int CubeSideLength = 10;
     const int YSpawn = 195;
+    const int InitialXSpawn = 200;
+    const sf::Color DefaultColor = sf::Color::White;
+    const sf::Color ActiveColor = sf::Color::Yellow;
+
+    //std::list <sprite2dObject> l;
+    int activeIndex;
+    void colorActiveBody();
+    void uncolorActiveBody();
+    void advanceActiveIndex();
+    void retreatActiveIndex();
 };
 
 #endif // LISTPUZZLE_H
