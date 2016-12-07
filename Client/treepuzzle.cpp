@@ -82,6 +82,8 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
         curr = b;
         curr->bindToMouse();
     }
+
+    curr->scaleSize(2);
     updateContact();
 
 }
@@ -107,7 +109,7 @@ void TreePuzzle::mouseReleasedSlot(QPointF qpoint)
 //    std::string val = curr->getText();
     updateContact();
 
-
+    curr->scaleSize(.5);
     curr = NULL;
 }
 
@@ -137,59 +139,6 @@ void TreePuzzle::updateContact()
 
         }
     }
-
-
-
-//       std::string  box = *it;
-
-//       for(auto it2 = plats.begin(); it2 < plats.end(); it++)
-//       {
-//          std::string  plat = *it2;
-//          bool inContact = getComponent(box)->inContact(getComponent(plat));
-//          int boxl =box.length();
-//          int platl = plat.length();
-//          bool namesMatch = (box[boxl-1] == plat[platl]);
-
-//          if(inContact && namesMatch)
-//          {
-//              getComponent(box)->changeColor(sf::Color::Green);
-//              getComponent(plat)->changeColor(sf::Color::Green);
-//          }
-//          else if (!inContact && namesMatch)
-//          {
-//              getComponent(box)->changeColor(sf::Color::Magenta);
-//              getComponent(plat)->changeColor(sf::Color::Yellow);
-//          }
-//        }
-//     }
-}
-
-void TreePuzzle::resetColors()
-{
-//    for(auto it = boxes.begin(); it < boxes.end(); it++)
-//    {
-//       std::string * box = *it;
-
-//       for(auto it2 = plats.begin(); it2 < plats.end(); it++)
-//       {
-//          string * plat = *it2;
-//          bool inContact = getComponent(box)->inContact(getComponent(plat));
-//          int boxl =box->length();
-//          int platl = plat.length();
-//          bool namesMatch = box[boxl-1] == plat[platl];
-
-//          if(!inContact && namesMatch)
-//          {
-//              curr->changeColor(sf::Color::);
-//              getComponent("plat0")->changeColor(sf::Color::Green);
-//          }
-//    }
-}
-
-
-void TreePuzzle::loadColors()
-{
-    //defunkt?
 }
 
 /*

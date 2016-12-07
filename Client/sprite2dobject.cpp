@@ -224,6 +224,12 @@ b2Vec2 sprite2dObject::getSize(){
     return vec;
 }
 
+void sprite2dObject::scaleSize(int factor)
+{
+    width *= factor;
+    height *= factor;
+}
+
 b2Body * sprite2dObject::getBody(){
     return body;
 }

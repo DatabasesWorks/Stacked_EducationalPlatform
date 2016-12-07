@@ -49,6 +49,7 @@ public:
     bool marked();
     bool inContact(sprite2dObject* s);
     b2Vec2 getSize();
+    void scaleSize(int factor);
 
 private:
     sf::Text text;
