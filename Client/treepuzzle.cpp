@@ -74,7 +74,8 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
 
     std::cout << "BUG?" << std::endl;
     if(b!=NULL){
-        curr = getComponentAt(x,y);
+        curr = b;
+        std::cout << curr->getName() << std::endl;
         std::cout << "BUG?" << std::endl;
 //        curr->bindToMouse();
     }
