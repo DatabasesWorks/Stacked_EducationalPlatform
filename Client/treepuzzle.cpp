@@ -15,7 +15,6 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     int h = 0;
 
     int boxsize=25;
-//    int tri=3;
 
     //platforms (i.e. tree)
     this->addComponent("plat_3",sides,l,h, 200, 50, b2_staticBody);
@@ -30,8 +29,8 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     std::string name;
     for(int i = 0; i<7; i++)
     {
-        name = "box_";
-        name += i;
+        name = "box_" + std::to_string(i);
+        std::cout << name << std::endl;
         this->addComponent(name,sides,boxsize,boxsize, 50+i*50, 185, b2_dynamicBody);
     }
     for(auto it = components.begin(); it < components.end(); it++)
@@ -57,7 +56,7 @@ TreePuzzle::~TreePuzzle() {
 
 void TreePuzzle::mousePressedSlot(QPointF qpoint)
 {
-    int scale = 2;
+    int scale = 1;
 
     int x = (qpoint.x())/scale;
     std::cout << "x" << x << std::endl;
@@ -65,19 +64,43 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
     int y = (qpoint.y())/scale;
     std::cout << "y" << y << std::endl;
 
-    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
+//    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
 
-    int i = 0;
+    sprite2dObject* b = getComponent("box_0");
+
+
+    if(b!=NULL){
+        curr = b;
+        curr->bindToMouse();
+    }
+
 }
 
 void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 {
+    int scale = 1;
 
+    int x = (qpoint.x())/scale;
+    std::cout << "x" << x << std::endl;
+
+    int y = (qpoint.y())/scale;
+    std::cout << "y" << y << std::endl;
+    if(curr != NULL){
+        curr->moveToPoint(x,y);
+    }
 }
 
 void TreePuzzle::mouseReleasedSlot(QPointF qpoint)
 {
+    curr->unbind();
+//    std::string val = curr->getText();
 
+    if (curr->inContact(getComponent("plat_0"))){
+        curr->changeColor(sf::Color::Green);
+        getComponent("plat0")->changeColor(sf::Color::Green);
+    }
+
+    curr = NULL;
 }
 
 

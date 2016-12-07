@@ -17,6 +17,7 @@ public:
     ~TreePuzzle();
 private:
     std::vector<sf::Color*> colors;
+    sprite2dObject* curr;
 
 public slots:
     void mousePressedSlot(QPointF qpoint);

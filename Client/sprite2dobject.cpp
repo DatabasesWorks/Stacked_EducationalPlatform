@@ -17,6 +17,13 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
 {
     body = world->CreateBody(def);
     name = description;
+
+    if (!font.loadFromFile("datacontrol.ttf"))
+    {
+       // error
+    }
+    text.setFont(font);
+    text.setCharacterSize(20);
 }
 
 sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dObject(def.name,world,def.body) // call the super constructor
@@ -30,13 +37,9 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dO
 void sprite2dObject::bindToMouse()
 {
 
-
-
 }
 
 void sprite2dObject::unbind(){
-
-
 
 }
 
@@ -49,10 +52,7 @@ void sprite2dObject::setText(std::string string, sf::Color color){
 
    text.setColor(color);
    text.setString(string);
-   sf::Font font;
- //  font.loadFromFile("font.ttf");
-  // text.setFont(font);
-   text.setCharacterSize(20000);
+
 
 }
 
@@ -99,6 +99,11 @@ void sprite2dObject::moveBody(Direction d, int magnitude){
            break;
        }
     }
+}
+void sprite2dObject::moveToPoint(int x, int y){
+    b2Vec2 v(x, y);
+    body->SetTransform(v, body->GetAngle());
+
 }
 
 //not implemented
@@ -229,4 +234,17 @@ void sprite2dObject::mark(){
 
 bool sprite2dObject::marked(){
     return remove;
+}
+bool sprite2dObject::inContact(sprite2dObject* s){
+    b2Body * b = s->getBody();
+    b2ContactEdge* ce = body->GetContactList();
+    for (ce = body->GetContactList(); ce != NULL; ce = ce->next)
+    {
+         if (ce->other == b && ce->contact->IsTouching())
+         {
+               return true;
+         }
+    }
+    return false;
+
 }

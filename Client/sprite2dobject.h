@@ -30,6 +30,7 @@ public:
     void bindToMouse();
     void unbind();
     void moveBody(Direction, int);
+    void moveToPoint(int,int);
     void applyAngularForce(Direction,double);
     void connectRope(sprite2dObject*);
     void connectBar(sprite2dObject*);
@@ -46,10 +47,12 @@ public:
     sf::Sprite * getSprite();
     void mark();
     bool marked();
+    bool inContact(sprite2dObject* s);
     b2Vec2 getSize();
 
 private:
     sf::Text text;
+    sf::Font font;
     bool ignore = false;
     bool remove = false;
     std::vector<b2Joint*> joints;

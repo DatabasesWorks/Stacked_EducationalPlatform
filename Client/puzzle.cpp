@@ -1,4 +1,5 @@
 #include "puzzle.h"
+#include <iostream>
 
 Puzzle::Puzzle(QObject *parent) :  QObject(parent) {
     b2Vec2 g(0,9.8);
@@ -28,7 +29,6 @@ void Puzzle::step(float time){
 
 
 sprite2dObject * Puzzle::getComponentAt(int x, int y ){
-    thisWorld->GetBodyList();
 
 
 
@@ -89,6 +89,7 @@ sprite2dObject* Puzzle::getComponent(std::string name)
         }
    }
 
+   std::cout << name << std::endl;
 }
 
 
