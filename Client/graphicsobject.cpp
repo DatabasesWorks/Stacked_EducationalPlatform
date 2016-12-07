@@ -4,7 +4,7 @@
 
 //A QWidget for rending SFML sprites in QT
 GraphicsObject::GraphicsObject(QWidget *Parent) :
-    QWidget(Parent), sf::RenderWindow(sf::VideoMode(800,600,32), "SMFL RULES"), goinitialized(false) {
+    QWidget(Parent), goinitialized(false) {
     // Setup some states to allow direct rendering into the widget
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
@@ -32,14 +32,16 @@ void GraphicsObject::showEvent(QShowEvent *) {
         #ifdef __APPLE__
             sf::Vector2u dimensions(1600,1200);
             sf::RenderWindow::setSize(dimensions);
-
         #elif __linux__
              sf::Vector2u dimensions(800,600);
             sf::RenderWindow::setSize(dimensions);
         #elif __unix__ // all unices not caught above
             sf::Vector2u dimensions(800,600);
             sf::RenderWindow::setSize(dimensions);
-        //set up size?
+        #elif _WIN32
+            sf::Vector2u dimensions(800,600);
+            sf::RenderWindow::setSize(dimensions);
+            //set up size?
         #endif
 
         sf::View view1(sf::FloatRect(0, 0, 800, 600));
