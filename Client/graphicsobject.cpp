@@ -5,6 +5,7 @@
 //A QWidget for rending SFML sprites in QT
 GraphicsObject::GraphicsObject(QWidget *Parent) :
     QWidget(Parent), sf::RenderWindow(), goinitialized(false) {    // Setup some states to allow direct rendering into the widget
+    // Setup some states to allow direct rendering into the widget
     setAttribute(Qt::WA_PaintOnScreen);
     setAttribute(Qt::WA_OpaquePaintEvent);
     setAttribute(Qt::WA_NoSystemBackground);

@@ -104,6 +104,7 @@ DISTFILES += \
     Stacked.pro.user \
     rc/font.ttf \
     music.ogg \
-    music.flac
+    music.flac \
+    datacontrol.ttf
 
 

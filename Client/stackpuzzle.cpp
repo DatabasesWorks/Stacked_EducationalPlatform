@@ -47,7 +47,7 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     addComponent(root);
     addComponent(underroot);
 
-    //generateTree();
+    generateTree();
 
 
 
