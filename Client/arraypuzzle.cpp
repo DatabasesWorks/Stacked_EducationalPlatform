@@ -81,8 +81,9 @@ void ArrayPuzzle::addAtIndexAction(){
      x = bod->GetPosition().x;
      this->thisWorld->DestroyBody(bod);
      //might want to restrict the deletion if size = 1
-     components.erase(components.begin() + activeIndex);
-     addComponent("array_"+activeIndex, 4, 100, 25, x, -25, b2_dynamicBody);
+     //components.erase(components.begin() + activeIndex);
+     this->replaceComponent("array_"+activeIndex, 4, 50, 25, x, -25, b2_dynamicBody, activeIndex);
+     components[activeIndex]->changeColor(sf::Color::Blue);
 }
 
 void ArrayPuzzle::sortArrayAction(){

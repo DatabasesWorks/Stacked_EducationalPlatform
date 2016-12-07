@@ -20,6 +20,7 @@ public:
     virtual ~Puzzle();
     //managing components
     void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored = false, bool pushFront = false);
+    void replaceComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, int ind, bool ignored = false);
     void changeComponentImage(unsigned int, sf::Image);
     void addComponent(SpriteDefinition, bool ignored = false, bool pushFront = false);
     void addComponent(sprite2dObject*, bool ignored = false, bool pushFront = false);
