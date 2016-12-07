@@ -34,6 +34,7 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
         name = "box_" + std::to_string(i);
 //        std::cout << name << std::endl;
         this->addComponent(name,sides,boxsize,boxsize, 50+i*50, 185, b2_dynamicBody);
+        getComponent(name)->setText(std::to_string(i));
     }
     for(auto it = components.begin(); it < components.end(); it++)
     {
@@ -42,6 +43,7 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
            boxes.push_back(obj->getName());
             sf::Color color = sf::Color::Magenta;
             obj->changeColor(color);
+
        }
        else if(obj->getName().find("plat") != -1){
            plats.push_back(obj->getName());
