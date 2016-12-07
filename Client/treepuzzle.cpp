@@ -7,13 +7,8 @@
 TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
 
-
-    //Timer keeps freezing the puzzle?
-
-//    connect(&treetime, SIGNAL(timeout()), this, TreePuzzle::updateContact);
-//    connect(&treetime, SIGNAL(treetime.timeout()), this, SLOT(updateContact()));
-//    QObject::connect(this, &PuzzleWindow::mousePressedSignal, this->puzzle, &Puzzle::mousePressedSlot);
-//    treetime.start(1000);
+    QObject::connect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));
+    treetime.start(100);
     this->establishFloor();
     this->establishGravity(100);
     this->establishSides();
@@ -37,7 +32,7 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     for(int i = 0; i<7; i++)
     {
         name = "box_" + std::to_string(i);
-        std::cout << name << std::endl;
+//        std::cout << name << std::endl;
         this->addComponent(name,sides,boxsize,boxsize, 50+i*50, 185, b2_dynamicBody);
     }
     for(auto it = components.begin(); it < components.end(); it++)
@@ -84,13 +79,12 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
     }
 
     curr->scaleSize(2);
-    updateContact();
 
 }
 
 void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 {
-    updateContact();
+
     int scale = 1;
 
     int x = (qpoint.x())/scale;
