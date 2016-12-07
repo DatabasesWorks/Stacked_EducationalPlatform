@@ -1,19 +1,21 @@
 #ifndef SPRITEDEFINITION_H
 #define SPRITEDEFINITION_H
 #include <Box2D/Box2D.h>
-#include <Box2D/Dynamics/b2Fixture.h>
-#include <Box2D/Dynamics/b2Body.h>
+#include <SFML/Graphics/Color.hpp>
 #include <vector>
 #include <string>
-#include <SFML/Graphics/Color.hpp>
+#include <cmath>
+#include <math.h>
 
 // a class to act as a template ( following the body definition approach )
 class SpriteDefinition
 {
 public:
+
     SpriteDefinition(int, int, b2BodyType, std::string);
     SpriteDefinition();
     ~SpriteDefinition();
+
     void setText(std::string);
     void setRestitution(double value);
     void setDensity(double);
@@ -24,11 +26,14 @@ public:
     void setColor(sf::Color);
     void setShape(int,int,int);
     void setType(b2BodyType);
+    void setBorderColor(sf::Color);
+
     b2BodyDef * body;
     b2FixtureDef * fixture;
     std::string name;
     sf::Color color;
     std::string text;
+    sf::Color bordercolor;
 
 };
 

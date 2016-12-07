@@ -16,7 +16,7 @@
 class sprite2dObject{
 
 public:
-    enum Direction {
+    enum Direction {//enum for directional commands
         left,right,up,down
     };
 
@@ -24,18 +24,30 @@ public:
     ~sprite2dObject();
     sprite2dObject(std::string,b2World*, b2BodyDef*);
     sprite2dObject(b2World*,SpriteDefinition);
-    b2Body * getBody();
-    sf::ConvexShape getShape();
-    void destroy();
+
+    //physics engine interactinons
     void bindToMouse();
     void unbind();
+    void connectRope(sprite2dObject*);
+    void connectBar(sprite2dObject*);
     void moveBody(Direction, int);
     void moveToPoint(int,int);
     void applyAngularForce(Direction,double);
-    void connectRope(sprite2dObject*);
-    void connectBar(sprite2dObject*);
+    bool inContact(sprite2dObject* s);
+
+    //garbage collection methods
     void ignoreObject();
     bool isIgnored();
+    void mark();
+    void destroy();
+    bool marked();
+
+    //various getters/setters for wrapper API
+    b2Body * getBody();
+    sf::ConvexShape getShape();
+    sf::Color getBorderColor();
+    sf::Color getColor();
+    void changeBorderColor(sf::Color color);
     void changeColor(sf::Color color);
     void setName(std::string);
     std::string getName();
@@ -45,22 +57,20 @@ public:
     void setText(std::string, sf::Color c = sf::Color::White);
     sf::Text getText();
     sf::Sprite * getSprite();
-    void mark();
-    bool marked();
-    bool inContact(sprite2dObject* s);
     b2Vec2 getSize();
     void scaleSize(int factor);
 
 private:
     sf::Text text;
     sf::Font font;
+    sf::Color color;
+    sf::Color bordercolor;
+    sf::Sprite * sprite = nullptr;
+    std::vector<b2Joint*> joints;
+    std::string name = "";
+    b2Body * body = nullptr;
     bool ignore = false;
     bool remove = false;
-    std::vector<b2Joint*> joints;
-    std::string name;
-    sf::Color color;
-    b2Body * body;
-    sf::Sprite * sprite;
     int width = 0;
     int height = 0;
     double SCALE=1;

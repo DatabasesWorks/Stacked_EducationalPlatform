@@ -104,7 +104,7 @@ void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 
 }
 
-void TreePuzzle::mouseReleasedSlot(QPointF qpoint)
+void TreePuzzle::mouseReleasedSlot(QPointF)
 {
     curr->unbind();
 //    std::string val = curr->getText();

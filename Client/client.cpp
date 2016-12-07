@@ -75,7 +75,7 @@ int Client::sendReg(QString data) {
     return 0;
 }
 //hardcoded to class "" for now
-QVector<QString> Client::getStudents(QString classcode){ // still unimplemented
+QVector<QString> Client::getStudents(QString){ // still unimplemented
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
     sock.authenticate("", "");
     Message msg = sock.sendPayload("getstudents", "");//classcode.toStdString());

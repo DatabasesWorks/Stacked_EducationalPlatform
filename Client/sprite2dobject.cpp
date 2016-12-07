@@ -4,12 +4,13 @@
 sprite2dObject::sprite2dObject(){
     body=NULL;
     sprite = NULL;
+    color = sf::Color::White;
+    bordercolor = sf::Color::White;
 }
 
 sprite2dObject::~sprite2dObject(){
     body->GetWorld()->DestroyBody(body);
     body = NULL;
-    color = sf::Color::White;
     text.setString("");
 }
 
@@ -17,24 +18,30 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
 {
     body = world->CreateBody(def);
     name = description;
-
-    if (!font.loadFromFile("../Client/datacontrol.ttf"))
+    if (!font.loadFromFile("./datacontrol.ttf"))
     {
-       // error
-//        throw new std::exception;
+        throw new std::exception;
     }
     text.setFont(font);
+    text.setOrigin(0,0);
     text.setCharacterSize(20);
 }
 
 sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dObject(def.name,world,def.body) // call the super constructor
 {
+    bordercolor=def.bordercolor;
+    body->CreateFixture(def.fixture);
     setText(def.text);
     text.setString(def.text);
-    body->CreateFixture(def.fixture);
     color = def.color;
 }
 
+
+/*
+ * Unimplemented Methods
+*/
+
+//------------------------------------------------------|
 void sprite2dObject::bindToMouse()
 {
 
@@ -43,27 +50,19 @@ void sprite2dObject::bindToMouse()
 void sprite2dObject::unbind(){
 
 }
-
-
-void sprite2dObject::changeColor(sf::Color color){
-   this->color=color;
+void sprite2dObject::applyAngularForce(Direction d, double magnitude){
+    if(d==right||d==down){ // not implemented
+        body->ApplyAngularImpulse(magnitude,true);
+    }else if(d==left||d==up) return;
 }
-
-void sprite2dObject::setText(std::string string, sf::Color color){
-
-   text.setColor(color);
-   text.setString(string);
+//-------------------------------------------------------|
 
 
-}
 
-sf::Text sprite2dObject::getText(){
 
-   b2Vec2 vec(body->GetLocalVector(body->GetPosition()));
-   text.setPosition(vec.x,vec.y);
-   text.setScale(100,100);
-   return text;
-}
+/*
+ * Physics Engine Manipulations
+*/
 
 void sprite2dObject::moveBody(Direction d, int magnitude){
 
@@ -101,17 +100,24 @@ void sprite2dObject::moveBody(Direction d, int magnitude){
        }
     }
 }
+
 void sprite2dObject::moveToPoint(int x, int y){
     b2Vec2 v(x, y);
     body->SetTransform(v, body->GetAngle());
 
 }
+bool sprite2dObject::inContact(sprite2dObject* s){
+    b2Body * b = s->getBody();
+    b2ContactEdge* ce = body->GetContactList();
+    for (ce = body->GetContactList(); ce != NULL; ce = ce->next)
+    {
+         if (ce->other == b && ce->contact->IsTouching())
+         {
+               return true;
+         }
+    }
+    return false;
 
-//not implemented
-void sprite2dObject::applyAngularForce(Direction d, double magnitude){
-    if(d==right||d==down){ // not implemented
-        body->ApplyAngularImpulse(magnitude,true);
-    }else if(d==left||d==up) return;
 }
 
 void sprite2dObject::connectRope(sprite2dObject * other){
@@ -189,6 +195,12 @@ sf::ConvexShape sprite2dObject::getShape(){
     return shapeToFill;
 }
 
+
+
+/*
+ * Getters/Setters
+*/
+
 void sprite2dObject::setSprite(std::string pathname){
     sf::Texture tex;
     tex.loadFromFile(pathname);
@@ -203,13 +215,43 @@ sf::Sprite * sprite2dObject::getSprite(){
     return sprite;
 }
 
-void sprite2dObject::setName(std::string n){
-    name=n;
+sf::Color sprite2dObject::getColor(){
+    return color;
+}
+
+sf::Color sprite2dObject::getBorderColor(){
+    return bordercolor;
+}
+
+void sprite2dObject::changeColor(sf::Color color){
+   color=color;
+}
+
+void sprite2dObject::changeBorderColor(sf::Color color){
+    bordercolor=color;
+}
+
+sf::Text sprite2dObject::getText(){
+   b2Vec2 vec(body->GetPosition());
+   text.setPosition(vec.x-text.getLocalBounds().width/2,vec.y-text.getLocalBounds().height);
+   return text;
+}
+
+#include <SFML/Main.hpp>
+void sprite2dObject::setText(std::string string, sf::Color color){
+       text.setCharacterSize(20);
+       text.setFont(font);
+       text.setColor(color);
+       text.setString(string);
 }
 
 std::string sprite2dObject::getName()
 {
     return name;
+}
+
+void sprite2dObject::setName(std::string n){
+    name=n;
 }
 
 void sprite2dObject::setFriction(double f){
@@ -241,17 +283,4 @@ void sprite2dObject::mark(){
 
 bool sprite2dObject::marked(){
     return remove;
-}
-bool sprite2dObject::inContact(sprite2dObject* s){
-    b2Body * b = s->getBody();
-    b2ContactEdge* ce = body->GetContactList();
-    for (ce = body->GetContactList(); ce != NULL; ce = ce->next)
-    {
-         if (ce->other == b && ce->contact->IsTouching())
-         {
-               return true;
-         }
-    }
-    return false;
-
 }

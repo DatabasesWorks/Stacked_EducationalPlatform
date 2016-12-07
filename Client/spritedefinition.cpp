@@ -1,6 +1,9 @@
 #include <spritedefinition.h>
-#include <cmath>
-#include <math.h>
+
+
+SpriteDefinition::~SpriteDefinition(){
+
+}
 
 SpriteDefinition::SpriteDefinition(int x, int y, b2BodyType type, std::string s) : SpriteDefinition(){
     body->type = type;
@@ -8,6 +11,7 @@ SpriteDefinition::SpriteDefinition(int x, int y, b2BodyType type, std::string s)
     body->position.y=y;
     name = s;
     color = sf::Color::White;
+    bordercolor = sf::Color::White;
 }
 
 SpriteDefinition::SpriteDefinition(){
@@ -16,53 +20,14 @@ SpriteDefinition::SpriteDefinition(){
     fixture = new b2FixtureDef;
     body->allowSleep=true;
     body->active=true;
-
 }
 
 void SpriteDefinition::setRestitution(double value){
     fixture->restitution=value;
-
-
-
 }
 
-
-SpriteDefinition::~SpriteDefinition(){
-}
-
-void SpriteDefinition::setInitialVelocity(double angular, b2Vec2 linear){
-    body->angularVelocity=angular;
-    body->linearVelocity=linear;
-}
-
-void SpriteDefinition::setPosition(int x, int y){
-    b2Vec2 v(x,y);
-    body->position.Set(x,y);
-}
-
-void SpriteDefinition::setText(std::string s){
-    text = s;
-}
-
-void SpriteDefinition::setType(b2BodyType type){
-    body->type=type;
-}
-
-void SpriteDefinition::setDensity(double set){
-   fixture->density=set;
-}
-
-void SpriteDefinition::dampen(double amount){
-    body->linearDamping+=amount;
-}
-
-
-void SpriteDefinition::setFriction(double set){
-   fixture->friction=set;
-}
-
-void SpriteDefinition::setColor(sf::Color c){
-   color=c;
+void SpriteDefinition::setBorderColor(sf::Color c){
+   bordercolor=c;
 }
 
 void SpriteDefinition::setShape(int count, int width, int height){
@@ -97,4 +62,39 @@ void SpriteDefinition::setShape(int count, int width, int height){
     //CREATE SHAPE and return
     shape->Set(&*points.begin(),count);
     fixture->shape = shape;
+}
+
+
+void SpriteDefinition::setInitialVelocity(double angular, b2Vec2 linear){
+    body->angularVelocity=angular;
+    body->linearVelocity=linear;
+}
+
+void SpriteDefinition::setPosition(int x, int y){
+    b2Vec2 v(x,y);
+    body->position.Set(x,y);
+}
+
+void SpriteDefinition::setText(std::string s){
+    text = s;
+}
+
+void SpriteDefinition::setType(b2BodyType type){
+    body->type=type;
+}
+
+void SpriteDefinition::setDensity(double set){
+   fixture->density=set;
+}
+
+void SpriteDefinition::dampen(double amount){
+    body->linearDamping+=amount;
+}
+
+void SpriteDefinition::setFriction(double set){
+   fixture->friction=set;
+}
+
+void SpriteDefinition::setColor(sf::Color c){
+   color=c;
 }

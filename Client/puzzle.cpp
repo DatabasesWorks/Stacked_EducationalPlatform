@@ -6,7 +6,7 @@ Puzzle::Puzzle(QObject *parent) :  QObject(parent) {
     thisWorld = new b2World(g);
 }
 
-Puzzle::Puzzle(QSize size, QObject *parent) : Puzzle(){
+Puzzle::Puzzle(QSize size, QObject*) : Puzzle(){
     this->size=size;
 }
 
@@ -116,23 +116,16 @@ void Puzzle::addComponent(sprite2dObject* obj, bool ignored, bool pushFront){
 
 sprite2dObject* Puzzle::getComponent(std::string name)
 {
-    int i = 0;
     for(auto it = components.begin(); it < components.end(); it++)
     {
         sprite2dObject * obj = *it;
-//        sf::Sprite * sprite = obj->getSprite();
-
         if(obj->getName()==name)
         {
             return obj;
         }
    }
-
-   std::cout << name << std::endl;
+   return nullptr;
 }
-
-
-
 
 //polymorphic stuff
 void Puzzle::runAction(Qt::Key){}
@@ -164,6 +157,7 @@ void Puzzle::establishFloor() {
     inactive_components.push_back(floor);
 }
 
+
 void Puzzle::establishSides() {
     SpriteDefinition lsidedef(0,0, b2_staticBody,"lside");
     SpriteDefinition rsidedef(390,0, b2_staticBody,"rside");
@@ -182,17 +176,17 @@ void Puzzle::collectGarbage(){
 }
 
 
-void Puzzle::mousePressedSlot(QPointF qpoint)
+void Puzzle::mousePressedSlot(QPointF)
 {
     //to be implemented in child class
 }
 
-void Puzzle::mouseMovedSlot(QPointF qpoint)
+void Puzzle::mouseMovedSlot(QPointF)
 {
     //to be implemented in child class
 }
 
-void Puzzle::mouseReleasedSlot(QPointF qpoint)
+void Puzzle::mouseReleasedSlot(QPointF)
 {
     //to be implemented in child class
 }

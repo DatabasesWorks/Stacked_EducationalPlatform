@@ -1,13 +1,23 @@
 #include "puzzlewindow.h"
-
+#include <QStyle>
+#include <QApplication>
+#include <QDesktopWidget>
 
 //Default constructor set's puzzle to 0 -- exception handling in OnUpdate?
 PuzzleWindow::PuzzleWindow(QWidget *Parent) : GraphicsObject(Parent)
 {
     puzzle = 0;
     QObject::connect(&slowUpdateTimer,&QTimer::timeout, this, &PuzzleWindow::SlowUpdate);
-
     slowUpdateTimer.start(1000);
+    //https://wiki.qt.io/How_to_Center_a_Window_on_the_Screen
+    this->setGeometry(
+       QStyle::alignedRect(
+         Qt::RightToLeft,
+         Qt::AlignCenter,
+         this->size(),
+         qApp->desktop()->availableGeometry()
+       )
+    );
 }
 
 void PuzzleWindow::OnInit()
@@ -43,24 +53,38 @@ void PuzzleWindow::OnUpdate()
     {
         sprite2dObject * obj = *it;
         RenderWindow::draw(obj->getShape());
+
+        //draw outline
+        sf::ConvexShape sh = obj->getShape();
+        sh.setFillColor(sf::Color::Transparent);
+        sh.setOutlineColor(obj->getBorderColor());// port this to sprdef and spr2dobj
+        sh.setOutlineThickness(1);
+        RenderWindow::draw(sh);
+
         sf::Sprite * sprite = obj->getSprite();
         if(sprite!=nullptr){
             RenderWindow::draw(*sprite);
+
         }
-        //if(obj->getText().getString()!=""){
-        //    RenderWindow::draw(obj->getText());
-        //}
+        if(obj->getText().getString()!=""){
+            RenderWindow::draw(obj->getText());
+        }
+
    }
 }
 
 //For setting or changing the puzzle in the window
 void PuzzleWindow::setPuzzle(Puzzle *puzzle)
 {
+
+    if(initialized){
     //disconnect
     QObject::disconnect(this, &PuzzleWindow::mousePressedSignal, this->puzzle, &Puzzle::mousePressedSlot);
     QObject::disconnect(this, &PuzzleWindow::mouseMovedSignal, this->puzzle, &Puzzle::mouseMovedSlot);
     QObject::disconnect(this, &PuzzleWindow::mouseReleasedSignal, this->puzzle, &Puzzle::mouseReleasedSlot);
-
+    }else{
+        initialized = true;
+    }
     //change puzzle
     this->puzzle = puzzle;
 

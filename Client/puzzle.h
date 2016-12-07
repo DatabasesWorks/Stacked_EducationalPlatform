@@ -27,6 +27,7 @@ public:
     sprite2dObject* getComponent(std::string name);
     std::vector<sprite2dObject*> getAllComponents();
     void collectGarbage();
+
     //phy engine step
     void step(float time);
     //polymorphic stuff

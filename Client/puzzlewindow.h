@@ -30,6 +30,7 @@ public:
 private:
 
     std::vector<sprite2dObject *> spritesToDraw;
+    bool initialized = false;
     Puzzle* puzzle;
     QTimer slowUpdateTimer;
 
