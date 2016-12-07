@@ -17,6 +17,8 @@ public:
     TreePuzzle(QSize size);
     void loadColors();
     ~TreePuzzle();
+    void updateContact();
+    void resetColors();
 private:
     std::vector<std::string> boxes;
     std::vector<std::string> plats;

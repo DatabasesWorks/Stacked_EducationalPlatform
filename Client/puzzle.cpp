@@ -28,12 +28,40 @@ void Puzzle::step(float time){
 }
 
 
-sprite2dObject * Puzzle::getComponentAt(int x, int y ){
 
 
+sprite2dObject * Puzzle::getComponentAt(int x, int y){
+   b2Body * results = nullptr;
+   for(b2Body* bodyIterator = thisWorld->GetBodyList(); bodyIterator; bodyIterator->GetNext()){
 
+      b2Vec2 bodyPosition(bodyIterator->GetPosition());
+      b2Vec2 mousePosition(x,y);
+      b2Vec2 difference;
 
+      difference+=bodyPosition; // load first point set
+      difference-=mousePosition; // take difference
 
+      if(difference.Normalize()<10){
+
+         results = bodyIterator;
+      }
+
+   }
+
+   if(results!=nullptr){
+      for(auto it = components.begin(); it < components.end(); it++){
+         b2Body * compare = (*it)->getBody();
+         if(results==compare){
+            return *it; // return the pointer to the correct sprite2dObject
+         }
+      }
+      for(auto it = inactive_components.begin(); it < inactive_components.end(); it++){
+         b2Body * compare = (*it)->getBody();
+         if(results==compare){
+            return *it; // return the pointer to the correct sprite2dObject
+         }
+      }
+    } return nullptr;
 }
 
 void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored, bool pushFront){
