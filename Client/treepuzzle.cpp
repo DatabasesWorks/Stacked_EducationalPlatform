@@ -78,7 +78,7 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
 
     std::cout << "BUG?" << std::endl;
 
-    if(b!=nullptr){
+    if(b!=nullptr && b->getName().find("box") != -1){
         curr = b;
         std::cout << curr->getName() << std::endl;
     }
