@@ -12,12 +12,6 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     leftwalld.setColor(sf::Color::Red);
     addComponent(leftwalld, true);
 
-    SpriteDefinition rightwalld(0,50, b2_staticBody, "rightwalld");
-    leftwalld.setShape(4,0,500);
-    leftwalld.setColor(sf::Color::Red);
-    addComponent(leftwalld, true);
-
-
     sprite2dObject *floor = new sprite2dObject(thisWorld, floordef);
     inactive_components.push_back(floor);
 
@@ -25,20 +19,25 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
         this->addComponent("array_"+i, 4, 50, 25, 20+(i*45), -25, b2_dynamicBody);
     }
     activeIndex = 0;
-}
 
+    components[0]->changeColor(sf::Color::Blue);
+}
 
 ArrayPuzzle::~ArrayPuzzle() {}
 
 void ArrayPuzzle::runAction(Qt::Key key){
     if(key == Qt::Key_Left){
         if(activeIndex != 0){
+            components[activeIndex]->changeColor(sf::Color::White);
             activeIndex--;
+            components[activeIndex]->changeColor(sf::Color::Blue);
         }
     }
     if(key == Qt::Key_Right){
         if(activeIndex < components.size()-1){
+            components[activeIndex]->changeColor(sf::Color::White);
             activeIndex++;
+            components[activeIndex]->changeColor(sf::Color::Blue);
         }
     }
     if(key == Qt::Key_E){
@@ -55,12 +54,16 @@ void ArrayPuzzle::runAction(Qt::Key key){
 void ArrayPuzzle::deleteAtIndexAction(){
     b2Body *bod;
     bod = components[activeIndex]->getBody();
-    //might want to restrict the deletion if size = 1
     if(components.size()>0){
         thisWorld->DestroyBody(bod);
         components.erase(components.begin() + activeIndex);
-    }if(activeIndex > 0){
+    }
+    if(activeIndex > 0){
         activeIndex--;
+        components[activeIndex]->changeColor(sf::Color::Blue);
+    }
+    if(activeIndex == 0){
+        components[activeIndex]->changeColor(sf::Color::Blue);
     }
     if(components.size() > 1){
         for(int i = activeIndex; i < ((int)components.size()); i++){
