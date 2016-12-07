@@ -72,13 +72,12 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
 
 //    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
 
-    sprite2dObject* b = getComponentAt(50,190); //reverse and accommodate offset ie +90?
+    sprite2dObject* b = getComponentAt(x,y); //reverse and accommodate offset ie +90?
 
     std::cout << "BUG?" << std::endl;
-    if(b!=NULL){
-        curr = getComponentAt(50,190);
+    if(b!=nullptr){
+        curr = getComponentAt(x,y);
         std::cout << "BUG?" << std::endl;
-//        curr->bindToMouse();
     }
 
 
@@ -94,7 +93,7 @@ void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 
     int y = (qpoint.y())/scale;
 //    std::cout << "y" << y << std::endl;
-    if(curr != NULL){
+    if(curr != nullptr){
         curr->moveToPoint(x, y);
     }
 
@@ -102,11 +101,7 @@ void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 
 void TreePuzzle::mouseReleasedSlot(QPointF)
 {
-//    curr->unbind();
-//    std::string val = curr->getText();
-
-//    curr->scaleSize(.5);
-    curr = NULL;
+    curr = nullptr;
 }
 
 void TreePuzzle::updateContact()
