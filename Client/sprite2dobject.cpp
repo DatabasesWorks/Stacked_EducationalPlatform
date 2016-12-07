@@ -224,7 +224,7 @@ sf::Color sprite2dObject::getBorderColor(){
 }
 
 void sprite2dObject::changeColor(sf::Color color){
-   color=color;
+   this->color=color;
 }
 
 void sprite2dObject::changeBorderColor(sf::Color color){
