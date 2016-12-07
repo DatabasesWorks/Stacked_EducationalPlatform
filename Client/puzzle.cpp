@@ -47,13 +47,13 @@ sprite2dObject * Puzzle::getComponentAt(int x, int y){
 
         std::cout << "diffx " << diffx << std::endl;
         std::cout << "diffy " << diffy << std::endl;
-        if (diffx<10 && diffy<10)
+        if (diffx<25 && diffy<25)
         {
             std::cout << "object found " << std::endl;
             return sp;
         }
 
-    }
+    }return nullptr;
 
 //   b2Body * results = nullptr;
 //   for(b2Body* bodyIterator = thisWorld->GetBodyList(); bodyIterator; bodyIterator->GetNext()){
