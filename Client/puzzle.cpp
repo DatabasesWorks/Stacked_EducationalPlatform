@@ -50,6 +50,17 @@ void Puzzle::addComponent(std::string name, int points, int width, int height, i
     }
 }
 
+//if you want to change by index
+void Puzzle::replaceComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, int ind, bool ignored){
+    SpriteDefinition tempdef(x,y, type,name);
+    tempdef.setShape(points,width,height); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
+    if(!ignored){
+        components[ind] = new sprite2dObject(thisWorld, tempdef);
+    }else{
+        inactive_components.push_back(new sprite2dObject(thisWorld,tempdef));
+    }
+}
+
 void Puzzle::addComponent(SpriteDefinition def, bool ignored, bool pushFront){
     if(!ignored){
         if (pushFront) {
