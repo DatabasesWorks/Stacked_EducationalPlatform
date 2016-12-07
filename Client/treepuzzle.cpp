@@ -97,6 +97,7 @@ void TreePuzzle::mouseReleasedSlot(QPointF qpoint)
 
     if (curr->inContact(getComponent("plat_0"))){
         curr->changeColor(sf::Color::Green);
+        getComponent("plat0")->changeColor(sf::Color::Green);
     }
 
     curr = NULL;
