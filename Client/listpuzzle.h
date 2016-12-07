@@ -16,12 +16,15 @@ public:
     void popFront();
     void popBack();
     void sortList();
+    void addAtActiveIndex();
     void virtual runAction(Qt::Key) override;
 
 private:
     const int CubeSideLength = 10;
     const int YSpawn = 195;
     const int InitialXSpawn = 200;
+    const int deltaX = 10;
+    const int deltaY = 15;
     const sf::Color DefaultColor = sf::Color::White;
     const sf::Color ActiveColor = sf::Color::Yellow;
 
@@ -31,6 +34,7 @@ private:
     void uncolorActiveBody();
     void advanceActiveIndex();
     void retreatActiveIndex();
+    void addFirstBody();
 };
 
 #endif // LISTPUZZLE_H

@@ -3,9 +3,11 @@
 ListPuzzle::ListPuzzle(QSize size) : Puzzle(size) {
     establishGravity();
     establishFloor();
+    addFirstBody();
+}
 
+void ListPuzzle::addFirstBody() {
     this->addComponent("list body", 4, CubeSideLength, CubeSideLength, InitialXSpawn, YSpawn, b2_dynamicBody);
-
     activeIndex = 0;
     colorActiveBody();
 }
@@ -18,6 +20,8 @@ void ListPuzzle::runAction(Qt::Key key) {
         pushFront();
     } else if (key == Qt::Key_E) {
         pushBack();
+    } else if (key == Qt::Key_Space) {
+        addAtActiveIndex();
     } else if (key == Qt::Key_S) {
         popFront();
     } else if (key == Qt::Key_D) {
@@ -31,26 +35,42 @@ void ListPuzzle::runAction(Qt::Key key) {
 
 void ListPuzzle::pushFront(){
     if (components.size() == 0) {
-        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, InitialXSpawn, YSpawn, b2_dynamicBody);
-        activeIndex = 0;
-        colorActiveBody();
+        addFirstBody();
     } else {
         b2Body *bod;
         bod = components.front()->getBody();
-        this->addComponent("list body", 4, 10, 10, bod->GetPosition().x - 10, bod->GetPosition().y, b2_dynamicBody, false, true);
+        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, bod->GetPosition().x - deltaX, YSpawn, b2_dynamicBody, false, true);
         activeIndex++;
     }
 }
 
 void ListPuzzle::pushBack(){
     if (components.size() == 0) {
-        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, InitialXSpawn, YSpawn, b2_dynamicBody);
-        activeIndex = 0;
-        colorActiveBody();
+        addFirstBody();
     } else {
         b2Body *bod;
         bod = components.back()->getBody();
-        this->addComponent("list body", 4, 10, 10, bod->GetPosition().x + 10, bod->GetPosition().y, b2_dynamicBody);
+        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, bod->GetPosition().x + deltaX, YSpawn, b2_dynamicBody);
+    }
+}
+
+void ListPuzzle::addAtActiveIndex() {
+    if (components.size() == 0) {
+        addFirstBody();
+    } else {
+        b2Body *bod;
+        bod = components[activeIndex]->getBody();
+        int xToSpawn = bod->GetPosition().x;
+        int yToSpawn = bod->GetPosition().y - deltaY;
+        for (int i = activeIndex + 1; i < ((int) components.size()); i++) {
+            if (components[i]->getBody()->GetPosition().x == xToSpawn) {
+                yToSpawn = components[i]->getBody()->GetPosition().y - deltaY;
+            } else {
+                break;
+            }
+        }
+        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, xToSpawn, yToSpawn, b2_dynamicBody);
+        advanceActiveIndex();
     }
 }
 
