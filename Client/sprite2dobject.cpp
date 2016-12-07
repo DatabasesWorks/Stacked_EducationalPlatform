@@ -20,7 +20,7 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
     name = description;
     if (!font.loadFromFile("./datacontrol.ttf"))
     {
-        throw new std::exception;
+       // throw new std::exception;
     }
     text.setFont(font);
     text.setOrigin(0,0);

@@ -11,13 +11,14 @@
 #include <usersocket.h>
 #include <iostream>
 #include <SFML/Audio.hpp>
+#include <QDesktopWidget>
 
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Client) {
     ui->setupUi(this);
-
-
+    //move the window to the center of the screen
+    move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
 
 }
 
