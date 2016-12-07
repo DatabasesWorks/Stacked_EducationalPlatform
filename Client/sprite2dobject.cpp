@@ -38,13 +38,9 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dO
 void sprite2dObject::bindToMouse()
 {
 
-
-
 }
 
 void sprite2dObject::unbind(){
-
-
 
 }
 
@@ -104,6 +100,11 @@ void sprite2dObject::moveBody(Direction d, int magnitude){
            break;
        }
     }
+}
+void sprite2dObject::moveToPoint(int x, int y){
+    b2Vec2 v(x, y);
+    body->SetTransform(v, body->GetAngle());
+
 }
 
 //not implemented
@@ -224,6 +225,12 @@ b2Vec2 sprite2dObject::getSize(){
     return vec;
 }
 
+void sprite2dObject::scaleSize(int factor)
+{
+    width *= factor;
+    height *= factor;
+}
+
 b2Body * sprite2dObject::getBody(){
     return body;
 }
@@ -234,4 +241,17 @@ void sprite2dObject::mark(){
 
 bool sprite2dObject::marked(){
     return remove;
+}
+bool sprite2dObject::inContact(sprite2dObject* s){
+    b2Body * b = s->getBody();
+    b2ContactEdge* ce = body->GetContactList();
+    for (ce = body->GetContactList(); ce != NULL; ce = ce->next)
+    {
+         if (ce->other == b && ce->contact->IsTouching())
+         {
+               return true;
+         }
+    }
+    return false;
+
 }
