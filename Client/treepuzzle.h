@@ -23,13 +23,11 @@ private:
     sprite2dObject* curr;
     QTimer treetime;
 
-    void resetColors();
 
 public slots:
     void mousePressedSlot(QPointF qpoint);
     void mouseMovedSlot(QPointF qpoint);
     void mouseReleasedSlot(QPointF qpoint);
-    void updateContact();
 };
 
 #endif // BINARYTREEPUZZLE_H
