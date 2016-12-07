@@ -30,7 +30,7 @@ void GraphicsObject::showEvent(QShowEvent *) {
             sf::RenderWindow::create(reinterpret_cast<sf::WindowHandle>(winId()));
         #endif
         #ifdef __APPLE__
-            sf::Vector2u dimensions(1600,1200);
+            sf::Vector2u dimensions(800,600);
             sf::RenderWindow::setSize(dimensions);
 
         #elif __linux__
@@ -47,7 +47,7 @@ void GraphicsObject::showEvent(QShowEvent *) {
 
         sf::RenderWindow::display();
      //   QWidget::setFixedSize(800, 600);
-        QWidget::showMaximized();
+        QWidget::showNormal();
 
         OnInit();
         connect(&gotimer, SIGNAL(timeout()), this, SLOT(repaint()));
