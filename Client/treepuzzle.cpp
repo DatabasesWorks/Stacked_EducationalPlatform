@@ -70,15 +70,14 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
 
 //    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
 
-    sprite2dObject* b = getComponent("box_0");
+//    sprite2dObject* b = getComponentAt(y,x+90); //reverse and accommodate offset ie +90?
 
 
-    if(b!=NULL){
-        curr = b;
+    if(getComponentAt(y,x+90)!=NULL){
+        curr = getComponentAt(y,x+90);
         curr->bindToMouse();
     }
 
-    curr->scaleSize(2);
 
 }
 
@@ -93,7 +92,7 @@ void TreePuzzle::mouseMovedSlot(QPointF qpoint)
     int y = (qpoint.y())/scale;
 //    std::cout << "y" << y << std::endl;
     if(curr != NULL){
-        curr->moveToPoint(x,y);
+        curr->moveToPoint(-y,x+90);
     }
 
 }
@@ -102,7 +101,6 @@ void TreePuzzle::mouseReleasedSlot(QPointF)
 {
     curr->unbind();
 //    std::string val = curr->getText();
-    updateContact();
 
     curr->scaleSize(.5);
     curr = NULL;
@@ -148,5 +146,4 @@ void TreePuzzle::updateContact()
  * if box and platform are not in contact with each other set default colour
  *
  * when all platforms are green puzzle is solved
-<<<<<<< HEAD
  */
