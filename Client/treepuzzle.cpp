@@ -73,7 +73,7 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
 //    sprite2dObject* b = getComponentAt(y,x+90); //reverse and accommodate offset ie +90?
 
 
-    if(getComponentAt(y,x+90)!=Null){
+    if(getComponentAt(y,x+90)!=NULL){
         curr = getComponentAt(y,x+90);
         curr->bindToMouse();
     }
