@@ -11,9 +11,9 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     //Timer keeps freezing the puzzle?
 
 //    connect(&treetime, SIGNAL(timeout()), this, TreePuzzle::updateContact);
-//    connect(&treetime, SIGNAL(treetime.timeout();), this, SLOT(updateContact()));
-    //QObject::connect(this, &PuzzleWindow::mousePressedSignal, this->puzzle, &Puzzle::mousePressedSlot);
-//    treetime.start(100);
+//    connect(&treetime, SIGNAL(treetime.timeout()), this, SLOT(updateContact()));
+//    QObject::connect(this, &PuzzleWindow::mousePressedSignal, this->puzzle, &Puzzle::mousePressedSlot);
+//    treetime.start(1000);
     this->establishFloor();
     this->establishGravity(100);
     this->establishSides();
@@ -90,6 +90,7 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
 
 void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 {
+    updateContact();
     int scale = 1;
 
     int x = (qpoint.x())/scale;
@@ -100,7 +101,7 @@ void TreePuzzle::mouseMovedSlot(QPointF qpoint)
     if(curr != NULL){
         curr->moveToPoint(x,y);
     }
-    updateContact();
+
 }
 
 void TreePuzzle::mouseReleasedSlot(QPointF qpoint)
@@ -136,7 +137,6 @@ void TreePuzzle::updateContact()
                 getComponent(box)->changeColor(sf::Color::Magenta);
                 getComponent(plat)->changeColor(sf::Color::Yellow);
             }
-
         }
     }
 }

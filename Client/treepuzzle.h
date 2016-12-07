@@ -29,7 +29,7 @@ public slots:
     void mousePressedSlot(QPointF qpoint);
     void mouseMovedSlot(QPointF qpoint);
     void mouseReleasedSlot(QPointF qpoint);
-//  void updateContact();
+//    void updateContact();
 };
 
 #endif // BINARYTREEPUZZLE_H
