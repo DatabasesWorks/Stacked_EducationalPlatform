@@ -68,10 +68,10 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
     int scale = 1;
 
     int x = (qpoint.x())/scale;
-    std::cout << "x" << x << std::endl;
+//    std::cout << "x" << x << std::endl;
 
     int y = (qpoint.y())/scale;
-    std::cout << "y" << y << std::endl;
+//    std::cout << "y" << y << std::endl;
 
 //    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
 
