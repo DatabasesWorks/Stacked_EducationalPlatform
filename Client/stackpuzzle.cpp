@@ -1,7 +1,6 @@
 #include "stackpuzzle.h"
 #include <sstream>
 
-
 StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
 
     b2Vec2 graf(0,0.98); // normalish gravity
@@ -15,51 +14,31 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     createBoundary(270,false);
 
 
+    instructionstream << "These are the instructions" << std::endl;
+    instructionstream << "Lorem ipsum dolor sit amet," << std::endl <<
+            "consectetur adipiscing elit," << std::endl <<
+            "sed do eiusmod tempor incididunt" << std::endl <<
+            "ut labore et dolore magna aliqua." << std::endl;
+
+    b2Vec2 pos(300,50);
+    createInstructions(pos);
+
+
+
 
 //make platform independent------
     createStackContainer(100);
     for(int i =0; i < 5; i++)
         generateStackPiece(100,0-i*20);
 
-    std::stringstream ss;
-    ss << "Lorem ipsum dolor sit amet," << std::endl <<
-            "consectetur adipiscing elit," << std::endl <<
-            "sed do eiusmod tempor incididunt" << std::endl <<
-            "ut labore et dolore magna aliqua." << std::endl;
-
-    std::string text = ss.str();
-    b2Vec2 pos(200,100);
-    b2Vec2 siZe(250,100);//scoping issues
-    createKeyBox(pos,siZe,text,"keybox_push");
-    siZe.operator *=(.25);
-    SpriteDefinition def;
-    def.setShape(4,25,25);
-    def.setPosition(pos.x+100,pos.y+100);
-    sprite2dObject * obj = new sprite2dObject(thisWorld,def);
-  //  obj->setSprite("./rc/andy.png");//can't use qt resources w/ sfml
-   // still not working properly
-    addComponent(obj,true);
 
 
-}
+
+ }
 
 void buildPuzzle(){
 
 
-}
-
-
-void StackPuzzle::createKeyBox(b2Vec2 position, b2Vec2 size, std::string text, std::string name){
-
-    SpriteDefinition box(position.x,position.y, b2_staticBody,name);
-    box.setShape(5,size.x,size.y);
-    box.setBorderColor(sf::Color::White);
-    sf::Color grey(84,84,84);
-    box.setColor(grey);
-    sprite2dObject * obj = new sprite2dObject(thisWorld,box);
-    obj->setText(text,  sf::Color(10,10,10));
-    obj->ignoreObject(); // nothing can interact with this
-    addComponent(obj,true);
 }
 
 void StackPuzzle::createStackContainer(int x){
