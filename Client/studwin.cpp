@@ -4,6 +4,7 @@
 #include <vector>
 #include "qstandarditemmodel.h"
 
+
 StudWin::StudWin(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StudWin) {
@@ -92,4 +93,22 @@ void StudWin::on_listWidget_currentRowChanged(int currentRow)
 //            pw->setPuzzle(new ListPuzzle);
 //            break;
 //    }
+}
+
+void StudWin::on_checkBox_stateChanged(int arg1)
+{
+    //There may be better way to get directory
+     Q_INIT_RESOURCE(sprites);
+     QFile musicfile(":/music.flac");
+     musicfile.copy(QString("music.flac"));
+    if(arg1 == 0){
+        music.stop();
+    }else{
+        if (!music.openFromFile("music.flac")){
+            std::cout << "music broke" << std::endl;
+        }else{
+            music.setVolume(50);
+            music.play();
+        }
+    }
 }

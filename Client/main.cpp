@@ -18,13 +18,10 @@ int main(int argc, char *argv[]) {
         qApp->setStyleSheet(ts.readAll());
     }
     f.close();
-    sf::Music music;
-    if (!music.openFromFile("music.flac")){
-        std::cout << "music broke" << std::endl;
-    }else{
-        music.setVolume(50);
-        music.play();
-    }
+
+    //There may be better way to get directory
+     Q_INIT_RESOURCE(sprites);
+
     Client w;
     w.show();
 

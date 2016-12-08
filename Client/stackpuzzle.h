@@ -7,7 +7,7 @@
 #include <puzzle.h>
 #include <QSize>
 #include <sprite2dobject.h>
-#include <Box2D.h>
+#include <Box2D/Box2D.h>
 class StackPuzzle : public Puzzle
 {
 public:

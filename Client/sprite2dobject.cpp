@@ -1,4 +1,5 @@
 #include "sprite2dobject.h"
+#include <iostream>
 
 // A class to integrate the SFML sprite class with the Box2D objects.
 sprite2dObject::sprite2dObject(){
@@ -18,7 +19,13 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
 {
     body = world->CreateBody(def);
     name = description;
-    if (!font.loadFromFile("./datacontrol.ttf"))
+    //There may be better way to get directory
+     Q_INIT_RESOURCE(sprites);
+     QFile f(":/datacontrol.ttf");
+     f.copy(QString("datacontrol.ttf"));
+
+
+    if (!font.loadFromFile("datacontrol.ttf"))
     {
        // throw new std::exception;
     }
@@ -44,12 +51,15 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dO
 //------------------------------------------------------|
 void sprite2dObject::bindToMouse()
 {
-
+    body->SetType(b2_staticBody);
 }
 
 void sprite2dObject::unbind(){
 
+    body->SetType(b2_dynamicBody);
+    body->SetLinearVelocity(b2Vec2(0,10));
 }
+
 void sprite2dObject::applyAngularForce(Direction d, double magnitude){
     if(d==right||d==down){ // not implemented
         body->ApplyAngularImpulse(magnitude,true);
@@ -223,7 +233,7 @@ sf::Color sprite2dObject::getBorderColor(){
 }
 
 void sprite2dObject::changeColor(sf::Color color){
-   color=color;
+   this->color=color;
 }
 
 void sprite2dObject::changeBorderColor(sf::Color color){

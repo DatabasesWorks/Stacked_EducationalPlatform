@@ -7,13 +7,8 @@
 TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
 
-
-    //Timer keeps freezing the puzzle?
-
-//    connect(&treetime, SIGNAL(timeout()), this, TreePuzzle::updateContact);
-//    connect(&treetime, SIGNAL(treetime.timeout()), this, SLOT(updateContact()));
-//    QObject::connect(this, &PuzzleWindow::mousePressedSignal, this->puzzle, &Puzzle::mousePressedSlot);
-//    treetime.start(1000);
+    QObject::connect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));
+    treetime.start(100);
     this->establishFloor();
     this->establishGravity(100);
     this->establishSides();
@@ -21,7 +16,7 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     int l = 50;
     int h = 0;
 
-    int boxsize=25;
+    int boxsize=35;
 
     //platforms (i.e. tree)
     this->addComponent("plat_3",sides,l,h, 200, 50, b2_staticBody);
@@ -34,11 +29,19 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 
     //boxes (i.e. data to go into the tree)
     std::string name;
+
     for(int i = 0; i<7; i++)
     {
-        name = "box_" + std::to_string(i);
-        std::cout << name << std::endl;
-        this->addComponent(name,sides,boxsize,boxsize, 50+i*50, 185, b2_dynamicBody);
+        SpriteDefinition stack_p;
+        stack_p.setShape(4, boxsize, boxsize);
+        stack_p.setDensity(50);
+        stack_p.setPosition(100+i*100,390);
+        stack_p.setText(std::to_string(i));
+        stack_p.setType(b2_dynamicBody);
+        name = "box_" + std::to_string(i);       
+        sprite2dObject* s = new sprite2dObject(thisWorld, stack_p);
+        s->setName(name);
+        addComponent(s);
     }
     for(auto it = components.begin(); it < components.end(); it++)
     {
@@ -47,6 +50,7 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
            boxes.push_back(obj->getName());
             sf::Color color = sf::Color::Magenta;
             obj->changeColor(color);
+
        }
        else if(obj->getName().find("plat") != -1){
            plats.push_back(obj->getName());
@@ -65,32 +69,8 @@ TreePuzzle::~TreePuzzle() {
 
 void TreePuzzle::mousePressedSlot(QPointF qpoint)
 {
-    int scale = 1;
-
-    int x = (qpoint.x())/scale;
-    std::cout << "x" << x << std::endl;
-
-    int y = (qpoint.y())/scale;
-    std::cout << "y" << y << std::endl;
-
-//    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
-
-    sprite2dObject* b = getComponent("box_0");
-
-
-    if(b!=NULL){
-        curr = b;
-        curr->bindToMouse();
-    }
-
-    curr->scaleSize(2);
-    updateContact();
-
-}
-
-void TreePuzzle::mouseMovedSlot(QPointF qpoint)
-{
-    updateContact();
+    std::cout<<"X box_0 " << getComponent("box_0")->getBody()->GetPosition().x;
+   std::cout<<"Y box_0 " << getComponent("box_0")->getBody()->GetPosition().y << std::endl;
     int scale = 1;
 
     int x = (qpoint.x())/scale;
@@ -98,20 +78,49 @@ void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 
     int y = (qpoint.y())/scale;
 //    std::cout << "y" << y << std::endl;
-    if(curr != NULL){
-        curr->moveToPoint(x,y);
+
+//    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
+
+    sprite2dObject* b = getComponentAt(x,y); //reverse and accommodate offset ie +90?
+
+    std::cout << "BUG?" << std::endl;
+
+    if(b!=nullptr && b->getName().find("box") != -1){
+        curr = b;
+        std::cout << curr->getName() << std::endl;
+        curr->bindToMouse();
+    }
+
+
+}
+
+void TreePuzzle::mouseMovedSlot(QPointF qpoint)
+{
+
+    int scale = 1;
+
+    int x = (qpoint.x())/scale;
+//    std::cout << "x" << x << std::endl;
+
+    int y = (qpoint.y())/scale;
+//    std::cout << "y" << y << std::endl;
+    if(curr != nullptr){
+        curr->moveToPoint(x, y);
+
     }
 
 }
 
 void TreePuzzle::mouseReleasedSlot(QPointF)
 {
-    curr->unbind();
-//    std::string val = curr->getText();
-    updateContact();
+    if(curr!=nullptr)
+    {
+//         curr->applyAngularForce(sprite2dObject::right, .000001);
+//         curr->moveBody(sprite2dObject::down,.0001);
+        curr->unbind();
+    }
 
-    curr->scaleSize(.5);
-    curr = NULL;
+    curr = nullptr;
 }
 
 void TreePuzzle::updateContact()
@@ -123,7 +132,7 @@ void TreePuzzle::updateContact()
         {
             std::string  plat = plats[j];
             bool inContact = getComponent(box)->inContact(getComponent(plat));
-            int boxl =box.length();
+            int boxl = box.length();
             int platl = plat.length();
             bool namesMatch = (box[boxl-1] == plat[platl-1]);
 
@@ -136,6 +145,10 @@ void TreePuzzle::updateContact()
             {
                 getComponent(box)->changeColor(sf::Color::Magenta);
                 getComponent(plat)->changeColor(sf::Color::Yellow);
+            }
+            else if (inContact && !namesMatch)
+            {
+                getComponent(box)->changeColor(sf::Color::Red);
             }
         }
     }
@@ -154,5 +167,4 @@ void TreePuzzle::updateContact()
  * if box and platform are not in contact with each other set default colour
  *
  * when all platforms are green puzzle is solved
-<<<<<<< HEAD
  */

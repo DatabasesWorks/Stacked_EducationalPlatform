@@ -12,12 +12,14 @@
 class TreePuzzle : public Puzzle
 
 {
+    Q_OBJECT
+
 public:
     TreePuzzle();
     TreePuzzle(QSize size);
     void loadColors();
     ~TreePuzzle();
-    void updateContact();
+//    void updateContact();
     void resetColors();
 private:
     std::vector<std::string> boxes;
@@ -29,7 +31,7 @@ public slots:
     void mousePressedSlot(QPointF qpoint);
     void mouseMovedSlot(QPointF qpoint);
     void mouseReleasedSlot(QPointF qpoint);
-//    void updateContact();
+    void updateContact();
 };
 
 #endif // BINARYTREEPUZZLE_H

@@ -11,6 +11,7 @@
 #include <cmath>
 #include <math.h>
 #include <vector>
+#include <QFile>
 
 // A class to integrate SFML sprites with Box2D shapes and bodies.
 class sprite2dObject{
