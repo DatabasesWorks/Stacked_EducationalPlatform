@@ -90,9 +90,12 @@ sprite2dObject * Puzzle::getComponentAt(int x, int y){
 //    } return nullptr;
 }
 
-void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored, bool pushFront){
+void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored, bool pushFront, std::string text){
     SpriteDefinition tempdef(x,y, type,name);
     tempdef.setShape(points,width,height); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
+    if (text.compare("") != 0) {
+        tempdef.setText(text);
+    }
     if(!ignored){
         if (pushFront) {
             components.insert(components.begin(), new sprite2dObject(thisWorld,tempdef));

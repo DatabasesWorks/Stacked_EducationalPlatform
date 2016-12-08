@@ -6,6 +6,8 @@
 #include <string>
 #include <sprite2dobject.h>
 #include <iterator>
+#include <sstream>
+#include <utility>
 
 class ListPuzzle : public Puzzle
 {
@@ -22,6 +24,7 @@ public:
     void deleteAtActiveIndex();
     void virtual runAction(Qt::Key) override;
     void reset();
+    bool checkSolution();
 
 private:
     const int CubeSideLength = 10;
@@ -33,6 +36,7 @@ private:
     const sf::Color ActiveColor = sf::Color::Yellow;
 
     std::list<std::pair<std::string, bool>> workingSet;
+    std::list<std::string> solutionSet;
     int activeIndex;
     void colorActiveBody();
     void uncolorActiveBody();
