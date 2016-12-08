@@ -41,24 +41,25 @@ sprite2dObject * Puzzle::getComponentAt(int x, int y){
     foreach(sprite2dObject *sp, components)
     {
         int spx = sp->getBody()->GetPosition().x;
-        std::cout << "spx "<<spx<<std::endl;
-        std::cout << "x "<<x<<std::endl;
+//        std::cout << "spx "<<spx<<std::endl;
+//        std::cout << "x "<<x<<std::endl;
         int spy = sp->getBody()->GetPosition().y;
-        std::cout << "spy "<<spy<<std::endl;
-        std::cout << "y "<<y<<std::endl;
+//        std::cout << "spy "<<spy<<std::endl;
+//        std::cout << "y "<<y<<std::endl;
 
         int diffx = abs(spx-x);
         int diffy = abs(spy-y);
 
-        std::cout << "diffx " << diffx << std::endl;
-        std::cout << "diffy " << diffy << std::endl;
+//        std::cout << "diffx " << diffx << std::endl;
+//        std::cout << "diffy " << diffy << std::endl;
         if (diffx<25 && diffy<25)
         {
-            std::cout << "object found " << std::endl;
+//            std::cout << "object found " << std::endl;
             return sp;
         }
 
     }return nullptr;
+
 }
 
 void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored, bool pushFront, std::string text){

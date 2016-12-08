@@ -3,6 +3,8 @@
 #include <iostream>
 #include <math.h>
 #include <puzzle.h>
+#include <random>
+#include <set>
 
 TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
@@ -27,6 +29,34 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     this->addComponent("plat_4",sides,l,h, 250, 150,b2_staticBody);
     this->addComponent("plat_6",sides,l,h, 350, 150,b2_staticBody);
 
+
+    //create random values for boxes
+    std::vector<int> values;
+    int r = std::rand()%50+1;
+    values.push_back(r);
+    while(values.size()< 7){
+        r = std::rand()%50+1;
+        for(int i = 0; i<values.size(); i++){
+            if(values.at(i) == r){
+                break;
+            }
+            if(i == values.size()-1){
+                values.push_back(r);
+            }
+        }
+    }
+    std::sort(values.begin(), values.end());
+
+    //create random array to shuffle boxes
+    int randArray[] = {0,1,2,3,4,5,6};
+
+    for(int i=0; i<7; i++){
+        int r = std::rand()%7;
+        int x = randArray[r];
+        randArray[r] = randArray[i];
+        randArray[i] = x;
+    }
+
     //boxes (i.e. data to go into the tree)
     std::string name;
 
@@ -35,8 +65,8 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
         SpriteDefinition stack_p;
         stack_p.setShape(4, boxsize, boxsize);
         stack_p.setDensity(50);
-        stack_p.setPosition(100+i*100,390);
-        stack_p.setText(std::to_string(i));
+        stack_p.setPosition(100+randArray[i]*100,390);
+        stack_p.setText(std::to_string(values[i]));
         stack_p.setType(b2_dynamicBody);
         name = "box_" + std::to_string(i);       
         sprite2dObject* s = new sprite2dObject(thisWorld, stack_p);
@@ -69,8 +99,8 @@ TreePuzzle::~TreePuzzle() {
 
 void TreePuzzle::mousePressedSlot(QPointF qpoint)
 {
-    std::cout<<"X box_0 " << getComponent("box_0")->getBody()->GetPosition().x;
-   std::cout<<"Y box_0 " << getComponent("box_0")->getBody()->GetPosition().y << std::endl;
+//    std::cout<<"X box_0 " << getComponent("box_0")->getBody()->GetPosition().x;
+//   std::cout<<"Y box_0 " << getComponent("box_0")->getBody()->GetPosition().y << std::endl;
     int scale = 1;
 
     int x = (qpoint.x())/scale;
@@ -83,11 +113,10 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
 
     sprite2dObject* b = getComponentAt(x,y); //reverse and accommodate offset ie +90?
 
-    std::cout << "BUG?" << std::endl;
+//    std::cout << "BUG?" << std::endl;
 
     if(b!=nullptr && b->getName().find("box") != -1){
         curr = b;
-        std::cout << curr->getName() << std::endl;
         curr->bindToMouse();
     }
 
@@ -115,8 +144,6 @@ void TreePuzzle::mouseReleasedSlot(QPointF)
 {
     if(curr!=nullptr)
     {
-//         curr->applyAngularForce(sprite2dObject::right, .000001);
-//         curr->moveBody(sprite2dObject::down,.0001);
         curr->unbind();
     }
 
