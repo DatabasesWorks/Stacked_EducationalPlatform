@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <client.h>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Audio.hpp>
 #include <stackpuzzle.h>
 #include <treepuzzle.h>
 #include <arraypuzzle.h>
@@ -29,8 +30,11 @@ private slots:
     void on_logoutButton_clicked();
     void on_listWidget_currentRowChanged(int currentRow);
 
+    void on_checkBox_stateChanged(int arg1);
+
 private:
     Ui::StudWin *ui;
+    sf::Music music;
     bool levelshow;
     PuzzleWindow* pw;
     void setupLevels();
