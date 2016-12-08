@@ -1,19 +1,7 @@
 #include "arraypuzzle.h"
 ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
 
-    b2Vec2 grav(0, 0.98);
-    thisWorld->SetGravity(grav);
-
-    SpriteDefinition floordef(100, 200, b2_staticBody, "testbox");
-    floordef.setShape(4, 1500, 0);
-
-    SpriteDefinition leftwalld(0,20, b2_staticBody, "leftwalld");
-    leftwalld.setShape(4,0,500);
-    leftwalld.setColor(sf::Color::Red);
-    addComponent(leftwalld, true);
-
-    sprite2dObject *floor = new sprite2dObject(thisWorld, floordef);
-    inactive_components.push_back(floor);
+    createEnvironment();
 
     for(int i = 0; i < 5; i++){
         this->addComponent("array_"+i, 4, 50, 25, 20+(i*45), -25, b2_dynamicBody);
@@ -65,6 +53,22 @@ void ArrayPuzzle::replaceAtIndexAction(){
     components[activeIndex]->setText(std::to_string(activeIndex), sf::Color::Black);
 }
 
+void ArrayPuzzle::createEnvironment(){
+    b2Vec2 grav(0, 0.98);
+    thisWorld->SetGravity(grav);
+
+    SpriteDefinition floordef(100, 200, b2_staticBody, "testbox");
+    floordef.setShape(4, 1500, 0);
+
+    SpriteDefinition leftwalld(0,20, b2_staticBody, "leftwalld");
+    leftwalld.setShape(4,0,500);
+    leftwalld.setColor(sf::Color::Red);
+    addComponent(leftwalld, true);
+
+    sprite2dObject *floor = new sprite2dObject(thisWorld, floordef);
+    inactive_components.push_back(floor);
+}
+
 void ArrayPuzzle::addAtIndexAction(){
      b2Body *bod;
      int x;
@@ -76,7 +80,4 @@ void ArrayPuzzle::addAtIndexAction(){
      //components.erase(components.begin() + activeIndex);
      this->replaceComponent("array_"+activeIndex, 4, 50, 25, x, y, b2_dynamicBody, activeIndex);
      components[activeIndex]->changeColor(sf::Color::Blue);
-}
-
-void ArrayPuzzle::sortArrayAction(){
 }

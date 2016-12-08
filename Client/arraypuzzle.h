@@ -22,9 +22,7 @@ private:
     int activeIndex;
     void replaceAtIndexAction();
     void addAtIndexAction();
-    void sortArrayAction();
-
-
+    void createEnvironment();
 };
 
 #endif // ARRAYPUZZLE_H
