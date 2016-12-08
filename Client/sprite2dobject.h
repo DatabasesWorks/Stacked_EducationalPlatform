@@ -65,6 +65,7 @@ private:
     sf::Text text;
     sf::Font font;
     sf::Color color;
+    b2Body * textBody;
     sf::Color bordercolor;
     sf::Sprite * sprite = nullptr;
     std::vector<b2Joint*> joints;

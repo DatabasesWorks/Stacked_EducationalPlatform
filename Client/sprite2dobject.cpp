@@ -241,12 +241,15 @@ void sprite2dObject::changeBorderColor(sf::Color color){
 }
 
 sf::Text sprite2dObject::getText(){
-   sf::ConvexShape sh(this->getShape());
-   text.setPosition(sh.getPosition().x,sh.getPosition().y);
+   sf::ConvexShape sh(getShape());
+   sf::FloatRect f(sh.getGlobalBounds());
+   b2Vec2 center(f.left+f.width/2,f.top+f.height/2);
+   int textwidth = text.getLocalBounds().width/2;
+   int textheight = text.getLocalBounds().height/2;
+   text.setPosition(center.x - textwidth,center.y - textheight*2);// 8 for buffer space
    return text;
 }
 
-#include <SFML/Main.hpp>
 void sprite2dObject::setText(std::string string, sf::Color color){
        text.setCharacterSize(20);
        text.setFont(font);

@@ -67,7 +67,7 @@ void PuzzleWindow::OnUpdate()
 
         }
         if(obj->getText().getString()!=""){
-            sf::Text text(obj->getText());
+            sf::Text text(obj->getText()); // fixed the text bug. :D
             RenderWindow::draw(text);
         }
 

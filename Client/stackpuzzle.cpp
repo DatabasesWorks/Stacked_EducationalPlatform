@@ -22,11 +22,11 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
         generateStackPiece(100,0-i*20);
 
     std::stringstream ss;
-    ss << " PUSH";
+    ss << "PUSH FOR VALUE";
 
 
     std::string text = ss.str();
-    b2Vec2 pos(300,50);
+    b2Vec2 pos(200,100);
     b2Vec2 siZe(100,100);//scoping issues
     createKeyBox(pos,siZe,text,"keybox_push");
 
@@ -114,8 +114,8 @@ void StackPuzzle::generateStackPiece(int x,int y){
     stack_p.setBorderColor(sf::Color::Green);
     stack_p.setDensity(50);
     stack_p.setColor(sf::Color::Red);
+    stack_p.setText("1");
     stack_p.setPosition(x,y);
-    stack_p.setText("rawr");
     stack_p.setType(b2_dynamicBody);
     addComponent(stack_p);
 }
