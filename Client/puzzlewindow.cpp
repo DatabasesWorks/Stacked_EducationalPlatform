@@ -67,7 +67,8 @@ void PuzzleWindow::OnUpdate()
 
         }
         if(obj->getText().getString()!=""){
-            RenderWindow::draw(obj->getText());
+            sf::Text text(obj->getText());
+            RenderWindow::draw(text);
         }
 
    }

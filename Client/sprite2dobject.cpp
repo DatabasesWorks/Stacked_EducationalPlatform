@@ -175,8 +175,7 @@ sf::ConvexShape sprite2dObject::getShape(){
            b2PolygonShape* polyShape= (b2PolygonShape*)f->GetShape();
            shapeToFill.setFillColor(color);
            b2Vec2 vec(body->GetPosition());
-           //b2Vec2 vec(body->GetLocalVector(body->GetPosition()));
-           shapeToFill.setPosition(vec.x*SCALE, vec.y*SCALE);
+           shapeToFill.setPosition(vec.x, vec.y);
            int vertCount = polyShape->GetVertexCount();
            shapeToFill.setPointCount(vertCount);
            for(int vert = 0 ; vert < vertCount ; vert++) {
@@ -232,8 +231,8 @@ void sprite2dObject::changeBorderColor(sf::Color color){
 }
 
 sf::Text sprite2dObject::getText(){
-   b2Vec2 vec(body->GetPosition());
-   text.setPosition(vec.x-text.getLocalBounds().width/2,vec.y-text.getLocalBounds().height);
+   sf::ConvexShape sh(this->getShape());
+   text.setPosition(sh.getPosition().x,sh.getPosition().y);
    return text;
 }
 
