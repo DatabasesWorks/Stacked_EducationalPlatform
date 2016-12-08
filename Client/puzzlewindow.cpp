@@ -63,7 +63,7 @@ void PuzzleWindow::OnUpdate()
 
         sf::Sprite * sprite = obj->getSprite();
         if(sprite!=nullptr){
-            RenderWindow::draw(*sprite);
+           // RenderWindow::draw(*sprite);
 
         }
         if(obj->getText()->getString()!=""){

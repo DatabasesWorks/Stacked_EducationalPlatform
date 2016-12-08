@@ -21,14 +21,12 @@ private:
     std::string peekAction();
     void popAction();
     void pushAction();
-
     //world generation
     void generateStackPiece(int,int);
     void createStackContainer(int);
     void createBoundary(int,bool);
     void startGame();
     void buildPuzzle();
-    void createKeyBox(b2Vec2 position, b2Vec2 size, std::string text, std::string name);
     b2Vec2 ssize;
 
 

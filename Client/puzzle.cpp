@@ -1,14 +1,20 @@
 #include "puzzle.h"
 #include <iostream>
 
-Puzzle::Puzzle(QObject *parent) :  QObject(parent) {
+Puzzle::Puzzle(){
+    this->size=size;
     b2Vec2 g(0,9.8);
     thisWorld = new b2World(g);
+ }
+
+Puzzle::Puzzle(QObject *parent) : Puzzle(QSize(800,600),parent) {
 }
 
-Puzzle::Puzzle(QSize size, QObject*) : Puzzle(){
+Puzzle::Puzzle(QSize size, QObject* parent) :  QObject(parent) {
     this->size=size;
-}
+    b2Vec2 g(0,9.8);
+    thisWorld = new b2World(g);
+   }
 
 Puzzle::~Puzzle(){
     delete thisWorld;
@@ -26,7 +32,6 @@ void Puzzle::step(float time){
    thisWorld->Step(time,10,10);
    //apparently there are performance issues when the last two numbers are < 10
 }
-
 
 
 
@@ -75,6 +80,21 @@ void Puzzle::addComponent(std::string name, int points, int width, int height, i
     }else{
         inactive_components.push_back(new sprite2dObject(thisWorld,tempdef));
     }
+}
+
+void Puzzle::createInstructions(b2Vec2 position){
+    SpriteDefinition box(position.x,position.y, b2_staticBody,"instructions_box");
+    box.setShape(4,0,0);
+    box.setBorderColor(sf::Color::Transparent);
+    box.setColor(sf::Color::Transparent);
+    sprite2dObject * obj = new sprite2dObject(thisWorld,box);
+    obj->setText(instructionstream.str(),  sf::Color::White);
+    obj->ignoreObject(); // nothing can interact with this
+    addComponent(obj,true);
+}
+
+std::string Puzzle::getInstructions(){
+    return instructionstream.str();
 }
 
 //if you want to change by index
