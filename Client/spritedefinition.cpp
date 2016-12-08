@@ -7,8 +7,7 @@ SpriteDefinition::~SpriteDefinition(){
 
 SpriteDefinition::SpriteDefinition(int x, int y, b2BodyType type, std::string s) : SpriteDefinition(){
     body->type = type;
-    body->position.x=x;
-    body->position.y=y;
+    body->position.Set(x,y);
     name = s;
     color = sf::Color::White;
     bordercolor = sf::Color::White;
