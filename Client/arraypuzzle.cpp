@@ -17,6 +17,7 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
 
     for(int i = 0; i < 5; i++){
         this->addComponent("array_"+i, 4, 50, 25, 20+(i*45), -25, b2_dynamicBody);
+        components[i]->setText(std::to_string(i), sf::Color::Black);
     }
     activeIndex = 0;
 
@@ -43,12 +44,9 @@ void ArrayPuzzle::runAction(Qt::Key key){
     if(key == Qt::Key_E){
         replaceAtIndexAction();
     }
-    if(key == Qt::Key_R){
-        addAtIndexAction();
-    }
-    if(key == Qt::Key_S){
-        sortArrayAction();
-    }
+//    if(key == Qt::Key_R){
+//        addAtIndexAction();
+//    }
 }
 
 void ArrayPuzzle::replaceAtIndexAction(){
@@ -56,13 +54,15 @@ void ArrayPuzzle::replaceAtIndexAction(){
     sprite2dObject * old = components[activeIndex];
     SpriteDefinition def;
     def.setShape(4,50,25);
-    def.setType(b2_staticBody);
+    def.setType(b2_dynamicBody);
     def.setColor(sf::Color::Red);
+    def.setBorderColor(sf::Color::Red);
     sf::FloatRect rect = old->getShape().getGlobalBounds();
-    def.setPosition(rect.left+rect.width/2,rect.top+rect.height/2);
+    def.setPosition(rect.left+rect.width/2,rect.top+rect.height/4);
     delete old;
     sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
     components[activeIndex] = replacement;
+    components[activeIndex]->setText(std::to_string(activeIndex), sf::Color::Black);
 }
 
 void ArrayPuzzle::addAtIndexAction(){
