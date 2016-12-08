@@ -51,12 +51,14 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dO
 //------------------------------------------------------|
 void sprite2dObject::bindToMouse()
 {
-
+    body->SetLinearVelocity(b2Vec2(0,0));
 }
 
 void sprite2dObject::unbind(){
 
+    body->SetLinearVelocity(b2Vec2(0,1));
 }
+
 void sprite2dObject::applyAngularForce(Direction d, double magnitude){
     if(d==right||d==down){ // not implemented
         body->ApplyAngularImpulse(magnitude,true);

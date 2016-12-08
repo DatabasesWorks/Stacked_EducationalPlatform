@@ -88,6 +88,7 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
     if(b!=nullptr && b->getName().find("box") != -1){
         curr = b;
         std::cout << curr->getName() << std::endl;
+        curr->bindToMouse();
     }
 
 
@@ -114,7 +115,9 @@ void TreePuzzle::mouseReleasedSlot(QPointF)
 {
     if(curr!=nullptr)
     {
-         curr->applyAngularForce(sprite2dObject::right, .0001);
+//         curr->applyAngularForce(sprite2dObject::right, .000001);
+//         curr->moveBody(sprite2dObject::down,.0001);
+        curr->unbind();
     }
 
     curr = nullptr;
@@ -142,6 +145,11 @@ void TreePuzzle::updateContact()
             {
                 getComponent(box)->changeColor(sf::Color::Magenta);
                 getComponent(plat)->changeColor(sf::Color::Yellow);
+            }
+            else if (inContact && !namesMatch)
+            {
+                getComponent(box)->changeColor(sf::Color::Red);
+//                getComponent(plat)->changeColor(sf::Color::Yellow);
             }
         }
     }
