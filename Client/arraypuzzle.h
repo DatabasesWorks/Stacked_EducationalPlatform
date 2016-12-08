@@ -10,6 +10,8 @@
 #include <sprite2dobject.h>
 #include <array>
 #include <algorithm>
+#include <sstream>
+#include <iostream>
 
 class ArrayPuzzle : public Puzzle
 {
@@ -26,6 +28,7 @@ private:
     void addAtIndexAction();
     void createEnvironment();
     std::string getNumAtActive();
+    void setupInstructions();
 };
 
 #endif // ARRAYPUZZLE_H

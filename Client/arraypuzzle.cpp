@@ -9,6 +9,8 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     activeIndex = 0;
 
     components[0]->changeColor(sf::Color::Blue);
+
+    setupInstructions();
 }
 
 ArrayPuzzle::~ArrayPuzzle() {}
@@ -33,6 +35,25 @@ void ArrayPuzzle::runAction(Qt::Key key){
     }
     if(key == Qt::Key_R){
         getNumAtActive();
+    }
+    if(key == Qt::Key_Plus){
+
+    }
+    if(key == Qt::Key_Minus){
+
+    }
+    if(key == Qt::Key_Asterisk){
+
+    }
+    if(key == Qt::Key_Slash){
+    }
+    if(key == Qt::Key_ParenLeft){
+
+    }
+    if(key == Qt::Key_ParenRight){
+
+    }
+    if(key == Qt::Key_Return){
     }
 }
 
@@ -87,4 +108,25 @@ std::string ArrayPuzzle::getNumAtActive(){
     std::string num;
     num = components[activeIndex]->getText()->getString();
     return num;
+}
+
+void ArrayPuzzle::setupInstructions(){
+    instructionstream << "Welcome to the Array Puzzle, hip hip Array!" << std::endl;
+    instructionstream << "Keys: Left and Right: change selected index." <<std::endl <<
+                         "      E: replace data with new random number. " <<std::endl <<
+                         "      R: Add selected data to equation." <<std::endl <<
+                         "      (,),+,-,*,/: For selected operator." <<std::endl <<
+                         "      Enter/Return: Perform arithmetic!" <<std::endl<<
+                         "Good luck!" <<std::endl;
+
+    b2Vec2 pos(280, 80);
+    createInstructions(pos);
+
+    instructionstream.str("");
+    instructionstream<<"Get result: 13" <<std::endl <<
+                       "Get result: 55" <<std::endl <<
+                       "Get result: 233" <<std::endl;
+    b2Vec2 pos2(50, 240);
+    createInstructions(pos2);
+
 }
