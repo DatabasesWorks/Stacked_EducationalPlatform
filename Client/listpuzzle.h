@@ -3,7 +3,9 @@
 
 #include <puzzle.h>
 #include <list>
+#include <string>
 #include <sprite2dobject.h>
+#include <iterator>
 
 class ListPuzzle : public Puzzle
 {
@@ -15,8 +17,9 @@ public:
     void pushBack();
     void popFront();
     void popBack();
-    void sortList();
+    //void sortList();
     void addAtActiveIndex();
+    void deleteAtActiveIndex();
     void virtual runAction(Qt::Key) override;
     void reset();
 
@@ -29,7 +32,7 @@ private:
     const sf::Color DefaultColor = sf::Color::White;
     const sf::Color ActiveColor = sf::Color::Yellow;
 
-    //std::list <sprite2dObject> l;
+    std::list<std::pair<std::string, bool>> workingSet;
     int activeIndex;
     void colorActiveBody();
     void uncolorActiveBody();

@@ -10,6 +10,7 @@ void ListPuzzle::addFirstBody() {
     this->addComponent("list body", 4, CubeSideLength, CubeSideLength, InitialXSpawn, YSpawn, b2_staticBody);
     activeIndex = 0;
     colorActiveBody();
+    workingSet.push_front(std::make_pair("A", true));
 }
 
 void ListPuzzle::reset() {
@@ -62,6 +63,8 @@ void ListPuzzle::runAction(Qt::Key key) {
         advanceActiveIndex();
     } else if (key == Qt::Key_R) {
         reset();
+    } else if (key == Qt::Key_Delete) {
+        deleteAtActiveIndex();
     }
 }
 
@@ -73,6 +76,7 @@ void ListPuzzle::pushFront(){
         bod = components.front()->getBody();
         this->addComponent("list body", 4, CubeSideLength, CubeSideLength, bod->GetPosition().x - deltaX, YSpawn, b2_staticBody, false, true);
         activeIndex++;
+        workingSet.push_front(std::make_pair("A", true));
     }
 }
 
@@ -83,6 +87,7 @@ void ListPuzzle::pushBack(){
         b2Body *bod;
         bod = components.back()->getBody();
         this->addComponent("list body", 4, CubeSideLength, CubeSideLength, bod->GetPosition().x + deltaX, YSpawn, b2_staticBody);
+        workingSet.push_back(std::make_pair("A", true));
     }
 }
 
@@ -107,27 +112,49 @@ void ListPuzzle::addAtActiveIndex() {
         sprite2dObject* newlyAdded = components.back();
         components.pop_back();
         components.insert(components.begin() + activeIndex + 1 + jumps, newlyAdded);
+        std::list<std::pair<std::string, bool>>::iterator it = workingSet.begin();
+        std::advance(it, activeIndex);
+        workingSet.insert(it, std::make_pair("A", true));
         advanceActiveIndex();
     }
 }
 
-void ListPuzzle::popFront(){
-    uncolorActiveBody();
+void ListPuzzle::deleteAtActiveIndex() {
     if (components.size() > 0) {
+        b2Body *bod;
+        bod = components[activeIndex]->getBody();
+        thisWorld->DestroyBody(bod);
+        components.erase(components.begin() + activeIndex);
+        std::list<std::pair<std::string, bool>>::iterator it = workingSet.begin();
+        std::advance(it, activeIndex - 1);
+        workingSet.erase(it);
+        if (activeIndex == ((int) components.size())) {
+            activeIndex--;
+        }
+        colorActiveBody();
+    }
+}
+
+void ListPuzzle::popFront(){
+    if (components.size() > 0) {
+        uncolorActiveBody();
+
         b2Body *bod;
         bod = components.front()->getBody();
         thisWorld->DestroyBody(bod);
         components.erase(components.begin());
+        workingSet.pop_front();
+
+        if (activeIndex > 0) {
+            activeIndex--;
+        }
+        colorActiveBody();
     }
-    if (activeIndex > 0) {
-        activeIndex--;
-    }
-    colorActiveBody();
 }
 
 void ListPuzzle::popBack(){
     if (components.size() > 0) {
-        if (activeIndex == components.size() - 1) {
+        if (activeIndex == ((int) components.size()) - 1) {
             retreatActiveIndex();
         }
 
@@ -135,10 +162,8 @@ void ListPuzzle::popBack(){
         bod = components.back()->getBody();
         thisWorld->DestroyBody(bod);
         components.pop_back();
+        workingSet.pop_back();
     }
-}
-
-void ListPuzzle::sortList(){
 }
 
 void ListPuzzle::colorActiveBody() {
@@ -154,7 +179,7 @@ void ListPuzzle::uncolorActiveBody() {
 }
 
 void ListPuzzle::advanceActiveIndex() {
-    if (components.size() - 1 > activeIndex) {
+    if (((int) components.size()) - 1 > activeIndex) {
         uncolorActiveBody();
         activeIndex++;
         colorActiveBody();
