@@ -149,7 +149,6 @@ void TreePuzzle::updateContact()
             else if (inContact && !namesMatch)
             {
                 getComponent(box)->changeColor(sf::Color::Red);
-//                getComponent(plat)->changeColor(sf::Color::Yellow);
             }
         }
     }
