@@ -69,8 +69,8 @@ TreePuzzle::~TreePuzzle() {
 
 void TreePuzzle::mousePressedSlot(QPointF qpoint)
 {
-    std::cout<<"X box_0 " << getComponent("box_0")->getBody()->GetPosition().x;
-   std::cout<<"Y box_0 " << getComponent("box_0")->getBody()->GetPosition().y << std::endl;
+//    std::cout<<"X box_0 " << getComponent("box_0")->getBody()->GetPosition().x;
+//   std::cout<<"Y box_0 " << getComponent("box_0")->getBody()->GetPosition().y << std::endl;
     int scale = 1;
 
     int x = (qpoint.x())/scale;
@@ -87,7 +87,6 @@ void TreePuzzle::mousePressedSlot(QPointF qpoint)
 
     if(b!=nullptr && b->getName().find("box") != -1){
         curr = b;
-        std::cout << curr->getName() << std::endl;
         curr->bindToMouse();
     }
 
@@ -115,8 +114,6 @@ void TreePuzzle::mouseReleasedSlot(QPointF)
 {
     if(curr!=nullptr)
     {
-//         curr->applyAngularForce(sprite2dObject::right, .000001);
-//         curr->moveBody(sprite2dObject::down,.0001);
         curr->unbind();
     }
 

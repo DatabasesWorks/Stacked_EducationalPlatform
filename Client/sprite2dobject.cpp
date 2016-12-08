@@ -45,18 +45,20 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dO
 
 
 /*
- * Unimplemented Methods
+ * only really used in tree
 */
 
 //------------------------------------------------------|
 void sprite2dObject::bindToMouse()
 {
+    //ignore gravity
     body->SetType(b2_staticBody);
 }
 
 void sprite2dObject::unbind(){
-
+    //restore gravity
     body->SetType(b2_dynamicBody);
+    //apply some velocity to prevent sticking
     body->SetLinearVelocity(b2Vec2(0,10));
 }
 
@@ -116,6 +118,7 @@ void sprite2dObject::moveToPoint(int x, int y){
     body->SetTransform(v, body->GetAngle());
 
 }
+
 bool sprite2dObject::inContact(sprite2dObject* s){
     b2Body * b = s->getBody();
     b2ContactEdge* ce = body->GetContactList();
