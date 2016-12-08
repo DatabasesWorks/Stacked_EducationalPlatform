@@ -105,12 +105,18 @@ void TreePuzzle::mouseMovedSlot(QPointF qpoint)
 //    std::cout << "y" << y << std::endl;
     if(curr != nullptr){
         curr->moveToPoint(x, y);
+
     }
 
 }
 
 void TreePuzzle::mouseReleasedSlot(QPointF)
 {
+    if(curr!=nullptr)
+    {
+         curr->applyAngularForce(sprite2dObject::right, .0001);
+    }
+
     curr = nullptr;
 }
 
@@ -123,7 +129,7 @@ void TreePuzzle::updateContact()
         {
             std::string  plat = plats[j];
             bool inContact = getComponent(box)->inContact(getComponent(plat));
-            int boxl =box.length();
+            int boxl = box.length();
             int platl = plat.length();
             bool namesMatch = (box[boxl-1] == plat[platl-1]);
 
