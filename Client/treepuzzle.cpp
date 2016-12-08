@@ -32,10 +32,10 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 
     //create random values for boxes
     std::vector<int> values;
-    int r = std::rand()%100;
+    int r = std::rand()%50+1;
     values.push_back(r);
     while(values.size()< 7){
-        r = std::rand()%100;
+        r = std::rand()%50+1;
         for(int i = 0; i<values.size(); i++){
             if(values.at(i) == r){
                 break;

@@ -15,6 +15,7 @@ class Puzzle : public QObject
     Q_OBJECT
 public:
 
+    Puzzle();
     Puzzle(QSize size, QObject *parent = 0);
     Puzzle(QObject *parent = 0);
     virtual ~Puzzle();
@@ -27,6 +28,8 @@ public:
     sprite2dObject* getComponent(std::string name);
     std::vector<sprite2dObject*> getAllComponents();
     void collectGarbage();
+    std::string getInstructions();
+    void createInstructions(b2Vec2 pos);
 
     //phy engine step
     void step(float time);
@@ -35,6 +38,8 @@ public:
     virtual void runAction(Qt::Key);
 
 protected:
+    std::stringstream instructionstream;
+
     std::vector<sprite2dObject*> components;
     std::vector<sprite2dObject*> inactive_components;
     b2World *thisWorld;

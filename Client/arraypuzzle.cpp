@@ -1,9 +1,6 @@
 #include "arraypuzzle.h"
 ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
-
     createEnvironment();
-
-
     for(int i = 0; i < 5; i++){
         this->addComponent("array_"+i, 4, 50, 25, 20+(i*45), -25, b2_dynamicBody);
         randomNum = rand() % 51;
@@ -49,6 +46,7 @@ void ArrayPuzzle::replaceAtIndexAction(){
     def.setBorderColor(sf::Color::Red);
     sf::FloatRect rect = old->getShape().getGlobalBounds();
     def.setPosition(rect.left+rect.width/2,rect.top+rect.height/4);
+    def.setInitialVelocity(0,b2Vec2(0,200));
     delete old;
     sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
     components[activeIndex] = replacement;
