@@ -15,19 +15,19 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     this->establishGravity(100);
     this->establishSides();
     int sides = 4;
-    int l = 50;
+    int l = 70;
     int h = 0;
 
     int boxsize=35;
 
     //platforms (i.e. tree)
-    this->addComponent("plat_3",sides,l,h, 200, 50, b2_staticBody);
-    this->addComponent("plat_1",sides,l,h, 100,100, b2_staticBody);
-    this->addComponent("plat_5",sides,l,h, 300,100, b2_staticBody);
-    this->addComponent("plat_0",sides,l,h, 50, 150, b2_staticBody);
-    this->addComponent("plat_2",sides,l,h, 150, 150,b2_staticBody);
-    this->addComponent("plat_4",sides,l,h, 250, 150,b2_staticBody);
-    this->addComponent("plat_6",sides,l,h, 350, 150,b2_staticBody);
+    this->addComponent("plat_3",sides,l,h, 190, 50, b2_staticBody);
+    this->addComponent("plat_1",sides,l,h, 90,100, b2_staticBody);
+    this->addComponent("plat_5",sides,l,h, 290,100, b2_staticBody);
+    this->addComponent("plat_0",sides,l,h, 40, 150, b2_staticBody);
+    this->addComponent("plat_2",sides,l,h, 140, 150,b2_staticBody);
+    this->addComponent("plat_4",sides,l,h, 240, 150,b2_staticBody);
+    this->addComponent("plat_6",sides,l,h, 340, 150,b2_staticBody);
 
 
     //create random values for boxes
