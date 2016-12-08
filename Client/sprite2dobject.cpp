@@ -243,10 +243,10 @@ void sprite2dObject::changeBorderColor(sf::Color color){
 sf::Text sprite2dObject::getText(){
    sf::ConvexShape sh(getShape());
    sf::FloatRect f(sh.getGlobalBounds());
-   b2Vec2 center(f.left+f.width/2,f.top+f.height/2);
+   b2Vec2 center(f.left+f.width/2,f.top+f.height/2-8);
    int textwidth = text.getLocalBounds().width/2;
    int textheight = text.getLocalBounds().height/2;
-   text.setPosition(center.x - textwidth,center.y - textheight*2);// 8 for buffer space
+   text.setPosition(center.x - textwidth,center.y - textheight);// 8 for buffer space
    return text;
 }
 

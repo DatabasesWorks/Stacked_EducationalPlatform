@@ -22,12 +22,14 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
         generateStackPiece(100,0-i*20);
 
     std::stringstream ss;
-    ss << "PUSH FOR VALUE";
-
+    ss << "Lorem ipsum dolor sit amet," << std::endl <<
+            "consectetur adipiscing elit," << std::endl <<
+            "sed do eiusmod tempor incididunt" << std::endl <<
+            "ut labore et dolore magna aliqua." << std::endl;
 
     std::string text = ss.str();
     b2Vec2 pos(200,100);
-    b2Vec2 siZe(100,100);//scoping issues
+    b2Vec2 siZe(250,100);//scoping issues
     createKeyBox(pos,siZe,text,"keybox_push");
 
 
@@ -43,15 +45,14 @@ void buildPuzzle(){
 void StackPuzzle::createKeyBox(b2Vec2 position, b2Vec2 size, std::string text, std::string name){
 
     SpriteDefinition box(position.x,position.y, b2_staticBody,name);
-    box.setText(text);
-    box.setShape(4,size.x,size.y);
-    box.setBorderColor(sf::Color::Blue);
+    box.setShape(5,size.x,size.y);
+    box.setBorderColor(sf::Color::White);
     sf::Color grey(84,84,84);
     box.setColor(grey);
     sprite2dObject * obj = new sprite2dObject(thisWorld,box);
+    obj->setText(text,  sf::Color(10,10,10));
     obj->ignoreObject(); // nothing can interact with this
     addComponent(obj,true);
-
 }
 
 void StackPuzzle::createStackContainer(int x){
