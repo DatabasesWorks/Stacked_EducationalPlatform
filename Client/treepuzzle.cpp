@@ -154,29 +154,50 @@ void TreePuzzle::updateContact()
 {
     for(int i = 0; i < 7; i++)
     {
-        std::string  box = boxes[i];
-        for(int j = 0; j < 7 ; j++)
+        std::string  box = boxes[i]; //get box name
+        //Determine if a box is touching any plats
+        bool inContact = false;
+        foreach(std::string s, plats)
         {
-            std::string  plat = plats[j];
-            bool inContact = getComponent(box)->inContact(getComponent(plat));
-            int boxl = box.length();
-            int platl = plat.length();
-            bool namesMatch = (box[boxl-1] == plat[platl-1]);
+            if(getComponent(box)->inContact(getComponent(s)))
+            {
+                inContact = true;
+            }
+        }
 
-            if(inContact && namesMatch)
+        //If touching determine if names match
+        if(inContact)
+        {
+            //In contact but names do not match -- initial state
+            getComponent(box)->changeColor(sf::Color::Red);
+
+            //If it is determined that names do match -- change color to green
+            for(int j = 0; j < 7 ; j++)
             {
-                getComponent(box)->changeColor(sf::Color::Green);
-                getComponent(plat)->changeColor(sf::Color::Green);
+                std::string  plat = plats[j]; //get plat name
+
+                bool inContactWith = getComponent(box)->inContact(getComponent(plat));
+                int boxl = box.length();
+                int platl = plat.length();
+                bool namesMatch = (box[boxl-1] == plat[platl-1]);
+                if(namesMatch && inContactWith)
+                {
+                    //Incontact && names match
+                    getComponent(box)->changeColor(sf::Color::Magenta);
+//                    getComponent(plat)->changeColor(sf::Color::Yellow);
+                    getComponent(box)->changeColor(sf::Color::Green);
+//                    getComponent(plat)->changeColor(sf::Color::Green);
+                    break;
+                }
             }
-            else if (!inContact && namesMatch)
-            {
-                getComponent(box)->changeColor(sf::Color::Magenta);
-                getComponent(plat)->changeColor(sf::Color::Yellow);
-            }
-            else if (inContact && !namesMatch)
-            {
-                getComponent(box)->changeColor(sf::Color::Red);
-            }
+        }
+        else //Box is not touching anything
+        {
+            //Not in contact
+            getComponent(box)->changeColor(sf::Color::Magenta);
+//            int boxl = box.length();
+//            std::string plat = "plat_" + box[boxl-1];
+//            getComponent(plat)->changeColor(sf::Color::Yellow);
         }
     }
 }
