@@ -12,6 +12,7 @@
 #include <math.h>
 #include <vector>
 #include <QFile>
+#include <sstream>
 
 // A class to integrate SFML sprites with Box2D shapes and bodies.
 class sprite2dObject{
@@ -28,6 +29,8 @@ public:
 
     //physics engine interactinons
     void bindToMouse();
+
+
     void unbind();
     void connectRope(sprite2dObject*);
     void connectBar(sprite2dObject*);
@@ -42,6 +45,7 @@ public:
     void mark();
     void destroy();
     bool marked();
+
 
     //various getters/setters for wrapper API
     b2Body * getBody();

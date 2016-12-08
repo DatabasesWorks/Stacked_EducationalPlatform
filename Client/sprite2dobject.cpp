@@ -16,6 +16,8 @@ sprite2dObject::~sprite2dObject(){
     text->setString("");
 }
 
+
+
 sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) : sprite2dObject() // call the super constructor
 {
     body = world->CreateBody(def);

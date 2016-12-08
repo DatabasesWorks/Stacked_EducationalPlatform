@@ -4,6 +4,8 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     b2Vec2 grav(0, 0.98);
     thisWorld->SetGravity(grav);
 
+    instructionstream << "HEllo sdlfjsldkfj s;ldkfj sl;dkf jsd l" <<std::endl;
+
     SpriteDefinition floordef(100, 200, b2_staticBody, "testbox");
     floordef.setShape(4, 1500, 0);
 
@@ -56,10 +58,11 @@ void ArrayPuzzle::replaceAtIndexAction(){
     sprite2dObject * old = components[activeIndex];
     SpriteDefinition def;
     def.setShape(4,50,25);
-    def.setType(b2_staticBody);
+    def.setType(b2_dynamicBody);
     def.setColor(sf::Color::Red);
     sf::FloatRect rect = old->getShape().getGlobalBounds();
-    def.setPosition(rect.left+rect.width/2,rect.top+rect.height/2);
+    def.setPosition(rect.left+rect.width/2,rect.top+rect.height/4);
+    def.setInitialVelocity(0,b2Vec2(0,200));
     delete old;
     sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
     components[activeIndex] = replacement;
