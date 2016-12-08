@@ -21,16 +21,7 @@ int main(int argc, char *argv[]) {
 
     //There may be better way to get directory
      Q_INIT_RESOURCE(sprites);
-     QFile musicfile(":/music.flac");
-     musicfile.copy(QString("music.flac"));
 
-    sf::Music music;
-    if (!music.openFromFile("music.flac")){
-        std::cout << "music broke" << std::endl;
-    }else{
-//        music.setVolume(50);
-//        music.play();
-    }
     Client w;
     w.show();
 
