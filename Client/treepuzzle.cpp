@@ -16,7 +16,7 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     int l = 50;
     int h = 0;
 
-    int boxsize=25;
+    int boxsize=35;
 
     //platforms (i.e. tree)
     this->addComponent("plat_3",sides,l,h, 200, 50, b2_staticBody);
@@ -29,12 +29,19 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 
     //boxes (i.e. data to go into the tree)
     std::string name;
+
     for(int i = 0; i<7; i++)
     {
-        name = "box_" + std::to_string(i);
-//        std::cout << name << std::endl;
-        this->addComponent(name,sides,boxsize,boxsize, 50+i*50, 185, b2_dynamicBody);
-        getComponent(name)->setText(std::to_string(i));
+        SpriteDefinition stack_p;
+        stack_p.setShape(4, boxsize, boxsize);
+        stack_p.setDensity(50);
+        stack_p.setPosition(100+i*100,390);
+        stack_p.setText(std::to_string(i));
+        stack_p.setType(b2_dynamicBody);
+        name = "box_" + std::to_string(i);       
+        sprite2dObject* s = new sprite2dObject(thisWorld, stack_p);
+        s->setName(name);
+        addComponent(s);
     }
     for(auto it = components.begin(); it < components.end(); it++)
     {
