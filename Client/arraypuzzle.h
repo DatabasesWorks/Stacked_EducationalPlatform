@@ -20,6 +20,8 @@ public:
     void virtual runAction(Qt::Key) override;
 private:
     int activeIndex;
+    //for the sprite text
+    int randomNum;
     void replaceAtIndexAction();
     void addAtIndexAction();
     void createEnvironment();
