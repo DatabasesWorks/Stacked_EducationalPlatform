@@ -34,9 +34,9 @@ void ArrayPuzzle::runAction(Qt::Key key){
     if(key == Qt::Key_E){
         replaceAtIndexAction();
     }
-//    if(key == Qt::Key_R){
-//        addAtIndexAction();
-//    }
+    if(key == Qt::Key_R){
+        getNumAtActive();
+    }
 }
 
 void ArrayPuzzle::replaceAtIndexAction(){
@@ -83,4 +83,10 @@ void ArrayPuzzle::addAtIndexAction(){
      //components.erase(components.begin() + activeIndex);
      this->replaceComponent("array_"+activeIndex, 4, 50, 25, x, y, b2_dynamicBody, activeIndex);
      components[activeIndex]->changeColor(sf::Color::Blue);
+}
+
+std::string ArrayPuzzle::getNumAtActive(){
+    std::string num;
+    num = components[activeIndex]->getText()->getString();
+    return num;
 }

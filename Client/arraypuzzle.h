@@ -25,6 +25,7 @@ private:
     void replaceAtIndexAction();
     void addAtIndexAction();
     void createEnvironment();
+    std::string getNumAtActive();
 };
 
 #endif // ARRAYPUZZLE_H
