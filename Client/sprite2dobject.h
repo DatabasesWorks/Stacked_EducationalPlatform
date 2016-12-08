@@ -56,13 +56,13 @@ public:
     void setDensity(double);
     void setSprite(std::string pathname);
     void setText(std::string, sf::Color c = sf::Color::White);
-    sf::Text getText();
+    sf::Text * getText();
     sf::Sprite * getSprite();
     b2Vec2 getSize();
     void scaleSize(int factor);
 
 private:
-    sf::Text text;
+    sf::Text * text;
     sf::Font font;
     sf::Color color;
     b2Body * textBody;

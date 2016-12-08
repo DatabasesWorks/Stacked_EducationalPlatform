@@ -7,12 +7,13 @@ sprite2dObject::sprite2dObject(){
     sprite = NULL;
     color = sf::Color::White;
     bordercolor = sf::Color::White;
+    text = new sf::Text;
 }
 
 sprite2dObject::~sprite2dObject(){
     body->GetWorld()->DestroyBody(body);
     body = NULL;
-    text.setString("");
+    text->setString("");
 }
 
 sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDef* def) : sprite2dObject() // call the super constructor
@@ -29,9 +30,9 @@ sprite2dObject::sprite2dObject(std::string description, b2World* world, b2BodyDe
     {
        // throw new std::exception;
     }
-    text.setFont(font);
-    text.setOrigin(0,0);
-    text.setCharacterSize(20);
+    text->setFont(font);
+    text->setOrigin(0,0);
+    text->setCharacterSize(20);
 }
 
 sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dObject(def.name,world,def.body) // call the super constructor
@@ -39,7 +40,7 @@ sprite2dObject::sprite2dObject(b2World* world, SpriteDefinition def) : sprite2dO
     bordercolor=def.bordercolor;
     body->CreateFixture(def.fixture);
     setText(def.text);
-    text.setString(def.text);
+    text->setString(def.text);
     color = def.color;
 }
 
@@ -212,17 +213,27 @@ sf::ConvexShape sprite2dObject::getShape(){
 /*
  * Getters/Setters
 */
-
+#include <exceptions.h>
 void sprite2dObject::setSprite(std::string pathname){
-    sf::Texture tex;
-    tex.loadFromFile(pathname);
-    sprite = new sf::Sprite(tex);
+    sf::Image tex;
+
+    if(!tex.loadFromFile(pathname)){
+        filenotfoundexception ex(pathname);
+        throw ex;
+    }
+    if(sprite!=nullptr){
+       delete sprite;
+    }else{
+        sf::Texture t;
+        t.loadFromImage(tex);
+        sprite = new sf::Sprite(t);
+    }
 }
 
 sf::Sprite * sprite2dObject::getSprite(){
     if(sprite!=nullptr){
-        b2Vec2 vec(getBody()->GetLocalVector(body->GetPosition()));
-        sprite->setPosition(vec.x,vec.y);
+        sf::ConvexShape sh(getShape());
+        sprite->setPosition(sh.getPosition().x,sh.getPosition().y);
     }
     return sprite;
 }
@@ -243,21 +254,21 @@ void sprite2dObject::changeBorderColor(sf::Color color){
     bordercolor=color;
 }
 
-sf::Text sprite2dObject::getText(){
+sf::Text* sprite2dObject::getText(){
    sf::ConvexShape sh(getShape());
    sf::FloatRect f(sh.getGlobalBounds());
    b2Vec2 center(f.left+f.width/2,f.top+f.height/2-8);
-   int textwidth = text.getLocalBounds().width/2;
-   int textheight = text.getLocalBounds().height/2;
-   text.setPosition(center.x - textwidth,center.y - textheight);// 8 for buffer space
+   int textwidth = text->getLocalBounds().width/2;
+   int textheight = text->getLocalBounds().height/2;
+   text->setPosition(center.x - textwidth,center.y - textheight);// 8 for buffer space
    return text;
 }
 
 void sprite2dObject::setText(std::string string, sf::Color color){
-       text.setCharacterSize(20);
-       text.setFont(font);
-       text.setColor(color);
-       text.setString(string);
+       text->setCharacterSize(20);
+       text->setFont(font);
+       text->setColor(color);
+       text->setString(string);
 }
 
 std::string sprite2dObject::getName()

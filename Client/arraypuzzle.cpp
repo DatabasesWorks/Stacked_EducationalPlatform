@@ -17,6 +17,7 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
 
     for(int i = 0; i < 5; i++){
         this->addComponent("array_"+i, 4, 50, 25, 20+(i*45), -25, b2_dynamicBody);
+        components[i]->setText(std::to_string(i), sf::Color::Black);
     }
     activeIndex = 0;
 
@@ -41,37 +42,27 @@ void ArrayPuzzle::runAction(Qt::Key key){
         }
     }
     if(key == Qt::Key_E){
-        deleteAtIndexAction();
+        replaceAtIndexAction();
     }
-    if(key == Qt::Key_R){
-        addAtIndexAction();
-    }
-    if(key == Qt::Key_S){
-        sortArrayAction();
-    }
+//    if(key == Qt::Key_R){
+//        addAtIndexAction();
+//    }
 }
 
-void ArrayPuzzle::deleteAtIndexAction(){
-    b2Body *bod;
-    bod = components[activeIndex]->getBody();
-    if(components.size()>0){
-        thisWorld->DestroyBody(bod);
-        components.erase(components.begin() + activeIndex);
-    }
-    if(activeIndex > 0){
-        activeIndex--;
-        components[activeIndex]->changeColor(sf::Color::Blue);
-    }
-    if(activeIndex == 0){
-        components[activeIndex]->changeColor(sf::Color::Blue);
-    }
-    if(components.size() > 1){
-        for(int i = activeIndex; i < ((int)components.size()); i++){
-            sprite2dObject * obj = (components[i]);
+void ArrayPuzzle::replaceAtIndexAction(){
 
-            obj->moveBody(sprite2dObject::left, 350);
-        }
-    }
+    sprite2dObject * old = components[activeIndex];
+    SpriteDefinition def;
+    def.setShape(4,50,25);
+    def.setType(b2_dynamicBody);
+    def.setColor(sf::Color::Red);
+    def.setBorderColor(sf::Color::Red);
+    sf::FloatRect rect = old->getShape().getGlobalBounds();
+    def.setPosition(rect.left+rect.width/2,rect.top+rect.height/4);
+    delete old;
+    sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
+    components[activeIndex] = replacement;
+    components[activeIndex]->setText(std::to_string(activeIndex), sf::Color::Black);
 }
 
 void ArrayPuzzle::addAtIndexAction(){
@@ -79,10 +70,11 @@ void ArrayPuzzle::addAtIndexAction(){
      int x;
      bod = components[activeIndex]->getBody();
      x = bod->GetPosition().x;
+     int y = bod->GetPosition().y;
      this->thisWorld->DestroyBody(bod);
      //might want to restrict the deletion if size = 1
      //components.erase(components.begin() + activeIndex);
-     this->replaceComponent("array_"+activeIndex, 4, 50, 25, x, -25, b2_dynamicBody, activeIndex);
+     this->replaceComponent("array_"+activeIndex, 4, 50, 25, x, y, b2_dynamicBody, activeIndex);
      components[activeIndex]->changeColor(sf::Color::Blue);
 }
 

@@ -31,7 +31,14 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     b2Vec2 pos(200,100);
     b2Vec2 siZe(250,100);//scoping issues
     createKeyBox(pos,siZe,text,"keybox_push");
-
+    siZe.operator *=(.25);
+    SpriteDefinition def;
+    def.setShape(4,25,25);
+    def.setPosition(pos.x+100,pos.y+100);
+    sprite2dObject * obj = new sprite2dObject(thisWorld,def);
+  //  obj->setSprite("./rc/andy.png");//can't use qt resources w/ sfml
+   // still not working properly
+    addComponent(obj,true);
 
 
 }

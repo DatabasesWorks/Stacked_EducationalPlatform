@@ -55,44 +55,14 @@ sprite2dObject * Puzzle::getComponentAt(int x, int y){
 
     }return nullptr;
 
-//   b2Body * results = nullptr;
-//   for(b2Body* bodyIterator = thisWorld->GetBodyList(); bodyIterator; bodyIterator->GetNext()){
-
-//      b2Vec2 bodyPosition(bodyIterator->GetPosition());
-//      std::cout << " b2dx " << bodyIterator->GetPosition().x << " b2dy " << bodyIterator->GetPosition().y << std::endl;
-//      b2Vec2 mousePosition(x,y);
-//      std::cout << " qtx " << x << " qtx " << y << std::endl;
-//      b2Vec2 difference;
-
-//      difference+=bodyPosition; // load first point set
-//      difference-=mousePosition; // take difference
-
-//      if(difference.Normalize()<10){
-
-//         results = bodyIterator;
-//      }
-
-//   }
-
-//   if(results!=nullptr){
-//      for(auto it = components.begin(); it < components.end(); it++){
-//         b2Body * compare = (*it)->getBody();
-//         if(results==compare){
-//            return *it; // return the pointer to the correct sprite2dObject
-//         }
-//      }
-//      for(auto it = inactive_components.begin(); it < inactive_components.end(); it++){
-//         b2Body * compare = (*it)->getBody();
-//         if(results==compare){
-//            return *it; // return the pointer to the correct sprite2dObject
-//         }
-//      }
-//    } return nullptr;
 }
 
 void Puzzle::addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored, bool pushFront, std::string text){
     SpriteDefinition tempdef(x,y, type,name);
     tempdef.setShape(points,width,height); // set shape is (verticeCount, width, height ) -- if 0 the height/width will be 1.
+    tempdef.setPosition(x,y);
+    tempdef.setDensity(1);
+
     if (text.compare("") != 0) {
         tempdef.setText(text);
     }
