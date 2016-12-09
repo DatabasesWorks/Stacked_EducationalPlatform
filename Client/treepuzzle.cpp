@@ -4,7 +4,7 @@
 #include <math.h>
 #include <puzzle.h>
 #include <random>
-#include <set>
+#include <sstream>
 
 TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
 {
@@ -88,7 +88,22 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
            obj->changeColor(color);
       }
     }
+    std::stringstream ss;
+    ss << "Lorem ipsum dolor sit amet," << std::endl <<
+            "consectetur adipiscing elit," << std::endl <<
+            "sed do eiusmod tempor incididunt" << std::endl <<
+            "ut labore et dolore magna aliqua." << std::endl;
+    std::string text = ss.str();
 
+    SpriteDefinition box(150,250, b2_staticBody,"text");
+    box.setShape(4,300,100);
+    box.setBorderColor(sf::Color::White);
+    sf::Color grey(84,84,84);
+    box.setColor(grey);
+    sprite2dObject * obj = new sprite2dObject(thisWorld,box);
+    obj->setText(text,  sf::Color(10,10,10));
+    obj->ignoreObject(); // nothing can interact with this
+    addComponent(obj,true);
 }
 
 
