@@ -13,17 +13,23 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     createBoundary(390,true);
     createBoundary(270,false);
 
+    instructionstream << "Keys:" << std::endl;
+    instructionstream << "Press R to push a random value to the stack," << std::endl <<
+                         "Press E to pop and ignore the value" << std::endl <<
+                         "Press W to pop into the pit" << std::endl <<
+                         "Press Space to drop an operator into the pit" <<std::endl <<
+                         "Use the Arrow Keys to Change Operator" << std::endl;
 
-    instructionstream << "These are the instructions" << std::endl;
-    instructionstream << "Lorem ipsum dolor sit amet," << std::endl <<
-            "consectetur adipiscing elit," << std::endl <<
-            "sed do eiusmod tempor incididunt" << std::endl <<
-            "ut labore et dolore magna aliqua." << std::endl;
-
-    b2Vec2 pos(300,50);
+    b2Vec2 pos(250,40);
     createInstructions(pos);
+    buildPuzzle();
+    b2Vec2 pos2(300,150);
+    instructionstream.str("");
+    instructionstream << "Operators" << std::endl;
+    createInstructions(pos2);
 
 
+    setActiveOperator(operatorindex);
 
 
 //make platform independent------
@@ -36,22 +42,58 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
 
  }
 
-void buildPuzzle(){
+void StackPuzzle::buildPuzzle(){
+     SpriteDefinition mul;
+     SpriteDefinition div;
+     SpriteDefinition plus;
+     SpriteDefinition minus;
+     mul.name="mul";
+     div.name="div";
+     plus.name="plus";
+     minus.name="minus";
+     mul.setText("*");
+     div.setText("/");
+     plus.setText("+");
+     minus.setText("-");
 
+     //try to clean up the code a bit
+     std::vector<SpriteDefinition*> defs;
+     defs.push_back(&mul);
+     defs.push_back(&div);
+     defs.push_back(&plus);
+     defs.push_back(&minus);
 
+     int startingindex = 400;
+     for(auto it = defs.begin(); it < defs.end(); it++){
+        int halfs =25;
+        SpriteDefinition * def = *it;
+        def->setShape(4,halfs,halfs);
+        def->setType(b2_staticBody);
+        def->setPosition(startingindex,300);
+        def->setColor(sf::Color::Green);
+        def->setBorderColor(sf::Color::White);
+        sprite2dObject * obj = new sprite2dObject(thisWorld,*def);
+        obj->ignoreObject();
+        addComponent(obj,true);
+        operators.push_back(obj);
+        startingindex+=halfs*1.5;
+     }
 }
 
 void StackPuzzle::createStackContainer(int x){
      SpriteDefinition left;
      SpriteDefinition right;
-     left.setShape(4,0,800);
-     left.setColor(sf::Color::Transparent);
-     left.setBorderColor(sf::Color::Blue);
-     right.setShape(4,0,800);
-     right.setColor(sf::Color::Transparent);
-     right.setBorderColor(sf::Color::Blue);
-     left.setType(b2_staticBody);
-     right.setType(b2_staticBody);
+     std::vector<SpriteDefinition*> defs;
+     defs.push_back(&left);
+     defs.push_back(&right);
+     for(auto it = defs.begin(); it < defs.end(); it++){
+         SpriteDefinition * def = *it;
+         def->setShape(4,0,400);
+         def->setShape(4,0,400);
+         def->setColor(sf::Color::Transparent);
+         def->setBorderColor(sf::Color::Blue);
+         def->setType(b2_staticBody);
+     }
      left.setPosition(x-ssize.x,0);
      right.setPosition(x+ssize.x,0);
      addComponent(left,true);
@@ -80,14 +122,47 @@ StackPuzzle::~StackPuzzle() {
 
 }
 
+void StackPuzzle::setActiveOperator(unsigned int toset){
+    unsigned int c = 0;
+    if(toset < operators.size()){
+        operatorindex = toset;
+        for(auto it = operators.begin(); it < operators.end(); it++){
+            sprite2dObject * spr = *it;
+            if(c==operatorindex){
+                spr->changeColor(sf::Color::Blue);
+            }
+            else{
+                spr->changeColor(sf::Color::Green);
+            }
+            c++;
+        }
+    }
+}
+
 void StackPuzzle::runAction(Qt::Key key){
    if(key==Qt::Key_E){
        popAction();
-   }
+   }else
    if(key==Qt::Key_R){
        pushAction();
-   }
+   }else
+   if(key==Qt::Key_Left){
+      if(operatorindex>0){
+        operatorindex--;
+        setActiveOperator(operatorindex);
+      }
+   }else
+   if(key==Qt::Key_Right){
+      if(operatorindex<3){
+        operatorindex++;
+        setActiveOperator(operatorindex);
+      }
+   }//else
+
 }
+
+
+
 
 std::string StackPuzzle::peekAction(){
    //need to extract component content string
