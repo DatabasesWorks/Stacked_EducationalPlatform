@@ -24,11 +24,13 @@ private:
     int activeIndex;
     //for the sprite text
     int randomNum;
+    int equationCount;
     void replaceAtIndexAction();
     void addAtIndexAction();
     void createEnvironment();
     std::string getNumAtActive();
     void setupInstructions();
+    void setupEquation(std::string);
 };
 
 #endif // ARRAYPUZZLE_H
