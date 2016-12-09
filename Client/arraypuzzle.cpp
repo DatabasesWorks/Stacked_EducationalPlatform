@@ -165,7 +165,19 @@ void ArrayPuzzle::setupEquation(std::string s){
 void ArrayPuzzle::clearStreamAt(b2Vec2 pos){
     instructionstream.str("");
     instructionstream.clear();
-    instructionstream<<"";
+    instructionstream.str().clear();
+    instructionstream.flush();
     createInstructions(pos);
 }
+
+//void ArrayPuzzle::clearStreamAt(b2Vec2 pos){
+////    instructionstream.str("");
+////    instructionstream.clear();
+////    instructionstream<<"";
+//      std::stringstream* mynewss = resetInstructions("instructions_box", pos);
+////    createInstructions(pos);
+
+//      *mynewss << "CLEARED";
+
+//}
 

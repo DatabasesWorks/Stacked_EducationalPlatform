@@ -82,8 +82,10 @@ void Puzzle::addComponent(std::string name, int points, int width, int height, i
     }
 }
 
+
+
 void Puzzle::createInstructions(b2Vec2 position){
-    SpriteDefinition box(position.x,position.y, b2_staticBody,"instructions_box");
+    SpriteDefinition box(position.x,position.y, b2_staticBody, "instructions_box");
     box.setShape(4,0,0);
     box.setBorderColor(sf::Color::Transparent);
     box.setColor(sf::Color::Transparent);
@@ -91,6 +93,42 @@ void Puzzle::createInstructions(b2Vec2 position){
     obj->setText(instructionstream.str(),  sf::Color::White);
     obj->ignoreObject(); // nothing can interact with this
     addComponent(obj,true);
+}
+
+//For creating a "resettable" instruction box
+std::stringstream* Puzzle::createInstructions(b2Vec2 position, std::string boxname){
+    std::stringstream* stream = new std::stringstream();
+    SpriteDefinition box(position.x,position.y, b2_staticBody, boxname);
+    box.setShape(4,0,0);
+    box.setBorderColor(sf::Color::Transparent);
+    box.setColor(sf::Color::Transparent);
+    sprite2dObject * obj = new sprite2dObject(thisWorld,box);
+    obj->setText(stream->str(),  sf::Color::White);
+    obj->ignoreObject(); // nothing can interact with this
+    addComponent(obj,true);
+    return stream;
+}
+
+
+std::stringstream* Puzzle::resetInstructions(std::string box2reset, b2Vec2 newposition){
+    std::stringstream* stream = new std::stringstream();
+    SpriteDefinition box(newposition.x,newposition.y, b2_staticBody, box2reset); //box2reset name is reused
+    box.setShape(4,0,0);
+    box.setBorderColor(sf::Color::Transparent);
+    box.setColor(sf::Color::Transparent);
+    sprite2dObject * obj = new sprite2dObject(thisWorld,box);
+    obj->setText(stream->str(),  sf::Color::White);
+    obj->ignoreObject(); // nothing can interact with this
+
+    for (int i =0; i<inactive_components.size(); i++)
+    {
+        if((inactive_components[i])->getName() == box2reset )
+        {
+            inactive_components[i] = obj;
+        }
+    }
+
+    return stream;
 }
 
 std::string Puzzle::getInstructions(){
