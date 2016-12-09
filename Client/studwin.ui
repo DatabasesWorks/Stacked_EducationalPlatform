@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>999</width>
-    <height>650</height>
+    <height>661</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -186,7 +186,7 @@
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>25</height>
+              <height>30</height>
              </size>
             </property>
             <property name="frameShape">
@@ -209,6 +209,12 @@
               <layout class="QGridLayout" name="gridLayout_10">
                <item row="0" column="3">
                 <widget class="QPushButton" name="logoutButton">
+                 <property name="minimumSize">
+                  <size>
+                   <width>80</width>
+                   <height>25</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Log Out</string>
                  </property>
@@ -216,6 +222,12 @@
                </item>
                <item row="0" column="1">
                 <widget class="QLabel" name="levelLabel">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>25</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Level: Arrays</string>
                  </property>
@@ -223,6 +235,12 @@
                </item>
                <item row="0" column="2">
                 <widget class="QPushButton" name="hideButton">
+                 <property name="minimumSize">
+                  <size>
+                   <width>80</width>
+                   <height>25</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Hide Levels</string>
                  </property>
@@ -230,6 +248,12 @@
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="userLabel">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>25</height>
+                  </size>
+                 </property>
                  <property name="text">
                   <string>Welcome: Student</string>
                  </property>

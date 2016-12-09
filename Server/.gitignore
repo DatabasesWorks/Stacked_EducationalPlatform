@@ -1,5 +1,6 @@
 # C++ objects and libs
 
+Server
 *.slo
 *.lo
 *.o
@@ -34,4 +35,5 @@ Makefile*
 *.qmlproject.user.*
 
 # QtCtreator CMake
-CMakeLists.txt.user*
+CMakeLists.txt.user
+
