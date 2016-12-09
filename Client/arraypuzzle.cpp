@@ -66,10 +66,11 @@ void ArrayPuzzle::runAction(Qt::Key key){
     }
     if(key == Qt::Key_Return){
     }
-    if(key == Qt::Key_Clear){
-        std::cout<<"backspace";
+    if(key == Qt::Key_Backspace){
+        std::cout<<"backspace" <<std::endl;
         b2Vec2 pos(100+(equationCount*10), 240);
         clearStreamAt(pos);
+        equationCount--;
     }
 }
 
@@ -163,6 +164,8 @@ void ArrayPuzzle::setupEquation(std::string s){
 
 void ArrayPuzzle::clearStreamAt(b2Vec2 pos){
     instructionstream.str("");
+    instructionstream.clear();
+    instructionstream<<"";
     createInstructions(pos);
 }
 
