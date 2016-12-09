@@ -66,6 +66,11 @@ void ArrayPuzzle::runAction(Qt::Key key){
     }
     if(key == Qt::Key_Return){
     }
+    if(key == Qt::Key_Clear){
+        std::cout<<"backspace";
+        b2Vec2 pos(100+(equationCount*10), 240);
+        clearStreamAt(pos);
+    }
 }
 
 void ArrayPuzzle::replaceAtIndexAction(){
@@ -134,9 +139,15 @@ void ArrayPuzzle::setupInstructions(){
     createInstructions(pos);
 
     instructionstream.str("");
-    instructionstream<<"Get result: 13" <<std::endl <<
-                       "Get result: 55" <<std::endl <<
-                       "Get result: 233" <<std::endl;
+    if(!question1Done){
+        instructionstream<<"Get result: 13" <<std::endl;
+    }
+    if(!question2Done){
+        instructionstream<<"Get result: 55" <<std::endl;
+    }
+    if(!question3Done){
+        instructionstream<<"Get result: 233" <<std::endl;
+    }
     b2Vec2 pos2(50, 240);
     createInstructions(pos2);
 
@@ -147,6 +158,11 @@ void ArrayPuzzle::setupEquation(std::string s){
     instructionstream.str("");
     instructionstream<< s;
     b2Vec2 pos(100+(equationCount*10), 240);
+    createInstructions(pos);
+}
+
+void ArrayPuzzle::clearStreamAt(b2Vec2 pos){
+    instructionstream.str("");
     createInstructions(pos);
 }
 
