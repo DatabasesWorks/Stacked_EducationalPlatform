@@ -30,6 +30,8 @@ public:
     void collectGarbage();
     std::string getInstructions();
     void createInstructions(b2Vec2 pos);
+    std::stringstream* createInstructions(b2Vec2 position, std::string boxname);
+    std::stringstream* resetInstructions(std::string boxnametoreset, b2Vec2 newposition);
 
     //phy engine step
     void step(float time);

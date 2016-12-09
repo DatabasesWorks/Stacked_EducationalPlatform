@@ -25,12 +25,14 @@ private:
     void generateStackPiece(int,int);
     void createStackContainer(int);
     void createBoundary(int,bool);
+    void setActiveOperator(unsigned int);
     void startGame();
     void buildPuzzle();
-    b2Vec2 ssize;
-
-
     sprite2dObject * createNode(int,int, b2BodyType);
+
+    int operatorindex=0;
+    std::vector<sprite2dObject*> operators;
+    b2Vec2 ssize;
     std::stack <sprite2dObject> s;
 };
 
