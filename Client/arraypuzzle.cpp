@@ -11,6 +11,8 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     components[0]->changeColor(sf::Color::Blue);
 
     setupInstructions();
+
+    equationCount = 0;
 }
 
 ArrayPuzzle::~ArrayPuzzle() {}
@@ -34,24 +36,33 @@ void ArrayPuzzle::runAction(Qt::Key key){
         replaceAtIndexAction();
     }
     if(key == Qt::Key_R){
-        getNumAtActive();
+        setupEquation(getNumAtActive());
+        equationCount++;
     }
     if(key == Qt::Key_Plus){
+        setupEquation("+");
+        equationCount++;
 
     }
     if(key == Qt::Key_Minus){
-
+        setupEquation("-");
+        equationCount++;
     }
     if(key == Qt::Key_Asterisk){
-
+        setupEquation("*");
+        equationCount++;
     }
     if(key == Qt::Key_Slash){
+        setupEquation("/");
+        equationCount++;
     }
     if(key == Qt::Key_ParenLeft){
-
+        setupEquation("(");
+        equationCount++;
     }
     if(key == Qt::Key_ParenRight){
-
+        setupEquation(")");
+        equationCount++;
     }
     if(key == Qt::Key_Return){
     }
@@ -130,3 +141,12 @@ void ArrayPuzzle::setupInstructions(){
     createInstructions(pos2);
 
 }
+
+void ArrayPuzzle::setupEquation(std::string s){
+
+    instructionstream.str("");
+    instructionstream<< s;
+    b2Vec2 pos(100+(equationCount*10), 240);
+    createInstructions(pos);
+}
+
