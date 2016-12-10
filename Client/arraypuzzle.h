@@ -28,6 +28,8 @@ private:
     int equationCount;
     bool question1Done;
     bool question2Done;
+    int currentAnswer = 13;
+    int currentQuestion = 1;
     void replaceAtIndexAction();
     void addAtIndexAction();
     void createEnvironment();

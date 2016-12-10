@@ -173,8 +173,22 @@ void Puzzle::addComponent(sprite2dObject* obj, bool ignored, bool pushFront){
 
 }
 
-sprite2dObject* Puzzle::getComponent(std::string name)
+void Puzzle::createTextBox(int x, int y, std::string text, std::string name){
+   SpriteDefinition def;
+   def.setShape(4,0,0);
+   def.setText(text);
+   def.setColor(sf::Color::Transparent);
+   def.setColor(sf::Color::Transparent);
+   def.name=name;
+   def.setPosition(x,y);
+   sprite2dObject * obj = new sprite2dObject(thisWorld,def);
+   obj->ignoreObject();
+   addComponent(obj,true);
+}
+
+sprite2dObject* Puzzle::getComponent(std::string name, bool active)
 {
+    if(active){
     for(auto it = components.begin(); it < components.end(); it++)
     {
         sprite2dObject * obj = *it;
@@ -183,6 +197,17 @@ sprite2dObject* Puzzle::getComponent(std::string name)
             return obj;
         }
    }
+    }else{
+        for(auto it = inactive_components.begin(); it < inactive_components.end(); it++)
+        {
+            sprite2dObject * obj = *it;
+            if(obj->getName()==name)
+            {
+                return obj;
+            }
+       }
+    }
+
    return nullptr;
 }
 

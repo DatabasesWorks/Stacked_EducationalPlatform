@@ -23,9 +23,10 @@ public:
     void addComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, bool ignored = false, bool pushFront = false, std::string text = "");
     void replaceComponent(std::string name, int points, int width, int height, int x, int y, b2BodyType type, int ind, bool ignored = false);
     void changeComponentImage(unsigned int, sf::Image);
+    void createTextBox(int,int,std::string,std::string);
     void addComponent(SpriteDefinition, bool ignored = false, bool pushFront = false);
     void addComponent(sprite2dObject*, bool ignored = false, bool pushFront = false);
-    sprite2dObject* getComponent(std::string name);
+    sprite2dObject* getComponent(std::string name, bool active = true);
     std::vector<sprite2dObject*> getAllComponents();
     void collectGarbage();
     std::string getInstructions();

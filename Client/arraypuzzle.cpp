@@ -68,12 +68,12 @@ void ArrayPuzzle::runAction(Qt::Key key){
     if(key == Qt::Key_Return){
         Calculator c;
         //std::cout << c.calculate ("(20+10)*3/2-3") << std::endl;
-        std::string equation = inactive_components[4]->getText()->getString();
+        std::string equation = getComponent("equation_box",false)->getText()->getString();
         //std::cout << c.calculate(equation)<< std::endl;
         if(!question1Done && (equation.length() > 0)){
             if(firstAnswer == c.calculate(equation)){
                 question1Done = true;
-                inactive_components[3]->setTextColor(sf::Color::Green);
+                getComponent("question_1",false)->setTextColor(sf::Color::Green);
                 clearEntireEquation();
                 setupQuestion();
             }                
@@ -81,7 +81,7 @@ void ArrayPuzzle::runAction(Qt::Key key){
         else if(!question2Done && (equation.length() > 0)){
             if(secondAnswer == c.calculate(equation)){
                 question2Done = true;
-                inactive_components[5]->setTextColor(sf::Color::Green);
+                getComponent("question_2",false)->setTextColor(sf::Color::Green);
                 foreach (sprite2dObject* obj, components) {
                     obj->applyAngularForce(sprite2dObject::up, rand() % 500);
                 }
@@ -130,12 +130,15 @@ void ArrayPuzzle::createEnvironment(){
     inactive_components.push_back(floor);
 
     //just set this up once. Before it was creating a text over the other one
-    b2Vec2 pos(200, 235);
+    b2Vec2 pos_(300, 450);
     std::string equation = "equation_box";
-    SpriteDefinition box(pos.x, pos.y, b2_staticBody, equation);
+    SpriteDefinition box;
+    box.name=equation;
     box.setShape(4, 0, 0);
+    box.setType(b2_staticBody);
     box.setBorderColor(sf::Color::Transparent);
     box.setColor(sf::Color::Transparent);
+    box.setPosition(pos_.x,pos_.y);
     sprite2dObject * obj = new sprite2dObject(thisWorld, box);
     obj->setText("", sf::Color::White);
     obj->ignoreObject();
@@ -176,30 +179,48 @@ void ArrayPuzzle::setupInstructions(){
     createInstructions(pos);
 }
 
+
 void ArrayPuzzle::setupQuestion(){
     instructionstream.str("");
+    b2Vec2 pos2(100, 450);
     if(!question1Done){
-        instructionstream<<"Get result: 13" <<std::endl;
-        b2Vec2 pos2(50, 240);
-        createInstructions(pos2);
+       if(getComponent("question_1",false)==nullptr){
+            createTextBox(pos2.x,pos2.y,"Get result : 13","question_1");
+       }
     }
     else if(!question2Done){
-        instructionstream<<"Get result: 55" <<std::endl;
-        b2Vec2 pos2(50, 250);
-        createInstructions(pos2);
+        pos2.y+=10;
+        if(getComponent("question_2",false)==nullptr){
+            createTextBox(pos2.x,pos2.y,"Get result: 55","question_2");
+       }
     }
+   //    if(!question1Done){
+   //        instructionstream<<"Get result: 13" <<std::endl;
+   //        createInstructions(pos2);
+   //    }
+   //    else if(!question2Done){
+   //        instructionstream<<"Get result: 55" <<std::endl;
+   //        b2Vec2 pos2(50, 250);
+   //        createInstructions(pos2);
+   //    }
 }
 
 void ArrayPuzzle::setupEquation(std::string s){
-    std::string nextString = inactive_components[4]->getText()->getString();
-    nextString.append(s);
-    inactive_components[4]->setText(nextString, sf::Color::White);
+    sprite2dObject * obj = getComponent("equation_box",false);
+    if(obj !=nullptr){
+        std::string nextString = obj->getText()->getString().toAnsiString();
+        nextString.append(s);
+        obj->setText(nextString, sf::Color::White);
+    }
 }
 
 void ArrayPuzzle::clearEquation(){
-    std::string newString = inactive_components[4]->getText()->getString();
-    newString.pop_back();
-    inactive_components[4]->setText(newString, sf::Color::White);
+    sprite2dObject * obj = getComponent("equation_box",false);
+    if(obj !=nullptr){
+        std::string newString = obj->getText()->getString().toAnsiString();
+        newString.pop_back();
+        obj->setText(newString, sf::Color::White);
+    }
 }
 
 void ArrayPuzzle::clearEntireEquation(){
