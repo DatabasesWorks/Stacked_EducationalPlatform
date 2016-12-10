@@ -3,7 +3,7 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     createEnvironment();
     for(int i = 0; i < 5; i++){
         this->addComponent("array_"+i, 4, 50, 25, 20+(i*45), -25, b2_dynamicBody);
-        randomNum = rand() % 51;
+        randomNum = rand() % 24+1;
         components[i]->setText(std::to_string(randomNum), sf::Color::Black);
     }
     activeIndex = 0;
@@ -74,6 +74,7 @@ void ArrayPuzzle::runAction(Qt::Key key){
             if(firstAnswer == c.calculate(equation)){
                 question1Done = true;
                 inactive_components[3]->setTextColor(sf::Color::Green);
+                clearEntireEquation();
                 setupQuestion();
             }                
         }
@@ -81,12 +82,14 @@ void ArrayPuzzle::runAction(Qt::Key key){
             if(secondAnswer == c.calculate(equation)){
                 question2Done = true;
                 inactive_components[5]->setTextColor(sf::Color::Green);
-                setupQuestion();
+                foreach (sprite2dObject* obj, components) {
+                    obj->applyAngularForce(sprite2dObject::up, rand() % 500);
+                }
             }
         }
     }
     if(key == Qt::Key_Backspace){
-        std::cout<<"backspace" <<std::endl;
+        //std::cout<<"backspace" <<std::endl;
         clearEquation();
         equationCount--;
     }
@@ -105,7 +108,7 @@ void ArrayPuzzle::replaceAtIndexAction(){
     delete old;
     sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
     components[activeIndex] = replacement;
-    randomNum = rand() % 51;
+    randomNum = rand() % 24+1;
     components[activeIndex]->setText(std::to_string(randomNum), sf::Color::Black);
 }
 
@@ -196,5 +199,13 @@ void ArrayPuzzle::clearEquation(){
     std::string newString = inactive_components[4]->getText()->getString();
     newString.pop_back();
     inactive_components[4]->setText(newString, sf::Color::White);
+    equationCount--;
+}
+
+void ArrayPuzzle::clearEntireEquation(){
+    while(equationCount != 0){
+        clearEquation();
+    }
+    clearEquation();
 }
 

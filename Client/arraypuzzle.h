@@ -36,6 +36,7 @@ private:
     void setupQuestion();
     void setupEquation(std::string);
     void clearEquation();
+    void clearEntireEquation();
     const static int firstAnswer = 13;
     const static int secondAnswer = 55;
 };
