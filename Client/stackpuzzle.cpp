@@ -218,6 +218,10 @@ void StackPuzzle::updatePit(){ // this is the animation logic
             b2Vec2 pos(middle->getBody()->GetPosition());
             if(results==currentanswer){
                 this->timessolved++;
+                if(timessolved==3){
+                    isSolved = true;
+                    // launch animation for completing the puzzle
+                }
                 middle->getBody()->SetType(b2_dynamicBody);
                 emptyPit();
                 waiting = false;
@@ -234,7 +238,6 @@ void StackPuzzle::updatePit(){ // this is the animation logic
                 generateStackPiece(stacklocation,0,results);
                 color = (sf::Color::Red);
                 explodeAtPoint(pos.x,pos.y,color);
-
             }
 
             waiting = false;
