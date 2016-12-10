@@ -22,8 +22,9 @@ void TeachReg::on_cancelButton_clicked() {
 
 void TeachReg::on_regButton_clicked() {
     Client *par = (Client *)this->parentWidget();
-    QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",1,"+ ui->dobEntry->text();
+    QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",1," + ui->dobEntry->text();
     int x = par->sendReg(data);
+
     switch (x) {
         case 0: //success
             return;

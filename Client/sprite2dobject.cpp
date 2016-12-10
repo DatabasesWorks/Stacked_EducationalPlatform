@@ -279,6 +279,10 @@ void sprite2dObject::setText(std::string string, sf::Color color){
        text->setString(string);
 }
 
+void sprite2dObject::setTextColor(sf::Color color){
+    text->setColor(color);
+}
+
 std::string sprite2dObject::getName()
 {
     return name;

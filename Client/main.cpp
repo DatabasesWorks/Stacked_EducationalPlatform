@@ -17,10 +17,11 @@ int main(int argc, char *argv[]) {
         QTextStream ts(&f);
         qApp->setStyleSheet(ts.readAll());
     }
+
     f.close();
 
     //There may be better way to get directory
-     Q_INIT_RESOURCE(sprites);
+    Q_INIT_RESOURCE(sprites);
 
     Client w;
     w.show();
