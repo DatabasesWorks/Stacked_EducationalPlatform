@@ -8,7 +8,7 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     }
     activeIndex = 0;
 
-    components[0]->changeColor(sf::Color::Blue);
+    components[0]->changeColor(sf::Color::Magenta);
 
     setupInstructions();
     setupQuestion();
@@ -23,14 +23,14 @@ void ArrayPuzzle::runAction(Qt::Key key){
         if(activeIndex != 0){
             components[activeIndex]->changeColor(sf::Color::White);
             activeIndex--;
-            components[activeIndex]->changeColor(sf::Color::Blue);
+            components[activeIndex]->changeColor(sf::Color::Magenta);
         }
     }
     if(key == Qt::Key_Right){
         if(activeIndex < components.size()-1){
             components[activeIndex]->changeColor(sf::Color::White);
             activeIndex++;
-            components[activeIndex]->changeColor(sf::Color::Blue);
+            components[activeIndex]->changeColor(sf::Color::Magenta);
         }
     }
     if(key == Qt::Key_E){
@@ -135,7 +135,7 @@ void ArrayPuzzle::addAtIndexAction(){
      //might want to restrict the deletion if size = 1
      //components.erase(components.begin() + activeIndex);
      this->replaceComponent("array_"+activeIndex, 4, 50, 25, x, y, b2_dynamicBody, activeIndex);
-     components[activeIndex]->changeColor(sf::Color::Blue);
+     components[activeIndex]->changeColor(sf::Color::Magenta);
 }
 
 std::string ArrayPuzzle::getNumAtActive(){
