@@ -8,6 +8,7 @@
 
 TreePuzzle::TreePuzzle(QSize size) : Puzzle(size) {
     QObject::connect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));
+
     treetime.start(100);
     this->establishFloor();
     this->establishGravity(100);
@@ -200,7 +201,9 @@ void TreePuzzle::updateContact() {
 
     //Endgame check
     if (allGreen()) {
-        endGameExplosion();
+        QObject::disconnect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));
+        QObject::connect(&treetime, SIGNAL(timeout()), this, SLOT(endGameExplosion()));
+//        endGameExplosion();
     }
 }
 
@@ -212,6 +215,7 @@ bool TreePuzzle::allGreen() {
             isgreen = false;
         }
     }
+
 
     return isgreen;
 }

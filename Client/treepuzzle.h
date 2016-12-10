@@ -22,7 +22,7 @@ public:
 //    void updateContact();
     void resetColors();
     bool allGreen();
-    void endGameExplosion();
+
 private:
     std::vector<std::string> boxes;
     std::vector<std::string> plats;
@@ -34,6 +34,7 @@ public slots:
     void mouseMovedSlot(QPointF qpoint);
     void mouseReleasedSlot(QPointF qpoint);
     void updateContact();
+    void endGameExplosion();
 };
 
 #endif // BINARYTREEPUZZLE_H
