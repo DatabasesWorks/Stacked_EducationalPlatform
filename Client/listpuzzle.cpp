@@ -4,15 +4,17 @@ ListPuzzle::ListPuzzle(QSize size) : Puzzle(size) {
     establishGravity();
     establishFloor();
 
+    instructionstream << "Create the string \"ABCDDDCBAABBCC\" with the given blocks" << std::endl;
+    instructionstream << "Black blocks cannot be deleted" << std::endl;
     instructionstream << "Keys:" << std::endl;
     instructionstream << "Press X/C to move left/right" << std::endl <<
                          "Press W/E to push front/back" << std::endl <<
                          "Press S/D to pop front/back" << std::endl <<
-                         "Press Space/D to add/delete at selection" << std::endl <<
+                         "Press Space/Delete to add/delete at selection" << std::endl <<
                          "Press Q/A to cycle through values" << std::endl <<
-                         "Press R to reset" << std::endl <<
-                         "Press Enter to submit solution" << std::endl;
-    b2Vec2 pos(105,55);
+                         "Press R to organize blocks" << std::endl <<
+                         "Press T to submit solution" << std::endl;
+    b2Vec2 pos(150,65);
     createInstructions(pos);
 
     instructionstream.str("");
@@ -23,6 +25,7 @@ ListPuzzle::ListPuzzle(QSize size) : Puzzle(size) {
     possibleValues.push_back("A");
     possibleValues.push_back("B");
     possibleValues.push_back("C");
+    possibleValues.push_back("D");
     nextValueIndex = 0;
     nextValue = possibleValues[nextValueIndex];
     instructionstream.str("");
@@ -31,15 +34,56 @@ ListPuzzle::ListPuzzle(QSize size) : Puzzle(size) {
     createInstructions(pos3);
     updateNextValueDisplay();
 
-    addFirstBody();
+    generatePuzzle();
 }
 
-void ListPuzzle::addFirstBody(std::string value) {
+void ListPuzzle::generatePuzzle() {
+    solutionSet.push_back("A");
+    solutionSet.push_back("B");
+    solutionSet.push_back("C");
+    solutionSet.push_back("D");
+    solutionSet.push_back("D");
+    solutionSet.push_back("D");
+    solutionSet.push_back("C");
+    solutionSet.push_back("B");
+    solutionSet.push_back("A");
+    solutionSet.push_back("A");
+    solutionSet.push_back("B");
+    solutionSet.push_back("B");
+    solutionSet.push_back("C");
+    solutionSet.push_back("C");
+
+    addFirstBody("D", true);
+    addToPuzzlePiece("A", true);
+    addToPuzzlePiece("B", false);
+    addToPuzzlePiece("B", true);
+    addToPuzzlePiece("A", false);
+    addToPuzzlePiece("D", true);
+    addToPuzzlePiece("B", false);
+    addToPuzzlePiece("C", false);
+    addToPuzzlePiece("C", true);
+    addToPuzzlePiece("A", false);
+    addToPuzzlePiece("C", true);
+
+    reset();
+}
+
+void ListPuzzle::addToPuzzlePiece(std::string value, bool locked) {
+    b2Body *bod;
+    bod = components.front()->getBody();
+    this->addComponent("list body", 4, CubeSideLength, CubeSideLength, bod->GetPosition().x + deltaX, YSpawn, b2_staticBody, false, false, value);
+    if (locked) {
+        components.back()->changeColor(LockedColor);
+    } else {
+        components.back()->changeColor(DefaultColor);
+    }
+    workingSet.push_back(std::make_pair(value, !locked));
+}
+
+void ListPuzzle::addFirstBody(std::string value, bool addToWorkingSet) {
     std::string valueToAdd;
-    bool addToWorkingSet = true;
     if (value.compare("") != 0) {
         valueToAdd = value;
-        addToWorkingSet = false;
     } else {
         valueToAdd = nextValue;
     }
@@ -108,8 +152,14 @@ void ListPuzzle::runAction(Qt::Key key) {
         reset();
     } else if (key == Qt::Key_Delete) {
         deleteAtActiveIndex();
-    } else if (key == Qt::Key_Enter) {
+    } else if (key == Qt::Key_T) {
         bool solved = checkSolution();
+        if (solved) {
+            instructionstream.str("");
+            instructionstream << "WINNER!!!" << std::endl;
+            b2Vec2 pos4(150,150);
+            createInstructions(pos4);
+        }
     } else if (key == Qt::Key_Q) {
         cycleNextValue(false);
     } else if (key == Qt::Key_A) {
@@ -141,7 +191,7 @@ void ListPuzzle::pushBack(std::string value){
     }
 
     if (components.size() == 0) {
-        addFirstBody(valueToAdd);
+        addFirstBody(valueToAdd, addToWorkingSet);
     } else {
         b2Body *bod;
         bod = components.back()->getBody();
@@ -164,7 +214,7 @@ void ListPuzzle::addAtActiveIndex(std::string value) {
     }
 
     if (components.size() == 0) {
-        addFirstBody(valueToAdd);
+        addFirstBody(valueToAdd, addToWorkingSet);
     } else {
         b2Body *bod;
         bod = components[activeIndex]->getBody();
@@ -189,14 +239,13 @@ void ListPuzzle::addAtActiveIndex(std::string value) {
             std::advance(it, activeIndex);
             workingSet.insert(it, std::make_pair(valueToAdd, true));
         }
-        advanceActiveIndex();
 
         forceSyncWithWorkingSet();
     }
 }
 
 void ListPuzzle::deleteAtActiveIndex() {
-    if (components.size() > 0) {
+    if (components.size() > 0 && canIndexBeDeleted(activeIndex)) {
         b2Body *bod;
         bod = components[activeIndex]->getBody();
         thisWorld->DestroyBody(bod);
@@ -216,7 +265,7 @@ void ListPuzzle::deleteAtActiveIndex() {
 }
 
 void ListPuzzle::popFront(){
-    if (components.size() > 0) {
+    if (components.size() > 0 && canIndexBeDeleted(0)) {
         uncolorActiveBody();
 
         b2Body *bod;
@@ -233,7 +282,7 @@ void ListPuzzle::popFront(){
 }
 
 void ListPuzzle::popBack(){
-    if (components.size() > 0) {
+    if (components.size() > 0 && canIndexBeDeleted(components.size() - 1)) {
         if (activeIndex == ((int) components.size()) - 1) {
             retreatActiveIndex();
         }
@@ -254,8 +303,18 @@ void ListPuzzle::colorActiveBody() {
 
 void ListPuzzle::uncolorActiveBody() {
     if (components.size() > 0) {
-        components[activeIndex]->changeColor(DefaultColor);
+        if (canIndexBeDeleted(activeIndex)) {
+            components[activeIndex]->changeColor(DefaultColor);
+        } else {
+            components[activeIndex]->changeColor(LockedColor);
+        }
     }
+}
+
+bool ListPuzzle::canIndexBeDeleted(int index) {
+    std::list<std::pair<std::string, bool>>::iterator it = workingSet.begin();
+    std::advance(it, index);
+    return std::get<1>(*it);
 }
 
 void ListPuzzle::advanceActiveIndex() {
@@ -315,6 +374,12 @@ void ListPuzzle::forceSyncWithWorkingSet() {
     int index = 0;
     for (auto iter = workingSet.begin(); iter != workingSet.end(); iter++) {
         components[index]->setText(std::get<0>(*iter), sf::Color::White);
+        if (canIndexBeDeleted(index)) {
+            components[index]->changeColor(DefaultColor);
+        } else {
+            components[index]->changeColor(LockedColor);
+        }
         index++;
     }
+    colorActiveBody();
 }

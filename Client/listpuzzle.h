@@ -34,6 +34,7 @@ private:
     const int deltaY = 10;
     const sf::Color DefaultColor = sf::Color::Blue;
     const sf::Color ActiveColor = sf::Color::Red;
+    const sf::Color LockedColor = sf::Color::Black;
 
     std::list<std::pair<std::string, bool>> workingSet;
     std::list<std::string> solutionSet;
@@ -45,10 +46,13 @@ private:
     void uncolorActiveBody();
     void advanceActiveIndex();
     void retreatActiveIndex();
-    void addFirstBody(std::string value = "");
+    void addFirstBody(std::string value = "", bool addToWorkingSet = true);
     void updateNextValueDisplay();
     void cycleNextValue(bool scrollDown);
     void forceSyncWithWorkingSet();
+    void generatePuzzle();
+    void addToPuzzlePiece(std::string value, bool locked);
+    bool canIndexBeDeleted(int index);
 };
 
 #endif // LISTPUZZLE_H
