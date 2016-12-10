@@ -8,7 +8,7 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     }
     activeIndex = 0;
 
-    components[0]->changeColor(sf::Color::Magenta);
+    components[0]->changeColor(mint);
 
     setupInstructions();
     setupQuestion();
@@ -23,14 +23,14 @@ void ArrayPuzzle::runAction(Qt::Key key){
         if(activeIndex != 0){
             components[activeIndex]->changeColor(sf::Color::White);
             activeIndex--;
-            components[activeIndex]->changeColor(sf::Color::Magenta);
+            components[activeIndex]->changeColor(mint);
         }
     }
     if(key == Qt::Key_Right){
         if(activeIndex < components.size()-1){
             components[activeIndex]->changeColor(sf::Color::White);
             activeIndex++;
-            components[activeIndex]->changeColor(sf::Color::Magenta);
+            components[activeIndex]->changeColor(mint);
         }
     }
     if(key == Qt::Key_E){
@@ -69,7 +69,7 @@ void ArrayPuzzle::runAction(Qt::Key key){
         Calculator c;
         //std::cout << c.calculate ("(20+10)*3/2-3") << std::endl;
         std::string equation = getComponent("equation_box",false)->getText()->getString();
-        std::cout << c.calculate(equation)<< std::endl;
+        //std::cout << c.calculate(equation)<< std::endl;
         if(!question1Done && (equation.length() > 0)){
             if(firstAnswer == c.calculate(equation)){
                 question1Done = true;
@@ -101,10 +101,13 @@ void ArrayPuzzle::replaceAtIndexAction(){
     SpriteDefinition def;
     def.setShape(4,50,25);
     def.setType(b2_dynamicBody);
-    def.setColor(sf::Color::Red);
-    def.setBorderColor(sf::Color::Red);
+    def.setColor(blueberry);
+    def.setBorderColor(blueberry);
     sf::FloatRect rect = old->getShape().getGlobalBounds();
-    def.setPosition(rect.left+rect.width/2,rect.top+rect.height/4);
+    int x = rect.left+rect.width/2;
+    int y = rect.top+rect.height/4;
+    def.setPosition(x,y);
+    //std::cout << x << "," << y <<std::endl;
 //    b2Vec2 vel(0, 100);
 //    def.setInitialVelocity(0, vel);
     delete old;
@@ -120,10 +123,11 @@ void ArrayPuzzle::createEnvironment(){
 
     SpriteDefinition floordef(100, 200, b2_staticBody, "testbox");
     floordef.setShape(4, 1500, 0);
+    floordef.setColor(purpleHaze);
 
     SpriteDefinition leftwalld(0,20, b2_staticBody, "leftwalld");
     leftwalld.setShape(4,0,500);
-    leftwalld.setColor(sf::Color::Red);
+    leftwalld.setColor(purpleHaze);
     addComponent(leftwalld, true);
 
     sprite2dObject *floor = new sprite2dObject(thisWorld, floordef);
@@ -156,7 +160,7 @@ void ArrayPuzzle::addAtIndexAction(){
      //might want to restrict the deletion if size = 1
      //components.erase(components.begin() + activeIndex);
      this->replaceComponent("array_"+activeIndex, 4, 50, 25, x, y, b2_dynamicBody, activeIndex);
-     components[activeIndex]->changeColor(sf::Color::Magenta);
+     components[activeIndex]->changeColor(mint);
 }
 
 std::string ArrayPuzzle::getNumAtActive(){
@@ -176,7 +180,7 @@ void ArrayPuzzle::setupInstructions(){
                          "                                       " <<std::endl<<
                          "      Goal: Create an expression that results" <<std::endl <<
                          "            in the numbers below." <<std::endl <<
-                         "Good luck!" <<std::endl;
+                         "                  Good luck!" <<std::endl;
 
     b2Vec2 pos(270, 80);
     createInstructions(pos);

@@ -41,6 +41,11 @@ private:
     void clearEntireEquation();
     const static int firstAnswer = 13;
     const static int secondAnswer = 55;
+    sf::Color mint = sf::Color(105,240,174);
+    sf::Color purpleHaze = sf::Color(156, 39, 176);
+    sf::Color hulkGreen = sf::Color(0, 200, 83);
+    sf::Color ashGreen = sf::Color(0, 191, 165);
+    sf::Color blueberry = sf::Color(0, 176, 255);
 };
 
 #endif // ARRAYPUZZLE_H
