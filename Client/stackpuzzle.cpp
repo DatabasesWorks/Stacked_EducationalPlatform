@@ -57,7 +57,6 @@ void StackPuzzle::onTick(){
 
 void StackPuzzle::generateStackSetWithAnswer(){
     int pos = rand() % 5;
-
     int pos2 = pos+rand() % 5;
     std::vector<int> facts;
     for(int i = 1; i <= currentanswer; i++)

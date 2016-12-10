@@ -69,7 +69,7 @@ void ArrayPuzzle::runAction(Qt::Key key){
         Calculator c;
         //std::cout << c.calculate ("(20+10)*3/2-3") << std::endl;
         std::string equation = getComponent("equation_box",false)->getText()->getString();
-        //std::cout << c.calculate(equation)<< std::endl;
+        std::cout << c.calculate(equation)<< std::endl;
         if(!question1Done && (equation.length() > 0)){
             if(firstAnswer == c.calculate(equation)){
                 question1Done = true;
@@ -189,7 +189,7 @@ void ArrayPuzzle::setupQuestion(){
        }
     }
     else if(!question2Done){
-        pos2.y+=10;
+        pos2.y+=30;
         if(getComponent("question_2",false)==nullptr){
             createTextBox(pos2.x,pos2.y,"Get result: 55","question_2");
        }
