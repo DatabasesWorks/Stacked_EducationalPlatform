@@ -70,11 +70,12 @@ void ArrayPuzzle::runAction(Qt::Key key){
         //std::cout << c.calculate ("(20+10)*3/2-3") << std::endl;
         std::string equation = inactive_components[4]->getText()->getString();
         //std::cout << c.calculate(equation)<< std::endl;
-        if(!question1Done){
+        if(!question1Done && (equation.length() > 0)){
             if(firstAnswer == c.calculate(equation)){
                 question1Done = true;
                 inactive_components[3]->setTextColor(sf::Color::Green);
-            }
+                setupQuestion();
+            }                
         }
         else if(!question2Done){
 
@@ -100,7 +101,6 @@ void ArrayPuzzle::replaceAtIndexAction(){
     def.setBorderColor(sf::Color::Red);
     sf::FloatRect rect = old->getShape().getGlobalBounds();
     def.setPosition(rect.left+rect.width/2,rect.top+rect.height/4);
-    def.setInitialVelocity(0,b2Vec2(0,200));
     delete old;
     sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
     components[activeIndex] = replacement;
@@ -160,16 +160,19 @@ void ArrayPuzzle::setupQuestion(){
     instructionstream.str("");
     if(!question1Done){
         instructionstream<<"Get result: 13" <<std::endl;
+        b2Vec2 pos2(50, 240);
+        createInstructions(pos2);
     }
     else if(!question2Done){
         instructionstream<<"Get result: 55" <<std::endl;
+        b2Vec2 pos2(50, 250);
+        createInstructions(pos2);
     }
     else if(!question3Done){
         instructionstream<<"Get result: 233" <<std::endl;
+        b2Vec2 pos2(50, 260);
+        createInstructions(pos2);
     }
-    b2Vec2 pos2(50, 240);
-    createInstructions(pos2);
-
 }
 
 void ArrayPuzzle::setupEquation(std::string s){
