@@ -48,6 +48,10 @@ std::string DB::executeCommand(std::string command, std::string payload) {
         return puzzleSolved(connection, payload);
     }
 
+    if (command =="studentlist"){
+           return studentlist(connection, payload);
+    }
+
     //idk how necessary these are
     // mysql_free_result(result);
     //mysql_close(connection);
