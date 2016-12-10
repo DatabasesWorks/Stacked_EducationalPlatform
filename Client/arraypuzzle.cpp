@@ -82,9 +82,7 @@ void ArrayPuzzle::runAction(Qt::Key key){
             if(secondAnswer == c.calculate(equation)){
                 question2Done = true;
                 getComponent("question_2",false)->setTextColor(sf::Color::Green);
-                foreach (sprite2dObject* obj, components) {
-                    obj->applyAngularForce(sprite2dObject::up, rand() % 500);
-                }
+                getComponent("equation_box",false)->setText("Great Job!", sf::Color::Green);
             }
         }
     }
@@ -107,6 +105,8 @@ void ArrayPuzzle::replaceAtIndexAction(){
     def.setBorderColor(sf::Color::Red);
     sf::FloatRect rect = old->getShape().getGlobalBounds();
     def.setPosition(rect.left+rect.width/2,rect.top+rect.height/4);
+//    b2Vec2 vel(0, 100);
+//    def.setInitialVelocity(0, vel);
     delete old;
     sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
     components[activeIndex] = replacement;
@@ -173,9 +173,12 @@ void ArrayPuzzle::setupInstructions(){
                          "      (,),+,-,*,/: For selected operator." <<std::endl <<
                          "      Backspace: Deletes last input."<<std::endl<<
                          "      Enter/Return: Perform arithmetic!" <<std::endl<<
+                         "                                       " <<std::endl<<
+                         "      Goal: Create an expression that results" <<std::endl <<
+                         "            in the numbers below." <<std::endl <<
                          "Good luck!" <<std::endl;
 
-    b2Vec2 pos(280, 80);
+    b2Vec2 pos(270, 80);
     createInstructions(pos);
 }
 
