@@ -30,8 +30,6 @@ Client::Client(QWidget *parent) :
     widgets.push_back(new TeachWin);
     widgets.push_back(new StudReg);
     widgets.push_back(new TeachReg);
-
-
 }
 
 Client::~Client() {
@@ -66,11 +64,21 @@ void Client::setCurrentPage(QString s) {
 }
 
 void Client::autosave(){
-    if(activeWidget == 1 || activeWidget == 2){
-
-
-
-
+    if(activeWidget == 1&&sessionid!=""){
+        UserSocket sock(sf::IpAddress::LocalHost, 11777, sessionid);
+        StudWin * win = static_cast<StudWin*>(widgets[activeWidget]);
+        std::vector<bool> solvedlist = win->getSolvedList();
+        int index = 0;
+        for(auto it = solvedlist.begin(); it < solvedlist.end(); it++){
+            bool i = *it;
+             // send to the client
+            if(i){
+                std::stringstream ss;
+                ss << username << "," << index;
+                sock.sendPayload("puzzlesolved",ss.str());
+            }
+            index++;
+        }
     }
 }
 
@@ -80,6 +88,7 @@ bool Client::sendLogin(QString user, QString pass) {
         UserSocket sock(sf::IpAddress::LocalHost, 11777);
         sock.authenticate(user.toStdString(), pass.toStdString()); //if no exceptions thrown, then we are authenticated
         sessionid = sock.sid();
+        username = user.toStdString();
         // sock.deauthenticate(); //when you are done deauthenticate, or save the sid for later
         //(note: the server will be configured to auto check for expired session ids -- probably every like 20 minutes or something )
     } catch (authenticationexception) { // if the client was not authenticated properly, or the session key was invalid

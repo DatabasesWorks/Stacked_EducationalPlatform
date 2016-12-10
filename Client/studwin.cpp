@@ -29,26 +29,23 @@ StudWin::~StudWin() {
 }
 
 void StudWin::setupLevels() {
-//    std::vector<QString> dataList;
-//    std::vector<QString> levelList;
-//    QStandardItemModel model;
-
-//    for (int i = 0; i < 5; i++) {
-//        dataList.push_back("DataStructure " + i);
-//        levelList.push_back("Level " + i);
-//    }
-
-
     puzzles.push_back(new StackPuzzle(size()));
     puzzles.push_back(new ArrayPuzzle(size()));
     puzzles.push_back(new TreePuzzle(size()));
     puzzles.push_back(new ListPuzzle(size()));
-
-
     ui->listWidget->addItem("stack");
     ui->listWidget->addItem("array");
     ui->listWidget->addItem("tree");
     ui->listWidget->addItem("list");
+}
+
+std::vector<bool> StudWin::getSolvedList(){
+    std::vector<bool> solvedlist;
+    for(auto it = puzzles.begin(); it < puzzles.end(); it++){
+        Puzzle * puzz = *it;
+        solvedlist.push_back(puzz->solved());
+        return solvedlist;
+    }
 }
 
 void StudWin::on_hideButton_clicked() {

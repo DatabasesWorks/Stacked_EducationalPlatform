@@ -30,6 +30,7 @@ public:
 private:
     QTimer timer;
     std::string sessionid;
+    std::string username;
     Ui::Client *ui;
     //UserSocket currsock;
     std::vector<QWidget*> widgets;

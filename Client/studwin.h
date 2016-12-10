@@ -22,6 +22,7 @@ class StudWin : public QWidget, sf::RenderWindow
 public:
     explicit StudWin(QWidget *parent = 0);
     ~StudWin();
+    std::vector<bool> getSolvedList();
 
 //    void setMainGameWidget(QWidget *widget);
 
@@ -31,6 +32,7 @@ private slots:
     void on_listWidget_currentRowChanged(int currentRow);
 
     void on_checkBox_stateChanged(int arg1);
+
 
 private:
     Ui::StudWin *ui;
