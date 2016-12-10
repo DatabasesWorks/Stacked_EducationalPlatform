@@ -28,13 +28,15 @@ private:
     std::vector<std::string> plats;
     sprite2dObject* curr;
     QTimer treetime;
+    void endGameExplosion();
 
 public slots:
     void mousePressedSlot(QPointF qpoint);
     void mouseMovedSlot(QPointF qpoint);
     void mouseReleasedSlot(QPointF qpoint);
-    void updateContact();
-    void endGameExplosion();
+    void updateContact();  
+    void chaos();
 };
+
 
 #endif // BINARYTREEPUZZLE_H
