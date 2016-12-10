@@ -10,7 +10,7 @@ class DB
     std::string getStudents(MYSQL* connection, std::string payload);
     std::string authenticate(MYSQL* connection, std::string payload);
     std::string puzzleSolved(MYSQL* connection, std::string payload);
-	std::string studentlist(MYSQL* connection, std::string payload)
+    std::string studentlist(MYSQL* connection, std::string payload);
 public:
     DB();
     std::string executeCommand(std::string command, std::string payload);

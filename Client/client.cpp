@@ -12,6 +12,9 @@
 #include <iostream>
 #include <SFML/Audio.hpp>
 #include <QDesktopWidget>
+#include <QDebug>
+#include <QUrl>
+#include <QDesktopServices>
 
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
@@ -114,4 +117,17 @@ void Client::on_pushButton_5_clicked() {
 void Client::on_pushButton_6_clicked() {
 //    PuzzleWindow pw;
 //    setCentralWidget(new GraphicsObjectTest);
+}
+
+void Client::on_pushButton_7_clicked()
+{
+    UserSocket sock(sf::IpAddress::LocalHost, 11777);
+    try{
+        sock.authenticate("averysecretusername", "averysecretpassword");
+        qDebug() << "tried to send payload";
+        Message msg = sock.sendPayload("studentlist", "");
+        QDesktopServices::openUrl(QUrl(QString::fromStdString(msg.payload)));
+    }catch(...){
+        qDebug() << "Error 404 God not found";
+    }
 }
