@@ -110,6 +110,8 @@ void ListPuzzle::runAction(Qt::Key key) {
             instructionstream << "WINNER!!!" << std::endl;
             b2Vec2 pos4(150,150);
             createInstructions(pos4);
+
+            isSolved = true;
         }
     } else if (key == Qt::Key_Q) {
         cycleNextValue(false);
