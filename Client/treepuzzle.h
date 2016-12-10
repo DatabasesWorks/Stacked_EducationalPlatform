@@ -21,6 +21,8 @@ public:
     ~TreePuzzle();
 //    void updateContact();
     void resetColors();
+    bool allGreen();
+    void endGameExplosion();
 private:
     std::vector<std::string> boxes;
     std::vector<std::string> plats;

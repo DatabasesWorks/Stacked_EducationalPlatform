@@ -215,6 +215,38 @@ void TreePuzzle::updateContact()
 //            getComponent(plat)->changeColor(sf::Color::Yellow);
         }
     }
+
+    //Endgame check
+    if(allGreen())
+    {
+        endGameExplosion();
+    }
+}
+
+bool TreePuzzle::allGreen()
+{
+    bool isgreen = true;
+    foreach(std::string s, boxes)
+    {
+        if(getComponent(s)->getColor() != sf::Color::Green)
+        {
+            isgreen = false;
+        }
+    }
+
+    return isgreen;
+}
+
+void TreePuzzle::endGameExplosion()
+{
+    for (int i = 0; i< 100; i++)
+    {
+        addComponent("WIN",4,10,10, rand()%500, rand()%500, b2_dynamicBody);
+        foreach (sprite2dObject* sp, components)
+        {
+            sp->changeColor(sf::Color(rand()%200+50, rand()%200+50, rand()%200+50, rand()%200+50));
+        }
+    }
 }
 
 /*
