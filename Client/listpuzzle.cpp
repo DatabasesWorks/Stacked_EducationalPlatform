@@ -3,15 +3,53 @@
 ListPuzzle::ListPuzzle(QSize size) : Puzzle(size) {
     establishGravity();
     establishFloor();
+
+    instructionstream << "Keys:" << std::endl;
+    instructionstream << "Press X/C to move left/right" << std::endl <<
+                         "Press W/E to push front/back" << std::endl <<
+                         "Press S/D to pop front/back" << std::endl <<
+                         "Press Space/D to add/delete at selection" << std::endl <<
+                         "Press Q/A to cycle through values" << std::endl <<
+                         "Press R to reset" << std::endl <<
+                         "Press Enter to submit solution" << std::endl;
+    b2Vec2 pos(105,55);
+    createInstructions(pos);
+
+    instructionstream.str("");
+    instructionstream << "The next added block will have the value:" << std::endl;
+    b2Vec2 pos2(105,230);
+    createInstructions(pos2);
+
+    possibleValues.push_back("A");
+    possibleValues.push_back("B");
+    possibleValues.push_back("C");
+    nextValueIndex = 0;
+    nextValue = possibleValues[nextValueIndex];
+    instructionstream.str("");
+    instructionstream << nextValue << std::endl;
+    b2Vec2 pos3(215,225);
+    createInstructions(pos3);
+    updateNextValueDisplay();
+
     addFirstBody();
 }
 
-void ListPuzzle::addFirstBody() {
-    std::string text = "A";
-    this->addComponent("list body", 4, CubeSideLength, CubeSideLength, InitialXSpawn, YSpawn, b2_staticBody, false, false, text);
+void ListPuzzle::addFirstBody(std::string value) {
+    std::string valueToAdd;
+    bool addToWorkingSet = true;
+    if (value.compare("") != 0) {
+        valueToAdd = value;
+        addToWorkingSet = false;
+    } else {
+        valueToAdd = nextValue;
+    }
+
+    this->addComponent("list body", 4, CubeSideLength, CubeSideLength, InitialXSpawn, YSpawn, b2_staticBody, false, false, valueToAdd);
     activeIndex = 0;
     colorActiveBody();
-    workingSet.push_front(std::make_pair(text, true));
+    if (addToWorkingSet) {
+        workingSet.push_front(std::make_pair(valueToAdd, true));
+    }
 }
 
 void ListPuzzle::reset() {
@@ -24,19 +62,22 @@ void ListPuzzle::reset() {
             stackingHeight = size / 10;
         }
 
-        std::string text = "A";
-        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, (InitialXSpawn - (size / 2 * deltaX) / stackingHeight), YSpawn, b2_staticBody, false, false, text);
+        std::list<std::pair<std::string, bool>>::iterator it = workingSet.begin();
+
+        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, (InitialXSpawn - (size / 2 * deltaX) / stackingHeight), YSpawn, b2_staticBody, false, false, std::get<0>(*it));
+        std::advance(it, 1);
         activeIndex = 0;
         int currentStackHeight = 1;
         for (int i = 1; i < size; i++) {
             if (currentStackHeight == stackingHeight) {
-                pushBack();
+                pushBack(std::get<0>(*it));
                 advanceActiveIndex();
                 currentStackHeight = 1;
             } else {
-                addAtActiveIndex();
+                addAtActiveIndex(std::get<0>(*it));
                 currentStackHeight++;
             }
+            std::advance(it, 1);
         }
 
         uncolorActiveBody();
@@ -69,6 +110,10 @@ void ListPuzzle::runAction(Qt::Key key) {
         deleteAtActiveIndex();
     } else if (key == Qt::Key_Enter) {
         bool solved = checkSolution();
+    } else if (key == Qt::Key_Q) {
+        cycleNextValue(false);
+    } else if (key == Qt::Key_A) {
+        cycleNextValue(true);
     }
 }
 
@@ -78,28 +123,48 @@ void ListPuzzle::pushFront(){
     } else {
         b2Body *bod;
         bod = components.front()->getBody();
-        std::string text = "A";
-        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, bod->GetPosition().x - deltaX, YSpawn, b2_staticBody, false, true, text);
+        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, bod->GetPosition().x - deltaX, YSpawn, b2_staticBody, false, true, nextValue);
+        components.front()->changeColor(DefaultColor);
         activeIndex++;
-        workingSet.push_front(std::make_pair(text, true));
+        workingSet.push_front(std::make_pair(nextValue, true));
     }
 }
 
-void ListPuzzle::pushBack(){
+void ListPuzzle::pushBack(std::string value){
+    std::string valueToAdd;
+    bool addToWorkingSet = true;
+    if (value.compare("") != 0) {
+        valueToAdd = value;
+        addToWorkingSet = false;
+    } else {
+        valueToAdd = nextValue;
+    }
+
     if (components.size() == 0) {
-        addFirstBody();
+        addFirstBody(valueToAdd);
     } else {
         b2Body *bod;
         bod = components.back()->getBody();
-        std::string text = "A";
-        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, bod->GetPosition().x + deltaX, YSpawn, b2_staticBody, false, false, text);
-        workingSet.push_back(std::make_pair(text, true));
+        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, bod->GetPosition().x + deltaX, YSpawn, b2_staticBody, false, false, valueToAdd);
+        components.back()->changeColor(DefaultColor);
+        if (addToWorkingSet) {
+            workingSet.push_back(std::make_pair(valueToAdd, true));
+        }
     }
 }
 
-void ListPuzzle::addAtActiveIndex() {
+void ListPuzzle::addAtActiveIndex(std::string value) {
+    std::string valueToAdd;
+    bool addToWorkingSet = true;
+    if (value.compare("") != 0) {
+        valueToAdd = value;
+        addToWorkingSet = false;
+    } else {
+        valueToAdd = nextValue;
+    }
+
     if (components.size() == 0) {
-        addFirstBody();
+        addFirstBody(valueToAdd);
     } else {
         b2Body *bod;
         bod = components[activeIndex]->getBody();
@@ -114,15 +179,19 @@ void ListPuzzle::addAtActiveIndex() {
                 break;
             }
         }
-        std::string text = "A";
-        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, xToSpawn, yToSpawn, b2_staticBody, false, false, text);
+        this->addComponent("list body", 4, CubeSideLength, CubeSideLength, xToSpawn, yToSpawn, b2_staticBody, false, false, valueToAdd);
         sprite2dObject* newlyAdded = components.back();
+        newlyAdded->changeColor(DefaultColor);
         components.pop_back();
         components.insert(components.begin() + activeIndex + 1 + jumps, newlyAdded);
-        std::list<std::pair<std::string, bool>>::iterator it = workingSet.begin();
-        std::advance(it, activeIndex);
-        workingSet.insert(it, std::make_pair(text, true));
+        if (addToWorkingSet) {
+            std::list<std::pair<std::string, bool>>::iterator it = workingSet.begin();
+            std::advance(it, activeIndex);
+            workingSet.insert(it, std::make_pair(valueToAdd, true));
+        }
         advanceActiveIndex();
+
+        forceSyncWithWorkingSet();
     }
 }
 
@@ -133,7 +202,11 @@ void ListPuzzle::deleteAtActiveIndex() {
         thisWorld->DestroyBody(bod);
         components.erase(components.begin() + activeIndex);
         std::list<std::pair<std::string, bool>>::iterator it = workingSet.begin();
-        std::advance(it, activeIndex - 1);
+        if (activeIndex > 0) {
+            std::advance(it, activeIndex - 1);
+        } else {
+            std::advance(it, activeIndex);
+        }
         workingSet.erase(it);
         if (activeIndex == ((int) components.size())) {
             activeIndex--;
@@ -213,4 +286,35 @@ bool ListPuzzle::checkSolution() {
     }
     std::string solutionString = solutionStream.str();
     return (solutionString.compare(workingString) == 0);
+}
+
+void ListPuzzle::updateNextValueDisplay() {
+    inactive_components[3]->setText(nextValue, sf::Color::White);
+}
+
+void ListPuzzle::cycleNextValue(bool scrollDown) {
+    if (scrollDown) {
+        if (nextValueIndex == ((int) possibleValues.size()) - 1) {
+            nextValueIndex = 0;
+        } else {
+            nextValueIndex++;
+        }
+    } else {
+        if (nextValueIndex == 0) {
+            nextValueIndex = possibleValues.size() - 1;
+        } else {
+            nextValueIndex--;
+        }
+    }
+
+    nextValue = possibleValues[nextValueIndex];
+    updateNextValueDisplay();
+}
+
+void ListPuzzle::forceSyncWithWorkingSet() {
+    int index = 0;
+    for (auto iter = workingSet.begin(); iter != workingSet.end(); iter++) {
+        components[index]->setText(std::get<0>(*iter), sf::Color::White);
+        index++;
+    }
 }
