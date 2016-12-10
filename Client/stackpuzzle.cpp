@@ -3,44 +3,21 @@
 #include <QTimer>
 
 StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
+    QObject::connect(&gen_timer, &QTimer::timeout, this, &StackPuzzle::onTick);
+    srand(time(NULL));
+    b2Vec2 graf(0,0.98); // normalish gravity
+    thisWorld->SetGravity(graf);
 
     left = nullptr;
     right = nullptr;
     middle = nullptr;
-    QObject::connect(&gen_timer, &QTimer::timeout, this, &StackPuzzle::onTick);
     can_generate = true;
 
-
-srand(time(NULL));
-    b2Vec2 graf(0,0.98); // normalish gravity
-    thisWorld->SetGravity(graf);
     ssize.x=60;
     ssize.y=20;
-    createBoundary(0,true);
-    createBoundary(390,true);
-    createBoundary(270,false);
-    instructionstream << "Keys:" << std::endl;
-    instructionstream << "Press Q to clear all values in the pit," << std::endl <<
-                         "Press W to pop into the pit" << std::endl <<
-                         "Press E to pop and ignore the value" << std::endl <<
-                         "Press R to push a random value to the stack," << std::endl <<
-                         "Press T to swap left/right values in pit," << std::endl <<
-                         "Press Space to drop an operator into the pit" <<std::endl <<
-                         "Use the Arrow Keys to Change Operator" << std::endl;
 
-    b2Vec2 pos(275,50);
-    createInstructions(pos,15);
     buildPuzzle();
-    b2Vec2 pos2(275,100);
-    instructionstream.str("");
-    instructionstream << "GOAL: COMBINE THE VALUES TO MAKE " << std::endl;
-    generateQuestionValue(pos2.x*2,pos2.y*2+20);
-    createInstructions(pos2,20);
-    setActiveOperator(operatorindex);
-//make platform independent------
-    createStackContainer(stacklocation);
-    generateStackSetWithAnswer();
-    createOperatorInterface();
+
  }
 
 
@@ -131,7 +108,6 @@ void StackPuzzle::popAndSend(sprite2dObject * obj){
             obj->ignoreObject();
             addComponent(newObj,true);
         }
-
         can_generate=false;
         gen_timer.start(500);
     }
@@ -170,7 +146,6 @@ void StackPuzzle::createInstructions(b2Vec2 position, int fontsize){
     obj->ignoreObject(); // nothing can interact with this
     addComponent(obj,true);
 }
-
 
 bool StackPuzzle::pitFull(){
    return (left!= nullptr && right != nullptr && middle != nullptr);
@@ -302,6 +277,29 @@ void StackPuzzle::step(float time){
 }
 
 void StackPuzzle::buildPuzzle(){
+    createBoundary(0,true);
+    createBoundary(390,true);
+    createBoundary(270,false);
+    instructionstream << "Keys:" << std::endl;
+    instructionstream << "Press Q to clear all values in the pit," << std::endl <<
+                         "Press W to pop into the pit" << std::endl <<
+                         "Press E to pop and ignore the value" << std::endl <<
+                         "Press R to push a random value to the stack," << std::endl <<
+                         "Press T to swap left/right values in pit," << std::endl <<
+                         "Press Space to drop an operator into the pit" <<std::endl <<
+                         "Use the Arrow Keys to Change Operator" << std::endl;
+    b2Vec2 pos(275,50);
+    createInstructions(pos,15);
+    b2Vec2 pos2(275,100);
+    instructionstream.str("");
+    instructionstream << "GOAL: COMBINE THE VALUES TO MAKE " << std::endl;
+    generateQuestionValue(pos2.x*2,pos2.y*2+20);
+    createInstructions(pos2,20);
+    setActiveOperator(operatorindex);
+//make platform independent------
+    createStackContainer(stacklocation);
+    generateStackSetWithAnswer();
+    createOperatorInterface();
 }
 
 void StackPuzzle::createOperatorInterface(){
@@ -512,5 +510,3 @@ void StackPuzzle::pushAction(){
         gen_timer.start(1000);
     }
 }
-
-
