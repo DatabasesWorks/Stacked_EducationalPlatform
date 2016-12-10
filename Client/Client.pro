@@ -64,7 +64,8 @@ SOURCES += main.cpp\
     sprite2dobject.cpp \
     puzzlewindow.cpp \
     spritedefinition.cpp \
-    treepuzzle.cpp
+    treepuzzle.cpp \
+    calculator.cpp
 
 
 HEADERS  += client.h \
