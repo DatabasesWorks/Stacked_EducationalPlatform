@@ -6,47 +6,59 @@
 #include <QObject>
 #include <puzzle.h>
 #include <QSize>
+#include <QTimer>
 #include <sprite2dobject.h>
 #include <Box2D/Box2D.h>
 #include <stdlib.h>
 #include <sstream>
 class StackPuzzle : public Puzzle
 {
+
 public:
     StackPuzzle();
     StackPuzzle(QSize size);
     ~StackPuzzle();
     void virtual runAction(Qt::Key action) override;
     void virtual step(float time) override;
+
 private:
 
-    //part of orig API
-    std::string peekAction();
-    std::atomic_bool waiting;
-    std::atomic_bool produced;
-    int currentanswer = 0;
-    void generateQuestionValue(int,int);
-    void generateStackSetWithAnswer();
-    int timessolved = 0;
-    std::vector<sprite2dObject*> inpit;
     void popAndSend(sprite2dObject *);
+    void popAction();
     void dropOperator();
+    void pushAction();
+
     bool pitFull();
     void emptyPit();
     bool addToPit(sprite2dObject*);
     void updatePit(); //update logic
-    void popAction();
-    void pushAction();
 
     //world generation
-    void generateStackPiece(int,int, int value = -1);
+    void buildPuzzle();
     void createStackContainer(int);
     void createBoundary(int,bool);
+    void createOperatorInterface();
     void createInstructions(b2Vec2, int);
-    void setActiveOperator(unsigned int);
+    void generateQuestionValue(int,int);
+    void generateStackSetWithAnswer();
+    void generateStackPiece(int,int, int value = -1);
     void generateNewQuestion();
-    void startGame();
-    void buildPuzzle();
+    void setActiveOperator(unsigned int);
+    void explodeAtPoint(int,int,sf::Color c = sf::Color::White);
+
+    const int itemlimit = 15;
+    const int stacklocation = 100;
+
+    std::atomic_bool waiting;
+    std::atomic_bool produced;
+
+    QTimer gen_timer;
+    std::atomic_bool can_generate;
+
+    int operatorindex=0;
+    int currentanswer = 0;
+    int timessolved = 0;
+
     sprite2dObject * createNode(int,int, b2BodyType);
     sprite2dObject * left;
     sprite2dObject * right;
@@ -55,12 +67,16 @@ private:
     sprite2dObject * leftDisplay;
     sprite2dObject * rightDisplay;
     sprite2dObject * operatorDisplay;
-    int itemlimit = 7;
-    int operatorindex=0;
+
     std::vector<sprite2dObject*> operators;
 
     b2Vec2 ssize;
     std::stack <sprite2dObject> s;
+
+public slots:
+    void onTick();
+
+
 };
 
 #endif // STACKPUZZLE_H

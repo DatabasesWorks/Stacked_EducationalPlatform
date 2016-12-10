@@ -11,8 +11,10 @@ sprite2dObject::sprite2dObject(){
 }
 
 sprite2dObject::~sprite2dObject(){
-    body->GetWorld()->DestroyBody(body);
-    body = NULL;
+    if(body!=nullptr){
+        body->GetWorld()->DestroyBody(body);
+        body = NULL;
+    }
     text->setString("");
 }
 
