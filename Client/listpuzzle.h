@@ -12,24 +12,14 @@
 class ListPuzzle : public Puzzle
 {
 public:
-    ListPuzzle();
-    ListPuzzle(QSize);
+    ListPuzzle(QSize size);
     ~ListPuzzle();
-    void pushFront();
-    void pushBack(std::string value = "");
-    void popFront();
-    void popBack();
-    //void sortList();
-    void addAtActiveIndex(std::string value = "");
-    void deleteAtActiveIndex();
     void virtual runAction(Qt::Key) override;
-    void reset();
-    bool checkSolution();
 
 private:
     const int CubeSideLength = 10;
     const int YSpawn = 190;
-    const int InitialXSpawn = 200;
+    const int InitialXSpawn = 130;
     const int deltaX = 10;
     const int deltaY = 10;
     const sf::Color DefaultColor = sf::Color::Blue;
@@ -38,21 +28,29 @@ private:
 
     std::list<std::pair<std::string, bool>> workingSet;
     std::list<std::string> solutionSet;
-    int activeIndex;
     std::vector<std::string> possibleValues;
     std::string nextValue;
     int nextValueIndex;
-    void colorActiveBody();
-    void uncolorActiveBody();
-    void advanceActiveIndex();
-    void retreatActiveIndex();
-    void addFirstBody(std::string value = "", bool addToWorkingSet = true);
+    int activeIndex;
+
+    void pushFront();
+    void pushBack();
+    void popFront();
+    void popBack();
+    void addAtActiveIndex();
+    void deleteAtActiveIndex();
+    void reset();
+    bool checkSolution();
+    void drawBlocks(bool updateAll);
+    void highlightActiveBlock();
+    void advanceActiveIndex(bool forceRedraw);
+    void retreatActiveIndex(bool forceRedraw);
     void updateNextValueDisplay();
     void cycleNextValue(bool scrollDown);
-    void forceSyncWithWorkingSet();
-    void generatePuzzle();
-    void addToPuzzlePiece(std::string value, bool locked);
-    bool canIndexBeDeleted(int index);
+    void generatePuzzleSolution();
+    void generatePuzzleWorkingSet();
+    bool isDeletable(int index);
+    void clearBlocks();
 };
 
 #endif // LISTPUZZLE_H
