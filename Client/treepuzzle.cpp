@@ -65,7 +65,7 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size) {
     for (int i = 0; i < 7; i++) {
         SpriteDefinition stack_p;
         stack_p.setShape(4, boxsize, boxsize);
-        stack_p.setDensity(50);
+        stack_p.setDensity(3);
         stack_p.setPosition(100 + randArray[i] * 100, 390);
         stack_p.setText(std::to_string(values[i]));
         stack_p.setType(b2_dynamicBody);
@@ -201,9 +201,8 @@ void TreePuzzle::updateContact() {
 
     //Endgame check
     if (allGreen()) {
-        QObject::disconnect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));
-        QObject::connect(&treetime, SIGNAL(timeout()), this, SLOT(endGameExplosion()));
-//        endGameExplosion();
+
+        endGameExplosion();
     }
 }
 
@@ -221,16 +220,22 @@ bool TreePuzzle::allGreen() {
 }
 
 void TreePuzzle::endGameExplosion() {
-    for (int i = 0; i < 500; i++) {
-        addComponent("WIN", 4, 10, 10, rand() % 500, rand() % 500, b2_dynamicBody);
+    treetime.stop();
+    treetime.start(420);
+    QObject::disconnect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));
+    QObject::connect(&treetime, SIGNAL(timeout()), this, SLOT(chaos()));
+    for (int i = 0; i < 240; i++) {
+        addComponent("WIN", i%10+2, 10, 10, rand() % 400, rand() % 200, b2_dynamicBody);
     }
 
-    int i = 0;
 
-    while (i < 100000) {
+}
+
+void TreePuzzle::chaos() {
+    int i = 0;
         foreach(sprite2dObject * sp, components) {
             sp->changeColor(sf::Color(rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50, 255));
-
+            sp->getBody()->SetType(b2_dynamicBody);
             if (i % 4 == 0) {
                 sp->applyAngularForce(sprite2dObject::right, rand() % 500);
             } else if (i % 3 == 0) {
@@ -243,8 +248,8 @@ void TreePuzzle::endGameExplosion() {
 
             i++;
         }
-    }
 }
+
 
 /*
  * TREEE PUZZLE SOLUTION OUTLINE:
