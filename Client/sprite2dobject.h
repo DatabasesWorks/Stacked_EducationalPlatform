@@ -32,8 +32,8 @@ public:
 
 
     void unbind();
-    void connectRope(sprite2dObject*);
-    void connectBar(sprite2dObject*);
+    void connectRope(sprite2dObject*, int length = -1);
+    void connectBar(sprite2dObject*,int length = 10);
     void moveBody(Direction, int);
     void moveToPoint(int,int);
     void applyAngularForce(Direction,double);
