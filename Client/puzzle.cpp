@@ -82,7 +82,9 @@ void Puzzle::addComponent(std::string name, int points, int width, int height, i
     }
 }
 
-
+bool Puzzle::solved(){
+    return isSolved;
+}
 
 void Puzzle::createInstructions(b2Vec2 position){
     SpriteDefinition box(position.x,position.y, b2_staticBody, "instructions_box");

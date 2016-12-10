@@ -7,6 +7,7 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     right = nullptr;
     middle = nullptr;
 
+srand(time(NULL));
     b2Vec2 graf(0,0.98); // normalish gravity
     thisWorld->SetGravity(graf);
 
@@ -17,6 +18,7 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     createBoundary(390,true);
     createBoundary(270,false);
 
+
     instructionstream << "Keys:" << std::endl;
     instructionstream << "Press R to push a random value to the stack," << std::endl <<
                          "Press E to pop and ignore the value" << std::endl <<
@@ -24,27 +26,84 @@ StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
                          "Press Space to drop an operator into the pit" <<std::endl <<
                          "Use the Arrow Keys to Change Operator" << std::endl;
 
-    b2Vec2 pos(250,40);
-    createInstructions(pos);
+    b2Vec2 pos(275,35);
+    createInstructions(pos,15);
     buildPuzzle();
-    b2Vec2 pos2(300,150);
+    b2Vec2 pos2(200,100);
     instructionstream.str("");
-    instructionstream << "Operators" << std::endl;
-    createInstructions(pos2);
-
-
+    instructionstream << "GOAL: COMBINE THE VALUES TO MAKE " << std::endl;
+    generateQuestionValue(pos2.x*2,pos2.y*2+20);
+    createInstructions(pos2,20);
     setActiveOperator(operatorindex);
-
-
 //make platform independent------
     createStackContainer(100);
-    for(int i =0; i < 5; i++)
-        generateStackPiece(100,0-i*20);
-
-
+    generateStackSetWithAnswer();
 
 
  }
+
+
+
+
+
+
+
+
+void StackPuzzle::generateStackSetWithAnswer(){
+    int pos = rand() % 5;
+
+    int pos2 = pos+rand() % 5;
+    std::vector<int> facts;
+    for(int i = 1; i <= currentanswer; i++)
+    {
+        if(currentanswer % i == 0){
+            facts.push_back(i);
+        }
+    }
+
+    for(int i =0; i < 5; i++){
+        if(i == pos){// there are at least two factors for the number, :) as long as the numbers aren't huge we will be ok
+            generateStackPiece(100,0-i*20,facts.back());
+            facts.pop_back();
+        }else if(i == pos2){
+            generateStackPiece(100,0-i*20,facts.back());
+            facts.pop_back();
+        }else{
+            generateStackPiece(100,0-i*20);
+        }
+    }
+}
+
+
+void StackPuzzle::generateNewQuestion(){
+    std::stringstream ss;
+    int rande = 100*rand();
+    currentanswer = std::abs(rande%100);
+    ss << currentanswer;
+    question->setText(ss.str());
+}
+
+
+void StackPuzzle::generateQuestionValue(int x, int y){
+    SpriteDefinition question;
+    question.setShape(4,30,20);
+    question.setType(b2_staticBody);
+    question.setPosition(x,y);
+    question.setColor(sf::Color::Transparent);
+    question.setBorderColor(sf::Color::White);
+    std::stringstream ss;
+
+    int rande = 100*rand();
+    currentanswer = std::abs(rande%100);
+    ss << currentanswer;
+    question.setText(ss.str());
+    sprite2dObject * obj = new sprite2dObject(thisWorld,question);
+    this->question =  obj;
+    obj->ignoreObject();
+    obj->getText()->setColor(sf::Color::Red);
+    addComponent(obj,true);
+
+}
 
 void StackPuzzle::popAndSend(sprite2dObject * obj){
     if(left != nullptr && right != nullptr) return;
@@ -92,34 +151,53 @@ void StackPuzzle::dropOperator(){
 
 }
 
+void StackPuzzle::createInstructions(b2Vec2 position, int fontsize){
+    SpriteDefinition box(position.x,position.y, b2_staticBody, "instructions_box");
+    box.setShape(4,0,0);
+    box.setBorderColor(sf::Color::Transparent);
+    box.setColor(sf::Color::Transparent);
+    sprite2dObject * obj = new sprite2dObject(thisWorld,box);
+    obj->setText(instructionstream.str(),  sf::Color::White);
+    obj->getText()->setCharacterSize(fontsize);
+    obj->ignoreObject(); // nothing can interact with this
+    addComponent(obj,true);
+}
+
 bool StackPuzzle::pitFull(){
    return (left!= nullptr && right != nullptr && middle != nullptr);
 }
 
 void StackPuzzle::emptyPit(){
    if(middle!=nullptr){
+       operatorDisplay->setText("");
        middle->ignoreObject();
        middle = nullptr;
    }
    if(left!=nullptr){
+       leftDisplay->setText("");
        left->ignoreObject();
        left = nullptr;
    }
    if(right!=nullptr){
+       rightDisplay->setText("");
        right->ignoreObject();
        right = nullptr;
    }
 }
 
 bool StackPuzzle::addToPit(sprite2dObject* obj){
+    std::string txt = obj->getText()->getString().toAnsiString();
     if(obj->getName().find("operator:") != std::string::npos && middle == nullptr){
+        operatorDisplay->setText(txt);
         middle = obj;
         return true;
     }else if(obj->getName().find("value:") != std::string::npos){
         if(left==nullptr){
-             left=obj;
+            leftDisplay->setText(txt);
+            left=obj;
              return true;
         }else if(right==nullptr){
+            rightDisplay->setText(txt);
              right=obj;
              return true;
         }
@@ -130,44 +208,64 @@ void StackPuzzle::updatePit(){ // this is the animation logic
     // first check the assumptions about left/right/middle
     if(pitFull()&&!waiting){
         middle->getBody()->SetType(b2_staticBody);
-   //     middle->connectBar(left,0);
         middle->setDensity(100000);
-   //     middle->connectBar(right,0);
         waiting=true;
+        produced=false;
 
     }else if(pitFull()&&waiting){
-        if(left->inContact(middle)&&right->inContact(middle)){
+        if((left->inContact(middle)&&right->inContact(middle))||left->inContact(right)){
             // then explode the suckers
-            sf::Color color;
-            // if( checkresult(num(left.getText(),middle.getText(),right.getText())){  // << todo
-            //     score++; // => checkforunlock(); <-- need to address implementation issues
-            color=sf::Color::Green;
-            // }else{
-            //   color.setColor(sf::Color::Red);
-            //}
-
-
-            unsigned int iterations = 10;
-            for(int i = 0; i < iterations; i++){
-                b2Vec2 pos(middle->getBody()->GetPosition());
-                SpriteDefinition tri;
-                 tri.name="tri";
-                 tri.setShape(3,0,0);
-                 tri.setText("");
-                 tri.setColor(color); // then rotate around with the angle
-                 tri.setType(b2_dynamicBody);
-                 tri.setPosition(pos.x,pos.y);
-                 int magnitude = 10;
-                 double angle = (360/iterations)*i;
-                 double radians = angle * M_PI/180.0;
-                 b2Vec2 v(magnitude*std::cos(radians),magnitude*std::sin(radians));
-                 tri.setInitialVelocity(radians,v);
-                 sprite2dObject * triobj = new sprite2dObject(thisWorld,tri);
-                 triobj->ignoreObject();
-                 addComponent(triobj,true);
+            int lefti = std::stoi(left->getText()->getString().toAnsiString());
+            int righti = std::stoi(right->getText()->getString().toAnsiString());
+            int results = 0;
+            std::string compare = middle->getText()->getString().toAnsiString();
+            if(compare=="*"){
+                results = lefti * righti;
+                //add stack value
+            }else if(compare=="/"){
+                if(righti !=0)results = lefti / righti;
+                else { //boom
+                }
+            }else if(compare=="+"){
+                results = lefti + righti;
+            }else if(compare=="-"){
+                results = lefti - righti;
             }
-            middle->getBody()->SetType(b2_dynamicBody);
-            emptyPit();
+            if(results==currentanswer){
+                unsigned int iterations = 10;
+                sf::Color color(sf::Color::Green);
+                for(int i = 0; i < iterations; i++){
+                    b2Vec2 pos(middle->getBody()->GetPosition());
+                    SpriteDefinition tri;
+                     tri.name="tri";
+                     tri.setShape(3,0,0);
+                     tri.setText("");
+                     tri.setColor(color); // then rotate around with the angle
+                     tri.setType(b2_dynamicBody);
+                     tri.setPosition(pos.x,pos.y);
+                     int magnitude = 10;
+                     double angle = (360/iterations)*i;
+                     double radians = angle * M_PI/180.0;
+                     b2Vec2 v(magnitude*std::cos(radians),magnitude*std::sin(radians));
+                     tri.setInitialVelocity(radians,v);
+                     sprite2dObject * triobj = new sprite2dObject(thisWorld,tri);
+                     triobj->ignoreObject();
+                     addComponent(triobj,true);
+                }
+                this->timessolved++;
+                middle->getBody()->SetType(b2_dynamicBody);
+                emptyPit();
+                waiting = false;
+                generateNewQuestion();
+                generateStackSetWithAnswer();
+            }else if(produced.is_lock_free() && !produced){
+                produced = true;
+                waiting = false;
+                middle->getBody()->SetType(b2_dynamicBody);
+                emptyPit();
+                //push new value onto the stack
+                generateStackPiece(100,0,results);
+            }
             waiting = false;
         }else{
             b2Vec2 leftv(left->getBody()->GetPosition());
@@ -178,6 +276,8 @@ void StackPuzzle::updatePit(){ // this is the animation logic
         }
     }
 }
+
+
 
 
 void StackPuzzle::step(float time){
@@ -202,7 +302,7 @@ void StackPuzzle::buildPuzzle(){
      div.setText("/");
      plus.setText("+");
      minus.setText("-");
-
+     {
      //try to clean up the code a bit
      std::vector<SpriteDefinition*> defs;
      defs.push_back(&mul);
@@ -225,6 +325,35 @@ void StackPuzzle::buildPuzzle(){
         operators.push_back(obj);
         startingindex+=halfs*1.5;
      }
+
+     } //don't remove :)
+     SpriteDefinition leftdisp;
+     SpriteDefinition opdisp;
+     SpriteDefinition rightdisp;
+     std::vector<SpriteDefinition*> defs;
+     defs.push_back(&leftdisp);
+     defs.push_back(&opdisp);
+     defs.push_back(&rightdisp);
+     int startingindex = 400;
+     for(auto it = defs.begin(); it < defs.end(); it++){
+        int halfs =25;
+        SpriteDefinition * def = *it;
+        def->setShape(4,halfs,halfs);
+        def->setType(b2_staticBody);
+        def->setPosition(startingindex,350);
+        def->setColor(sf::Color::Transparent);
+        def->setBorderColor(sf::Color::Red);
+        startingindex+=halfs*1.5;
+     }
+     operatorDisplay= new sprite2dObject(thisWorld,opdisp);
+     operatorDisplay->ignoreObject();
+     leftDisplay = new sprite2dObject(thisWorld,leftdisp);
+     leftDisplay->ignoreObject();
+     rightDisplay = new sprite2dObject(thisWorld,rightdisp);
+     rightDisplay->ignoreObject();
+     addComponent(operatorDisplay,true);
+     addComponent(leftDisplay,true);
+     addComponent(rightDisplay,true);
 }
 
 void StackPuzzle::createStackContainer(int x){
@@ -324,9 +453,8 @@ std::string StackPuzzle::peekAction(){
    return s;
 }
 
-#include <stdlib.h>
-#include <sstream>
-void StackPuzzle::generateStackPiece(int x,int y){
+
+void StackPuzzle::generateStackPiece(int x,int y, int value){
     if(components.size()>itemlimit)return;
     SpriteDefinition stack_p;
     stack_p.setShape(4,ssize.x,ssize.y);
@@ -334,8 +462,12 @@ void StackPuzzle::generateStackPiece(int x,int y){
     stack_p.setDensity(50);
     stack_p.setColor(sf::Color::Red);
     std::stringstream ss;
-    int range = 20;
-    ss << rand() % range ;
+    if(value<0){
+        int range = 20;
+        ss << rand() % range ;
+    }else{
+        ss << value;
+    }
     stack_p.setText(ss.str());
     stack_p.setPosition(x,y);
     stack_p.setType(b2_dynamicBody);

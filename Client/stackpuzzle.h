@@ -8,6 +8,8 @@
 #include <QSize>
 #include <sprite2dobject.h>
 #include <Box2D/Box2D.h>
+#include <stdlib.h>
+#include <sstream>
 class StackPuzzle : public Puzzle
 {
 public:
@@ -20,8 +22,12 @@ private:
 
     //part of orig API
     std::string peekAction();
-    bool waiting = false;
-
+    std::atomic_bool waiting;
+    std::atomic_bool produced;
+    int currentanswer = 0;
+    void generateQuestionValue(int,int);
+    void generateStackSetWithAnswer();
+    int timessolved = 0;
     std::vector<sprite2dObject*> inpit;
     void popAndSend(sprite2dObject *);
     void dropOperator();
@@ -31,20 +37,28 @@ private:
     void updatePit(); //update logic
     void popAction();
     void pushAction();
+
     //world generation
-    void generateStackPiece(int,int);
+    void generateStackPiece(int,int, int value = -1);
     void createStackContainer(int);
     void createBoundary(int,bool);
+    void createInstructions(b2Vec2, int);
     void setActiveOperator(unsigned int);
+    void generateNewQuestion();
     void startGame();
     void buildPuzzle();
     sprite2dObject * createNode(int,int, b2BodyType);
     sprite2dObject * left;
     sprite2dObject * right;
     sprite2dObject * middle;
+    sprite2dObject * question;
+    sprite2dObject * leftDisplay;
+    sprite2dObject * rightDisplay;
+    sprite2dObject * operatorDisplay;
     int itemlimit = 7;
     int operatorindex=0;
     std::vector<sprite2dObject*> operators;
+
     b2Vec2 ssize;
     std::stack <sprite2dObject> s;
 };

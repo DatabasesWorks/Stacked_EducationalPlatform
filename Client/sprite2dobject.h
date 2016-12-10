@@ -46,6 +46,7 @@ public:
     void destroy();
     bool marked();
 
+    void setFontSize(int);
 
     //various getters/setters for wrapper API
     b2Body * getBody();

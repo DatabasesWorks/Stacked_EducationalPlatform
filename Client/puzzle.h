@@ -38,6 +38,8 @@ public:
     //polymorphic stuff
 
     virtual void runAction(Qt::Key);
+    virtual bool solved();
+
 
 protected:
     std::stringstream instructionstream;
@@ -50,10 +52,11 @@ protected:
     void establishFloor();
     void establishSides();
     sprite2dObject * getComponentAt(int,int);
+    QSize size;
+    bool isSolved = false;
 
 private:
     void garbageCollection(std::vector<sprite2dObject*>&);
-    QSize size;
 
 public slots:
     virtual void mousePressedSlot(QPointF qpoint);

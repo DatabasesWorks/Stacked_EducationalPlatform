@@ -155,6 +155,12 @@ void sprite2dObject::connectRope(sprite2dObject * other, int length){
      joints.push_back(joint);
 }
 
+
+void sprite2dObject::setFontSize(int size){
+    this->text->setCharacterSize(size);
+}
+
+
 void sprite2dObject::connectBar(sprite2dObject * other, int len){
      b2DistanceJointDef jd;
      b2Vec2 vec(other->getBody()->GetPosition()-getBody()->GetPosition());
