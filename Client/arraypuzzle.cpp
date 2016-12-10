@@ -66,6 +66,22 @@ void ArrayPuzzle::runAction(Qt::Key key){
         equationCount++;
     }
     if(key == Qt::Key_Return){
+        Calculator c;
+        //std::cout << c.calculate ("(20+10)*3/2-3") << std::endl;
+        std::string equation = inactive_components[4]->getText()->getString();
+        //std::cout << c.calculate(equation)<< std::endl;
+        if(!question1Done){
+            if(firstAnswer == c.calculate(equation)){
+                question1Done = true;
+                inactive_components[3]->setTextColor(sf::Color::Green);
+            }
+        }
+        else if(!question2Done){
+
+        }
+        else if(!question3Done){
+
+        }
     }
     if(key == Qt::Key_Backspace){
         std::cout<<"backspace" <<std::endl;
@@ -182,15 +198,4 @@ void ArrayPuzzle::clearEquation(){
     newString.pop_back();
     inactive_components[4]->setText(newString, sf::Color::White);
 }
-
-//void ArrayPuzzle::clearStreamAt(b2Vec2 pos){
-////    instructionstream.str("");
-////    instructionstream.clear();
-////    instructionstream<<"";
-//      std::stringstream* mynewss = resetInstructions("instructions_box", pos);
-////    createInstructions(pos);
-
-//      *mynewss << "CLEARED";
-
-//}
 
