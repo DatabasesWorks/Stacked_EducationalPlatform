@@ -2,15 +2,17 @@
 #define STACKPUZZLE_H
 #include <QGraphicsScene>
 #include <QWidget>
-#include <stack>
 #include <QObject>
-#include <puzzle.h>
 #include <QSize>
 #include <QTimer>
-#include <sprite2dobject.h>
-#include <Box2D/Box2D.h>
+
 #include <stdlib.h>
 #include <sstream>
+#include <puzzle.h>
+#include <sprite2dobject.h>
+#include <Box2D/Box2D.h>
+#include <time.h>
+
 class StackPuzzle : public Puzzle
 {
 
@@ -67,11 +69,9 @@ private:
     sprite2dObject * leftDisplay;
     sprite2dObject * rightDisplay;
     sprite2dObject * operatorDisplay;
-
     std::vector<sprite2dObject*> operators;
-
     b2Vec2 ssize;
-    std::stack <sprite2dObject> s;
+
 
 public slots:
     void onTick();

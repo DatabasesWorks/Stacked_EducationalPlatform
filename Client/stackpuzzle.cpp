@@ -1,10 +1,9 @@
 #include "stackpuzzle.h"
-#include <sstream>
-#include <QTimer>
+
 
 StackPuzzle::StackPuzzle(QSize size) : Puzzle(size) {
     QObject::connect(&gen_timer, &QTimer::timeout, this, &StackPuzzle::onTick);
-    srand(time(NULL));
+    srand(time(nullptr));
     b2Vec2 graf(0,0.98); // normalish gravity
     thisWorld->SetGravity(graf);
 
