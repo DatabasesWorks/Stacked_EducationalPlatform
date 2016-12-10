@@ -8,12 +8,13 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     }
     activeIndex = 0;
 
-    components[0]->changeColor(sf::Color::Magenta);
+    components[0]->changeColor(mint);
 
     setupInstructions();
     setupQuestion();
 
     equationCount = 0;
+    outOfBoundsCount = 0;
 }
 
 ArrayPuzzle::~ArrayPuzzle() {}
@@ -23,14 +24,14 @@ void ArrayPuzzle::runAction(Qt::Key key){
         if(activeIndex != 0){
             components[activeIndex]->changeColor(sf::Color::White);
             activeIndex--;
-            components[activeIndex]->changeColor(sf::Color::Magenta);
+            components[activeIndex]->changeColor(mint);
         }
     }
     if(key == Qt::Key_Right){
         if(activeIndex < components.size()-1){
             components[activeIndex]->changeColor(sf::Color::White);
             activeIndex++;
-            components[activeIndex]->changeColor(sf::Color::Magenta);
+            components[activeIndex]->changeColor(mint);
         }
     }
     if(key == Qt::Key_E){
@@ -69,24 +70,31 @@ void ArrayPuzzle::runAction(Qt::Key key){
         Calculator c;
         //std::cout << c.calculate ("(20+10)*3/2-3") << std::endl;
         std::string equation = getComponent("equation_box",false)->getText()->getString();
-        std::cout << c.calculate(equation)<< std::endl;
-        if(!question1Done && (equation.length() > 0)){
-            if(firstAnswer == c.calculate(equation)){
-                question1Done = true;
-                getComponent("question_1",false)->setTextColor(sf::Color::Green);
-                clearEntireEquation();
-                setupQuestion();
-            }                
+        QString qEquation = QString::fromStdString(equation);
+        QRegExp equationRegEx("([-+]?[0-9]*\.?[0-9]+[\/\+\-\*])+([-+]?[0-9]*\.?[0-9]+)");
+        if(!equationRegEx.exactMatch(qEquation)){
+            getComponent("equation_box", false)->setText("Incorrect Format");
+            equationCount = getComponent("equation_box", false)->getText()->getString().getSize();
         }
-        else if(!question2Done && (equation.length() > 0)){
-            if(secondAnswer == c.calculate(equation)){
-                question2Done = true;
-                getComponent("question_2",false)->setTextColor(sf::Color::Green);
-                foreach (sprite2dObject* obj, components) {
-                    obj->applyAngularForce(sprite2dObject::up, rand() % 500);
+        else{
+            //std::cout << c.calculate(equation)<< std::endl;
+            if(!question1Done && (equation.length() > 0)){
+                if(firstAnswer == c.calculate(equation)){
+                    question1Done = true;
+                    getComponent("question_1",false)->setTextColor(sf::Color::Green);
+                    clearEntireEquation();
+                    setupQuestion();
+                }
+            }
+            else if(!question2Done && (equation.length() > 0)){
+                if(secondAnswer == c.calculate(equation)){
+                    question2Done = true;
+                    getComponent("question_2",false)->setTextColor(sf::Color::Green);
+                    getComponent("equation_box",false)->setText("Great Job!", sf::Color::Green);
                 }
             }
         }
+
     }
     if(key == Qt::Key_Backspace){
         //std::cout<<"backspace" <<std::endl;
@@ -98,18 +106,6 @@ void ArrayPuzzle::runAction(Qt::Key key){
 }
 
 void ArrayPuzzle::replaceAtIndexAction(){
-
-    sprite2dObject * old = components[activeIndex];
-    SpriteDefinition def;
-    def.setShape(4,50,25);
-    def.setType(b2_dynamicBody);
-    def.setColor(sf::Color::Red);
-    def.setBorderColor(sf::Color::Red);
-    sf::FloatRect rect = old->getShape().getGlobalBounds();
-    def.setPosition(rect.left+rect.width/2,rect.top+rect.height/4);
-    delete old;
-    sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
-    components[activeIndex] = replacement;
     randomNum = rand() % 8+1;
     components[activeIndex]->setText(std::to_string(randomNum), sf::Color::Black);
 }
@@ -120,10 +116,11 @@ void ArrayPuzzle::createEnvironment(){
 
     SpriteDefinition floordef(100, 200, b2_staticBody, "testbox");
     floordef.setShape(4, 1500, 0);
+    floordef.setColor(purpleHaze);
 
     SpriteDefinition leftwalld(0,20, b2_staticBody, "leftwalld");
     leftwalld.setShape(4,0,500);
-    leftwalld.setColor(sf::Color::Red);
+    leftwalld.setColor(purpleHaze);
     addComponent(leftwalld, true);
 
     sprite2dObject *floor = new sprite2dObject(thisWorld, floordef);
@@ -146,19 +143,6 @@ void ArrayPuzzle::createEnvironment(){
 
 }
 
-void ArrayPuzzle::addAtIndexAction(){
-     b2Body *bod;
-     int x;
-     bod = components[activeIndex]->getBody();
-     x = bod->GetPosition().x;
-     int y = bod->GetPosition().y;
-     this->thisWorld->DestroyBody(bod);
-     //might want to restrict the deletion if size = 1
-     //components.erase(components.begin() + activeIndex);
-     this->replaceComponent("array_"+activeIndex, 4, 50, 25, x, y, b2_dynamicBody, activeIndex);
-     components[activeIndex]->changeColor(sf::Color::Magenta);
-}
-
 std::string ArrayPuzzle::getNumAtActive(){
     std::string num;
     num = components[activeIndex]->getText()->getString();
@@ -173,9 +157,12 @@ void ArrayPuzzle::setupInstructions(){
                          "      (,),+,-,*,/: For selected operator." <<std::endl <<
                          "      Backspace: Deletes last input."<<std::endl<<
                          "      Enter/Return: Perform arithmetic!" <<std::endl<<
-                         "Good luck!" <<std::endl;
+                         "                                       " <<std::endl<<
+                         "      Goal: Create an expression that results" <<std::endl <<
+                         "            in the numbers below." <<std::endl <<
+                         "                  Good luck!" <<std::endl;
 
-    b2Vec2 pos(280, 80);
+    b2Vec2 pos(270, 80);
     createInstructions(pos);
 }
 
