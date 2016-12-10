@@ -33,8 +33,9 @@ private:
     void createEnvironment();
     std::string getNumAtActive();
     void setupInstructions();
+    void setupQuestion();
     void setupEquation(std::string);
-    void clearStreamAt(b2Vec2);
+    void clearEquation();
 };
 
 #endif // ARRAYPUZZLE_H

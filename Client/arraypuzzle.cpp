@@ -11,6 +11,7 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     components[0]->changeColor(sf::Color::Blue);
 
     setupInstructions();
+    setupQuestion();
 
     equationCount = 0;
 }
@@ -68,8 +69,7 @@ void ArrayPuzzle::runAction(Qt::Key key){
     }
     if(key == Qt::Key_Backspace){
         std::cout<<"backspace" <<std::endl;
-        b2Vec2 pos(100+(equationCount*10), 240);
-        clearStreamAt(pos);
+        clearEquation();
         equationCount--;
     }
 }
@@ -138,15 +138,17 @@ void ArrayPuzzle::setupInstructions(){
 
     b2Vec2 pos(280, 80);
     createInstructions(pos);
+}
 
+void ArrayPuzzle::setupQuestion(){
     instructionstream.str("");
     if(!question1Done){
         instructionstream<<"Get result: 13" <<std::endl;
     }
-    if(!question2Done){
+    else if(!question2Done){
         instructionstream<<"Get result: 55" <<std::endl;
     }
-    if(!question3Done){
+    else if(!question3Done){
         instructionstream<<"Get result: 233" <<std::endl;
     }
     b2Vec2 pos2(50, 240);
@@ -156,18 +158,29 @@ void ArrayPuzzle::setupInstructions(){
 
 void ArrayPuzzle::setupEquation(std::string s){
 
-    instructionstream.str("");
-    instructionstream<< s;
-    b2Vec2 pos(100+(equationCount*10), 240);
-    createInstructions(pos);
+    if(equationCount == 0){
+        b2Vec2 pos(200, 235);
+        std::string equation = "equation_box";
+        SpriteDefinition box(pos.x, pos.y, b2_staticBody, equation);
+        box.setShape(4, 0, 0);
+        box.setBorderColor(sf::Color::Transparent);
+        box.setColor(sf::Color::Transparent);
+        sprite2dObject * obj = new sprite2dObject(thisWorld, box);
+        obj->setText(s, sf::Color::White);
+        obj->ignoreObject();
+        addComponent(obj, true);
+    }
+    else{
+        std::string nextString = inactive_components[4]->getText()->getString();
+        nextString.append(s);
+        inactive_components[4]->setText(nextString, sf::Color::White);
+    }
 }
 
-void ArrayPuzzle::clearStreamAt(b2Vec2 pos){
-    instructionstream.str("");
-    instructionstream.clear();
-    instructionstream.str().clear();
-    instructionstream.flush();
-    createInstructions(pos);
+void ArrayPuzzle::clearEquation(){
+    std::string newString = inactive_components[4]->getText()->getString();
+    newString.pop_back();
+    inactive_components[4]->setText(newString, sf::Color::White);
 }
 
 //void ArrayPuzzle::clearStreamAt(b2Vec2 pos){
