@@ -46,6 +46,7 @@ private:
     sf::Color hulkGreen = sf::Color(0, 200, 83);
     sf::Color ashGreen = sf::Color(0, 191, 165);
     sf::Color blueberry = sf::Color(0, 176, 255);
+    int outOfBoundsCount;
 };
 
 #endif // ARRAYPUZZLE_H

@@ -14,6 +14,7 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     setupQuestion();
 
     equationCount = 0;
+    outOfBoundsCount = 0;
 }
 
 ArrayPuzzle::~ArrayPuzzle() {}
@@ -96,23 +97,6 @@ void ArrayPuzzle::runAction(Qt::Key key){
 }
 
 void ArrayPuzzle::replaceAtIndexAction(){
-
-    sprite2dObject * old = components[activeIndex];
-    SpriteDefinition def;
-    def.setShape(4,50,25);
-    def.setType(b2_dynamicBody);
-    def.setColor(blueberry);
-    def.setBorderColor(blueberry);
-    sf::FloatRect rect = old->getShape().getGlobalBounds();
-    int x = rect.left+rect.width/2;
-    int y = rect.top+rect.height/4;
-    def.setPosition(x,y);
-    //std::cout << x << "," << y <<std::endl;
-//    b2Vec2 vel(0, 100);
-//    def.setInitialVelocity(0, vel);
-    delete old;
-    sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
-    components[activeIndex] = replacement;
     randomNum = rand() % 8+1;
     components[activeIndex]->setText(std::to_string(randomNum), sf::Color::Black);
 }
@@ -148,19 +132,6 @@ void ArrayPuzzle::createEnvironment(){
     obj->ignoreObject();
     addComponent(obj, true);
 
-}
-
-void ArrayPuzzle::addAtIndexAction(){
-     b2Body *bod;
-     int x;
-     bod = components[activeIndex]->getBody();
-     x = bod->GetPosition().x;
-     int y = bod->GetPosition().y;
-     this->thisWorld->DestroyBody(bod);
-     //might want to restrict the deletion if size = 1
-     //components.erase(components.begin() + activeIndex);
-     this->replaceComponent("array_"+activeIndex, 4, 50, 25, x, y, b2_dynamicBody, activeIndex);
-     components[activeIndex]->changeColor(mint);
 }
 
 std::string ArrayPuzzle::getNumAtActive(){
