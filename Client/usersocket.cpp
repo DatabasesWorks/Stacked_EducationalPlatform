@@ -80,13 +80,14 @@ Message UserSocket::sendPayload(std::string command, std::string payload) {
             if (results.payload == "AUTHFAILURE") {
                 authenticationexception ex;
                 throw ex;
-            }else if(results.payload == "USERERROR"){
+            } else if (results.payload == "USERERROR") {
                 reguserexception ex;
                 throw ex;
-            }else if(results.payload == "CLASSERROR"){
+            } else if (results.payload == "CLASSERROR") {
                 regclassexception ex;
                 throw ex;
             }
+
             return results;
         }
     } else {

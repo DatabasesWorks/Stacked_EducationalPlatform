@@ -19,7 +19,6 @@ Client::Client(QWidget *parent) :
     ui->setupUi(this);
     //move the window to the center of the screen
     move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
-
 }
 
 Client::~Client() {
@@ -45,7 +44,7 @@ void Client::setCurrentPage(QString s) {
 bool Client::sendLogin(QString user, QString pass) {
     try {
         UserSocket sock(sf::IpAddress::LocalHost, 11777);
-        sock.authenticate(user.toStdString(), pass.toStdString()); //if no exceptions thrown, then we are authenticated      
+        sock.authenticate(user.toStdString(), pass.toStdString()); //if no exceptions thrown, then we are authenticated
         sock.deauthenticate(); //when you are done deauthenticate, or save the sid for later
         //(note: the server will be configured to auto check for expired session ids -- probably every like 20 minutes or something )
     } catch (authenticationexception) { // if the client was not authenticated properly, or the session key was invalid
@@ -53,31 +52,35 @@ bool Client::sendLogin(QString user, QString pass) {
     }
     //send payload and parse payload to determine if teach/student
     bool teach = false;
+
     if (teach) {
         setCentralWidget(new TeachWin());
     } else {
         setCentralWidget(new StudWin());
     }
+
     return true;
 }
 
 int Client::sendReg(QString data) {
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
 
-    try{
+    try {
         Message msg = sock.sendPayload("register", data.toStdString());
-    }catch (reguserexception){
+    } catch (reguserexception) {
         return 1;
-    }catch (regclassexception){
+    } catch (regclassexception) {
         return 2;
     }
 
     setCentralWidget(new LoginWin());
     return 0;
 }
+
 //hardcoded to class "" for now
-QVector<QString> Client::getStudents(QString){ // still unimplemented
+QVector<QString> Client::getStudents(QString) { // still unimplemented
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
+
     sock.authenticate("", "");
     Message msg = sock.sendPayload("getstudents", "");//classcode.toStdString());
     QVector<QString> students = QString::fromStdString(msg.payload).split(",").toVector();
@@ -92,6 +95,7 @@ void Client::on_pushButton_clicked() {
 void Client::on_pushButton_2_clicked() {
     //This logic will need to be changed later
     StudWin *studwin = new StudWin(this);
+
     setCentralWidget(studwin);
 }
 
