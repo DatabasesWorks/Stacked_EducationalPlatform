@@ -199,12 +199,12 @@ void ArrayPuzzle::clearEquation(){
     std::string newString = inactive_components[4]->getText()->getString();
     newString.pop_back();
     inactive_components[4]->setText(newString, sf::Color::White);
-    equationCount--;
 }
 
 void ArrayPuzzle::clearEntireEquation(){
     while(equationCount != 0){
         clearEquation();
+        equationCount--;
     }
     clearEquation();
 }
