@@ -3,7 +3,7 @@ ArrayPuzzle::ArrayPuzzle(QSize size) : Puzzle(size){
     createEnvironment();
     for(int i = 0; i < 5; i++){
         this->addComponent("array_"+i, 4, 50, 25, 20+(i*45), -25, b2_dynamicBody);
-        randomNum = rand() % 24+1;
+        randomNum = rand() % 8+1;
         components[i]->setText(std::to_string(randomNum), sf::Color::Black);
     }
     activeIndex = 0;
@@ -90,8 +90,10 @@ void ArrayPuzzle::runAction(Qt::Key key){
     }
     if(key == Qt::Key_Backspace){
         //std::cout<<"backspace" <<std::endl;
-        clearEquation();
-        equationCount--;
+        if(equationCount != 0){
+            clearEquation();
+            equationCount--;
+        }
     }
 }
 
@@ -108,7 +110,7 @@ void ArrayPuzzle::replaceAtIndexAction(){
     delete old;
     sprite2dObject * replacement = new sprite2dObject(thisWorld,def);
     components[activeIndex] = replacement;
-    randomNum = rand() % 24+1;
+    randomNum = rand() % 8+1;
     components[activeIndex]->setText(std::to_string(randomNum), sf::Color::Black);
 }
 
@@ -153,6 +155,7 @@ void ArrayPuzzle::setupInstructions(){
                          "      E: replace data with new random number. " <<std::endl <<
                          "      R: Add selected data to equation." <<std::endl <<
                          "      (,),+,-,*,/: For selected operator." <<std::endl <<
+                         "      Backspace: Deletes last input."<<std::endl<<
                          "      Enter/Return: Perform arithmetic!" <<std::endl<<
                          "Good luck!" <<std::endl;
 
@@ -206,6 +209,5 @@ void ArrayPuzzle::clearEntireEquation(){
         clearEquation();
         equationCount--;
     }
-    clearEquation();
 }
 
