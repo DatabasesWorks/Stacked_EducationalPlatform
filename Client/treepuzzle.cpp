@@ -89,10 +89,11 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size) {
     }
 
     std::stringstream ss;
-    ss << "Lorem ipsum dolor sit amet," << std::endl <<
-        "consectetur adipiscing elit," << std::endl <<
-        "sed do eiusmod tempor incididunt" << std::endl <<
-        "ut labore et dolore magna aliqua." << std::endl;
+    ss << "To solve this puzzle" << std::endl <<
+          "Click and drag the boxes above" << std::endl
+          <<"to construct a balanced binary tree." << std::endl;
+
+
     std::string text = ss.str();
 
     SpriteDefinition box(150, 250, b2_staticBody, "text");
