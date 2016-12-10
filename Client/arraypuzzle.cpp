@@ -128,6 +128,19 @@ void ArrayPuzzle::createEnvironment(){
 
     sprite2dObject *floor = new sprite2dObject(thisWorld, floordef);
     inactive_components.push_back(floor);
+
+    //just set this up once. Before it was creating a text over the other one
+    b2Vec2 pos(200, 235);
+    std::string equation = "equation_box";
+    SpriteDefinition box(pos.x, pos.y, b2_staticBody, equation);
+    box.setShape(4, 0, 0);
+    box.setBorderColor(sf::Color::Transparent);
+    box.setColor(sf::Color::Transparent);
+    sprite2dObject * obj = new sprite2dObject(thisWorld, box);
+    obj->setText("", sf::Color::White);
+    obj->ignoreObject();
+    addComponent(obj, true);
+
 }
 
 void ArrayPuzzle::addAtIndexAction(){
@@ -178,24 +191,9 @@ void ArrayPuzzle::setupQuestion(){
 }
 
 void ArrayPuzzle::setupEquation(std::string s){
-
-    if(equationCount == 0){
-        b2Vec2 pos(200, 235);
-        std::string equation = "equation_box";
-        SpriteDefinition box(pos.x, pos.y, b2_staticBody, equation);
-        box.setShape(4, 0, 0);
-        box.setBorderColor(sf::Color::Transparent);
-        box.setColor(sf::Color::Transparent);
-        sprite2dObject * obj = new sprite2dObject(thisWorld, box);
-        obj->setText(s, sf::Color::White);
-        obj->ignoreObject();
-        addComponent(obj, true);
-    }
-    else{
-        std::string nextString = inactive_components[4]->getText()->getString();
-        nextString.append(s);
-        inactive_components[4]->setText(nextString, sf::Color::White);
-    }
+    std::string nextString = inactive_components[4]->getText()->getString();
+    nextString.append(s);
+    inactive_components[4]->setText(nextString, sf::Color::White);
 }
 
 void ArrayPuzzle::clearEquation(){
