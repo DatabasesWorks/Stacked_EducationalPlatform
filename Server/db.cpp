@@ -204,3 +204,55 @@ std::string DB::puzzleSolved(MYSQL *connection, std::string payload) {
     }
 
 }
+
+//Method to get the list of students
+std::string DB::studentlist(MYSQL *connection, std::string payload) {
+    MYSQL_RES *result;
+    QString query = "SELECT id, username, (SELECT date as completiondate FROM `puzzles` WHERE puzzletable.puzzleid = 1 AND puzzletable.userid = usertable.id) as puzzle1, (SELECT date FROM `puzzles` WHERE puzzletable.puzzleid = 2 AND puzzletable.userid = usertable.id) as puzzle2, (SELECT date FROM `puzzles` WHERE puzzletable.puzzleid = 3 AND puzzletable.userid = usertable.id) as puzzle3, (SELECT date FROM `puzzles` WHERE puzzletable.puzzleid = 4 AND puzzletable.userid = usertable.id) as puzzle4 FROM users as usertable, puzzles as puzzletable;";
+    int state = mysql_query(connection, query.toLatin1().data());
+    if (state != 0) {
+        std::cout << mysql_error(connection) << std::endl;
+        return "SQLERROR";
+    }
+    QString generatedhtml = "";
+    generatedhtml += "<!DOCTYPE html> <html lang='en'> <head> <meta charset='utf-8'> <title>Student Analytics Report - The CCC Educational App</title> <meta name='viewport' content='width=device-width, initial-scale=1'> <meta http-equiv='X-UA-Compatible' content='IE=edge' /> <link rel='stylesheet' href='https://bootswatch.com/united/bootstrap.css' media='screen'> <link rel='stylesheet' href='https://bootswatch.com/assets/css/custom.min.css'> <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries --> <!--[if lt IE 9]> <script src='https://bootswatch.com/bower_components/html5shiv/dist/html5shiv.js'></script> <script src='https://bootswatch.com/bower_components/respond/dest/respond.min.js'></script> <![endif]--> </head> <body> <div class='navbar navbar-default navbar-fixed-top'> <div class='container'> <div class='navbar-header'> <a href='#' class='navbar-brand'><strong>The CCC Educational App</strong></a> </div> <div class='navbar-collapse collapse' id='navbar-main'><a href='#' class='navbar-brand pull-right'><strong>Date: "+QDate::currentDate().toString()+ " - " +QTime::currentTime().toString()+"</strong></a> </div> </div> </div> <div class='container'> <!-- Tables ================================================== --> <div> <div class='row'> <div class='col-lg-12'> <div class='page-header'> <h2>Student Analytics Report</h2> </div> <div class='bs-component'> <table class='table table-striped table-hover '> <thead> <tr> <th>Student Name (ID)</th> <th>Puzzle 1 (Stack)</th> <th>Puzzle 2 (Array)</th> <th>Puzzle 3 (List)</th> <th>Puzzle 4 (Tree)</th> </tr> </thead> <tbody>";
+    result = mysql_store_result(connection);
+    //MYSQL_FIELD *field = mysql_fetch_field(result);
+    MYSQL_ROW row;
+    while((row = mysql_fetch_row(result))) {
+        //For loop to add rows
+        QString userid = row[1];
+        QString username = row[0];
+        QString puzzle1 = row[2];
+        if(puzzle1.length() < 1){
+            puzzle1 = "--";
+        }
+        QString puzzle2 = row[3];
+        if(puzzle2.length() < 1){
+            puzzle2 = "--";
+        }
+        QString puzzle3 = row[4];
+        if(puzzle3.length() < 1){
+            puzzle3 = "--";
+        }
+        QString puzzle4 = row[5];
+        if(puzzle4.length() < 1){
+            puzzle4 = "--";
+        }
+        generatedhtml += "<tr> <td>"+QString(row[1])+" ( "+QString(row[0])+" )"+"</td> <td>"+puzzle1+"</td> <td>"+puzzle2+"</td> <td>"+puzzle3+"</td> <td>"+puzzle4+"</td> </tr>";
+    }
+    generatedhtml += "</tbody> </table> </div><!-- /example --> </div> </div> </div> </div> </html>";
+    //For debug, remove later
+    std::cout << "Student Analytics Report generated (analytics.html)" << std::endl;
+    //Try writing something to a file (HTML) and opening it in a browser:
+    QString filename="./analytics.html";
+    QFile file( filename );
+    QFile::remove(filename);
+    if ( file.open(QIODevice::ReadWrite) )
+    {
+        QTextStream stream( &file );
+        stream << generatedhtml << endl;
+    }
+    QString urladdress = QDir::currentPath() + "/analytics.html";
+    return urladdress.toStdString();
+}
