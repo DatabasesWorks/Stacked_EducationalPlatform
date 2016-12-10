@@ -46,8 +46,8 @@ private:
     void setActiveOperator(unsigned int);
     void explodeAtPoint(int,int,sf::Color c = sf::Color::White);
 
-    const int itemlimit = 15;
-    const int stacklocation = 100;
+    const unsigned int itemlimit = 15;
+    const unsigned int stacklocation = 100;
 
     std::atomic_bool waiting;
     std::atomic_bool produced;
@@ -55,9 +55,9 @@ private:
     QTimer gen_timer;
     std::atomic_bool can_generate;
 
-    int operatorindex=0;
+    unsigned int operatorindex=0;
     int currentanswer = 0;
-    int timessolved = 0;
+    unsigned int timessolved = 0;
 
     sprite2dObject * createNode(int,int, b2BodyType);
     sprite2dObject * left;

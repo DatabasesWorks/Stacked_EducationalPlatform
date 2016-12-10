@@ -15,47 +15,78 @@
 #include <QDebug>
 #include <QUrl>
 #include <QDesktopServices>
+#include <QTimer>
 
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Client) {
     ui->setupUi(this);
+    QObject::connect(&timer,&QTimer::timeout,this,&Client::autosave);
     //move the window to the center of the screen
     move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
+    timer.start(30000); //every 30 seconds or so
+    widgets.push_back(new LoginWin);
+    widgets.push_back(new StudWin);
+    widgets.push_back(new TeachWin);
+    widgets.push_back(new StudReg);
+    widgets.push_back(new TeachReg);
+
+
 }
 
 Client::~Client() {
     delete ui;
+    try{
+        UserSocket sock(sf::IpAddress::LocalHost, 11777,getSessionId());
+        sock.deauthenticate();
+    }catch(std::exception){
+
+    }
 }
 
 //TODO: Move this all to controller later?
-//TODO: Make sure this doesn't cause memory leaks (I think it should be fine)
 void Client::setCurrentPage(QString s) {
     if (s == "login") {
-        setCentralWidget(new LoginWin());
+        setCentralWidget(widgets[0]);
+        activeWidget = 0;
     } else if (s == "studwin") {
-        setCentralWidget(new StudWin());
+        setCentralWidget(widgets[1]);
+        activeWidget = 1;
     } else if (s == "teachwin") {
-        setCentralWidget(new TeachWin());
+        setCentralWidget(widgets[2]);
+        static_cast<TeachWin*>(widgets[2])->updateStudents();
+        activeWidget = 2;
     } else if (s == "studreg") {
-        setCentralWidget(new StudReg());
+        setCentralWidget(widgets[3]);
+        activeWidget = 3;
     } else if (s == "teachreg") {
-        setCentralWidget(new TeachReg());
+        setCentralWidget(widgets[4]);
+        activeWidget = 4;
     }
 }
+
+void Client::autosave(){
+    if(activeWidget == 1 || activeWidget == 2){
+
+
+
+
+    }
+}
+
 
 bool Client::sendLogin(QString user, QString pass) {
     try {
         UserSocket sock(sf::IpAddress::LocalHost, 11777);
         sock.authenticate(user.toStdString(), pass.toStdString()); //if no exceptions thrown, then we are authenticated
-        sock.deauthenticate(); //when you are done deauthenticate, or save the sid for later
+        sessionid = sock.sid();
+        // sock.deauthenticate(); //when you are done deauthenticate, or save the sid for later
         //(note: the server will be configured to auto check for expired session ids -- probably every like 20 minutes or something )
     } catch (authenticationexception) { // if the client was not authenticated properly, or the session key was invalid
         return false;
     }
     //send payload and parse payload to determine if teach/student
     bool teach = false;
-
     if (teach) {
         setCentralWidget(new TeachWin());
     } else {
@@ -100,6 +131,10 @@ void Client::on_pushButton_2_clicked() {
     StudWin *studwin = new StudWin(this);
 
     setCentralWidget(studwin);
+}
+
+std::string Client::getSessionId(){
+   return sessionid;
 }
 
 void Client::on_pushButton_3_clicked() {

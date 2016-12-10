@@ -15,8 +15,6 @@ StudWin::StudWin(QWidget *parent) :
     setupLevels();
     pw->setPuzzle(puzzles.front());
     pw->setFocus();
-
-
     QGridLayout *lay = new QGridLayout(this);
     lay->addWidget(pw);
     ui->mainGameWidget->setLayout(lay);
@@ -68,9 +66,9 @@ void StudWin::on_hideButton_clicked() {
 //Move to controller?
 void StudWin::on_logoutButton_clicked() {
     Client *par = (Client *)this->parentWidget();
-
+    UserSocket sock(sf::IpAddress::LocalHost, 11777,par->getSessionId());
+    sock.deauthenticate();
     par->setCurrentPage("login");
-
     //emit signal to release sources?
 }
 
@@ -79,22 +77,6 @@ void StudWin::on_listWidget_currentRowChanged(int currentRow) {
         pw->setPuzzle(puzzles[currentRow]);
         pw->setFocus();
     }
-
-//     memory leak here.
-//    switch(currentRow){
-//        case 0:
-//            pw->setPuzzle(new StackPuzzle);
-//            break;
-//        case 1:
-//            pw->setPuzzle(new ArrayPuzzle);
-//            break;
-//        case 2:
-//            pw->setPuzzle(new TreePuzzle);
-//            break;
-//        case 3:
-//            pw->setPuzzle(new ListPuzzle);
-//            break;
-//    }
 }
 
 void StudWin::on_checkBox_stateChanged(int arg1) {

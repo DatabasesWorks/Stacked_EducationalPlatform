@@ -37,7 +37,7 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size) {
     while (values.size() < 7) {
         r = std::rand() % 50 + 1;
 
-        for (int i = 0; i < values.size(); i++) {
+        for (unsigned int i = 0; i < values.size(); i++) {
             if (values.at(i) == r) {
                 break;
             }

@@ -22,14 +22,12 @@ public:
     ~ArrayPuzzle();
     void virtual runAction(Qt::Key) override;
 private:
-    int activeIndex;
+    unsigned int activeIndex;
     //for the sprite text
     int randomNum;
     int equationCount;
     bool question1Done;
     bool question2Done;
-    int currentAnswer = 13;
-    int currentQuestion = 1;
     void replaceAtIndexAction();
     void addAtIndexAction();
     void createEnvironment();

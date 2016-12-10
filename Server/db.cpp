@@ -206,7 +206,7 @@ std::string DB::puzzleSolved(MYSQL *connection, std::string payload) {
 }
 
 //Method to get the list of students
-std::string DB::studentlist(MYSQL *connection, std::string payload) {
+std::string DB::studentlist(MYSQL *connection, std::string) {
     MYSQL_RES *result;
     QString query = "SELECT id, username, (SELECT date as completiondate FROM `puzzles` WHERE puzzletable.puzzleid = 1 AND puzzletable.userid = usertable.id) as puzzle1, (SELECT date FROM `puzzles` WHERE puzzletable.puzzleid = 2 AND puzzletable.userid = usertable.id) as puzzle2, (SELECT date FROM `puzzles` WHERE puzzletable.puzzleid = 3 AND puzzletable.userid = usertable.id) as puzzle3, (SELECT date FROM `puzzles` WHERE puzzletable.puzzleid = 4 AND puzzletable.userid = usertable.id) as puzzle4 FROM users as usertable, puzzles as puzzletable;";
     int state = mysql_query(connection, query.toLatin1().data());

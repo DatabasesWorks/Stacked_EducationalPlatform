@@ -12,7 +12,7 @@ TeachWin::TeachWin(QWidget *parent) :
     ui->classLabel->setText("Class: CS3505");
     ui->userLabel->setText("Welcome: TestUser");
 
-    updateStudents();
+
 }
 
 TeachWin::~TeachWin() {
@@ -21,7 +21,8 @@ TeachWin::~TeachWin() {
 
 void TeachWin::on_logoutButton_clicked() {
     Client *par = (Client *)this->parentWidget();
-
+    UserSocket sock(sf::IpAddress::LocalHost, 11777,par->getSessionId());
+    sock.deauthenticate();
     par->setCurrentPage("login");
 }
 
