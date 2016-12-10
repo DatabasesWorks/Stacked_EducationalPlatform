@@ -77,11 +77,12 @@ void ArrayPuzzle::runAction(Qt::Key key){
                 setupQuestion();
             }                
         }
-        else if(!question2Done){
-
-        }
-        else if(!question3Done){
-
+        else if(!question2Done && (equation.length() > 0)){
+            if(secondAnswer == c.calculate(equation)){
+                question2Done = true;
+                inactive_components[5]->setTextColor(sf::Color::Green);
+                setupQuestion();
+            }
         }
     }
     if(key == Qt::Key_Backspace){
@@ -166,11 +167,6 @@ void ArrayPuzzle::setupQuestion(){
     else if(!question2Done){
         instructionstream<<"Get result: 55" <<std::endl;
         b2Vec2 pos2(50, 250);
-        createInstructions(pos2);
-    }
-    else if(!question3Done){
-        instructionstream<<"Get result: 233" <<std::endl;
-        b2Vec2 pos2(50, 260);
         createInstructions(pos2);
     }
 }
