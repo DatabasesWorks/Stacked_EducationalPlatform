@@ -12,6 +12,7 @@ class TeachWin : public QWidget
     Q_OBJECT
 
 public:
+    void updateStudents();
     explicit TeachWin(QWidget *parent = 0);
     ~TeachWin();
 
@@ -24,7 +25,7 @@ private slots:
 
 private:
     Ui::TeachWin *ui;
-    void updateStudents();
+
 };
 
 #endif // TEACHWIN_H

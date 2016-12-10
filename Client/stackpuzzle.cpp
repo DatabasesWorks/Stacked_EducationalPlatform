@@ -251,7 +251,7 @@ void StackPuzzle::updatePit(){ // this is the animation logic
 
 void StackPuzzle::explodeAtPoint(int x, int y, sf::Color color){
     unsigned int iterations = 20;
-    for(int i = 0; i < iterations; i++){
+    for(unsigned int i = 0; i < iterations; i++){
         SpriteDefinition tri;
          tri.name="tri";
          tri.setShape(3,0,0);

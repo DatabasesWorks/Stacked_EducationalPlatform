@@ -12,6 +12,7 @@ TeachReg::TeachReg(QWidget *parent) :
 
 TeachReg::~TeachReg() {
     delete ui;
+
 }
 
 void TeachReg::on_cancelButton_clicked() {

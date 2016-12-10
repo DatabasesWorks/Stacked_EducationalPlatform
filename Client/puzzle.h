@@ -40,6 +40,7 @@ public:
 
     virtual void runAction(Qt::Key);
     virtual bool solved();
+    bool getProgress();
 
 
 protected:

@@ -23,8 +23,19 @@ public:
     int sendReg(QString data);
     QVector<QString> getStudents(QString classcode);
     ~Client();
+    std::string getSessionId();
 
+
+
+private:
+    QTimer timer;
+    std::string sessionid;
+    Ui::Client *ui;
+    //UserSocket currsock;
+    std::vector<QWidget*> widgets;
+    unsigned int activeWidget = 0;
 private slots:
+    void autosave();
     void on_pushButton_clicked();
     void on_pushButton_3_clicked();
     void on_pushButton_2_clicked();
@@ -35,9 +46,6 @@ private slots:
 
     void on_pushButton_7_clicked();
 
-private:
-    Ui::Client *ui;
-    //UserSocket currsock;
 };
 
 #endif // CLIENT_H

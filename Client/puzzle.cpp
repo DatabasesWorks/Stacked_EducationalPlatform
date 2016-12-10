@@ -16,6 +16,7 @@ Puzzle::Puzzle(QSize size, QObject* parent) :  QObject(parent) {
     thisWorld = new b2World(g);
    }
 
+
 Puzzle::~Puzzle(){
     delete thisWorld;
     for(auto it = inactive_components.begin(); it < inactive_components.end(); it++){
@@ -34,6 +35,9 @@ void Puzzle::step(float time){
 }
 
 
+bool Puzzle::getProgress(){
+  return this->solved();
+}
 
 sprite2dObject * Puzzle::getComponentAt(int x, int y){
 
@@ -122,7 +126,7 @@ std::stringstream* Puzzle::resetInstructions(std::string box2reset, b2Vec2 newpo
     obj->setText(stream->str(),  sf::Color::White);
     obj->ignoreObject(); // nothing can interact with this
 
-    for (int i =0; i<inactive_components.size(); i++)
+    for (unsigned int i =0; i<inactive_components.size(); i++)
     {
         if((inactive_components[i])->getName() == box2reset )
         {
