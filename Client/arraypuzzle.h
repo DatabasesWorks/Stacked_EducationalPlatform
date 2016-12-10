@@ -13,6 +13,7 @@
 #include <sstream>
 #include <iostream>
 #include "calculator.cpp"
+#include <QRegExp>
 
 class ArrayPuzzle : public Puzzle
 {

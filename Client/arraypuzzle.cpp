@@ -70,22 +70,31 @@ void ArrayPuzzle::runAction(Qt::Key key){
         Calculator c;
         //std::cout << c.calculate ("(20+10)*3/2-3") << std::endl;
         std::string equation = getComponent("equation_box",false)->getText()->getString();
-        //std::cout << c.calculate(equation)<< std::endl;
-        if(!question1Done && (equation.length() > 0)){
-            if(firstAnswer == c.calculate(equation)){
-                question1Done = true;
-                getComponent("question_1",false)->setTextColor(sf::Color::Green);
-                clearEntireEquation();
-                setupQuestion();
-            }                
+        QString qEquation = QString::fromStdString(equation);
+        QRegExp equationRegEx("([-+]?[0-9]*\.?[0-9]+[\/\+\-\*])+([-+]?[0-9]*\.?[0-9]+)");
+        if(!equationRegEx.exactMatch(qEquation)){
+            getComponent("equation_box", false)->setText("Incorrect Format");
+            equationCount = getComponent("equation_box", false)->getText()->getString().getSize();
         }
-        else if(!question2Done && (equation.length() > 0)){
-            if(secondAnswer == c.calculate(equation)){
-                question2Done = true;
-                getComponent("question_2",false)->setTextColor(sf::Color::Green);
-                getComponent("equation_box",false)->setText("Great Job!", sf::Color::Green);
+        else{
+            //std::cout << c.calculate(equation)<< std::endl;
+            if(!question1Done && (equation.length() > 0)){
+                if(firstAnswer == c.calculate(equation)){
+                    question1Done = true;
+                    getComponent("question_1",false)->setTextColor(sf::Color::Green);
+                    clearEntireEquation();
+                    setupQuestion();
+                }
+            }
+            else if(!question2Done && (equation.length() > 0)){
+                if(secondAnswer == c.calculate(equation)){
+                    question2Done = true;
+                    getComponent("question_2",false)->setTextColor(sf::Color::Green);
+                    getComponent("equation_box",false)->setText("Great Job!", sf::Color::Green);
+                }
             }
         }
+
     }
     if(key == Qt::Key_Backspace){
         //std::cout<<"backspace" <<std::endl;
