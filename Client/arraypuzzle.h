@@ -40,6 +40,7 @@ private:
     void setupEquation(std::string);
     void clearEquation();
     void clearEntireEquation();
+    void explodeAtPoint(int,int,sf::Color c = sf::Color::White);
     const static int firstAnswer = 13;
     const static int secondAnswer = 55;
     sf::Color mint = sf::Color(105,240,174);

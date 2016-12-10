@@ -85,12 +85,33 @@ void ArrayPuzzle::runAction(Qt::Key key){
                     clearEntireEquation();
                     setupQuestion();
                 }
+                else{
+                    getComponent("question_1",false)->setTextColor(sf::Color::Red);
+                    getComponent("equation_box",false)->setText("Wrong, try again!", sf::Color::Red);
+                    equationCount = getComponent("equation_box", false)->getText()->getString().getSize();
+                    int x = getComponent("equation_box", false)->getBody()->GetPosition().x;
+                    int y = getComponent("equation_box", false)->getBody()->GetPosition().y;
+                    explodeAtPoint(x, y, sf::Color::Red);
+
+                }
             }
             else if(!question2Done && (equation.length() > 0)){
                 if(secondAnswer == c.calculate(equation)){
                     question2Done = true;
                     getComponent("question_2",false)->setTextColor(sf::Color::Green);
                     getComponent("equation_box",false)->setText("Great Job!", sf::Color::Green);
+                    equationCount = getComponent("equation_box", false)->getText()->getString().getSize();
+                    int x = getComponent("equation_box", false)->getBody()->GetPosition().x;
+                    int y = getComponent("equation_box", false)->getBody()->GetPosition().y;
+                    explodeAtPoint(x, y, hulkGreen);
+                }
+                else{
+                    getComponent("question_2",false)->setTextColor(sf::Color::Red);
+                    getComponent("equation_box",false)->setText("Wrong, try again!", sf::Color::Red);
+                    equationCount = getComponent("equation_box", false)->getText()->getString().getSize();
+                    int x = getComponent("equation_box", false)->getBody()->GetPosition().x;
+                    int y = getComponent("equation_box", false)->getBody()->GetPosition().y;
+                    explodeAtPoint(x, y, sf::Color::Red);
                 }
             }
         }
@@ -214,6 +235,27 @@ void ArrayPuzzle::clearEntireEquation(){
     while(equationCount != 0){
         clearEquation();
         equationCount--;
+    }
+}
+
+void ArrayPuzzle::explodeAtPoint(int x, int y, sf::Color color){
+    unsigned int iterations = 20;
+    for(int i = 0; i < iterations; i++){
+        SpriteDefinition tri;
+         tri.name="tri";
+         tri.setShape(3,0,0);
+         tri.setText("");
+         tri.setColor(color); // then rotate around with the angle
+         tri.setType(b2_dynamicBody);
+         tri.setPosition(x,y);
+         int magnitude = 10;
+         double angle = (360/iterations)*i;
+         double radians = angle * M_PI/180.0;
+         b2Vec2 v(magnitude*std::cos(radians),magnitude*std::sin(radians));
+         tri.setInitialVelocity(radians,v);
+         sprite2dObject * triobj = new sprite2dObject(thisWorld,tri);
+         triobj->ignoreObject();
+         addComponent(triobj,true);
     }
 }
 
