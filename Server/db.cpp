@@ -3,6 +3,13 @@
 
 #include <iostream>
 #include <QVector>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QFile>
+#include <QTextStream>
+#include <QDir>
+#include <QDate>
+#include <QTime>
 
 // A note on this class, don't use any global variables since this class will be accessed by the multi-threaded server.
 // Since sql is safe for multithreading just build queries and return the results. The way that the sockets are set up
