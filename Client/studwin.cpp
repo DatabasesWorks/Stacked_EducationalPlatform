@@ -100,13 +100,13 @@ void StudWin::on_listWidget_currentRowChanged(int currentRow) {
 void StudWin::on_checkBox_stateChanged(int arg1) {
     //There may be better way to get directory
     Q_INIT_RESOURCE(sprites);
-    QFile musicfile(":/music.flac");
-    musicfile.copy(QString("music.flac"));
+    QFile musicfile(":rc/music.ogg");
+    musicfile.copy(QString("music.ogg"));
 
     if (arg1 == 0) {
         music.stop();
     } else {
-        if (!music.openFromFile("music.flac")) {
+        if (!music.openFromFile("music.ogg")) {
             std::cout << "music broke" << std::endl;
         } else {
             music.setVolume(50);

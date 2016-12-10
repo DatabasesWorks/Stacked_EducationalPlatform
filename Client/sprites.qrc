@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>../spritesheet.png</file>
         <file>datacontrol.ttf</file>
+        <file>rc/music.ogg</file>
     </qresource>
 </RCC>

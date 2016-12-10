@@ -28,7 +28,6 @@ private:
     int equationCount;
     bool question1Done;
     bool question2Done;
-    bool question3Done;
     void replaceAtIndexAction();
     void addAtIndexAction();
     void createEnvironment();
@@ -37,9 +36,9 @@ private:
     void setupQuestion();
     void setupEquation(std::string);
     void clearEquation();
+    void clearEntireEquation();
     const static int firstAnswer = 13;
     const static int secondAnswer = 55;
-    const static int thirdAnswer = 233;
 };
 
 #endif // ARRAYPUZZLE_H
