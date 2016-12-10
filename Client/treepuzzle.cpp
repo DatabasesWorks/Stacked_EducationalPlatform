@@ -239,14 +239,29 @@ bool TreePuzzle::allGreen()
 
 void TreePuzzle::endGameExplosion()
 {
-    for (int i = 0; i< 100; i++)
+    for (int i = 0; i< 500; i++)
     {
         addComponent("WIN",4,10,10, rand()%500, rand()%500, b2_dynamicBody);
+    }
+
+        int i = 0;
+        while(i<100000)
+        {
         foreach (sprite2dObject* sp, components)
         {
-            sp->changeColor(sf::Color(rand()%200+50, rand()%200+50, rand()%200+50, rand()%200+50));
+            sp->changeColor(sf::Color(rand()%200+50, rand()%200+50, rand()%200+50, 255));
+
+            if(i%4 == 0)
+            { sp->applyAngularForce(sprite2dObject::right, rand()%500);}
+            else if(i%3==0)
+            {sp->applyAngularForce(sprite2dObject::left, rand()%500);}
+            else if(i%2==0)
+            {sp->moveBody(sprite2dObject::up, rand()%100);}
+            else
+            {sp->moveBody(sprite2dObject::down, rand()%100);}
+            i++;
         }
-    }
+        }
 }
 
 /*
