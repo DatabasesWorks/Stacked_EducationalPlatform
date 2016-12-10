@@ -34,7 +34,7 @@ public:
     std::stringstream* resetInstructions(std::string boxnametoreset, b2Vec2 newposition);
 
     //phy engine step
-    void step(float time);
+    virtual void step(float time);
     //polymorphic stuff
 
     virtual void runAction(Qt::Key);

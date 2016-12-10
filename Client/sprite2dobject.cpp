@@ -136,11 +136,16 @@ bool sprite2dObject::inContact(sprite2dObject* s){
 
 }
 
-void sprite2dObject::connectRope(sprite2dObject * other){
+void sprite2dObject::connectRope(sprite2dObject * other, int length){
      b2RopeJointDef jd;
-     b2Vec2 vec(other->getBody()->GetPosition()-getBody()->GetPosition());
-     b2Vec2 tmp(vec.x,vec.y);
-     jd.maxLength=tmp.Normalize();
+     if(length < 0){
+        b2Vec2 vec(other->getBody()->GetPosition()-getBody()->GetPosition());
+        b2Vec2 tmp(vec.x,vec.y);
+        jd.maxLength=tmp.Normalize();
+     }else{
+        jd.maxLength=length;
+     }
+
      jd.bodyA=getBody();
      jd.bodyB=other->getBody();
      jd.localAnchorA=getBody()->GetLocalVector(getBody()->GetPosition());
@@ -150,11 +155,12 @@ void sprite2dObject::connectRope(sprite2dObject * other){
      joints.push_back(joint);
 }
 
-void sprite2dObject::connectBar(sprite2dObject * other){
+void sprite2dObject::connectBar(sprite2dObject * other, int len){
      b2DistanceJointDef jd;
      b2Vec2 vec(other->getBody()->GetPosition()-getBody()->GetPosition());
      b2Vec2 tmp(std::abs(vec.x),std::abs(vec.y));
-     jd.dampingRatio=0.01;
+     jd.length=len;
+     jd.dampingRatio=0;
      jd.frequencyHz=0;
      jd.length=tmp.Normalize();
      jd.bodyA=getBody();

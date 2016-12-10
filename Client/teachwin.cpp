@@ -30,7 +30,7 @@ void TeachWin::updateStudents() {
     Client *par = (Client *)this->parentWidget();
     QVector<QString> students = par->getStudents("class");
 
-    for(int i = 0; i< students.length(); i++){
+    for (int i = 0; i < students.length(); i++) {
         ui->listWidget->addItem(students.at(i));
     }
 

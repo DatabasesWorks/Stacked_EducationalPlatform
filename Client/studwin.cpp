@@ -24,7 +24,8 @@ StudWin::StudWin(QWidget *parent) :
 
 StudWin::~StudWin() {
     delete ui;
-    for(auto it = puzzles.begin(); it < puzzles.end(); it++){
+
+    for (auto it = puzzles.begin(); it < puzzles.end(); it++) {
         delete *it;
     }
 }
@@ -66,18 +67,19 @@ void StudWin::on_hideButton_clicked() {
 
 //Move to controller?
 void StudWin::on_logoutButton_clicked() {
-    Client *par = (Client *)this->parentWidget();   
+    Client *par = (Client *)this->parentWidget();
+
     par->setCurrentPage("login");
 
     //emit signal to release sources?
 }
 
-void StudWin::on_listWidget_currentRowChanged(int currentRow)
-{
-    if(currentRow>-1&&currentRow<4){
+void StudWin::on_listWidget_currentRowChanged(int currentRow) {
+    if (currentRow > -1 && currentRow < 4) {
         pw->setPuzzle(puzzles[currentRow]);
         pw->setFocus();
     }
+
 //     memory leak here.
 //    switch(currentRow){
 //        case 0:
@@ -95,18 +97,18 @@ void StudWin::on_listWidget_currentRowChanged(int currentRow)
 //    }
 }
 
-void StudWin::on_checkBox_stateChanged(int arg1)
-{
+void StudWin::on_checkBox_stateChanged(int arg1) {
     //There may be better way to get directory
-     Q_INIT_RESOURCE(sprites);
-     QFile musicfile(":/music.flac");
-     musicfile.copy(QString("music.flac"));
-    if(arg1 == 0){
+    Q_INIT_RESOURCE(sprites);
+    QFile musicfile(":/music.flac");
+    musicfile.copy(QString("music.flac"));
+
+    if (arg1 == 0) {
         music.stop();
-    }else{
-        if (!music.openFromFile("music.flac")){
+    } else {
+        if (!music.openFromFile("music.flac")) {
             std::cout << "music broke" << std::endl;
-        }else{
+        } else {
             music.setVolume(50);
             music.play();
         }

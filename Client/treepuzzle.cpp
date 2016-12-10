@@ -6,41 +6,43 @@
 #include <random>
 #include <sstream>
 
-TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
-{
-
+TreePuzzle::TreePuzzle(QSize size) : Puzzle(size) {
     QObject::connect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));
+
     treetime.start(100);
     this->establishFloor();
     this->establishGravity(100);
     this->establishSides();
     int sides = 4;
-    int l = 50;
+    int l = 70;
     int h = 0;
 
-    int boxsize=35;
+    int boxsize = 35;
 
     //platforms (i.e. tree)
-    this->addComponent("plat_3",sides,l,h, 200, 50, b2_staticBody);
-    this->addComponent("plat_1",sides,l,h, 100,100, b2_staticBody);
-    this->addComponent("plat_5",sides,l,h, 300,100, b2_staticBody);
-    this->addComponent("plat_0",sides,l,h, 50, 150, b2_staticBody);
-    this->addComponent("plat_2",sides,l,h, 150, 150,b2_staticBody);
-    this->addComponent("plat_4",sides,l,h, 250, 150,b2_staticBody);
-    this->addComponent("plat_6",sides,l,h, 350, 150,b2_staticBody);
+    this->addComponent("plat_3", sides, l, h, 190, 50, b2_staticBody);
+    this->addComponent("plat_1", sides, l, h, 90, 100, b2_staticBody);
+    this->addComponent("plat_5", sides, l, h, 290, 100, b2_staticBody);
+    this->addComponent("plat_0", sides, l, h, 40, 150, b2_staticBody);
+    this->addComponent("plat_2", sides, l, h, 140, 150, b2_staticBody);
+    this->addComponent("plat_4", sides, l, h, 240, 150, b2_staticBody);
+    this->addComponent("plat_6", sides, l, h, 340, 150, b2_staticBody);
 
 
     //create random values for boxes
     std::vector<int> values;
-    int r = std::rand()%50+1;
+    int r = std::rand() % 50 + 1;
     values.push_back(r);
-    while(values.size()< 7){
-        r = std::rand()%50+1;
-        for(int i = 0; i<values.size(); i++){
-            if(values.at(i) == r){
+
+    while (values.size() < 7) {
+        r = std::rand() % 50 + 1;
+
+        for (int i = 0; i < values.size(); i++) {
+            if (values.at(i) == r) {
                 break;
             }
-            if(i == values.size()-1){
+
+            if (i == values.size() - 1) {
                 values.push_back(r);
             }
         }
@@ -48,10 +50,10 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     std::sort(values.begin(), values.end());
 
     //create random array to shuffle boxes
-    int randArray[] = {0,1,2,3,4,5,6};
+    int randArray[] = { 0, 1, 2, 3, 4, 5, 6 };
 
-    for(int i=0; i<7; i++){
-        int r = std::rand()%7;
+    for (int i = 0; i < 7; i++) {
+        int r = std::rand() % 7;
         int x = randArray[r];
         randArray[r] = randArray[i];
         randArray[i] = x;
@@ -60,143 +62,126 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size)
     //boxes (i.e. data to go into the tree)
     std::string name;
 
-    for(int i = 0; i<7; i++)
-    {
+    for (int i = 0; i < 7; i++) {
         SpriteDefinition stack_p;
         stack_p.setShape(4, boxsize, boxsize);
         stack_p.setDensity(50);
-        stack_p.setPosition(100+randArray[i]*100,390);
+        stack_p.setPosition(100 + randArray[i] * 100, 390);
         stack_p.setText(std::to_string(values[i]));
         stack_p.setType(b2_dynamicBody);
-        name = "box_" + std::to_string(i);       
-        sprite2dObject* s = new sprite2dObject(thisWorld, stack_p);
+        name = "box_" + std::to_string(i);
+        sprite2dObject *s = new sprite2dObject(thisWorld, stack_p);
         s->setName(name);
         addComponent(s);
     }
-    for(auto it = components.begin(); it < components.end(); it++)
-    {
-       sprite2dObject * obj = *it;
-       if(obj->getName().find("box") != -1){
-           boxes.push_back(obj->getName());
+
+    for (auto it = components.begin(); it < components.end(); it++) {
+        sprite2dObject *obj = *it;
+
+        if (obj->getName().find("box") != -1) {
+            boxes.push_back(obj->getName());
             sf::Color color = sf::Color::Magenta;
             obj->changeColor(color);
-
-       }
-       else if(obj->getName().find("plat") != -1){
-           plats.push_back(obj->getName());
-           sf::Color color = sf::Color::Yellow;
-           obj->changeColor(color);
-      }
+        } else if (obj->getName().find("plat") != -1) {
+            plats.push_back(obj->getName());
+            sf::Color color = sf::Color::Yellow;
+            obj->changeColor(color);
+        }
     }
+
     std::stringstream ss;
-    ss << "Lorem ipsum dolor sit amet," << std::endl <<
-            "consectetur adipiscing elit," << std::endl <<
-            "sed do eiusmod tempor incididunt" << std::endl <<
-            "ut labore et dolore magna aliqua." << std::endl;
+    ss << "To solve this puzzle" << std::endl <<
+          "Click and drag the boxes above" << std::endl
+          <<"to construct a balanced binary tree." << std::endl;
+
+
     std::string text = ss.str();
 
-    SpriteDefinition box(150,250, b2_staticBody,"text");
-    box.setShape(4,300,100);
+    SpriteDefinition box(150, 250, b2_staticBody, "text");
+    box.setShape(4, 300, 100);
     box.setBorderColor(sf::Color::White);
-    sf::Color grey(84,84,84);
+    sf::Color grey(84, 84, 84);
     box.setColor(grey);
-    sprite2dObject * obj = new sprite2dObject(thisWorld,box);
-    obj->setText(text,  sf::Color(10,10,10));
+    sprite2dObject *obj = new sprite2dObject(thisWorld, box);
+    obj->setText(text,  sf::Color(10, 10, 10));
     obj->ignoreObject(); // nothing can interact with this
-    addComponent(obj,true);
+    addComponent(obj, true);
 }
-
 
 TreePuzzle::~TreePuzzle() {
-
 }
 
-
-void TreePuzzle::mousePressedSlot(QPointF qpoint)
-{
+void TreePuzzle::mousePressedSlot(QPointF qpoint) {
 //    std::cout<<"X box_0 " << getComponent("box_0")->getBody()->GetPosition().x;
 //   std::cout<<"Y box_0 " << getComponent("box_0")->getBody()->GetPosition().y << std::endl;
     int scale = 1;
 
-    int x = (qpoint.x())/scale;
+    int x = (qpoint.x()) / scale;
 //    std::cout << "x" << x << std::endl;
 
-    int y = (qpoint.y())/scale;
+    int y = (qpoint.y()) / scale;
 //    std::cout << "y" << y << std::endl;
 
 //    this->addComponent("name", 4 ,15,15,x, y, b2_dynamicBody);
 
-    sprite2dObject* b = getComponentAt(x,y); //reverse and accommodate offset ie +90?
+    sprite2dObject *b = getComponentAt(x, y); //reverse and accommodate offset ie +90?
 
 //    std::cout << "BUG?" << std::endl;
 
-    if(b!=nullptr && b->getName().find("box") != -1){
+    if (b != nullptr && b->getName().find("box") != -1) {
         curr = b;
         curr->bindToMouse();
     }
-
-
 }
 
-void TreePuzzle::mouseMovedSlot(QPointF qpoint)
-{
-
+void TreePuzzle::mouseMovedSlot(QPointF qpoint) {
     int scale = 1;
 
-    int x = (qpoint.x())/scale;
+    int x = (qpoint.x()) / scale;
 //    std::cout << "x" << x << std::endl;
 
-    int y = (qpoint.y())/scale;
+    int y = (qpoint.y()) / scale;
+
 //    std::cout << "y" << y << std::endl;
-    if(curr != nullptr){
+    if (curr != nullptr) {
         curr->moveToPoint(x, y);
-
     }
-
 }
 
-void TreePuzzle::mouseReleasedSlot(QPointF)
-{
-    if(curr!=nullptr)
-    {
+void TreePuzzle::mouseReleasedSlot(QPointF) {
+    if (curr != nullptr) {
         curr->unbind();
     }
 
     curr = nullptr;
 }
 
-void TreePuzzle::updateContact()
-{
-    for(int i = 0; i < 7; i++)
-    {
-        std::string  box = boxes[i]; //get box name
+void TreePuzzle::updateContact() {
+    for (int i = 0; i < 7; i++) {
+        std::string box = boxes[i];  //get box name
         //Determine if a box is touching any plats
         bool inContact = false;
-        foreach(std::string s, plats)
-        {
-            if(getComponent(box)->inContact(getComponent(s)))
-            {
+        foreach(std::string s, plats) {
+            if (getComponent(box)->inContact(getComponent(s))) {
                 inContact = true;
             }
         }
 
         //If touching determine if names match
-        if(inContact)
-        {
+        if (inContact) {
             //In contact but names do not match -- initial state
             getComponent(box)->changeColor(sf::Color::Red);
 
             //If it is determined that names do match -- change color to green
-            for(int j = 0; j < 7 ; j++)
-            {
-                std::string  plat = plats[j]; //get plat name
+            for (int j = 0; j < 7; j++) {
+                std::string plat = plats[j];  //get plat name
 
                 bool inContactWith = getComponent(box)->inContact(getComponent(plat));
                 int boxl = box.length();
                 int platl = plat.length();
-                bool namesMatch = (box[boxl-1] == plat[platl-1]);
-                if(namesMatch && inContactWith)
-                {
+                bool namesMatch = (box[boxl - 1] == plat[platl - 1]);
+
+                if (namesMatch && inContactWith) {
                     //Incontact && names match
                     getComponent(box)->changeColor(sf::Color::Magenta);
 //                    getComponent(plat)->changeColor(sf::Color::Yellow);
@@ -205,10 +190,8 @@ void TreePuzzle::updateContact()
                     break;
                 }
             }
-        }
-        else //Box is not touching anything
-        {
-            //Not in contact
+        } else { //Box is not touching anything
+                 //Not in contact
             getComponent(box)->changeColor(sf::Color::Magenta);
 //            int boxl = box.length();
 //            std::string plat = "plat_" + box[boxl-1];
@@ -217,51 +200,50 @@ void TreePuzzle::updateContact()
     }
 
     //Endgame check
-    if(allGreen())
-    {
-        endGameExplosion();
+    if (allGreen()) {
+        QObject::disconnect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));
+        QObject::connect(&treetime, SIGNAL(timeout()), this, SLOT(endGameExplosion()));
+//        endGameExplosion();
     }
 }
 
-bool TreePuzzle::allGreen()
-{
+bool TreePuzzle::allGreen() {
     bool isgreen = true;
-    foreach(std::string s, boxes)
-    {
-        if(getComponent(s)->getColor() != sf::Color::Green)
-        {
+
+    foreach(std::string s, boxes) {
+        if (getComponent(s)->getColor() != sf::Color::Green) {
             isgreen = false;
         }
     }
 
+
     return isgreen;
 }
 
-void TreePuzzle::endGameExplosion()
-{
-    for (int i = 0; i< 500; i++)
-    {
-        addComponent("WIN",4,10,10, rand()%500, rand()%500, b2_dynamicBody);
+void TreePuzzle::endGameExplosion() {
+    for (int i = 0; i < 500; i++) {
+        addComponent("WIN", 4, 10, 10, rand() % 500, rand() % 500, b2_dynamicBody);
     }
 
-        int i = 0;
-        while(i<100000)
-        {
-        foreach (sprite2dObject* sp, components)
-        {
-            sp->changeColor(sf::Color(rand()%200+50, rand()%200+50, rand()%200+50, 255));
+    int i = 0;
 
-            if(i%4 == 0)
-            { sp->applyAngularForce(sprite2dObject::right, rand()%500);}
-            else if(i%3==0)
-            {sp->applyAngularForce(sprite2dObject::left, rand()%500);}
-            else if(i%2==0)
-            {sp->moveBody(sprite2dObject::up, rand()%100);}
-            else
-            {sp->moveBody(sprite2dObject::down, rand()%100);}
+    while (i < 100000) {
+        foreach(sprite2dObject * sp, components) {
+            sp->changeColor(sf::Color(rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50, 255));
+
+            if (i % 4 == 0) {
+                sp->applyAngularForce(sprite2dObject::right, rand() % 500);
+            } else if (i % 3 == 0) {
+                sp->applyAngularForce(sprite2dObject::left, rand() % 500);
+            } else if (i % 2 == 0) {
+                sp->moveBody(sprite2dObject::up, rand() % 100);
+            } else {
+                sp->moveBody(sprite2dObject::down, rand() % 100);
+            }
+
             i++;
         }
-        }
+    }
 }
 
 /*
