@@ -36,12 +36,12 @@ StudWin::~StudWin() {
 void StudWin::setupLevels() {
     puzzles.push_back(new StackPuzzle(size()));
     puzzles.push_back(new ArrayPuzzle(size()));
-    puzzles.push_back(new TreePuzzle(size()));
     puzzles.push_back(new ListPuzzle(size()));
-    ui->listWidget->addItem("stack");
-    ui->listWidget->addItem("array");
-    ui->listWidget->addItem("tree");
-    ui->listWidget->addItem("list");
+    puzzles.push_back(new TreePuzzle(size()));
+    ui->listWidget->addItem("Stack Puzzle");
+    ui->listWidget->addItem("Array Puzzle");
+    ui->listWidget->addItem("List Puzzle");
+    ui->listWidget->addItem("Tree Puzzle");
 }
 
 std::vector<bool> StudWin::getSolvedList() {
