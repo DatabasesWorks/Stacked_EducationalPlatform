@@ -45,15 +45,18 @@ void StackPuzzle::generateStackSetWithAnswer(){
 
     for(int i =0; i < 5; i++){
         if(facts.size()>1){
-        if(i == pos){// there are at least two factors for the number, :) as long as the numbers aren't huge we will be ok
-            generateStackPiece(stacklocation,0-i*20,facts.back());
-            facts.pop_back();
-        }else if(i == pos2){
-            generateStackPiece(stacklocation,0-i*20,facts.back());
-            facts.pop_back();
-        }} else{
-            generateStackPiece(stacklocation,0-i*20);
-        }
+            if(i == pos){// there are at least two factors for the number, :) as long as the numbers aren't huge we will be ok
+               generateStackPiece(stacklocation,0-i*20,facts.back());
+               facts.pop_back();
+            }else if(i == pos2){
+               generateStackPiece(stacklocation,0-i*20,facts.back());
+               facts.pop_back();
+            }else{
+                generateStackPiece(stacklocation,0-i*20);
+            }
+         } else{
+              generateStackPiece(stacklocation,0-i*20);
+         }
     }
 }
 
