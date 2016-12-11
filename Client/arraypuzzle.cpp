@@ -104,6 +104,7 @@ void ArrayPuzzle::runAction(Qt::Key key){
                     int x = getComponent("equation_box", false)->getBody()->GetPosition().x;
                     int y = getComponent("equation_box", false)->getBody()->GetPosition().y;
                     explodeAtPoint(x, y, hulkGreen);
+                    this->isSolved = true;
                 }
                 else{
                     getComponent("question_2",false)->setTextColor(sf::Color::Red);

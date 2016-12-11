@@ -93,3 +93,7 @@ void StudWin::on_checkBox_stateChanged(int arg1) {
         }
     }
 }
+
+std::vector<bool> StudWin::getUpdatedPuzzles(){
+
+}

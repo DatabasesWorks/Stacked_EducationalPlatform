@@ -23,6 +23,7 @@ public:
     explicit StudWin(QWidget *parent = 0);
     ~StudWin();
     std::vector<bool> getSolvedList();
+    std::vector<bool> getUpdatedPuzzles();
 
 //    void setMainGameWidget(QWidget *widget);
 
@@ -41,6 +42,7 @@ private:
     PuzzleWindow* pw;
     void setupLevels();
     std::vector<Puzzle*> puzzles;
+
 };
 
 #endif // STUDWIN_H
