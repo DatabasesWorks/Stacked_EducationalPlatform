@@ -14,7 +14,7 @@ StudWin::StudWin(QWidget *parent) :
     ui->userLabel->setText("Welcome: TestUser");
     setupLevels();
     pw->setPuzzle(puzzles.front());
-    pw->setFocus();
+  //  pw->setFocus();
     QGridLayout *lay = new QGridLayout(this);
     lay->addWidget(pw);
     ui->mainGameWidget->setLayout(lay);
@@ -66,6 +66,10 @@ void StudWin::on_hideButton_clicked() {
         levelshow = true;
     }
 }
+
+
+
+
 
 //Move to controller?
 void StudWin::on_logoutButton_clicked() {

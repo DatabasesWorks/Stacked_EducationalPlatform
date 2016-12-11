@@ -26,7 +26,8 @@ TeachWin::~TeachWin() {
 }
 
 void TeachWin::on_logoutButton_clicked() {
-    Client *par = (Client *)this->parentWidget();
+
+    Client *par = client;
     UserSocket sock(sf::IpAddress::LocalHost, 11777,par->getSessionId());
     sock.deauthenticate();
     par->setCurrentPage("login");
@@ -34,7 +35,7 @@ void TeachWin::on_logoutButton_clicked() {
 
 void TeachWin::updateStudents() {
     ui->listWidget->clear();
-    Client *par = (Client *)this->parentWidget();
+    Client *par = client;
     QVector<QString> students = par->getStudents("class");
 
     for (int i = 0; i < students.length(); i++) {

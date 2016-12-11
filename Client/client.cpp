@@ -21,16 +21,18 @@ Client::Client(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Client) {
     ui->setupUi(this);
+
     QObject::connect(&timer,&QTimer::timeout,this,&Client::autosave);
     //move the window to the center of the screen
     move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
+    widget.addWidget(new LoginWin(this,nullptr));
     timer.start(30000); //every 30 seconds or so
-    widgets.push_back(new LoginWin(this,nullptr));
-    widgets.push_back(new StudWin(this,nullptr));
-    widgets.push_back(new TeachWin(this,nullptr));
-    widgets.push_back(new StudReg(this,nullptr));
-    widgets.push_back(new TeachReg(this,nullptr));
-      this->setStyleSheet("background-color: black; color: white");
+    widget.addWidget(new StudWin(this,nullptr));
+    widget.addWidget(new TeachWin(this,nullptr));
+    widget.addWidget(new StudReg(this,nullptr));
+    widget.addWidget(new TeachReg(this,nullptr));
+    this->setStyleSheet("background-color: black; color: white");
+
     check = true;
 }
 
@@ -54,10 +56,9 @@ Client::~Client() {
 
 //TODO: Move this all to controller later?
 void Client::setCurrentPage(QString s) {
-
     if(check.is_lock_free()&&check){
         check = false;
-
+        this->setCentralWidget(&widget);
         if (s == "login") {
             activeWidget = 0;
         } else if (s == "studwin") {
@@ -70,18 +71,9 @@ void Client::setCurrentPage(QString s) {
         } else if (s == "teachreg") {
             activeWidget = 4;
         }
-
-
-
-        int count = 0;
-        for(auto it = widgets.begin(); it < widgets.end(); it++){
-            if(count == activeWidget){
-                this->centralWidget()->setParent(0); // Preserve current central widget
-                setCentralWidget(*it);
-            }
-
-           count++;
-        }
+        widget.setCurrentIndex(activeWidget);
+        widget.currentWidget()->setFocus();
+        widget.currentWidget()->activateWindow();
         check = true;
     }
 }
@@ -89,7 +81,7 @@ void Client::setCurrentPage(QString s) {
 void Client::autosave(){
     if(activeWidget == 1&&sessionid!=""){
         UserSocket sock(sf::IpAddress::LocalHost, 11777, sessionid);
-        StudWin * win = static_cast<StudWin*>(widgets[activeWidget]);
+        StudWin * win = static_cast<StudWin*>(widget.widget(1));
         std::vector<bool> solvedlist = win->getSolvedList();
         int index = 0;
         for(auto it = solvedlist.begin(); it < solvedlist.end(); it++){
@@ -120,13 +112,12 @@ bool Client::sendLogin(QString user, QString pass) {
     //send payload and parse payload to determine if teach/student
     bool teach = false;
     if (teach) {
-         centralWidget()->setParent(0); // Preserve current central widget
-         setCentralWidget(widgets[2]);
-          static_cast<TeachWin*>(widgets[2])->setCurrentUsername(QString::fromStdString(username));
+          setCurrentPage("teachwin");
+
+          static_cast<TeachWin*>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
     } else {
-         centralWidget()->setParent(0); // Preserve current central widget
-         setCentralWidget(widgets[1]);
-         static_cast<StudWin*>(widgets[1])->setCurrentUsername(QString::fromStdString(username));
+        setCurrentPage("studwin");
+        static_cast<StudWin*>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
     }
 
     return true;
@@ -143,8 +134,7 @@ int Client::sendReg(QString data) {
         return 2;
     }
 
-    centralWidget()->setParent(0); // Preserve current central widget
-    setCentralWidget(widgets[0]);
+    setCurrentPage("login");
     return 0;
 }
 
@@ -159,35 +149,28 @@ QVector<QString> Client::getStudents(QString) { // still unimplemented
 }
 
 //UI debug individual pages
-void Client::on_pushButton_clicked() {
-    centralWidget()->setParent(0); // Preserve current central widget
-    setCentralWidget(widgets[0]);
-}
+void Client::loginWindow() {
+    setCurrentPage("login");
+   }
 
-void Client::on_pushButton_2_clicked() {
-    centralWidget()->setParent(0); // Preserve current central widget
-    setCentralWidget(widgets[1]);
+void Client::studentWindow() {
+    setCurrentPage("studwin");
 }
 
 std::string Client::getSessionId(){
    return sessionid;
 }
 
-void Client::on_pushButton_3_clicked() {
-    centralWidget()->setParent(0); // Preserve current central widget
-     setCentralWidget(widgets[2]);
+void Client::teacherWindow() {
+    setCurrentPage("teachwin");
 }
 
-void Client::on_pushButton_4_clicked() {
-    centralWidget()->setParent(0); // Preserve current central widget
-
-     setCentralWidget(widgets[3]);
+void Client::studentRegistrationed() {
+    setCurrentPage("studreg");
 }
 
-void Client::on_pushButton_5_clicked() {
-    centralWidget()->setParent(0); // Preserve current central widget
-
-    setCentralWidget(widgets[4]);
+void Client::teacherRegistration() {
+    setCurrentPage("teachreg");
 }
 
 void Client::on_pushButton_6_clicked() {

@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include <usersocket.h>
 #include <puzzlewindow.h>
+#include <QStackedWidget>
 
 namespace Ui {
 class Client;
@@ -17,6 +18,7 @@ class Client : public QMainWindow
     Q_OBJECT
 
 public:
+    QStackedWidget widget;
     explicit Client(QWidget *parent = 0);
     void setCurrentPage(QString);
     bool sendLogin(QString user, QString pass);

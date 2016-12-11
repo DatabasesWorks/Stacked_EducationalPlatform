@@ -23,13 +23,13 @@ TeachReg::~TeachReg() {
 }
 
 void TeachReg::on_cancelButton_clicked() {
-    Client *par = (Client *)this->parentWidget();
+    Client *par = client;
 
     par->setCurrentPage("login");
 }
 
 void TeachReg::on_regButton_clicked() {
-    Client *par = (Client *)this->parentWidget();
+    Client *par = client;
     QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",1," + ui->dobEntry->text();
     int x = par->sendReg(data);
 
