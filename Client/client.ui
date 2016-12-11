@@ -196,6 +196,22 @@
      <string>Generate Student Report</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>5</y>
+      <width>271</width>
+      <height>571</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="style.qrc">:/rc/gradientLogo.png</pixmap>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>pushButton</zorder>
    <zorder>pushButton_2</zorder>
@@ -208,9 +224,12 @@
    <zorder>label_5</zorder>
    <zorder>label_6</zorder>
    <zorder>pushButton_7</zorder>
+   <zorder>label_7</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="style.qrc"/>
+ </resources>
  <connections/>
 </ui>
