@@ -12,14 +12,12 @@ TeachReg::TeachReg(QWidget *parent) :
     //this->setStyleSheet("background-color: black; color: white;");
 }
 
-TeachReg::TeachReg(Client *client, QWidget* parent) : TeachReg(parent){
-     this->client=client;
+TeachReg::TeachReg(Client *client, QWidget *parent) : TeachReg(parent) {
+    this->client = client;
 }
-
 
 TeachReg::~TeachReg() {
     delete ui;
-
 }
 
 void TeachReg::on_cancelButton_clicked() {

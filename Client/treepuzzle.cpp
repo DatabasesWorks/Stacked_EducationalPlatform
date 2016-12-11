@@ -91,8 +91,8 @@ TreePuzzle::TreePuzzle(QSize size) : Puzzle(size) {
 
     std::stringstream ss;
     ss << "To solve this puzzle" << std::endl <<
-          "Click and drag the boxes above" << std::endl
-          <<"to construct a balanced binary tree." << std::endl;
+        "Click and drag the boxes above" << std::endl
+       << "to construct a balanced binary tree." << std::endl;
 
 
     std::string text = ss.str();
@@ -201,7 +201,6 @@ void TreePuzzle::updateContact() {
 
     //Endgame check
     if (allGreen()) {
-
         endGameExplosion();
     }
 }
@@ -224,32 +223,32 @@ void TreePuzzle::endGameExplosion() {
     treetime.start(420);
     QObject::disconnect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));
     QObject::connect(&treetime, SIGNAL(timeout()), this, SLOT(chaos()));
+
     for (int i = 0; i < 240; i++) {
-        addComponent("WIN", i%10+2, 10, 10, rand() % 400, rand() % 200, b2_dynamicBody);
+        addComponent("WIN", i % 10 + 2, 10, 10, rand() % 400, rand() % 200, b2_dynamicBody);
     }
-
-
 }
 
 void TreePuzzle::chaos() {
     int i = 0;
-        foreach(sprite2dObject * sp, components) {
-            sp->changeColor(sf::Color(rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50, 255));
-            sp->getBody()->SetType(b2_dynamicBody);
-            if (i % 4 == 0) {
-                sp->applyAngularForce(sprite2dObject::right, rand() % 500);
-            } else if (i % 3 == 0) {
-                sp->applyAngularForce(sprite2dObject::left, rand() % 500);
-            } else if (i % 2 == 0) {
-                sp->moveBody(sprite2dObject::up, rand() % 100);
-            } else {
-                sp->moveBody(sprite2dObject::down, rand() % 100);
-            }
 
-            i++;
+    foreach(sprite2dObject * sp, components) {
+        sp->changeColor(sf::Color(rand() % 200 + 50, rand() % 200 + 50, rand() % 200 + 50, 255));
+        sp->getBody()->SetType(b2_dynamicBody);
+
+        if (i % 4 == 0) {
+            sp->applyAngularForce(sprite2dObject::right, rand() % 500);
+        } else if (i % 3 == 0) {
+            sp->applyAngularForce(sprite2dObject::left, rand() % 500);
+        } else if (i % 2 == 0) {
+            sp->moveBody(sprite2dObject::up, rand() % 100);
+        } else {
+            sp->moveBody(sprite2dObject::down, rand() % 100);
         }
-}
 
+        i++;
+    }
+}
 
 /*
  * TREEE PUZZLE SOLUTION OUTLINE:

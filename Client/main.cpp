@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     //There may be better way to get directory
     Q_INIT_RESOURCE(sprites);
 
-    Client * w = new Client;
+    Client *w = new Client;
     w->show();
 
     return a.exec();

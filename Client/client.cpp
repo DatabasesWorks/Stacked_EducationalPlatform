@@ -21,24 +21,24 @@ Client::Client(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Client) {
     ui->setupUi(this);
-    QObject::connect(ui->pushButton,&QPushButton::clicked, this,&Client::loginWindow);
-    QObject::connect(ui->pushButton_2,&QPushButton::clicked, this,&Client::studentWindow);
-    QObject::connect(ui->pushButton_3,&QPushButton::clicked, this,&Client::teacherWindow);
-    QObject::connect(ui->pushButton_3,&QPushButton::clicked, this,&Client::studentRegistration);
-    QObject::connect(ui->pushButton_4,&QPushButton::clicked, this,&Client::teacherRegistration);
-    QObject::connect(ui->pushButton_7,&QPushButton::clicked, this,&Client::on_pushButton_7_clicked);
+    QObject::connect(ui->pushButton, &QPushButton::clicked, this, &Client::loginWindow);
+    QObject::connect(ui->pushButton_2, &QPushButton::clicked, this, &Client::studentWindow);
+    QObject::connect(ui->pushButton_3, &QPushButton::clicked, this, &Client::teacherWindow);
+    QObject::connect(ui->pushButton_3, &QPushButton::clicked, this, &Client::studentRegistration);
+    QObject::connect(ui->pushButton_4, &QPushButton::clicked, this, &Client::teacherRegistration);
+    QObject::connect(ui->pushButton_7, &QPushButton::clicked, this, &Client::on_pushButton_7_clicked);
 
 
-    QObject::connect(&timer,&QTimer::timeout,this,&Client::autosave);
+    QObject::connect(&timer, &QTimer::timeout, this, &Client::autosave);
     //move the window to the center of the screen
     move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
-    widget.addWidget(new LoginWin(this,nullptr));
+    widget.addWidget(new LoginWin(this, nullptr));
     timer.start(30000); //every 30 seconds or so
-    widget.addWidget(new StudWin(this,nullptr));
-    widget.addWidget(new TeachWin(this,nullptr));
+    widget.addWidget(new StudWin(this, nullptr));
+    widget.addWidget(new TeachWin(this, nullptr));
 
-    widget.addWidget(new StudReg(this,nullptr));
-    widget.addWidget(new TeachReg(this,nullptr));
+    widget.addWidget(new StudReg(this, nullptr));
+    widget.addWidget(new TeachReg(this, nullptr));
     this->setStyleSheet("background-color: black; color: white");
 
     check = true;
@@ -46,39 +46,32 @@ Client::Client(QWidget *parent) :
 
 Client::~Client() {
     delete ui;
-    try{
-        UserSocket sock(sf::IpAddress::LocalHost, 11777,getSessionId());
+    try {
+        UserSocket sock(sf::IpAddress::LocalHost, 11777, getSessionId());
         sock.deauthenticate();
-    }catch(std::exception){
-
+    } catch (std::exception) {
     }
 }
 
-
-
-
-
-
-
-
-
 //TODO: Move this all to controller later?
 void Client::setCurrentPage(QString s) {
-    if(check.is_lock_free()&&check){
+    if (check.is_lock_free() && check) {
         check = false;
         this->setCentralWidget(&widget);
+
         if (s == "login") {
             activeWidget = 0;
         } else if (s == "studwin") {
             activeWidget = 1;
         } else if (s == "teachwin") {
             activeWidget = 2;
-            static_cast<TeachWin*>(widget.widget(activeWidget))->updateStudents();
+            static_cast<TeachWin *>(widget.widget(activeWidget))->updateStudents();
         } else if (s == "studreg") {
             activeWidget = 3;
         } else if (s == "teachreg") {
             activeWidget = 4;
         }
+
         widget.setCurrentIndex(activeWidget);
         widget.currentWidget()->setFocus();
         widget.currentWidget()->activateWindow();
@@ -87,25 +80,27 @@ void Client::setCurrentPage(QString s) {
     }
 }
 
-void Client::autosave(){
-    if(activeWidget == 1&&sessionid!=""){
+void Client::autosave() {
+    if (activeWidget == 1 && sessionid != "") {
         UserSocket sock(sf::IpAddress::LocalHost, 11777, sessionid);
-        StudWin * win = static_cast<StudWin*>(widget.widget(1));
+        StudWin *win = static_cast<StudWin *>(widget.widget(1));
         std::vector<bool> solvedlist = win->getSolvedList();
         int index = 0;
-        for(auto it = solvedlist.begin(); it < solvedlist.end(); it++){
+
+        for (auto it = solvedlist.begin(); it < solvedlist.end(); it++) {
             bool i = *it;
-             // send to the client
-            if(i){
+
+            // send to the client
+            if (i) {
                 std::stringstream ss;
                 ss << username << "," << index;
-                sock.sendPayload("puzzlesolved",ss.str());
+                sock.sendPayload("puzzlesolved", ss.str());
             }
+
             index++;
         }
     }
 }
-
 
 bool Client::sendLogin(QString user, QString pass) {
     try {
@@ -120,12 +115,13 @@ bool Client::sendLogin(QString user, QString pass) {
     }
     //send payload and parse payload to determine if teach/student
     bool teach = false;
+
     if (teach) {
-          setCurrentPage("teachwin");
-          static_cast<TeachWin*>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
+        setCurrentPage("teachwin");
+        static_cast<TeachWin *>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
     } else {
         setCurrentPage("studwin");
-        static_cast<StudWin*>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
+        static_cast<StudWin *>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
     }
 
     return true;
@@ -165,8 +161,8 @@ void Client::studentWindow() {
     setCurrentPage("studwin");
 }
 
-std::string Client::getSessionId(){
-   return sessionid;
+std::string Client::getSessionId() {
+    return sessionid;
 }
 
 void Client::teacherWindow() {
@@ -181,15 +177,15 @@ void Client::teacherRegistration() {
     setCurrentPage("teachreg");
 }
 
-void Client::on_pushButton_7_clicked()
-{
+void Client::on_pushButton_7_clicked() {
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
-    try{
+
+    try {
         sock.authenticate("averysecretusername", "averysecretpassword");
         qDebug() << "tried to send payload";
         Message msg = sock.sendPayload("studentlist", "");
         QDesktopServices::openUrl(QUrl(QString::fromStdString(msg.payload)));
-    }catch(...){
+    } catch (...) {
         qDebug() << "Error 404 God not found";
     }
 }

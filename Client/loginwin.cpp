@@ -10,9 +10,8 @@ LoginWin::LoginWin(QWidget *parent) :
     //this->setStyleSheet("background-color: black; color: white;");
 }
 
-
-LoginWin::LoginWin(Client *client, QWidget* parent) : LoginWin(parent){
-     this->client=client;
+LoginWin::LoginWin(Client *client, QWidget *parent) : LoginWin(parent) {
+    this->client = client;
 }
 
 LoginWin::~LoginWin() {
@@ -31,15 +30,16 @@ void LoginWin::on_loginButton_clicked() {
 
 void LoginWin::on_regStud_clicked() {
     Client *par = client;
+
     par->setCurrentPage("studreg");
 }
 
 void LoginWin::on_regTeach_clicked() {
     Client *par = client;
+
     par->setCurrentPage("teachreg");
 }
 
-void LoginWin::on_passEntry_returnPressed()
-{
+void LoginWin::on_passEntry_returnPressed() {
     on_loginButton_clicked();
 }

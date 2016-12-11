@@ -15,34 +15,31 @@ StudReg::StudReg(QWidget *parent) :
     //this->setStyleSheet("background-color: black; color: white;");
 }
 
-StudReg::StudReg(Client *client, QWidget* parent) : StudReg(parent){
-     this->client=client;
+StudReg::StudReg(Client *client, QWidget *parent) : StudReg(parent) {
+    this->client = client;
 }
-
-
 
 StudReg::~StudReg() {
     delete ui;
 }
 
 void StudReg::on_cancelButton_clicked() {
-
     Client *par = client;
 
     par->setCurrentPage("login");
 }
 
 void StudReg::on_regButton_clicked() {
-    if(!Validate(ui->userEntry->text())){
+    if (!Validate(ui->userEntry->text())) {
         ui->userEntry->setText("bad chars");
         //make an error dialog here
-    }else if(!Validate(ui->passEntry->text())){
-         ui->passEntry->setText("bad chars");
-         //make an error dialog here
+    } else if (!Validate(ui->passEntry->text())) {
+        ui->passEntry->setText("bad chars");
+        //make an error dialog here
     }
 
     Client *par = client;
-    QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",0,"+ ui->dobEntry->text();
+    QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",0," + ui->dobEntry->text();
     int x = par->sendReg(data);
 
     switch (x) {
@@ -66,8 +63,8 @@ void StudReg::on_regButton_clicked() {
 }
 
 //alphanumeric 4-16
-bool StudReg::Validate(QString s){
+bool StudReg::Validate(QString s) {
     QRegExp re("[A-Za-z0-9]{4,16}");
+
     return re.exactMatch(s);
 }
-

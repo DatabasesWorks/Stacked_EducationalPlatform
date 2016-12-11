@@ -12,23 +12,20 @@ TeachWin::TeachWin(QWidget *parent) :
     ui->classLabel->setText("Class: CS3505");
     ui->userLabel->setText("Welcome: TestUser");
     //this->setStyleSheet("background-color: black; color: white;");
-
 }
 
-
-TeachWin::TeachWin(Client *client, QWidget* parent) : TeachWin(parent){
-     this->client=client;
+TeachWin::TeachWin(Client *client, QWidget *parent) : TeachWin(parent) {
+    this->client = client;
 }
-
 
 TeachWin::~TeachWin() {
     delete ui;
 }
 
 void TeachWin::on_logoutButton_clicked() {
-
     Client *par = client;
-    UserSocket sock(sf::IpAddress::LocalHost, 11777,par->getSessionId());
+    UserSocket sock(sf::IpAddress::LocalHost, 11777, par->getSessionId());
+
     sock.deauthenticate();
     par->setCurrentPage("login");
 }

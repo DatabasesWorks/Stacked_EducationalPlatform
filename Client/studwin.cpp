@@ -14,18 +14,16 @@ StudWin::StudWin(QWidget *parent) :
     ui->userLabel->setText("Welcome: TestUser");
     setupLevels();
     pw->setPuzzle(puzzles.front());
-  //  pw->setFocus();
+    //  pw->setFocus();
     QGridLayout *lay = new QGridLayout(this);
     lay->addWidget(pw);
     ui->mainGameWidget->setLayout(lay);
     //this->setStyleSheet("background-color: black; color: white;");
 }
 
-
-StudWin::StudWin(Client *client, QWidget* parent) : StudWin(parent){
-     this->client=client;
+StudWin::StudWin(Client *client, QWidget *parent) : StudWin(parent) {
+    this->client = client;
 }
-
 
 StudWin::~StudWin() {
     delete ui;
@@ -46,13 +44,15 @@ void StudWin::setupLevels() {
     ui->listWidget->addItem("list");
 }
 
-std::vector<bool> StudWin::getSolvedList(){
+std::vector<bool> StudWin::getSolvedList() {
     std::vector<bool> solvedlist;
-    for(auto it = puzzles.begin(); it < puzzles.end(); it++){
-        Puzzle * puzz = *it;
+
+    for (auto it = puzzles.begin(); it < puzzles.end(); it++) {
+        Puzzle *puzz = *it;
         solvedlist.push_back(puzz->solved());
         return solvedlist;
     }
+
     //return nullptr;
 }
 
@@ -66,27 +66,26 @@ void StudWin::on_hideButton_clicked() {
         ui->hideButton->setText(QString("Hide Levels"));
         levelshow = true;
     }
-
 }
-
 
 //Move to controller?
 void StudWin::on_logoutButton_clicked() {
     Client *par = client;
+
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(static_cast<QWidget*>(this), "Really QUIT??","Quit?", QMessageBox::Yes|QMessageBox::No);
+    reply = QMessageBox::question(static_cast<QWidget *>(this), "Really QUIT??", "Quit?", QMessageBox::Yes | QMessageBox::No);
+
     if (reply == QMessageBox::Yes) {
         QApplication::quit();
-        UserSocket sock(sf::IpAddress::LocalHost, 11777,par->getSessionId());
-        try{
+        UserSocket sock(sf::IpAddress::LocalHost, 11777, par->getSessionId());
+        try {
             sock.deauthenticate();
-        }catch(authenticationexception ex){
-
+        } catch (authenticationexception ex) {
         }
     } else {
-
-      //recover
+        //recover
     }
+
     //emit signal to release sources?
 }
 
@@ -115,23 +114,25 @@ void StudWin::on_checkBox_stateChanged(int arg1) {
     }
 }
 
-std::vector<bool> StudWin::getUpdatedPuzzles(){
+std::vector<bool> StudWin::getUpdatedPuzzles() {
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
+
     sock.authenticate("", "");
     Message msg = sock.sendPayload("getSolvedPuzzles", "");
     QVector<QString> completedPuzzles = QString::fromStdString(msg.payload).split(",").toVector();
     return convertStringsToBools(completedPuzzles);
-
 }
 
-std::vector<bool> StudWin::convertStringsToBools(QVector<QString> strBools){
+std::vector<bool> StudWin::convertStringsToBools(QVector<QString> strBools) {
     std::vector<bool>bools;
     bool tempBool;
-    for(int i = 0; i < strBools.length(); i++){
+
+    for (int i = 0; i < strBools.length(); i++) {
         std::istringstream is(strBools.at(i).toStdString());
-        is>>std::boolalpha >> tempBool;
+        is >> std::boolalpha >> tempBool;
         bools.push_back(tempBool);//make sure order is right
     }
+
     return bools;
 }
 
