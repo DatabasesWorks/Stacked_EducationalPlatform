@@ -18,7 +18,7 @@ StudWin::StudWin(QWidget *parent) :
     QGridLayout *lay = new QGridLayout(this);
     lay->addWidget(pw);
     ui->mainGameWidget->setLayout(lay);
-    this->setStyleSheet("background-color: lightgray; color: black;");
+    //this->setStyleSheet("background-color: black; color: white;");
 }
 
 StudWin::~StudWin() {

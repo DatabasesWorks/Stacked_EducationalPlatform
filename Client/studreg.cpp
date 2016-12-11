@@ -12,7 +12,7 @@ StudReg::StudReg(QWidget *parent) :
     ui->setupUi(this);
     //maybe get rid of this
     ui->passEntry->setEchoMode(QLineEdit::Password);
-    this->setStyleSheet("background-color: lightgray; color: black;");
+    //this->setStyleSheet("background-color: black; color: white;");
 }
 
 StudReg::~StudReg() {

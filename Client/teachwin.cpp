@@ -11,7 +11,7 @@ TeachWin::TeachWin(QWidget *parent) :
     //Query DB and get this info
     ui->classLabel->setText("Class: CS3505");
     ui->userLabel->setText("Welcome: TestUser");
-    this->setStyleSheet("background-color: lightgray; color: black;");
+    //this->setStyleSheet("background-color: black; color: white;");
 
 }
 
