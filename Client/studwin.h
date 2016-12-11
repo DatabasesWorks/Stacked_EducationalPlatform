@@ -10,6 +10,7 @@
 #include <treepuzzle.h>
 #include <arraypuzzle.h>
 #include <listpuzzle.h>
+#include <sstream>
 
 namespace Ui {
 class StudWin;
@@ -42,6 +43,7 @@ private:
     PuzzleWindow* pw;
     void setupLevels();
     std::vector<Puzzle*> puzzles;
+    std::vector<bool> convertStringsToBools(QVector<QString>);
 
 };
 

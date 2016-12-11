@@ -96,4 +96,22 @@ void StudWin::on_checkBox_stateChanged(int arg1) {
 
 std::vector<bool> StudWin::getUpdatedPuzzles(){
 
+    UserSocket sock(sf::IpAddress::LocalHost, 11777);
+
+    sock.authenticate("", "");
+    Message msg = sock.sendPayload("getSolvedPuzzles", "");
+    QVector<QString> completedPuzzles = QString::fromStdString(msg.payload).split(",").toVector();
+    return convertStringsToBools(completedPuzzles);
+
+}
+
+std::vector<bool> StudWin::convertStringsToBools(QVector<QString> strBools){
+    std::vector<bool>bools;
+    bool tempBool;
+    for(int i = 0; i < strBools.length(); i++){
+        std::istringstream is(strBools.at(i).toStdString());
+        is>>std::boolalpha >> tempBool;
+        bools.push_back(tempBool);//make sure order is right
+    }
+    return bools;
 }
