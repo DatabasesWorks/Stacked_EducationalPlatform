@@ -25,12 +25,12 @@ Client::Client(QWidget *parent) :
     //move the window to the center of the screen
     move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
     timer.start(30000); //every 30 seconds or so
-
     widgets.push_back(new LoginWin(this,nullptr));
     widgets.push_back(new StudWin(this,nullptr));
     widgets.push_back(new TeachWin(this,nullptr));
     widgets.push_back(new StudReg(this,nullptr));
     widgets.push_back(new TeachReg(this,nullptr));
+      this->setStyleSheet("background-color: black; color: white");
     check = true;
 }
 
@@ -122,9 +122,11 @@ bool Client::sendLogin(QString user, QString pass) {
     if (teach) {
          centralWidget()->setParent(0); // Preserve current central widget
          setCentralWidget(widgets[2]);
+          static_cast<TeachWin*>(widgets[2])->setCurrentUsername(QString::fromStdString(username));
     } else {
          centralWidget()->setParent(0); // Preserve current central widget
          setCentralWidget(widgets[1]);
+         static_cast<StudWin*>(widgets[1])->setCurrentUsername(QString::fromStdString(username));
     }
 
     return true;

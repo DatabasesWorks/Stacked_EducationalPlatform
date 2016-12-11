@@ -24,10 +24,13 @@ HEADERS += \
 #osx
 macx: LIBS += -L"/usr/local/lib"
 macx: LIBS += -L"/usr/local/mysql/lib"
+macx: LIBS += -L"/usr/local/Cellar/mysql/5.7.16/lib"
 macx: INCLUDEPATH += "/usr/local/include"
 macx: INCLUDEPATH += "/usr/local/mysql/include"
+macx: INCLUDEPATH += "/usr/local/Cellar/mysql/5.7.16/include/mysql"
 macx: DEPENDPATH += "/usr/local/include"
 macx: DEPENDPATH += "/usr/local/mysql/include"
+macx: DEPENDPATH += "/usr/local/Cellar/mysql/5.7.16/include"
 
 #this should work for a shared library on unix as well.
 linux: LIBS += -L"/usr/lib"

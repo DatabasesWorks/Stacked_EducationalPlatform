@@ -7,6 +7,7 @@ LoginWin::LoginWin(QWidget *parent) :
     ui(new Ui::LoginWin) {
     ui->setupUi(this);
     ui->passEntry->setEchoMode(QLineEdit::Password);
+    //this->setStyleSheet("background-color: black; color: white;");
 }
 
 

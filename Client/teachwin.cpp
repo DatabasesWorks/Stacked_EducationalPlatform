@@ -11,7 +11,7 @@ TeachWin::TeachWin(QWidget *parent) :
     //Query DB and get this info
     ui->classLabel->setText("Class: CS3505");
     ui->userLabel->setText("Welcome: TestUser");
-
+    //this->setStyleSheet("background-color: black; color: white;");
 
 }
 
@@ -52,4 +52,9 @@ void TeachWin::on_pushButton_clicked() {
     //remove student from database here
 
     updateStudents();
+}
+
+void TeachWin::setCurrentUsername(QString currentUsername) {
+    this->currentUsername = currentUsername;
+    ui->userLabel->setText("Welcome: " + this->currentUsername);
 }

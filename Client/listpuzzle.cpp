@@ -107,7 +107,7 @@ void ListPuzzle::runAction(Qt::Key key) {
         bool solved = checkSolution();
         if (solved) {
             instructionstream.str("");
-            instructionstream << "WINNER!!!" << std::endl;
+            instructionstream << "Good job!!!" << std::endl;
             b2Vec2 pos4(150,150);
             createInstructions(pos4);
 

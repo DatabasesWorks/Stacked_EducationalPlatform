@@ -19,6 +19,7 @@ public:
     TeachWin(Client * client, QWidget *parent=0);
     explicit TeachWin(QWidget *parent = 0);
     ~TeachWin();
+    void setCurrentUsername(QString currentUsername);
 
 private slots:
     void on_logoutButton_clicked();
@@ -30,6 +31,7 @@ private slots:
 private:
     Ui::TeachWin *ui;
     Client * client;
+    QString currentUsername;
 };
 
 #endif // TEACHWIN_H
