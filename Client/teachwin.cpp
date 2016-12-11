@@ -47,3 +47,8 @@ void TeachWin::on_pushButton_clicked() {
 
     updateStudents();
 }
+
+void TeachWin::setCurrentUsername(QString currentUsername) {
+    this->currentUsername = currentUsername;
+    ui->userLabel->setText("Welcome: " + this->currentUsername);
+}

@@ -25,6 +25,7 @@ public:
     ~StudWin();
     std::vector<bool> getSolvedList();
     std::vector<bool> getUpdatedPuzzles();
+    void setCurrentUsername(QString currentUsername);
 
 //    void setMainGameWidget(QWidget *widget);
 
@@ -44,6 +45,7 @@ private:
     void setupLevels();
     std::vector<Puzzle*> puzzles;
     std::vector<bool> convertStringsToBools(QVector<QString>);
+    QString currentUsername;
 
 };
 

@@ -98,9 +98,13 @@ bool Client::sendLogin(QString user, QString pass) {
     //send payload and parse payload to determine if teach/student
     bool teach = false;
     if (teach) {
-        setCentralWidget(new TeachWin());
+        TeachWin* teachwindow = new TeachWin();
+        setCentralWidget(teachwindow);
+        teachwindow->setCurrentUsername(QString::fromStdString(username));
     } else {
-        setCentralWidget(new StudWin());
+        StudWin* studwindow = new StudWin();
+        setCentralWidget(studwindow);
+        studwindow->setCurrentUsername(QString::fromStdString(username));
     }
 
     return true;

@@ -116,3 +116,8 @@ std::vector<bool> StudWin::convertStringsToBools(QVector<QString> strBools){
     }
     return bools;
 }
+
+void StudWin::setCurrentUsername(QString currentUsername) {
+    this->currentUsername = currentUsername;
+    ui->userLabel->setText("Welcome: " + this->currentUsername);
+}
