@@ -12,6 +12,9 @@
 #include <listpuzzle.h>
 #include <sstream>
 
+#include <QApplication>
+#include <QMessageBox>
+
 namespace Ui {
 class StudWin;
 }

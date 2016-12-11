@@ -53,6 +53,7 @@ std::vector<bool> StudWin::getSolvedList(){
         solvedlist.push_back(puzz->solved());
         return solvedlist;
     }
+    //return nullptr;
 }
 
 void StudWin::on_hideButton_clicked() {
@@ -65,18 +66,27 @@ void StudWin::on_hideButton_clicked() {
         ui->hideButton->setText(QString("Hide Levels"));
         levelshow = true;
     }
+
 }
-
-
-
 
 
 //Move to controller?
 void StudWin::on_logoutButton_clicked() {
     Client *par = client;
-    UserSocket sock(sf::IpAddress::LocalHost, 11777,par->getSessionId());
-    sock.deauthenticate();
-    par->setCurrentPage("login");
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(static_cast<QWidget*>(this), "Really QUIT??","Quit?", QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+        QApplication::quit();
+        UserSocket sock(sf::IpAddress::LocalHost, 11777,par->getSessionId());
+        try{
+            sock.deauthenticate();
+        }catch(authenticationexception ex){
+
+        }
+    } else {
+
+      //recover
+    }
     //emit signal to release sources?
 }
 
@@ -106,9 +116,7 @@ void StudWin::on_checkBox_stateChanged(int arg1) {
 }
 
 std::vector<bool> StudWin::getUpdatedPuzzles(){
-
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
-
     sock.authenticate("", "");
     Message msg = sock.sendPayload("getSolvedPuzzles", "");
     QVector<QString> completedPuzzles = QString::fromStdString(msg.payload).split(",").toVector();

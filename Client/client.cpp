@@ -21,6 +21,13 @@ Client::Client(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Client) {
     ui->setupUi(this);
+    QObject::connect(ui->pushButton,&QPushButton::clicked, this,&Client::loginWindow);
+    QObject::connect(ui->pushButton_2,&QPushButton::clicked, this,&Client::studentWindow);
+    QObject::connect(ui->pushButton_3,&QPushButton::clicked, this,&Client::teacherWindow);
+    QObject::connect(ui->pushButton_3,&QPushButton::clicked, this,&Client::studentRegistration);
+    QObject::connect(ui->pushButton_4,&QPushButton::clicked, this,&Client::teacherRegistration);
+    QObject::connect(ui->pushButton_7,&QPushButton::clicked, this,&Client::on_pushButton_7_clicked);
+
 
     QObject::connect(&timer,&QTimer::timeout,this,&Client::autosave);
     //move the window to the center of the screen
@@ -29,6 +36,7 @@ Client::Client(QWidget *parent) :
     timer.start(30000); //every 30 seconds or so
     widget.addWidget(new StudWin(this,nullptr));
     widget.addWidget(new TeachWin(this,nullptr));
+
     widget.addWidget(new StudReg(this,nullptr));
     widget.addWidget(new TeachReg(this,nullptr));
     this->setStyleSheet("background-color: black; color: white");
@@ -65,7 +73,7 @@ void Client::setCurrentPage(QString s) {
             activeWidget = 1;
         } else if (s == "teachwin") {
             activeWidget = 2;
-            static_cast<TeachWin*>(widgets[2])->updateStudents();
+            static_cast<TeachWin*>(widget.widget(activeWidget))->updateStudents();
         } else if (s == "studreg") {
             activeWidget = 3;
         } else if (s == "teachreg") {
@@ -74,6 +82,7 @@ void Client::setCurrentPage(QString s) {
         widget.setCurrentIndex(activeWidget);
         widget.currentWidget()->setFocus();
         widget.currentWidget()->activateWindow();
+
         check = true;
     }
 }
@@ -113,7 +122,6 @@ bool Client::sendLogin(QString user, QString pass) {
     bool teach = false;
     if (teach) {
           setCurrentPage("teachwin");
-
           static_cast<TeachWin*>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
     } else {
         setCurrentPage("studwin");
@@ -151,7 +159,7 @@ QVector<QString> Client::getStudents(QString) { // still unimplemented
 //UI debug individual pages
 void Client::loginWindow() {
     setCurrentPage("login");
-   }
+}
 
 void Client::studentWindow() {
     setCurrentPage("studwin");
@@ -165,17 +173,12 @@ void Client::teacherWindow() {
     setCurrentPage("teachwin");
 }
 
-void Client::studentRegistrationed() {
+void Client::studentRegistration() {
     setCurrentPage("studreg");
 }
 
 void Client::teacherRegistration() {
     setCurrentPage("teachreg");
-}
-
-void Client::on_pushButton_6_clicked() {
-//    PuzzleWindow pw;
-//    setCentralWidget(new GraphicsObjectTest);
 }
 
 void Client::on_pushButton_7_clicked()
