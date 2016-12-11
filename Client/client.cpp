@@ -30,6 +30,7 @@ Client::Client(QWidget *parent) :
     widgets.push_back(new TeachWin);
     widgets.push_back(new StudReg);
     widgets.push_back(new TeachReg);
+    this->setStyleSheet("background-color: lightgray; color: black");
 }
 
 Client::~Client() {

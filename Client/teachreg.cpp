@@ -8,6 +8,7 @@ TeachReg::TeachReg(QWidget *parent) :
     ui->setupUi(this);
     //maybe get rid of this
     ui->passEntry->setEchoMode(QLineEdit::Password);
+    this->setStyleSheet("background-color: lightgray; color: black;");
 }
 
 TeachReg::~TeachReg() {

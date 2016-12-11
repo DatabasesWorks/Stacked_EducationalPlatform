@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QSize>
 #include <QTimer>
-
+#include <atomic>
 #include <stdlib.h>
 #include <sstream>
 #include <puzzle.h>

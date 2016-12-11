@@ -18,6 +18,7 @@ PuzzleWindow::PuzzleWindow(QWidget *Parent) : GraphicsObject(Parent)
          qApp->desktop()->availableGeometry()
        )
     );
+    this->setStyleSheet("background-color: lightgray; color: black;");
 }
 
 void PuzzleWindow::OnInit()
