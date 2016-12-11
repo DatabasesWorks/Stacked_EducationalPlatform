@@ -182,8 +182,8 @@ std::string DB::regUser(MYSQL *connection, std::string payload) {
 
     //if teach and class present error
     //if student and class not present error
-    if ((mysql_num_rows(result) != 0 && split.at(3) == "1") ||
-        (mysql_num_rows(result) == 0 && split.at(3) == "0")) {
+    if ((mysql_num_rows(result) != 0 && split.at(2) == "1") ||
+        (mysql_num_rows(result) == 0 && split.at(2) == "0")) {
         return "CLASSERROR";
     }
 
