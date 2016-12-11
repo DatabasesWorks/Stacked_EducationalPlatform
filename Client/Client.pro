@@ -59,7 +59,6 @@ SOURCES += main.cpp\
     graphicsobject.cpp \
     arraypuzzle.cpp \
     listpuzzle.cpp \
-    hashtablepuzzle.cpp \
     stackpuzzle.cpp \
     sprite2dobject.cpp \
     puzzlewindow.cpp \
@@ -81,7 +80,6 @@ HEADERS  += client.h \
     exceptions.h \
     arraypuzzle.h \
     listpuzzle.h \
-    hashtablepuzzle.h \
     stackpuzzle.h \
     sprite2dobject.h \
     puzzlewindow.h \
