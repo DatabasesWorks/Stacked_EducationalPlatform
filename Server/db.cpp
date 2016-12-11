@@ -52,12 +52,54 @@ std::string DB::executeCommand(std::string command, std::string payload) {
            return studentlist(connection, payload);
     }
 
+    if (command == "getSolvedPuzzles") {
+        return solvedPuzzles(connection, payload);
+    }
+
     //idk how necessary these are
     // mysql_free_result(result);
     //mysql_close(connection);
 
     //fallback command
     return "Command: " + command + " Not Recognized";
+}
+
+std::string DB::solvedPuzzles(MYSQL *connection, std::string payload) {
+    MYSQL_RES *result;
+    QVector<QString> split = QString::fromStdString(payload).split(",").toVector();
+
+    QString query = "SELECT * FROM users WHERE id=\"" + split.at(0) + "\";";
+    int state = mysql_query(connection, query.toLatin1().data());
+    if (state != 0) {
+        std::cout << mysql_error(connection) << std::endl;
+        return "SQLERROR";
+    }
+    result = mysql_store_result(connection);
+    //check to see if the user exists in the database
+    if (mysql_num_rows(result) != 0) {
+        return "INVALIDUSER";
+    }
+
+    query = " SELECT puzzles.puzzleid FROM `puzzles` INNER JOIN `users` on puzzles.userid = users.id ";
+    query += " WHERE users.id =\"" + split.at(0) + "\"; ";
+
+    //execute
+    state = mysql_query(connection, query.toLatin1().data());
+    result = mysql_store_result(connection);
+
+    if (state != 0) {
+        std::cout << mysql_error(connection) << std::endl;
+        return "SQLERROR";
+    }
+
+    MYSQL_ROW row;
+    QString res= "";
+
+    while((row = mysql_fetch_row(result))) {
+        res += QString(row[0]) + ",";
+    }
+    res.chop(1); //remove last comma
+    return res.toStdString();
 }
 
 std::string DB::authenticate(MYSQL *connection, std::string payload) {
