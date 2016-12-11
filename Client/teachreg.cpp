@@ -1,3 +1,4 @@
+
 #include "teachreg.h"
 #include "ui_teachreg.h"
 #include "client.h"
@@ -9,6 +10,11 @@ TeachReg::TeachReg(QWidget *parent) :
     //maybe get rid of this
     ui->passEntry->setEchoMode(QLineEdit::Password);
 }
+
+TeachReg::TeachReg(Client *client, QWidget* parent) : TeachReg(parent){
+     this->client=client;
+}
+
 
 TeachReg::~TeachReg() {
     delete ui;

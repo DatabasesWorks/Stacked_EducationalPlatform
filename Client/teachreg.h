@@ -2,6 +2,7 @@
 #define TEACHREG_H
 
 #include <QWidget>
+#include <client.h>
 
 namespace Ui {
 class TeachReg;
@@ -13,6 +14,8 @@ class TeachReg : public QWidget
 
 public:
     explicit TeachReg(QWidget *parent = 0);
+    TeachReg(Client * client, QWidget *parent=0);
+
     ~TeachReg();
 
 private slots:
@@ -22,6 +25,7 @@ private slots:
 
 private:
     Ui::TeachReg *ui;
+     Client * client;
 };
 
 #endif // TEACHREG_H

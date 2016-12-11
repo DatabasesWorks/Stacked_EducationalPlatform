@@ -20,6 +20,12 @@ StudWin::StudWin(QWidget *parent) :
     ui->mainGameWidget->setLayout(lay);
 }
 
+
+StudWin::StudWin(Client *client, QWidget* parent) : StudWin(parent){
+     this->client=client;
+}
+
+
 StudWin::~StudWin() {
     delete ui;
 
@@ -62,7 +68,7 @@ void StudWin::on_hideButton_clicked() {
 
 //Move to controller?
 void StudWin::on_logoutButton_clicked() {
-    Client *par = (Client *)this->parentWidget();
+    Client *par = client;
     UserSocket sock(sf::IpAddress::LocalHost, 11777,par->getSessionId());
     sock.deauthenticate();
     par->setCurrentPage("login");

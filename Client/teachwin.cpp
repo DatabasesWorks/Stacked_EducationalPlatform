@@ -15,6 +15,12 @@ TeachWin::TeachWin(QWidget *parent) :
 
 }
 
+
+TeachWin::TeachWin(Client *client, QWidget* parent) : TeachWin(parent){
+     this->client=client;
+}
+
+
 TeachWin::~TeachWin() {
     delete ui;
 }

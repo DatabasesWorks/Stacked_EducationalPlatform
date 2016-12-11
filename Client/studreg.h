@@ -2,6 +2,7 @@
 #define STUDREG_H
 
 #include <QWidget>
+#include <client.h>
 
 namespace Ui {
 class StudReg;
@@ -13,15 +14,16 @@ class StudReg : public QWidget
 
 public:
     explicit StudReg(QWidget *parent = 0);
+    StudReg(Client * client, QWidget *parent=0);
     ~StudReg();
 
 private slots:
     void on_cancelButton_clicked();
-
     void on_regButton_clicked();
 
 private:
     Ui::StudReg *ui;
+     Client * client;
     bool Validate(QString s);
 };
 

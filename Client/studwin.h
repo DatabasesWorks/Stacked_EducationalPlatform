@@ -21,6 +21,8 @@ class StudWin : public QWidget, sf::RenderWindow
 
 public:
     explicit StudWin(QWidget *parent = 0);
+    StudWin(Client * client, QWidget *parent=0);
+
     ~StudWin();
     std::vector<bool> getSolvedList();
 
@@ -35,6 +37,7 @@ private slots:
 
 
 private:
+     Client * client;
     Ui::StudWin *ui;
     sf::Music music;
     bool levelshow;

@@ -32,6 +32,7 @@ private:
     std::string sessionid;
     std::string username;
     Ui::Client *ui;
+    std::atomic_bool check;
     //UserSocket currsock;
     std::vector<QWidget*> widgets;
     unsigned int activeWidget = 0;

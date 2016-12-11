@@ -14,12 +14,19 @@ StudReg::StudReg(QWidget *parent) :
     ui->passEntry->setEchoMode(QLineEdit::Password);
 }
 
+StudReg::StudReg(Client *client, QWidget* parent) : StudReg(parent){
+     this->client=client;
+}
+
+
+
 StudReg::~StudReg() {
     delete ui;
 }
 
 void StudReg::on_cancelButton_clicked() {
-    Client *par = (Client *)this->parentWidget();
+
+    Client *par = client;
 
     par->setCurrentPage("login");
 }
@@ -33,7 +40,7 @@ void StudReg::on_regButton_clicked() {
          //make an error dialog here
     }
 
-    Client *par = (Client *)this->parentWidget();
+    Client *par = client;
     QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",0,"+ ui->dobEntry->text();
     int x = par->sendReg(data);
 
