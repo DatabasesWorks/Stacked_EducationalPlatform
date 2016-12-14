@@ -280,8 +280,13 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>30</pointsize>
+                </font>
+               </property>
                <property name="text">
-                <string>Stack</string>
+                <string>STACK</string>
                </property>
               </widget>
              </item>
@@ -293,8 +298,13 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>30</pointsize>
+                </font>
+               </property>
                <property name="text">
-                <string>Tree</string>
+                <string>TREE</string>
                </property>
               </widget>
              </item>
@@ -306,8 +316,13 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>30</pointsize>
+                </font>
+               </property>
                <property name="text">
-                <string>List</string>
+                <string>LIST</string>
                </property>
               </widget>
              </item>
@@ -319,8 +334,13 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>30</pointsize>
+                </font>
+               </property>
                <property name="text">
-                <string>Array</string>
+                <string>ARRAY</string>
                </property>
               </widget>
              </item>
