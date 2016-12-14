@@ -1,6 +1,7 @@
 #include "loginwin.h"
 #include "ui_loginwin.h"
 #include "client.h"
+#include <QMessageBox>
 
 LoginWin::LoginWin(QWidget *parent) :
     QWidget(parent),
@@ -23,7 +24,9 @@ void LoginWin::on_loginButton_clicked() {
 
     if (!par->sendLogin(ui->userEntry->text(), ui->passEntry->text())) {
         //TODO Make dialog
-        ui->userEntry->setText("INVALID CREDENTIALS");
+        QMessageBox messageBox;
+        messageBox.critical(0,"ERROR", "Invalid Login Credentials");
+        messageBox.setFixedSize(500,200);
         ui->passEntry->setText("");
     }
 }

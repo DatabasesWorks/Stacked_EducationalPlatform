@@ -4,6 +4,7 @@
 #include "ui_studreg.h"
 #include "QGridLayout"
 #include "QPushButton"
+#include <QMessageBox>
 #include <QRegExp>
 
 StudReg::StudReg(QWidget *parent) :
@@ -31,35 +32,37 @@ void StudReg::on_cancelButton_clicked() {
 
 void StudReg::on_regButton_clicked() {
     if (!Validate(ui->userEntry->text())) {
-        ui->userEntry->setText("bad chars");
-        //make an error dialog here
-    } else if (!Validate(ui->passEntry->text())) {
-        ui->passEntry->setText("bad chars");
-        //make an error dialog here
+        QMessageBox messageBox;
+        messageBox.critical(0,"ERROR", "Usernames must be 4+ alphanumeric characters");
+        messageBox.setFixedSize(500,200);
+        ui->userEntry->setText("");
+    }
+    if (!Validate(ui->passEntry->text())) {
+        QMessageBox messageBox;
+        messageBox.critical(0,"ERROR", "Passwords must be 4+ alphanumeric characters");
+        messageBox.setFixedSize(500,200);
+        ui->passEntry->setText("");
     }
 
     Client *par = client;
     QString data = ui->userEntry->text() + "," + ui->passEntry->text() + "," + ui->classEntry->text() + ",0," + ui->dobEntry->text();
     int x = par->sendReg(data);
-
-    switch (x) {
-        case 0: //success
-            return;
-
-        case 1: //user name taken error
-            //TODO Make dialog
-            ui->userEntry->setText("USERNAME TAKEN");
-            ui->passEntry->setText("");
-            ui->classEntry->setText("");
-            break;
-
-        case 2: //class code invalid error
-            //TODO invalid dialog
-            ui->classEntry->setText("CLASS DOES NOT EXIST");
-            ui->passEntry->setText("");
+        //username taken
+        if(x==1){
+            QString error = "Username: " + ui->userEntry->text() + " is already taken";
+            QMessageBox messageBox;
+            messageBox.critical(0,"ERROR", error);
+            messageBox.setFixedSize(500,200);
             ui->userEntry->setText("");
-            break;
-    }
+        }
+        //class code taken
+        else if(x==2){
+            QString error = "Class Code: " + ui->classEntry->text() + " is invalid";
+            QMessageBox messageBox;
+            messageBox.critical(0,"ERROR", error);
+            messageBox.setFixedSize(500,200);
+            ui->classEntry->setText("");
+        }
 }
 
 //alphanumeric 4-16
