@@ -14,9 +14,9 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
+   <item row="0" column="1">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
+     <item row="0" column="2">
       <widget class="QFrame" name="loginframe">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -43,7 +43,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Username</string>
+         <string>Username:</string>
         </property>
        </widget>
        <widget class="QLabel" name="passlabel">
@@ -56,7 +56,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Password</string>
+         <string>Password:</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="userEntry">
@@ -121,14 +121,25 @@
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>20</y>
-          <width>59</width>
-          <height>14</height>
+          <x>8</x>
+          <y>9</y>
+          <width>181</width>
+          <height>31</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+         </font>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
         <property name="text">
-         <string>Sign In:</string>
+         <string>Login</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
        <widget class="QLabel" name="label_2">
@@ -148,8 +159,36 @@
      </item>
     </layout>
    </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="style.qrc">:/rc/gradientLogo.png</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="style.qrc">:/rc/gradientLogo.png</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="style.qrc"/>
+ </resources>
  <connections/>
 </ui>
