@@ -37,10 +37,17 @@ public:
 private slots:
     void on_hideButton_clicked();
     void on_logoutButton_clicked();
-    void on_listWidget_currentRowChanged(int currentRow);
+//    void on_listWidget_currentRowChanged(int currentRow);
 
     void on_checkBox_stateChanged(int arg1);
 
+    void on_puzzle1_clicked();
+
+    void on_puzzle2_clicked();
+
+    void on_puzzle3_clicked();
+
+    void on_puzzle4_clicked();
 
 private:
      Client * client;
