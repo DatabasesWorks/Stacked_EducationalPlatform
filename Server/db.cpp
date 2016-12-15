@@ -108,6 +108,11 @@ std::string DB::solvedPuzzles(MYSQL *connection, std::string payload) {
     return res.toStdString();
 }
 
+
+
+
+
+
 std::string DB::authenticate(MYSQL *connection, std::string payload) {
     MYSQL_RES *result;
 
