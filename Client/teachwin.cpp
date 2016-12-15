@@ -90,3 +90,19 @@ void TeachWin::on_addStudentButton_clicked()
 {
 
 }
+
+void TeachWin::on_analyticsButton_clicked()
+{
+    UserSocket sock(sf::IpAddress::LocalHost, 11777);
+
+    try {
+        sock.authenticate("averysecretusername", "averysecretusername");
+        qDebug() << "tried to send payload";
+        Message msg = sock.sendPayload("studentlist", "");
+        QDesktopServices::openUrl(QUrl(QString::fromStdString(msg.payload)));
+    } catch (...) {
+        QMessageBox messageBox;
+        messageBox.critical(0,"ERROR", "Server Not Responding");
+        messageBox.setFixedSize(500,200);
+    }
+}

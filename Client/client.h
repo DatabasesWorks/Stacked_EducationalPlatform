@@ -9,6 +9,7 @@
 #include <puzzlewindow.h>
 #include <QStackedWidget>
 
+
 namespace Ui {
 class Client;
 }
