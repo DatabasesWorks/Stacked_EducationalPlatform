@@ -26,19 +26,20 @@ public:
     QVector<QString> getStudents(QString classcode);
     ~Client();
     std::string getSessionId();
-
+    std::string username;
 
 
 private:
     QTimer timer;
     std::string sessionid;
-    std::string username;
+
     Ui::Client *ui;
     std::atomic_bool check;
     //UserSocket currsock;
     std::vector<QWidget*> widgets;
     unsigned int activeWidget = 0;
 private slots:
+
     void autosave();
     void loginWindow();
     void teacherWindow();

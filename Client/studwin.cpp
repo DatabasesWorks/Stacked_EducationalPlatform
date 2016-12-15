@@ -20,6 +20,8 @@ StudWin::StudWin(QWidget *parent) :
     ui->mainGameWidget->setLayout(lay);
     //this->setStyleSheet("background-color: black; color: white;");
     ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
+
+    updatePuzzles(0);
 }
 
 StudWin::StudWin(Client *client, QWidget *parent) : StudWin(parent) {
@@ -111,6 +113,7 @@ void StudWin::on_checkBox_stateChanged(int arg1) {
     }
 }
 
+
 std::vector<bool> StudWin::getUnlockedPuzzles() {
     UserSocket sock(sf::IpAddress::LocalHost, 11777,client->getSessionId());
     Message msg = sock.sendPayload("getSolvedPuzzles", "");
@@ -130,6 +133,44 @@ std::vector<bool> StudWin::convertStringsToBools(QVector<QString> strBools) {
 
     return bools;
 }
+void StudWin::updatePuzzles(int i){
+    getUpdatedPuzzles();
+    if(i == 0){
+        ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
+    }
+
+    if(!puzzles.at(1)->getProgress()){
+        ui->puzzle2->setDisabled(true);
+        ui->puzzle2->setStyleSheet("Background-color: grey;");
+    }else if(i == 1){
+        ui->puzzle2->setDisabled(false);
+        ui->puzzle2->setStyleSheet("Background-color: #3daee9;");
+    }else{
+        ui->puzzle2->setStyleSheet("Background-color: black");
+    }
+
+    if(!puzzles.at(2)->getProgress()){
+        ui->puzzle3->setDisabled(true);
+        ui->puzzle3->setStyleSheet("Background-color: grey;");
+    }else if(i == 2){
+        ui->puzzle3->setDisabled(false);
+        ui->puzzle3->setStyleSheet("Background-color: #3daee9;");
+    }else{
+        ui->puzzle3->setStyleSheet("Background-color: black");
+    }
+
+    if(!puzzles.at(3)->getProgress()){
+        ui->puzzle4->setDisabled(true);
+        ui->puzzle4->setStyleSheet("Background-color: grey;");
+    }else if(i == 3){
+        ui->puzzle4->setDisabled(false);
+        ui->puzzle4->setStyleSheet("Background-color: #3daee9;");
+    }else{
+        ui->puzzle4->setStyleSheet("Background-color: black");
+    }
+
+
+}
 
 void StudWin::setCurrentUsername(QString currentUsername) {
     this->currentUsername = currentUsername;
@@ -140,38 +181,26 @@ void StudWin::on_puzzle1_clicked()
 {
     pw->setPuzzle(puzzles[0]);
     pw->setFocus();
-    ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
-    ui->puzzle2->setStyleSheet("Background-color: black;");
-    ui->puzzle3->setStyleSheet("Background-color: black;");
-    ui->puzzle4->setStyleSheet("Background-color: black;");
+    updatePuzzles(0);
 }
 
 void StudWin::on_puzzle2_clicked()
 {
     pw->setPuzzle(puzzles[1]);
     pw->setFocus();
-    ui->puzzle1->setStyleSheet("Background-color: black;");
-    ui->puzzle2->setStyleSheet("Background-color: #3daee9;");
-    ui->puzzle3->setStyleSheet("Background-color: black;");
-    ui->puzzle4->setStyleSheet("Background-color: black;");
+    updatePuzzles(1);
 }
 
 void StudWin::on_puzzle3_clicked()
 {
     pw->setPuzzle(puzzles[2]);
     pw->setFocus();
-    ui->puzzle1->setStyleSheet("Background-color: black;");
-    ui->puzzle2->setStyleSheet("Background-color: black;");
-    ui->puzzle3->setStyleSheet("Background-color: #3daee9;");
-    ui->puzzle4->setStyleSheet("Background-color: black;");
+    updatePuzzles(2);
 }
 
 void StudWin::on_puzzle4_clicked()
 {
     pw->setPuzzle(puzzles[3]);
     pw->setFocus();
-    ui->puzzle1->setStyleSheet("Background-color: black;");
-    ui->puzzle2->setStyleSheet("Background-color: black;");
-    ui->puzzle3->setStyleSheet("Background-color: black;");
-    ui->puzzle4->setStyleSheet("Background-color: #3daee9;");
+    updatePuzzles(3);
 }
