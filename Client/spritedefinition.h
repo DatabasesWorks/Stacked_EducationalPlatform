@@ -7,7 +7,10 @@
 #include <cmath>
 #include <math.h>
 
-// a class to act as a template ( following the body definition approach )
+/**
+ * @brief The SpriteDefinition class acts as a template ( following the body definition approach )
+ * for Sprite2dobject in the Stackd game API.
+ */
 class SpriteDefinition
 {
 public:

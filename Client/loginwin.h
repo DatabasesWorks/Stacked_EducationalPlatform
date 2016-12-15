@@ -8,6 +8,10 @@ namespace Ui {
 class LoginWin;
 }
 
+/**
+ *@brief LoginWin class is the login window for the Stackd game API. It is the entry point for students
+ * and teachers to access the register window as well as login to the game.
+ */
 class LoginWin : public QWidget
 {
     Q_OBJECT

@@ -14,7 +14,9 @@
 #include <QFile>
 #include <sstream>
 
-// A class to integrate SFML sprites with Box2D shapes and bodies.
+/**
+ * @brief The sprite2dObject class integrates SFML sprites with Box2D shapes and bodies.
+ */
 class sprite2dObject{
 
 public:

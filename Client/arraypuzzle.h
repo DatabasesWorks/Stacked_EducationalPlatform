@@ -15,6 +15,11 @@
 #include "calculator.cpp"
 #include <QRegExp>
 
+/**
+ * @brief The ArrayPuzzle class inherits from the puzzle class. It is part of a suite of puzzles
+ * for the  Stackd education game API. ArrayPuzzle simulates the functionality of an array to
+ * teach students about array datastructures.
+ */
 class ArrayPuzzle : public Puzzle
 {
 public:

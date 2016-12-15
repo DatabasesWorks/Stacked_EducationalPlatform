@@ -12,6 +12,10 @@
 #include <exceptions.h>
 #include <iostream>
 
+/**
+ * @brief The ServerSocket class is a socket for the Stackd game API server to communicate
+ * with a client.
+ */
 class ServerSocket
 {
 public:
