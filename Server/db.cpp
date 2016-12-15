@@ -55,6 +55,9 @@ std::string DB::executeCommand(std::string command, std::string payload) {
     if (command == "getSolvedPuzzles") {
         return solvedPuzzles(connection, payload);
     }
+    if(command == "deleteStudent") {
+        return deleteStudent(connection, payload);
+    }
 
     //idk how necessary these are
     // mysql_free_result(result);
