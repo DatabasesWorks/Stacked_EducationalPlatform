@@ -117,7 +117,7 @@ std::vector<bool> StudWin::getUpdatedPuzzles() {
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
 
     sock.authenticate("user", "pass");
-    Message msg = sock.sendPayload("getSolvedPuzzles", "user, pass");
+    Message msg = sock.sendPayload("getSolvedPuzzles", currentUsername.toStdString());
     QVector<QString> completedPuzzles = QString::fromStdString(msg.payload).split(",").toVector();
     return convertStringsToBools(completedPuzzles);
 }
