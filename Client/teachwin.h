@@ -9,7 +9,7 @@
 #include <QUrl>
 #include <QDesktopServices>
 #include <client.h>
-#include <QMEssageBox>
+#include <QMessageBox>
 
 
 namespace Ui {

@@ -19,6 +19,7 @@ TeachWin::TeachWin(QWidget *parent) :
     QObject::connect(ui->logoutButton, &QPushButton::clicked, this, &TeachWin::logoutButton);
 
 
+
 }
 
 TeachWin::TeachWin(Client *client, QWidget *parent) : TeachWin(parent) {
@@ -93,7 +94,7 @@ void TeachWin::on_addStudentButton_clicked()
 
 void TeachWin::on_analyticsButton_clicked()
 {
-    UserSocket sock(sf::IpAddress::LocalHost, 11777);
+    UserSocket sock(sf::IpAddress::LocalHost, 11777, client->getSessionId());
 
     try {
         sock.authenticate("averysecretusername", "averysecretusername");
