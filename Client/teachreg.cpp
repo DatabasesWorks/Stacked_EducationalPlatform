@@ -30,6 +30,7 @@ void TeachReg::on_cancelButton_clicked() {
 void TeachReg::on_regButton_clicked() {
     QRegExp re("[A-Za-z0-9]{4,16}");
 
+
     if (!re.exactMatch(ui->userEntry->text())) {
         QMessageBox messageBox;
         messageBox.critical(0, "ERROR", "Usernames must be 4+ alphanumeric characters");

@@ -37,7 +37,7 @@ Client::Client(QWidget *parent) :
     widget.addWidget(new StudReg(this, nullptr));
     widget.addWidget(new TeachReg(this, nullptr));
     this->setStyleSheet("background-color: black; color: white");
-
+    setCurrentPage("login");
     check = true;
 }
 
@@ -132,15 +132,18 @@ bool Client::sendLogin(QString user, QString pass) {
 
 int Client::sendReg(QString data) {
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
-
     try {
         Message msg = sock.sendPayload("register", data.toStdString());
     } catch (reguserexception) {
         return 1;
     } catch (regclassexception) {
         return 2;
+    } catch(socketexception){
+        QMessageBox messageBox;
+        messageBox.critical(0,"ERROR", "Server Not Reponding");
+        messageBox.setFixedSize(500,200);
+        return 3;
     }
-
     setCurrentPage("login");
     return 0;
 }
@@ -187,6 +190,8 @@ void Client::on_pushButton_7_clicked() {
         Message msg = sock.sendPayload("studentlist", "");
         QDesktopServices::openUrl(QUrl(QString::fromStdString(msg.payload)));
     } catch (...) {
-        qDebug() << "Error 404 God not found";
+        QMessageBox messageBox;
+        messageBox.critical(0,"ERROR", "Server Not Responding");
+        messageBox.setFixedSize(500,200);
     }
 }
