@@ -197,7 +197,7 @@ std::string DB::regUser(MYSQL *connection, std::string payload) {
     query += split.at(0) + "\",\"" + split.at(1) + "\",\"" + split.at(2) + "\",\"" + split.at(3) + "\",\"" + split.at(4) + "\");";
 
     //For debug, remove later
-    //  std::cout << query.toLatin1().data() << std::endl;
+   //  std::cout << query.toLatin1().data() << std::endl;
 
     //execute
     state = mysql_query(connection, query.toLatin1().data());
