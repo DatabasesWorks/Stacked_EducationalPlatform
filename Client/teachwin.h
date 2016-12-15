@@ -4,7 +4,12 @@
 #define TEACHWIN_H
 
 #include <QWidget>
+#include <QDesktopWidget>
+#include <QDebug>
+#include <QUrl>
+#include <QDesktopServices>
 #include <client.h>
+#include <QMEssageBox>
 
 
 namespace Ui {
@@ -34,6 +39,8 @@ private slots:
     void deleteStudentButton();
 
     void on_addStudentButton_clicked();
+
+    void on_analyticsButton_clicked();
 
 private:
     Ui::TeachWin *ui;
