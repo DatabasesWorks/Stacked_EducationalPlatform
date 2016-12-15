@@ -53,12 +53,13 @@ private slots:
     void on_puzzle4_clicked();
 
 private:
-     Client * client;
+    Client * client;
     Ui::StudWin *ui;
     sf::Music music;
     bool levelshow;
     PuzzleWindow* pw;
     void setupLevels();
+    int currPuzz;
     std::vector<Puzzle*> puzzles;
     std::vector<bool> solvedPuzzles;
     std::vector<bool> convertStringsToBools(QVector<QString>);

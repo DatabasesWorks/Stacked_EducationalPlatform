@@ -19,6 +19,7 @@ StudWin::StudWin(QWidget *parent) :
     lay->addWidget(pw);
     ui->mainGameWidget->setLayout(lay);
     //this->setStyleSheet("background-color: black; color: white;");
+    currPuzz = 0;
     ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
 }
 
@@ -183,13 +184,14 @@ void StudWin::updatePuzzles(){
         if(*it){
            unlocked[i]=true;
            buttons[i]->setDisabled(false);
-           buttons[i]->setStyleSheet("Background-color: #3daee9;");
+           buttons[i]->setStyleSheet("Background-color: black;");
         }else{
            buttons[i]->setDisabled(true);
            buttons[i]->setStyleSheet("Background-color: grey;");
         }
         i++;
     }
+    buttons[currPuzz]->setStyleSheet("Background-color: #3daee9;");
 }
 
 
@@ -200,24 +202,34 @@ void StudWin::setCurrentUsername(QString currentUsername) {
 
 void StudWin::on_puzzle1_clicked()
 {
+    currPuzz = 0;
+    updatePuzzles();
     pw->setPuzzle(puzzles[0]);
     pw->setFocus();
 }
 
 void StudWin::on_puzzle2_clicked()
 {
+    currPuzz = 1;
+    updatePuzzles();
     pw->setPuzzle(puzzles[1]);
     pw->setFocus();
 }
 
 void StudWin::on_puzzle3_clicked()
 {
+    currPuzz = 2;
+    updatePuzzles();
     pw->setPuzzle(puzzles[2]);
     pw->setFocus();
+    ui->puzzle3->setStyleSheet("Background-color: #3daee9;");
 }
 
 void StudWin::on_puzzle4_clicked()
 {
+    currPuzz = 3;
+    updatePuzzles();
     pw->setPuzzle(puzzles[3]);
     pw->setFocus();
+    ui->puzzle4->setStyleSheet("Background-color: #3daee9;");
 }
