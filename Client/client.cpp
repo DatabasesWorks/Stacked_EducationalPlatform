@@ -98,23 +98,25 @@ void Client::autosave() {
 }
 
 bool Client::sendLogin(QString user, QString pass) {
+    bool teach = false;
     try {
         UserSocket sock(sf::IpAddress::LocalHost, 11777);
         sock.authenticate(user.toStdString(), pass.toStdString()); //if no exceptions thrown, then we are authenticated
         sessionid = sock.sid();
         username = user.toStdString();
+        std::string payload = user.toStdString()+ "," + pass.toStdString();
+        sdt::string command = "teacherAuthenticate";
+
+        Message msg = sock.sendPayload(command, payload);
+        if(msg.payload=="VALID"){
+            teach = true;
+        }
         // sock.deauthenticate(); //when you are done deauthenticate, or save the sid for later
         //(note: the server will be configured to auto check for expired session ids -- probably every like 20 minutes or something )
     } catch (authenticationexception) { // if the client was not authenticated properly, or the session key was invalid
         return false;
     }
     //send payload and parse payload to determine if teach/student
-    bool teach = false;
-
-
-
-
-    ///////////?!
 
     if (teach) {
         setCurrentPage("teachwin");
