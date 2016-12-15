@@ -21,7 +21,7 @@ StudWin::StudWin(QWidget *parent) :
     //this->setStyleSheet("background-color: black; color: white;");
     ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
 
-    updatePuzzles(0);
+
 }
 
 StudWin::StudWin(Client *client, QWidget *parent) : StudWin(parent) {
@@ -45,14 +45,12 @@ void StudWin::setupLevels() {
 
 std::vector<bool> StudWin::getSolvedList() {
     std::vector<bool> solvedlist;
-
     for (auto it = puzzles.begin(); it < puzzles.end(); it++) {
         Puzzle *puzz = *it;
         solvedlist.push_back(puzz->solved());
         return solvedlist;
     }
-
-    //return nullptr;
+    return solvedlist;
 }
 
 void StudWin::on_hideButton_clicked() {
@@ -116,61 +114,88 @@ void StudWin::on_checkBox_stateChanged(int arg1) {
 
 std::vector<bool> StudWin::getUnlockedPuzzles() {
     UserSocket sock(sf::IpAddress::LocalHost, 11777,client->getSessionId());
-    Message msg = sock.sendPayload("getSolvedPuzzles", "");
+    Message msg = sock.sendPayload("getSolvedPuzzles", client->username);
     QVector<QString> completedPuzzles = QString::fromStdString(msg.payload).split(",").toVector();
     return convertStringsToBools(completedPuzzles);
 }
 
 std::vector<bool> StudWin::convertStringsToBools(QVector<QString> strBools) {
     std::vector<bool>bools;
-    bool tempBool;
+    std::vector<int> completed;
+    for(auto it = strBools.begin(); it < strBools.end(); it++){
+        std::string parse = it->toStdString();
+        if(parse != ""){
+            completed.push_back(std::stoi(parse));
+        }
+     }
 
-    for (int i = 0; i < strBools.length(); i++) {
+    for (int i = 0; i < 4; i++) {
+        bool found = false;
+        for(auto it = completed.begin(); it < completed.end(); it++){
+            if(*it==i){
+                bools.push_back(true);
+                found = true;
+            }
+        }
+        if(!found){
+            bools.push_back(false);
+        }
+
+    } // should always return a set of 4 bools
+
+    /*
+    if(i < strBools.length()){
         std::istringstream is(strBools.at(i).toStdString());
         is >> std::boolalpha >> tempBool;
         bools.push_back(tempBool);//make sure order is right
-    }
+    }else{
 
+    }*/
     return bools;
 }
-void StudWin::updatePuzzles(int i){
-    getUpdatedPuzzles();
-    if(i == 0){
-        ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
+
+void StudWin::updatePuzzles(){
+    std::vector<bool> unlocked = getUnlockedPuzzles();
+    std::vector<QPushButton*> buttons;
+    buttons.push_back(ui->puzzle1);
+    buttons.push_back(ui->puzzle2);
+    buttons.push_back(ui->puzzle3);
+    buttons.push_back(ui->puzzle4);
+
+    bool last = false;
+    int i = 0;
+    for(auto it = unlocked.begin(); it < unlocked.end(); it++){
+         if(*it){
+             last=true;
+         }else{
+             if(last){
+                 unlocked[i]=true;
+                 break;
+             }else{
+                 break; // if the last wasn't unlocked and this one isn't unlocked then we're done.
+             }
+         }
+         i++;
     }
 
-    if(!puzzles.at(1)->getProgress()){
-        ui->puzzle2->setDisabled(true);
-        ui->puzzle2->setStyleSheet("Background-color: grey;");
-    }else if(i == 1){
-        ui->puzzle2->setDisabled(false);
-        ui->puzzle2->setStyleSheet("Background-color: #3daee9;");
-    }else{
-        ui->puzzle2->setStyleSheet("Background-color: black");
+    if(!last){ // if nothing is unlocked, unlock the firs puzzle
+        unlocked[0]=true;
     }
 
-    if(!puzzles.at(2)->getProgress()){
-        ui->puzzle3->setDisabled(true);
-        ui->puzzle3->setStyleSheet("Background-color: grey;");
-    }else if(i == 2){
-        ui->puzzle3->setDisabled(false);
-        ui->puzzle3->setStyleSheet("Background-color: #3daee9;");
-    }else{
-        ui->puzzle3->setStyleSheet("Background-color: black");
+    i = 0;
+    for(auto it = unlocked.begin(); it < unlocked.end(); it++){
+        if(*it){
+           unlocked[i]=true;
+           buttons[i]->setDisabled(false);
+           ui->puzzle2->setStyleSheet("Background-color: #3daee9;");
+        }else{
+           buttons[i]->setDisabled(true);
+           ui->puzzle2->setStyleSheet("Background-color: grey;");
+        }
+        i++;
     }
-
-    if(!puzzles.at(3)->getProgress()){
-        ui->puzzle4->setDisabled(true);
-        ui->puzzle4->setStyleSheet("Background-color: grey;");
-    }else if(i == 3){
-        ui->puzzle4->setDisabled(false);
-        ui->puzzle4->setStyleSheet("Background-color: #3daee9;");
-    }else{
-        ui->puzzle4->setStyleSheet("Background-color: black");
-    }
-
-
 }
+
 
 void StudWin::setCurrentUsername(QString currentUsername) {
     this->currentUsername = currentUsername;
@@ -181,26 +206,22 @@ void StudWin::on_puzzle1_clicked()
 {
     pw->setPuzzle(puzzles[0]);
     pw->setFocus();
-    updatePuzzles(0);
 }
 
 void StudWin::on_puzzle2_clicked()
 {
     pw->setPuzzle(puzzles[1]);
     pw->setFocus();
-    updatePuzzles(1);
 }
 
 void StudWin::on_puzzle3_clicked()
 {
     pw->setPuzzle(puzzles[2]);
     pw->setFocus();
-    updatePuzzles(2);
 }
 
 void StudWin::on_puzzle4_clicked()
 {
     pw->setPuzzle(puzzles[3]);
     pw->setFocus();
-    updatePuzzles(3);
 }

@@ -26,7 +26,7 @@ std::string DB::executeCommand(std::string command, std::string payload) {
     //int state;
     mysql_init(&mysql);
 
-    connection = mysql_real_connect(&mysql, "localhost", "root", "pass", "ccc_app", 0, 0, 0);
+    connection = mysql_real_connect(&mysql, "localhost", "root", "atomforpeace", "ccc_app", 0, 0, 0);
 
     if (connection == NULL) {
         std::cout << mysql_error(&mysql) << std::endl;
@@ -69,7 +69,7 @@ std::string DB::solvedPuzzles(MYSQL *connection, std::string payload) {
 
     QVector<QString> split = QString::fromStdString(payload).split(",").toVector();
 
-    QString query = "SELECT * FROM users WHERE username=\"" + split.at(0) + "\";";
+    QString query = "SELECT id FROM users WHERE username=\"" + split.at(0) + "\";";
     int state = mysql_query(connection, query.toLatin1().data());
 
     if (state != 0) {
@@ -80,7 +80,7 @@ std::string DB::solvedPuzzles(MYSQL *connection, std::string payload) {
     result = mysql_store_result(connection);
 
     //check to see if the user exists in the database
-    if (mysql_num_rows(result) != 0) {
+    if (mysql_num_rows(result) == 0) {
         return "INVALIDUSER";
     }
 
@@ -217,7 +217,7 @@ std::string DB::puzzleSolved(MYSQL *connection, std::string payload) {
 
     QVector<QString> split = QString::fromStdString(payload).split(",").toVector();
 
-    QString query = "SELECT userid FROM users WHERE username=\"" + split.at(0) + "\";";
+    QString query = "SELECT id FROM users WHERE username=\"" + split.at(0) + "\";";
     int state = mysql_query(connection, query.toLatin1().data());
 
     if (state != 0) {

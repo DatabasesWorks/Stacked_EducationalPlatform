@@ -34,7 +34,7 @@ public:
     std::vector<bool> getSolvedList();
     std::vector<bool> getUnlockedPuzzles();
     void setCurrentUsername(QString currentUsername);
-
+    void updatePuzzles();
 //    void setMainGameWidget(QWidget *widget);
 
 private slots:
@@ -63,7 +63,7 @@ private:
     std::vector<bool> solvedPuzzles;
     std::vector<bool> convertStringsToBools(QVector<QString>);
     QString currentUsername;
-    void updatePuzzles(int i);
+
 
 };
 

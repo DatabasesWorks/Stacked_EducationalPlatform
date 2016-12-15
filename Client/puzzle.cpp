@@ -35,9 +35,6 @@ void Puzzle::step(float time) {
     //apparently there are performance issues when the last two numbers are < 10
 }
 
-bool Puzzle::getProgress() {
-    return this->solved();
-}
 
 sprite2dObject * Puzzle::getComponentAt(int x, int y) {
     //x and y need to be adjusted. Switch x and y, add 90 to x on Tyler's machine

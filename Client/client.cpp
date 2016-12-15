@@ -86,16 +86,14 @@ void Client::autosave() {
 
         for (auto it = solvedlist.begin(); it < solvedlist.end(); it++) {
             bool i = *it;
-
-            // send to the client
             if (i) {
                 std::stringstream ss;
                 ss << username << "," << index;
                 sock.sendPayload("puzzlesolved", ss.str());
             }
-
             index++;
         }
+        win->updatePuzzles();
     }
 }
 
@@ -113,11 +111,18 @@ bool Client::sendLogin(QString user, QString pass) {
     //send payload and parse payload to determine if teach/student
     bool teach = false;
 
+
+
+
+    ///////////?!
+
     if (teach) {
         setCurrentPage("teachwin");
         static_cast<TeachWin *>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
     } else {
         setCurrentPage("studwin");
+        StudWin * stud = static_cast<StudWin *>(widget.currentWidget());
+        stud->updatePuzzles();
         static_cast<StudWin *>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
     }
 
