@@ -20,6 +20,7 @@ StudWin::StudWin(QWidget *parent) :
     ui->mainGameWidget->setLayout(lay);
     //this->setStyleSheet("background-color: black; color: white;");
     ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
+
     updatePuzzles(0);
 }
 
@@ -115,8 +116,8 @@ void StudWin::on_checkBox_stateChanged(int arg1) {
 std::vector<bool> StudWin::getUpdatedPuzzles() {
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
 
-    sock.authenticate("", "");
-    Message msg = sock.sendPayload("getSolvedPuzzles", "");
+    sock.authenticate("user", "pass");
+    Message msg = sock.sendPayload("getSolvedPuzzles", "user, pass");
     QVector<QString> completedPuzzles = QString::fromStdString(msg.payload).split(",").toVector();
     return convertStringsToBools(completedPuzzles);
 }
@@ -134,6 +135,7 @@ std::vector<bool> StudWin::convertStringsToBools(QVector<QString> strBools) {
     return bools;
 }
 void StudWin::updatePuzzles(int i){
+    getUpdatedPuzzles();
     if(i == 0){
         ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
     }
@@ -141,7 +143,7 @@ void StudWin::updatePuzzles(int i){
     if(!puzzles.at(1)->getProgress()){
         ui->puzzle2->setDisabled(true);
         ui->puzzle2->setStyleSheet("Background-color: grey;");
-    }else if(i == 0){
+    }else if(i == 1){
         ui->puzzle2->setDisabled(false);
         ui->puzzle2->setStyleSheet("Background-color: #3daee9;");
     }else{
@@ -151,7 +153,7 @@ void StudWin::updatePuzzles(int i){
     if(!puzzles.at(2)->getProgress()){
         ui->puzzle3->setDisabled(true);
         ui->puzzle3->setStyleSheet("Background-color: grey;");
-    }else if(i == 1){
+    }else if(i == 2){
         ui->puzzle3->setDisabled(false);
         ui->puzzle3->setStyleSheet("Background-color: #3daee9;");
     }else{
@@ -161,7 +163,7 @@ void StudWin::updatePuzzles(int i){
     if(!puzzles.at(3)->getProgress()){
         ui->puzzle4->setDisabled(true);
         ui->puzzle4->setStyleSheet("Background-color: grey;");
-    }else if(i == 2){
+    }else if(i == 3){
         ui->puzzle4->setDisabled(false);
         ui->puzzle4->setStyleSheet("Background-color: #3daee9;");
     }else{

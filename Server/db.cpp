@@ -69,7 +69,7 @@ std::string DB::solvedPuzzles(MYSQL *connection, std::string payload) {
 
     QVector<QString> split = QString::fromStdString(payload).split(",").toVector();
 
-    QString query = "SELECT * FROM users WHERE id=\"" + split.at(0) + "\";";
+    QString query = "SELECT * FROM users WHERE id=\"" + "14" + "\";";
     int state = mysql_query(connection, query.toLatin1().data());
 
     if (state != 0) {
