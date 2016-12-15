@@ -42,6 +42,14 @@ void TeachWin::updateStudents() {
     ui->listWidget->setCurrentRow(0);
 }
 
+void TeachWin::deleteStudent(QString username){
+    Client *par = client;
+    UserSocket sock(sf::IpAddress::LocalHost, 11777, par->getSessionId());
+    Message msg = sock.sendPayload("deleteStudent",username);
+    updateStudents();
+}
+
+
 void TeachWin::on_listWidget_itemSelectionChanged() {
     //get data from student database and put into main widget
 }

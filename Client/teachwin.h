@@ -1,4 +1,5 @@
 
+
 #ifndef TEACHWIN_H
 #define TEACHWIN_H
 
@@ -19,6 +20,7 @@ class TeachWin : public QWidget
     Q_OBJECT
 
 public:
+    void deleteStudent(QString);
     void updateStudents();
     TeachWin(Client * client, QWidget *parent=0);
     explicit TeachWin(QWidget *parent = 0);
