@@ -221,9 +221,6 @@ bool TreePuzzle::allGreen() {
 
 void TreePuzzle::endGameExplosion() {
     isSolved = true;
-    Client *par = (Client*) this->parent();
-    par->autosave();
-
     treetime.stop();
     treetime.start(420);
     QObject::disconnect(&treetime, SIGNAL(timeout()), this, SLOT(updateContact()));

@@ -114,9 +114,7 @@ void ListPuzzle::runAction(Qt::Key key) {
             createInstructions(pos4);
 
             isSolved = true;
-            Client *par = (Client*) this->parent();
-            par->autosave();
-        }
+          }
     } else if (key == Qt::Key_Q) {
         cycleNextValue(false);
     } else if (key == Qt::Key_A) {

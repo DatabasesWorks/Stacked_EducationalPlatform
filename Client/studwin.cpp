@@ -7,21 +7,19 @@
 
 StudWin::StudWin(QWidget *parent) :
     QWidget(parent),
+
     ui(new Ui::StudWin) {
     ui->setupUi(this);
+    QGridLayout *lay = new QGridLayout(this);
     levelshow = true;
     pw = new PuzzleWindow;
     ui->userLabel->setText("Welcome: TestUser");
     setupLevels();
     pw->setPuzzle(puzzles.front());
-    //  pw->setFocus();
-    QGridLayout *lay = new QGridLayout(this);
     lay->addWidget(pw);
     ui->mainGameWidget->setLayout(lay);
     //this->setStyleSheet("background-color: black; color: white;");
     ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
-
-
 }
 
 StudWin::StudWin(Client *client, QWidget *parent) : StudWin(parent) {
@@ -30,7 +28,6 @@ StudWin::StudWin(Client *client, QWidget *parent) : StudWin(parent) {
 
 StudWin::~StudWin() {
     delete ui;
-
     for (auto it = puzzles.begin(); it < puzzles.end(); it++) {
         delete *it;
     }
