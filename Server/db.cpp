@@ -55,6 +55,9 @@ std::string DB::executeCommand(std::string command, std::string payload) {
     if (command == "getSolvedPuzzles") {
         return solvedPuzzles(connection, payload);
     }
+    if(command == "deleteStudent") {
+        return deleteStudent(connection, payload);
+    }
 
     //idk how necessary these are
     // mysql_free_result(result);
@@ -107,6 +110,11 @@ std::string DB::solvedPuzzles(MYSQL *connection, std::string payload) {
     res.chop(1); //remove last comma
     return res.toStdString();
 }
+
+
+
+
+
 
 std::string DB::authenticate(MYSQL *connection, std::string payload) {
     MYSQL_RES *result;
@@ -345,4 +353,52 @@ std::string DB::studentlist(MYSQL *connection, std::string) {
 
     QString urladdress = QDir::currentPath() + "/analytics.html";
     return urladdress.toStdString();
+}
+
+std::string DB::deleteStudent(MYSQL* connection, std::string payload){
+
+    //check id exists in users table
+    MYSQL_RES *result;
+    QString query = "SELECT id FROM users WHERE id=\"" + QString::fromStdString(payload) + "\";";
+    int state = mysql_query(connection, query.toLatin1().data());
+
+    if (state != 0) {
+        std::cout << mysql_error(connection) << std::endl;
+        return "USERDOESNOTEXIST";
+    }
+
+    result = mysql_store_result(connection);
+
+   //delete row from users table
+    query = "DELETE FROM users WHERE id\"" + QString::fromStdString(payload) + "\";";
+    state = mysql_query(connection, query.toLatin1().data());
+
+    if (state != 0) {
+        std::cout << mysql_error(connection) << std::endl;
+        return "FAILEDTODELETE";
+    }
+
+    result = mysql_store_result(connection);
+
+    //check for id in row from puzzles table
+    query = "SELECT userid FROM puzzles WHERE id=\"" + QString::fromStdString(payload) + "\";";
+    state = mysql_query(connection, query.toLatin1().data());
+
+    if (state != 0) {
+        std::cout << mysql_error(connection) << std::endl;
+        return "USERIDNOTINPUZZLES";
+    }
+
+    //delete row from users table
+     query = "DELETE FROM puzzles WHERE userid\"" + QString::fromStdString(payload) + "\";";
+     state = mysql_query(connection, query.toLatin1().data());
+
+     result = mysql_store_result(connection);
+
+    if (state == 0) {
+        return "SUCCESS";
+    } else {
+        return "FAIL";
+    }
+
 }

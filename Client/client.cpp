@@ -31,7 +31,7 @@ Client::Client(QWidget *parent) :
     //move the window to the center of the screen
     move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
     widget.addWidget(new LoginWin(this, nullptr));
-    timer.start(3000); //every 30 seconds or so
+    timer.start(3000); //every 3 seconds or so
     widget.addWidget(new StudWin(this, nullptr));
     widget.addWidget(new TeachWin(this, nullptr));
     widget.addWidget(new StudReg(this, nullptr));
