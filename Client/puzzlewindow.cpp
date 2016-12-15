@@ -20,6 +20,12 @@ PuzzleWindow::PuzzleWindow(QWidget *Parent) : GraphicsObject(Parent) {
     //this->setStyleSheet("background-color: black; color: white;");
 }
 
+PuzzleWindow::~PuzzleWindow(){
+    this->releaseMouse();
+    this->releaseKeyboard();
+    this->deleteLater();
+}
+
 void PuzzleWindow::OnInit() {
     // any init code for the game environment
     updateSet();

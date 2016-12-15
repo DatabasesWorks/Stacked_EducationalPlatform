@@ -10,17 +10,28 @@ StudWin::StudWin(QWidget *parent) :
 
     ui(new Ui::StudWin) {
     ui->setupUi(this);
-    QGridLayout *lay = new QGridLayout(this);
+    layout_0 = new QGridLayout(this);
+    ui->mainGameWidget->setLayout(layout_0);
+    pw=nullptr;
     levelshow = true;
-    pw = new PuzzleWindow;
-    ui->userLabel->setText("Welcome: TestUser");
-    setupLevels();
-    pw->setPuzzle(puzzles.front());
-    lay->addWidget(pw);
-    ui->mainGameWidget->setLayout(lay);
-    //this->setStyleSheet("background-color: black; color: white;");
     currPuzz = 0;
     ui->puzzle1->setStyleSheet("Background-color: #3daee9;");
+    QObject::connect(this->ui->logoutButton, &QPushButton::clicked, this, &StudWin::studLogoutButton);
+}
+
+void StudWin::switched(){
+
+    if(pw!=nullptr)
+    {
+       layout_0->removeWidget(pw);
+       delete pw;
+    }
+    pw = new PuzzleWindow;
+    puzzles.clear();
+    setupLevels();
+    pw->setPuzzle(puzzles.front());
+    layout_0->addWidget(pw);
+    this->ui->logoutButton->setCheckable(true);
 }
 
 StudWin::StudWin(Client *client, QWidget *parent) : StudWin(parent) {
@@ -63,12 +74,11 @@ void StudWin::on_hideButton_clicked() {
 }
 
 //Move to controller?
-void StudWin::on_logoutButton_clicked() {
+void StudWin::studLogoutButton() {
+  //  Client *par = client;
     Client *par = client;
-
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(static_cast<QWidget *>(this), "Really QUIT??", "Quit?", QMessageBox::Yes | QMessageBox::No);
-
     if (reply == QMessageBox::Yes) {
         QApplication::quit();
         UserSocket sock(sf::IpAddress::LocalHost, 11777, par->getSessionId());
@@ -79,16 +89,7 @@ void StudWin::on_logoutButton_clicked() {
     } else {
         //recover
     }
-
-    //emit signal to release sources?
 }
-
-//void StudWin::on_listWidget_currentRowChanged(int currentRow) {
-//    if (currentRow > -1 && currentRow < 4) {
-//        pw->setPuzzle(puzzles[currentRow]);
-//        pw->setFocus();
-//    }
-//}
 
 void StudWin::on_checkBox_stateChanged(int arg1) {
     //There may be better way to get directory
@@ -107,7 +108,6 @@ void StudWin::on_checkBox_stateChanged(int arg1) {
         }
     }
 }
-
 
 std::vector<bool> StudWin::getUnlockedPuzzles() {
     UserSocket sock(sf::IpAddress::LocalHost, 11777,client->getSessionId());
@@ -139,16 +139,7 @@ std::vector<bool> StudWin::convertStringsToBools(QVector<QString> strBools) {
         }
 
     } // should always return a set of 4 bools
-
-    /*
-    if(i < strBools.length()){
-        std::istringstream is(strBools.at(i).toStdString());
-        is >> std::boolalpha >> tempBool;
-        bools.push_back(tempBool);//make sure order is right
-    }else{
-
-    }*/
-    return bools;
+   return bools;
 }
 
 void StudWin::updatePuzzles(){

@@ -11,7 +11,6 @@
 #include <arraypuzzle.h>
 #include <listpuzzle.h>
 #include <sstream>
-
 #include <QApplication>
 #include <QMessageBox>
 
@@ -35,20 +34,25 @@ public:
     std::vector<bool> getUnlockedPuzzles();
     void setCurrentUsername(QString currentUsername);
     void updatePuzzles();
+    void switched();
 //    void setMainGameWidget(QWidget *widget);
+
+
 
 private slots:
     void on_hideButton_clicked();
-    void on_logoutButton_clicked();
+    void studLogoutButton();
     void on_checkBox_stateChanged(int arg1);
     void on_puzzle1_clicked();
     void on_puzzle2_clicked();
     void on_puzzle3_clicked();
     void on_puzzle4_clicked();
 
+
 private:
     Client * client;
     Ui::StudWin *ui;
+    QLayout * layout_0;
     sf::Music music;
     bool levelshow;
     PuzzleWindow* pw;
