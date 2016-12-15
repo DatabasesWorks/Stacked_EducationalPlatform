@@ -31,6 +31,8 @@ public:
     std::string getSessionId();
     std::string username;
 
+public slots:
+    void autosave();
 
 private:
     QTimer timer;
@@ -43,7 +45,7 @@ private:
     unsigned int activeWidget = 0;
 private slots:
 
-    void autosave();
+
     void loginWindow();
     void teacherWindow();
     void studentWindow();
