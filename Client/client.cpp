@@ -105,8 +105,7 @@ bool Client::sendLogin(QString user, QString pass) {
         sessionid = sock.sid();
         username = user.toStdString();
         std::string payload = user.toStdString()+ "," + pass.toStdString();
-        std::string command = "teacherAuthenticate";
-
+        std::string command = "teachAuthenticate";
         Message msg = sock.sendPayload(command, payload);
         if(msg.payload=="VALID"){
             teach = true;
