@@ -46,7 +46,6 @@ private slots:
     void studentRegistration();
     void teacherRegistration();
     void on_pushButton_7_clicked();
-
 };
 
 #endif // CLIENT_H

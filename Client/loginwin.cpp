@@ -28,6 +28,8 @@ void LoginWin::on_loginButton_clicked() {
         messageBox.critical(0,"ERROR", "Invalid Login Credentials");
         messageBox.setFixedSize(500,200);
         ui->passEntry->setText("");
+    }else{
+
     }
 }
 

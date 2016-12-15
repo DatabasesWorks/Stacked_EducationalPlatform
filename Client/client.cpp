@@ -181,7 +181,7 @@ void Client::on_pushButton_7_clicked() {
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
 
     try {
-        sock.authenticate("averysecretusername", "averysecretpassword");
+        sock.authenticate("squirtle", "pass");
         qDebug() << "tried to send payload";
         Message msg = sock.sendPayload("studentlist", "");
         QDesktopServices::openUrl(QUrl(QString::fromStdString(msg.payload)));
