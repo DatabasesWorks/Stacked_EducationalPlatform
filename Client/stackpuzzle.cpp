@@ -196,7 +196,6 @@ bool StackPuzzle::addToPit(sprite2dObject *obj) {
             return true;
         }
     }
-
     return false;
 }
 
@@ -487,6 +486,7 @@ void StackPuzzle::runAction(Qt::Key key) {
         leftDisplay->setText(temp);
     } else if ( key == Qt::Key_U){
         this->isSolved = true;
+
     }
 }
 

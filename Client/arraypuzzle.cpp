@@ -115,8 +115,6 @@ void ArrayPuzzle::runAction(Qt::Key key) {
                     int y = getComponent("equation_box", false)->getBody()->GetPosition().y;
                     explodeAtPoint(x, y, hulkGreen);
                     this->isSolved = true;
-                    Client *par = (Client*) this->parent();
-                    par->autosave();
                 } else {
                     getComponent("question_2", false)->setTextColor(sf::Color::Red);
                     getComponent("equation_box", false)->setText("Wrong, try again!", sf::Color::Red);

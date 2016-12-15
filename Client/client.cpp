@@ -31,7 +31,7 @@ Client::Client(QWidget *parent) :
     //move the window to the center of the screen
     move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
     widget.addWidget(new LoginWin(this, nullptr));
-    timer.start(30000); //every 30 seconds or so
+    timer.start(3000); //every 3 seconds or so
     widget.addWidget(new StudWin(this, nullptr));
     widget.addWidget(new TeachWin(this, nullptr));
     widget.addWidget(new StudReg(this, nullptr));
@@ -183,7 +183,7 @@ void Client::on_pushButton_7_clicked() {
     UserSocket sock(sf::IpAddress::LocalHost, 11777);
 
     try {
-        sock.authenticate("squirtle", "pass");
+        sock.authenticate("averysecretusername", "averysecretusername");
         qDebug() << "tried to send payload";
         Message msg = sock.sendPayload("studentlist", "");
         QDesktopServices::openUrl(QUrl(QString::fromStdString(msg.payload)));
