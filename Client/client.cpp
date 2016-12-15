@@ -83,13 +83,13 @@ void Client::autosave() {
         StudWin *win = static_cast<StudWin *>(widget.widget(1));
         std::vector<bool> solvedlist = win->getSolvedList();
         int index = 0;
-
         for (auto it = solvedlist.begin(); it < solvedlist.end(); it++) {
             bool i = *it;
             if (i) {
                 std::stringstream ss;
-                ss << username << "," << index;
-                sock.sendPayload("puzzlesolved", ss.str());
+                ss << username << "," << index+1;
+                Message msg = sock.sendPayload("puzzlesolved", ss.str());
+                int i = 0;
             }
             index++;
         }

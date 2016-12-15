@@ -48,7 +48,6 @@ std::vector<bool> StudWin::getSolvedList() {
     for (auto it = puzzles.begin(); it < puzzles.end(); it++) {
         Puzzle *puzz = *it;
         solvedlist.push_back(puzz->solved());
-        return solvedlist;
     }
     return solvedlist;
 }
@@ -187,10 +186,10 @@ void StudWin::updatePuzzles(){
         if(*it){
            unlocked[i]=true;
            buttons[i]->setDisabled(false);
-           ui->puzzle2->setStyleSheet("Background-color: #3daee9;");
+           buttons[i]->setStyleSheet("Background-color: #3daee9;");
         }else{
            buttons[i]->setDisabled(true);
-           ui->puzzle2->setStyleSheet("Background-color: grey;");
+           buttons[i]->setStyleSheet("Background-color: grey;");
         }
         i++;
     }

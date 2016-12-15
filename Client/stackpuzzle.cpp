@@ -485,6 +485,8 @@ void StackPuzzle::runAction(Qt::Key key) {
         std::string temp = rightDisplay->getText()->getString().toAnsiString();
         rightDisplay->setText(leftDisplay->getText()->getString().toAnsiString());
         leftDisplay->setText(temp);
+    } else if ( key == Qt::Key_U){
+        this->isSolved = true;
     }
 }
 

@@ -228,16 +228,46 @@ std::string DB::puzzleSolved(MYSQL *connection, std::string payload) {
     result = mysql_store_result(connection);
 
     //check to see if the user exists in the database
-    if (mysql_num_rows(result) != 0) {
+    if (mysql_num_rows(result) == 0) {
         return "INVALIDUSER";
     }
 
     MYSQL_ROW userrow = mysql_fetch_row(result);
     std::string userid = std::string(userrow[0]);
 
+    query = "SELECT `puzzleid` FROM `puzzles` WHERE puzzles.userid="+ QString::fromStdString(userid)+";";
+    state = mysql_query(connection, query.toLatin1().data());
+    if (state != 0) {
+        std::cout << mysql_error(connection) << std::endl;
+        return "SQLERROR";
+    }
+
+    result = mysql_store_result(connection);
+    int numfields = mysql_num_fields(result);
+
+
+    MYSQL_ROW row;
+    std::vector<int> completed;
+    while((row = mysql_fetch_row(result)))
+    {
+        for(int i = 0; i < numfields; i++)
+        {
+            completed.push_back(std::stoi(std::string(row[i])));
+        }
+    }
+
     //construct insert command
+
+    int puzzleid = std::stoi(split.at(1).toStdString());
+    for(auto it = completed.begin(); it < completed.end(); it++){
+        if(puzzleid==*it){
+            return "SUCCESS"; // check for duplicates
+        }
+    }
+    //otherwise update the database
+
     query = "INSERT INTO `puzzles` (`userid`, `puzzleid`, `date`) VALUES (\"";
-    query += QString::fromStdString(userid) + "\",\"" + split.at(1) + "\",\"CURRENT_TIMESTAMP)\");";
+    query += QString::fromStdString(userid) + "\",\"" + split.at(1) + "\",CURRENT_TIMESTAMP\);";
 
     //For debug, remove later
     std::cout << query.toLatin1().data() << std::endl;
