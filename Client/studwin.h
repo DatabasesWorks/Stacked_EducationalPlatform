@@ -60,8 +60,10 @@ private:
     PuzzleWindow* pw;
     void setupLevels();
     std::vector<Puzzle*> puzzles;
+    std::vector<bool> solvedPuzzles;
     std::vector<bool> convertStringsToBools(QVector<QString>);
     QString currentUsername;
+    void updatePuzzles(int i);
 
 };
 

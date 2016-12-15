@@ -69,7 +69,7 @@ std::string DB::solvedPuzzles(MYSQL *connection, std::string payload) {
 
     QVector<QString> split = QString::fromStdString(payload).split(",").toVector();
 
-    QString query = "SELECT * FROM users WHERE id=\"" + split.at(0) + "\";";
+    QString query = "SELECT * FROM users WHERE username=\"" + split.at(0) + "\";";
     int state = mysql_query(connection, query.toLatin1().data());
 
     if (state != 0) {
@@ -84,8 +84,11 @@ std::string DB::solvedPuzzles(MYSQL *connection, std::string payload) {
         return "INVALIDUSER";
     }
 
+    MYSQL_ROW userrow = mysql_fetch_row(result);
+    std::string userid = std::string(userrow[0]);
+
     query = " SELECT puzzles.puzzleid FROM `puzzles` INNER JOIN `users` on puzzles.userid = users.id ";
-    query += " WHERE users.id =\"" + split.at(0) + "\"; ";
+    query += " WHERE users.id =\"" + QString::fromStdString(userid) + "\"; ";
 
     //execute
     state = mysql_query(connection, query.toLatin1().data());
@@ -207,13 +210,14 @@ std::string DB::regUser(MYSQL *connection, std::string payload) {
     }
 }
 
+
 //Method to submit and log a solved puzzle
 std::string DB::puzzleSolved(MYSQL *connection, std::string payload) {
     MYSQL_RES *result;
 
     QVector<QString> split = QString::fromStdString(payload).split(",").toVector();
 
-    QString query = "SELECT * FROM users WHERE id=\"" + split.at(0) + "\";";
+    QString query = "SELECT userid FROM users WHERE username=\"" + split.at(0) + "\";";
     int state = mysql_query(connection, query.toLatin1().data());
 
     if (state != 0) {
@@ -228,9 +232,12 @@ std::string DB::puzzleSolved(MYSQL *connection, std::string payload) {
         return "INVALIDUSER";
     }
 
+    MYSQL_ROW userrow = mysql_fetch_row(result);
+    std::string userid = std::string(userrow[0]);
+
     //construct insert command
     query = "INSERT INTO `puzzles` (`userid`, `puzzleid`, `date`) VALUES (\"";
-    query += split.at(0) + "\",\"" + split.at(1) + "\",\"CURRENT_TIMESTAMP)\");";
+    query += QString::fromStdString(userid) + "\",\"" + split.at(1) + "\",\"CURRENT_TIMESTAMP)\");";
 
     //For debug, remove later
     std::cout << query.toLatin1().data() << std::endl;
