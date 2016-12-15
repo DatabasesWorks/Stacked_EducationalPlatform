@@ -87,7 +87,7 @@
              <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
               <widget class="QLabel" name="label">
                <property name="text">
-                <string>Students</string>
+                <string>STUDENTS</string>
                </property>
               </widget>
              </item>
@@ -127,15 +127,9 @@
             <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
               <widget class="QListWidget" name="listWidget">
-               <property name="minimumSize">
-                <size>
-                 <width>600</width>
-                 <height>1000</height>
-                </size>
-               </property>
                <property name="maximumSize">
                 <size>
-                 <width>600</width>
+                 <width>150</width>
                  <height>10000</height>
                 </size>
                </property>
@@ -260,7 +254,7 @@
             <property name="minimumSize">
              <size>
               <width>150</width>
-              <height>10000</height>
+              <height>150</height>
              </size>
             </property>
            </widget>
