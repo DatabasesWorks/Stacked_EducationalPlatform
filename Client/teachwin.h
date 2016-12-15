@@ -20,7 +20,7 @@ class TeachWin : public QWidget
     Q_OBJECT
 
 public:
-    void deleteStudent(QString);
+    void deleteStudent(std::string);
     void updateStudents();
     TeachWin(Client * client, QWidget *parent=0);
     explicit TeachWin(QWidget *parent = 0);
@@ -28,11 +28,10 @@ public:
     void setCurrentUsername(QString currentUsername);
 
 private slots:
-    void on_logoutButton_clicked();
-
+    void logoutButton();
+    void addStudentButton();
     void on_listWidget_itemSelectionChanged();
-
-    void on_pushButton_clicked();
+    void deleteStudentButton();
 
 private:
     Ui::TeachWin *ui;
