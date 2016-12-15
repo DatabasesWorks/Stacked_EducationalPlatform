@@ -119,6 +119,9 @@ void ListPuzzle::runAction(Qt::Key key) {
         cycleNextValue(false);
     } else if (key == Qt::Key_A) {
         cycleNextValue(true);
+    } else if ( key == Qt::Key_U){
+        this->isSolved = true;
+
     }
 }
 

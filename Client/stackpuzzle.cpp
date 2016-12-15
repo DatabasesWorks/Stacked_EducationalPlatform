@@ -486,7 +486,9 @@ void StackPuzzle::runAction(Qt::Key key) {
         leftDisplay->setText(temp);
     } else if ( key == Qt::Key_U){
         this->isSolved = true;
-
+        this->explodeAtPoint(50,50,sf::Color::Green);
+        this->explodeAtPoint(150,150,sf::Color::Green);
+        this->explodeAtPoint(200,200,sf::Color::Green);
     }
 }
 
