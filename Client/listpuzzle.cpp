@@ -1,4 +1,5 @@
 #include "listpuzzle.h"
+#include "client.h"
 
 ListPuzzle::ListPuzzle(QSize size) : Puzzle(size) {
     establishGravity();
@@ -113,6 +114,8 @@ void ListPuzzle::runAction(Qt::Key key) {
             createInstructions(pos4);
 
             isSolved = true;
+            Client *par = (Client*) this->parent();
+            par->autosave();
         }
     } else if (key == Qt::Key_Q) {
         cycleNextValue(false);
