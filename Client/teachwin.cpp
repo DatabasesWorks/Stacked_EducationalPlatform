@@ -74,7 +74,7 @@ void TeachWin::addStudentButton(){
     QString classCode = ui->classCodeField->text();
     QString birthDate = ui->birthDateField->text();
     QString teacherName = this->currentUsername;
-    std::string studentString = (username + "," + pw + "," + classCode + "," + teacherName + "," + birthDate).toStdString();
+    std::string studentString = (username + "," + pw + "," + classCode + "," + QString::fromStdString("0") + "," + birthDate).toStdString();
     UserSocket sock(sf::IpAddress::LocalHost, 11777, client->getSessionId());
     Message msg = sock.sendPayload("register",studentString);
     updateStudents();
