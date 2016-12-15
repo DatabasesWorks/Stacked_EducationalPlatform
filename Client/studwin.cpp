@@ -111,10 +111,8 @@ void StudWin::on_checkBox_stateChanged(int arg1) {
     }
 }
 
-std::vector<bool> StudWin::getUpdatedPuzzles() {
-    UserSocket sock(sf::IpAddress::LocalHost, 11777);
-
-    sock.authenticate("", "");
+std::vector<bool> StudWin::getUnlockedPuzzles() {
+    UserSocket sock(sf::IpAddress::LocalHost, 11777,client->getSessionId());
     Message msg = sock.sendPayload("getSolvedPuzzles", "");
     QVector<QString> completedPuzzles = QString::fromStdString(msg.payload).split(",").toVector();
     return convertStringsToBools(completedPuzzles);

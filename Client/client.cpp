@@ -27,8 +27,6 @@ Client::Client(QWidget *parent) :
     QObject::connect(ui->pushButton_3, &QPushButton::clicked, this, &Client::studentRegistration);
     QObject::connect(ui->pushButton_4, &QPushButton::clicked, this, &Client::teacherRegistration);
     QObject::connect(ui->pushButton_7, &QPushButton::clicked, this, &Client::on_pushButton_7_clicked);
-
-
     QObject::connect(&timer, &QTimer::timeout, this, &Client::autosave);
     //move the window to the center of the screen
     move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
@@ -36,7 +34,6 @@ Client::Client(QWidget *parent) :
     timer.start(30000); //every 30 seconds or so
     widget.addWidget(new StudWin(this, nullptr));
     widget.addWidget(new TeachWin(this, nullptr));
-
     widget.addWidget(new StudReg(this, nullptr));
     widget.addWidget(new TeachReg(this, nullptr));
     this->setStyleSheet("background-color: black; color: white");

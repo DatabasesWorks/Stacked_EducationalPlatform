@@ -29,7 +29,7 @@ public:
 
     ~StudWin();
     std::vector<bool> getSolvedList();
-    std::vector<bool> getUpdatedPuzzles();
+    std::vector<bool> getUnlockedPuzzles();
     void setCurrentUsername(QString currentUsername);
 
 //    void setMainGameWidget(QWidget *widget);
