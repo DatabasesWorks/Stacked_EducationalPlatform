@@ -15,7 +15,8 @@
 #include <sstream>
 
 /**
- * @brief The sprite2dObject class integrates SFML sprites with Box2D shapes and bodies.
+ * @brief The sprite2dObject class integrates SFML sprites with Box2D shapes and bodies
+ * for use in the Stackd game API.
  */
 class sprite2dObject{
 

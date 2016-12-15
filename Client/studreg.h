@@ -8,6 +8,10 @@ namespace Ui {
 class StudReg;
 }
 
+/**
+ * @brief The StudReg class is a window for students to register a login name and password
+ * with the Stackd game API.
+ */
 class StudReg : public QWidget
 {
     Q_OBJECT

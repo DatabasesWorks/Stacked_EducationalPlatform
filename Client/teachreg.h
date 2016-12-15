@@ -8,6 +8,10 @@ namespace Ui {
 class TeachReg;
 }
 
+/**
+ * @brief The TeachReg class is a window for teachers to register a login name and password
+ * with the Stackd game API.
+ */
 class TeachReg : public QWidget
 {
     Q_OBJECT

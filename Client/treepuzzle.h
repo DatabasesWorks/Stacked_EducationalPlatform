@@ -8,7 +8,11 @@
 #include <sprite2dobject.h>
 #include <QTimer>
 
-
+/**
+ * @brief The TreePuzzle class inherits from the puzzle class. It is part of a suite of puzzles
+ * for the  Stackd education game API. TreePuzzle simulates the functionality of a tree to
+ * teach students about tree data structures.
+ */
 class TreePuzzle : public Puzzle
 
 {

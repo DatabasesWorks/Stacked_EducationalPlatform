@@ -16,6 +16,10 @@
 #include <mutex>
 #include <db.h>
 
+/**
+ * @brief The Server class is a hybrid TCP/UDP server for for Stackd game API clients.
+ * It is the top level class of the Stackd API's server structure.
+ */
 class Server
 {
     ServerSocket listener;

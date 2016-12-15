@@ -8,6 +8,9 @@ struct packetexception;
 struct authenticationexception;
 struct timeoutexception;
 
+/**
+ * Exception structs for the Stackd game API.
+ */
 struct timeoutexception : public std::exception {
    const char * what() const throw(){
       return "timeout reached";

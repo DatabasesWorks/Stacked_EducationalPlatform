@@ -10,6 +10,10 @@ namespace Ui {
 class TeachWin;
 }
 
+/**
+ * @brief The StudReg class is a window for teachers to login and gather analytics on students
+ * registered in the Stackd game API.
+ */
 class TeachWin : public QWidget
 {
     Q_OBJECT

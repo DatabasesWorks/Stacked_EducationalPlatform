@@ -9,6 +9,11 @@
 #include <sstream>
 #include <utility>
 
+/**
+ * @brief The ListPuzzle class inherits from the Puzzle class in the Stackd game API. It
+ * simulates the functionality of an array to teach students about array
+ * datastructures.
+ */
 class ListPuzzle : public Puzzle
 {
 public:

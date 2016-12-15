@@ -13,6 +13,9 @@ namespace Ui {
 class Client;
 }
 
+/**
+ * @brief The Client class is the top-level, main window and client for the Stackd game API and server.
+ */
 class Client : public QMainWindow
 {
     Q_OBJECT
