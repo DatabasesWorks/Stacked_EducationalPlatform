@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>999</width>
-    <height>670</height>
+    <height>671</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -118,7 +118,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="2">
+               <item row="0" column="2" alignment="Qt::AlignHCenter">
                 <widget class="QPushButton" name="logoutButton">
                  <property name="minimumSize">
                   <size>

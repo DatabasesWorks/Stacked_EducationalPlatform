@@ -14,6 +14,8 @@ TeachWin::TeachWin(QWidget *parent) :
     //this->setStyleSheet("background-color: black; color: white;");
     QObject::connect(ui->addStudentButton, &QPushButton::clicked, this, &TeachWin::addStudentButton);
     QObject::connect(ui->deleteStudentButton, &QPushButton::clicked, this, &TeachWin::deleteStudentButton);
+    QObject::connect(ui->logoutButton, &QPushButton::clicked, this, &TeachWin::logoutButton);
+
 
 }
 
@@ -28,7 +30,6 @@ TeachWin::~TeachWin() {
 void TeachWin::logoutButton() {
     Client *par = client;
     UserSocket sock(sf::IpAddress::LocalHost, 11777, par->getSessionId());
-
     sock.deauthenticate();
     par->setCurrentPage("login");
 }

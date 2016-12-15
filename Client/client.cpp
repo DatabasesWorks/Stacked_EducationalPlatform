@@ -27,16 +27,30 @@ Client::Client(QWidget *parent) :
     QObject::connect(ui->pushButton_3, &QPushButton::clicked, this, &Client::studentRegistration);
     QObject::connect(ui->pushButton_4, &QPushButton::clicked, this, &Client::teacherRegistration);
     QObject::connect(ui->pushButton_7, &QPushButton::clicked, this, &Client::on_pushButton_7_clicked);
+    QObject::connect(this,&Client::setWidget,&stackWidget, &QStackedWidget::setCurrentWidget);
     QObject::connect(&timer, &QTimer::timeout, this, &Client::autosave);
     //move the window to the center of the screen
     move(QApplication::desktop()->availableGeometry().center() - this->rect().center());
-    widget.addWidget(new LoginWin(this, nullptr));
+
+    LoginWin * lwin = new LoginWin(this,nullptr);
+    StudWin * swin = new StudWin(this,nullptr);
+    TeachWin* twin = new TeachWin(this,nullptr);
+    StudReg * sreg = new StudReg(this,nullptr);
+    TeachReg * treg = new TeachReg(this,nullptr);
+
+    widgets.push_back(lwin);
+    widgets.push_back(swin);
+    widgets.push_back(twin);
+    widgets.push_back(sreg);
+    widgets.push_back(treg);
+    stackWidget.addWidget(lwin);
+    stackWidget.addWidget(swin);
+    stackWidget.addWidget(twin);
+    stackWidget.addWidget(sreg);
+    stackWidget.addWidget(treg);
     timer.start(3000); //every 3 seconds or so
-    widget.addWidget(new StudWin(this, nullptr));
-    widget.addWidget(new TeachWin(this, nullptr));
-    widget.addWidget(new StudReg(this, nullptr));
-    widget.addWidget(new TeachReg(this, nullptr));
     this->setStyleSheet("background-color: black; color: white");
+    this->setCentralWidget(&stackWidget);
     setCurrentPage("login");
     check = true;
 }
@@ -54,25 +68,27 @@ Client::~Client() {
 void Client::setCurrentPage(QString s) {
     if (check.is_lock_free() && check) {
         check = false;
-        this->setCentralWidget(&widget);
-
         if (s == "login") {
             activeWidget = 0;
         } else if (s == "studwin") {
             activeWidget = 1;
+            StudWin* win = static_cast<StudWin*>(stackWidget.widget(activeWidget));
+            this->stackWidget.removeWidget(win);
+            win = new StudWin(this,nullptr);
+            stackWidget.addWidget(win);
+            widgets[activeWidget]=win;
+            win->switched();
         } else if (s == "teachwin") {
             activeWidget = 2;
-            static_cast<TeachWin *>(widget.widget(activeWidget))->updateStudents();
+            static_cast<TeachWin *>(stackWidget.widget(activeWidget))->updateStudents();
         } else if (s == "studreg") {
             activeWidget = 3;
         } else if (s == "teachreg") {
             activeWidget = 4;
         }
-
-        widget.setCurrentIndex(activeWidget);
-        widget.currentWidget()->setFocus();
-        widget.currentWidget()->activateWindow();
-
+        emit setWidget(widgets[activeWidget]);
+        stackWidget.currentWidget()->setFocus();
+        stackWidget.currentWidget()->activateWindow();
         check = true;
     }
 }
@@ -80,7 +96,7 @@ void Client::setCurrentPage(QString s) {
 void Client::autosave() {
     if (activeWidget == 1 && sessionid != "") {
         UserSocket sock(sf::IpAddress::LocalHost, 11777, sessionid);
-        StudWin *win = static_cast<StudWin *>(widget.widget(1));
+        StudWin *win = static_cast<StudWin *>(widgets[1]);
         std::vector<bool> solvedlist = win->getSolvedList();
         int index = 0;
         for (auto it = solvedlist.begin(); it < solvedlist.end(); it++) {
@@ -89,7 +105,6 @@ void Client::autosave() {
                 std::stringstream ss;
                 ss << username << "," << index+1;
                 Message msg = sock.sendPayload("puzzlesolved", ss.str());
-                int i = 0;
             }
             index++;
         }
@@ -119,12 +134,12 @@ bool Client::sendLogin(QString user, QString pass) {
 
     if (teach) {
         setCurrentPage("teachwin");
-        static_cast<TeachWin *>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
+        static_cast<TeachWin *>(stackWidget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
     } else {
         setCurrentPage("studwin");
-        StudWin * stud = static_cast<StudWin *>(widget.currentWidget());
+        StudWin * stud = static_cast<StudWin *>(stackWidget.currentWidget());
         stud->updatePuzzles();
-        static_cast<StudWin *>(widget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
+        static_cast<StudWin *>(stackWidget.currentWidget())->setCurrentUsername(QString::fromStdString(username));
     }
 
     return true;

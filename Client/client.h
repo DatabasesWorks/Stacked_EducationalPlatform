@@ -21,7 +21,7 @@ class Client : public QMainWindow
     Q_OBJECT
 
 public:
-    QStackedWidget widget;
+    QStackedWidget stackWidget;
     explicit Client(QWidget *parent = 0);
     void setCurrentPage(QString);
     bool sendLogin(QString user, QString pass);
@@ -33,6 +33,10 @@ public:
 
 public slots:
     void autosave();
+
+signals:
+    void setWidget(QWidget *);
+
 
 private:
     QTimer timer;

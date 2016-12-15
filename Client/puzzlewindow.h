@@ -27,6 +27,7 @@ class PuzzleWindow : public GraphicsObject
     Q_OBJECT
 public:
     explicit PuzzleWindow(QWidget *Parent=0);
+    ~PuzzleWindow();
     void onInit();
     void onUpdate();
     void setPuzzle(Puzzle *puzzle);
