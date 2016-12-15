@@ -9,6 +9,7 @@ TeachReg::TeachReg(QWidget *parent) :
     ui->setupUi(this);
     //maybe get rid of this
     ui->passEntry->setEchoMode(QLineEdit::Password);
+
     //this->setStyleSheet("background-color: black; color: white;");
 }
 
@@ -28,6 +29,7 @@ void TeachReg::on_cancelButton_clicked() {
 
 void TeachReg::on_regButton_clicked() {
     QRegExp re("[A-Za-z0-9]{4,16}");
+
 
     if (!re.exactMatch(ui->userEntry->text())) {
         QMessageBox messageBox;

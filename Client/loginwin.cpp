@@ -22,6 +22,7 @@ LoginWin::~LoginWin() {
 void LoginWin::on_loginButton_clicked() {
     Client *par = client;
 
+    try{
     if (!par->sendLogin(ui->userEntry->text(), ui->passEntry->text())) {
         //TODO Make dialog
         QMessageBox messageBox;
@@ -30,6 +31,10 @@ void LoginWin::on_loginButton_clicked() {
         ui->passEntry->setText("");
     }else{
 
+    }}catch(socketexception ex){
+        QMessageBox messageBox;
+        messageBox.critical(0,"ERROR", "Server not responding");
+        messageBox.setFixedSize(500,200);
     }
 }
 

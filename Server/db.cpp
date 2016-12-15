@@ -176,7 +176,7 @@ std::string DB::authenticate(MYSQL *connection, std::string payload) {
 std::string DB::getStudents(MYSQL *connection, std::string payload) {
     MYSQL_RES *result;
 
-    QString query = "SELECT username FROM users WHERE class_code=\"" + QString::fromStdString(payload) + "\";";
+    QString query = "SELECT username FROM users;"; //WHERE class_code=\"" + QString::fromStdString(payload) + "\";";
     int state = mysql_query(connection, query.toLatin1().data());
 
     if (state != 0) {
