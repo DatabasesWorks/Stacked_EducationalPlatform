@@ -15,7 +15,7 @@ ListPuzzle::ListPuzzle(QSize size) : Puzzle(size) {
         "Press Q/A to cycle through values" << std::endl <<
         "Press R to reset" << std::endl <<
         "Press T to submit solution" << std::endl;
-    b2Vec2 pos(150, 65);
+    b2Vec2 pos(150, 75);
     createInstructions(pos);
 
     instructionstream.str("");
@@ -102,7 +102,7 @@ void ListPuzzle::runAction(Qt::Key key) {
         advanceActiveIndex(true);
     } else if (key == Qt::Key_R) {
         reset();
-    } else if (key == Qt::Key_Delete) {
+    } else if (key == Qt::Key_Delete || key == Qt::Key_Backspace) {
         deleteAtActiveIndex();
     } else if (key == Qt::Key_T) {
         bool solved = checkSolution();
