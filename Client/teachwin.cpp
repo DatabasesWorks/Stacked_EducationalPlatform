@@ -8,7 +8,6 @@ TeachWin::TeachWin(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TeachWin) {
     ui->setupUi(this);
-    ui->addStudentField->setText("format is :  (username,password,class_code,teacher, dateofbirth ");
     //Query DB and get this info
     ui->classLabel->setText("Class: CS3505");
     ui->userLabel->setText("Welcome: TestUser");
@@ -69,12 +68,22 @@ void TeachWin::setCurrentUsername(QString currentUsername) {
 }
 
 void TeachWin::addStudentButton(){
-    QString str = ui->addStudentField->text();
+    QString username = ui->userNameField->text();
+    QString pw = ui->passwordField->text();
+    QString classCode = ui->classCodeField->text();
+    QString birthDate = ui->birthDateField->text();
+    QString teacherName = this->currentUsername;
+    std::string studentString = (username + "," + pw + "," + classCode + "," + teacherName + "," + birthDate).toStdString();
     UserSocket sock(sf::IpAddress::LocalHost, 11777, client->getSessionId());
-    Message msg = sock.sendPayload("register",str.toStdString());
+    Message msg = sock.sendPayload("register",studentString);
     updateStudents();
 }
 
 
 
 
+
+void TeachWin::on_addStudentButton_clicked()
+{
+
+}

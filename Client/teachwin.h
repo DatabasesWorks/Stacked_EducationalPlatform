@@ -33,6 +33,8 @@ private slots:
     void on_listWidget_itemSelectionChanged();
     void deleteStudentButton();
 
+    void on_addStudentButton_clicked();
+
 private:
     Ui::TeachWin *ui;
     Client * client;
