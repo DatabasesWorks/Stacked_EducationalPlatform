@@ -131,7 +131,18 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="birthDateField"/>
+          <widget class="QDateEdit" name="birthDateField">
+           <property name="displayFormat">
+            <string>yyyy-MM-dd</string>
+           </property>
+           <property name="date">
+            <date>
+             <year>2000</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">

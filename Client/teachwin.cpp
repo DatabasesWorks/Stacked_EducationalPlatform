@@ -11,6 +11,8 @@ TeachWin::TeachWin(QWidget *parent) :
     //Query DB and get this info
     ui->classLabel->setText("Class: CS3505");
     ui->userLabel->setText("Welcome: TestUser");
+    ui->passwordField->setEchoMode(QLineEdit::Password);
+
     //this->setStyleSheet("background-color: black; color: white;");
     QObject::connect(ui->addStudentButton, &QPushButton::clicked, this, &TeachWin::addStudentButton);
     QObject::connect(ui->deleteStudentButton, &QPushButton::clicked, this, &TeachWin::deleteStudentButton);
