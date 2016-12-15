@@ -387,7 +387,7 @@ std::string DB::deleteStudent(MYSQL* connection, std::string payload){
 
     //check id exists in users table
     MYSQL_RES *result;
-    QString query = "SELECT id FROM users WHERE id=\"" + QString::fromStdString(payload) + "\";";
+    QString query = "SELECT `id` FROM `users` WHERE users.username=\"" + QString::fromStdString(payload) + "\";";
     int state = mysql_query(connection, query.toLatin1().data());
 
     if (state != 0) {
@@ -397,8 +397,13 @@ std::string DB::deleteStudent(MYSQL* connection, std::string payload){
 
     result = mysql_store_result(connection);
 
+    MYSQL_ROW userrow = mysql_fetch_row(result);
+    std::string userid = std::string(userrow[0]);
+
+
+
    //delete row from users table
-    query = "DELETE FROM users WHERE id\"" + QString::fromStdString(payload) + "\";";
+    query = "DELETE FROM `users` WHERE users.id=\"" + QString::fromStdString(userid) + "\";";
     state = mysql_query(connection, query.toLatin1().data());
 
     if (state != 0) {
@@ -409,7 +414,7 @@ std::string DB::deleteStudent(MYSQL* connection, std::string payload){
     result = mysql_store_result(connection);
 
     //check for id in row from puzzles table
-    query = "SELECT userid FROM puzzles WHERE id=\"" + QString::fromStdString(payload) + "\";";
+    query = "SELECT `userid` FROM `puzzles` WHERE puzzles.userid=\"" + QString::fromStdString(payload) + "\";";
     state = mysql_query(connection, query.toLatin1().data());
 
     if (state != 0) {
@@ -418,7 +423,7 @@ std::string DB::deleteStudent(MYSQL* connection, std::string payload){
     }
 
     //delete row from users table
-     query = "DELETE FROM puzzles WHERE userid\"" + QString::fromStdString(payload) + "\";";
+     query = "DELETE FROM `puzzles` WHERE puzzles.userid=\"" + QString::fromStdString(payload) + "\";";
      state = mysql_query(connection, query.toLatin1().data());
 
      result = mysql_store_result(connection);
