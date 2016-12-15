@@ -10,6 +10,10 @@
 #include <iterator>
 #include <string>
 
+/**
+ * @brief The Puzzle class is the parent class to Stackd game API puzzles. All puzzles
+ * to be used in the Stackd game API must inherit from the Puzzle class.
+ */
 class Puzzle : public QObject
 {
     Q_OBJECT

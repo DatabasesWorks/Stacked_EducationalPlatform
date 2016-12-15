@@ -19,6 +19,10 @@
 //Sourced: http://www.sfml-dev.org/tutorials/1.6/graphics-qt.php
 //Also: https://www.youtube.com/watch?v=D9XK1KHI0Xk
 //Also: http://becomingindiedev.blogspot.com/2013/10/qt-5-and-sfml-20-integration.html
+/**
+ * @brief The GraphicsObject class is a wrapper class for QWidget and SFML's RenderWindow. It is
+ * used in the Stackd game API for generating a game window.
+ */
 class GraphicsObject : public QWidget, public sf::RenderWindow
 {
     Q_OBJECT

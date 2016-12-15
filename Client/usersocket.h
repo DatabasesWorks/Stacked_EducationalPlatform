@@ -13,6 +13,10 @@
 #include <message.h>
 #include <exceptions.h>
 
+/**
+ * @brief The UserSocket class is a socket used by the Stackd game API's client to communicate
+ * with the server over a hybrid TCP/UDP interface.
+ */
 class UserSocket
 {
     unsigned int portnumber = 0;

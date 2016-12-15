@@ -4,6 +4,10 @@
 #include <SFML/System/String.hpp>
 #include <string>
 
+/**
+ * @brief The Message class is a message for the Stackd game API server to communicate with the
+ * client.
+ */
 class Message{
 
 public:

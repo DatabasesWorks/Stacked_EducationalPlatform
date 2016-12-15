@@ -3,7 +3,9 @@
 #include <string>
 #include <mysql.h>
 
-
+/**
+ * @brief The DB class interfaces the server and a MySQL database for the Stackd game API.
+ */
 class DB
 {
     std::string regUser(MYSQL* connection, std::string payload);

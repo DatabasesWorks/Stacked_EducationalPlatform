@@ -13,6 +13,11 @@
 #include <Box2D/Box2D.h>
 #include <time.h>
 
+/**
+ * @brief The StackPuzzle class inherits from the puzzle class. It is part of a suite of puzzles
+ * for the  Stackd education game API. StackPuzzle simulates the functionality of a stack to
+ * teach students about stack data structures.
+ */
 class StackPuzzle : public Puzzle
 {
 

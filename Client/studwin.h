@@ -19,6 +19,9 @@ namespace Ui {
 class StudWin;
 }
 
+/**
+ * @brief The StudWin class is the window where Stackd game API Puzzles are displayed and played.
+ */
 class StudWin : public QWidget, sf::RenderWindow
 {
     Q_OBJECT

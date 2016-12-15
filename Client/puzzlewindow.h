@@ -18,6 +18,10 @@
 #include <QPoint>
 
 
+/**
+ * @brief The PuzzleWindow class inherits from GraphicsObject. It is the window that
+ * displays Stackd game API's puzzles.
+ */
 class PuzzleWindow : public GraphicsObject
 {
     Q_OBJECT

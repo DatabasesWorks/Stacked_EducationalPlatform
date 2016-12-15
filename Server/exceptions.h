@@ -3,6 +3,9 @@
 #include <string>
 #include <exception>
 
+/**
+ * A collection of strucs for error handling in the Stackd game API's server.
+ */
 struct socketexception;
 struct packetexception;
 struct authenticationexception;
