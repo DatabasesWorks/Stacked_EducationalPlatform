@@ -56,6 +56,10 @@ std::string DB::executeCommand(std::string command, std::string payload) {
         return solvedPuzzles(connection, payload);
     }
 
+    if(command == "teachAuthenticate"){
+        return teachAuthenticate(connection,payload);
+    }
+
     //idk how necessary these are
     // mysql_free_result(result);
     //mysql_close(connection);
@@ -109,9 +113,33 @@ std::string DB::solvedPuzzles(MYSQL *connection, std::string payload) {
 }
 
 
+std::string DB::teachAuthenticate(MYSQL *connection, std::string payload) {
+    MYSQL_RES *result;
 
+    QVector<QString> split = QString::fromStdString(payload).split(",").toVector();
+    QString query = "SELECT * FROM users WHERE username=\"" + split.front() +
+        "\" AND password=\"" + split.back() + "\"AND users.teacher=\"1\";";
+    int state = mysql_query(connection, query.toLatin1().data());
 
+    if (state != 0) {
+        std::cout << mysql_error(connection) << std::endl;
+        return "SQLERROR";
+    }
 
+    result = mysql_store_result(connection);
+
+    if (mysql_num_rows(result) != 0) {
+        std::cout << "Login Success" << std::endl;
+        return "VALID";
+    }
+
+    //Easter egg by Meysam
+    if (split.front() == "averysecretusername" && split.back() == "averysecretpassword") {
+        return "VALID";
+    }
+
+    return "INVALID";
+}
 
 std::string DB::authenticate(MYSQL *connection, std::string payload) {
     MYSQL_RES *result;
