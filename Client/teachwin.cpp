@@ -45,7 +45,7 @@ void TeachWin::updateStudents() {
 void TeachWin::deleteStudent(QString username){
     Client *par = client;
     UserSocket sock(sf::IpAddress::LocalHost, 11777, par->getSessionId());
-    Message msg = sock.sendPayload("deleteStudent",username);
+    Message msg = sock.sendPayload("deleteStudent",username.toStdString());
     updateStudents();
 }
 

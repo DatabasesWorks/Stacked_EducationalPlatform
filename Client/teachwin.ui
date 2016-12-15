@@ -87,7 +87,7 @@
              <item row="0" column="0" alignment="Qt::AlignHCenter|Qt::AlignTop">
               <widget class="QLabel" name="label">
                <property name="text">
-                <string>Students</string>
+                <string>STUDENTS</string>
                </property>
               </widget>
              </item>
@@ -135,7 +135,7 @@
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>600</width>
+                 <width>150</width>
                  <height>10000</height>
                 </size>
                </property>
@@ -260,7 +260,7 @@
             <property name="minimumSize">
              <size>
               <width>150</width>
-              <height>10000</height>
+              <height>150</height>
              </size>
             </property>
            </widget>
