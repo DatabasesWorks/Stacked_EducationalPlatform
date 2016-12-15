@@ -53,6 +53,7 @@ private:
     bool levelshow;
     PuzzleWindow* pw;
     void setupLevels();
+    int currPuzz;
     std::vector<Puzzle*> puzzles;
     std::vector<bool> solvedPuzzles;
     std::vector<bool> convertStringsToBools(QVector<QString>);
