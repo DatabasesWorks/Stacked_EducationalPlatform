@@ -14,6 +14,7 @@ class DB
     std::string puzzleSolved(MYSQL* connection, std::string payload);
     std::string studentlist(MYSQL* connection, std::string payload);
     std::string solvedPuzzles(MYSQL* connection, std::string payload);
+    std::string deleteStudent(MYSQL* connection, std::string payload);
 public:
     DB();
     std::string executeCommand(std::string command, std::string payload);
