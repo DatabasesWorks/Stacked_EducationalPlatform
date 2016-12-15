@@ -68,5 +68,6 @@ void StudReg::on_regButton_clicked() {
 }
 
 //alphanumeric 4-16
-bool StudReg::Validate(QString s) {
+bool StudReg::Validate(QString) {
+    return true;
 }

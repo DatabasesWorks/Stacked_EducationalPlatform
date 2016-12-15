@@ -147,9 +147,7 @@ int Client::sendReg(QString data) {
 
 //hardcoded to class "" for now
 QVector<QString> Client::getStudents(QString) { // still unimplemented
-    UserSocket sock(sf::IpAddress::LocalHost, 11777);
-
-    sock.authenticate("", "");
+    UserSocket sock(sf::IpAddress::LocalHost, 11777,getSessionId());
     Message msg = sock.sendPayload("getstudents", "");//classcode.toStdString());
     QVector<QString> students = QString::fromStdString(msg.payload).split(",").toVector();
     return students;
