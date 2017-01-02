@@ -48,7 +48,7 @@ Client::Client(QWidget *parent) :
     stackWidget.addWidget(twin);
     stackWidget.addWidget(sreg);
     stackWidget.addWidget(treg);
-    timer.start(3000); //every 3 seconds or so
+    timer.start(30000); //every 3 seconds or so
     this->setStyleSheet("background-color: black; color: white");
     this->setCentralWidget(&stackWidget);
     setCurrentPage("login");
